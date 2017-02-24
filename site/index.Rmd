@@ -79,7 +79,7 @@ PhD students that enrolled through the doctoral school will receive **2 ECTS** i
 
 ## Elixir
 
-This event is supported by [ELIXIR-Luxembourg](http://elixir-homepage.uni.lu/elixir-lu-introduction-r-tidyverse)
+This event is supported by [ELIXIR-Luxembourg]( http://elixir-luxembourg.org/data-processing-r-tidyverse)
 
 ## Contact
 
