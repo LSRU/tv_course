@@ -46,13 +46,14 @@ From: **2nd May** to **5th May** 2017.
 
 
 The course will be held at:
-Salle polyvalente, Maison du Savoir, 1st floor.
 University of Luxembourg
 Esch-sur-Alzette
 Luxembourg
 See map: [Google Maps](http://maps.google.com/?q=11%2C+porte+des+Sciences+%2C+Esch-sur-Alzette%2C+%2C+%2C+lu)
 
+In the Salle polyvalente, Maison du Savoir, 1st floor.
 
+![salle polyvalente](img/salle_polyvalente_MSA.png)
 
 ## ECTS
 
