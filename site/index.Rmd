@@ -67,6 +67,11 @@ In the Salle polyvalente, Maison du Savoir, 1st floor.
 
 ![salle polyvalente](img/salle_polyvalente_MSA.png)
 
+## Registration
+
+the course is limited to 25 participants. Register through [this form](https://goo.gl/forms/KVq5ek5PcStkrAK92)
+
+
 ## ECTS
 
 PhD students that enrolled through the doctoral school will receive **2 ECTS** in category 1, which requires handing in a short report at the end of the course.
@@ -75,3 +80,8 @@ PhD students that enrolled through the doctoral school will receive **2 ECTS** i
 ## Elixir
 
 This event is supported by [ELIXIR-Luxembourg](http://elixir-homepage.uni.lu/elixir-lu-introduction-r-tidyverse)
+
+## Contact
+
+
+[Roland Krause](mailto:roland.krause@elixir-luxembourg.org)
