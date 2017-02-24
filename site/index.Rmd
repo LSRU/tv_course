@@ -8,18 +8,26 @@ output:
 
 ## Introduction
 
-R is a powerful language for data science in many disciplines of research with a steep learning curve. The tidyverse group of packages provide a dialect that greatly simplifies data importing, cleaning, processing, and visualization as well as providing reproducible workflows, replacing many intricacies of R with clear and easy to learn syntax.
-The four day course provides a complete introduction to data science in R with the tidyverse. Participants should have basic experience in programming environments such as Matlab, Octave or other programming languages or complete a simple free online course as this one offered by DataCamp.
-The course will not go deep into statistics but rather getting data ready, some exploratory analysis, visualization and handling models. Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course.
+[_R_](https://cran.r-project.org/) is a powerful language for data science in many disciplines of research with a steep learning curve. 
+The [tidyverse](http://tidyverse.org/) group of packages provide a dialect that greatly simplifies:
+
+- data importing
+- cleaning
+- processing
+- visualization as well as providing reproducible workflows using pipelines (`%>%`)
+
+Adopt [Hadley Wickham](http://hadley.nz/), Chief Scientist at [RStudio](https://www.rstudio.com/products/RStudio/), philosophy: take each step of data science and  replace many intricacies of _R_ with clear, consistent and easy to learn syntax.
+[RStudio](https://www.rstudio.com/products/RStudio/) will be the software to use since it eases package management, scripting, plotting and data handling.
+
+The four day course provides a complete introduction to data science in _R_ with the **tidyverse**. 
+The course will not go deep into statistics but rather getting data ready, some exploratory analysis, visualization and handling models. 
+
+**Preparing data** takes up to 90% of the time spent in analysis — speeding this up is the mission of this course.
 
 ## Tidyverse
 
-Replace [_R_](https://cran.r-project.org/) base functions by the [tidyverse](tidyverse) which is now an official [CRAN package](https://cran.r-project.org/package=tidyverse). 
-Adopt [Hadley Wickham](http://hadley.nz/) philosophy, take each step of data science and simplify the tools. 
-Keeping what make them helpful and removing inconsistent and historic behaviors.
-His proposed workflow is described as follow in his must-read book [_R_ for data science](http://r4ds.had.co.nz/)
-
-- Provide strong practical skills in the analysis of large-scale data sets with [RStudio](https://www.rstudio.com/products/RStudio/)
+The **tidyverse** is an official [CRAN package](https://cran.r-project.org/package=tidyverse) and its [manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html). 
+Hadley proposed workflow is described as follow in his must-read book [_R_ for data science](http://r4ds.had.co.nz/)
 
 ![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/data-science-explore.png)
 
@@ -29,20 +37,24 @@ In terms of _R_ packages, the workflow is nicely depicted as in this
 picture, by [David Robinson](http://varianceexplained.org/)
 
 ![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png)
+---
 
 ## Requirements
 
-Each student should bring their own laptop with _R_ and Rstudio installed with recent versions. Please look at [install tutorial](install_tutorial.html) to set it up prior to the course.
+Participants should have **basic experience** in programming environments such as Matlab, Octave or other programming languages
+or complete a simple free online course as [this one](https://www.datacamp.com/courses/free-introduction-to-r) offered by [DataCamp](https://www.datacamp.com/).
+
+Each student must bring their **own laptop** with _R_ and Rstudio installed with recent versions. Please look at [install tutorial](install_tutorial.html) to set it up prior to the course.
 
 ## Schedule, location
 
 From: **2nd May** to **5th May** 2017.
 
-
-- Day 1 will review the basics of R and loading data via the readr package as well as Rmarkdown. 
--	Day 2 will introduce tidying and organising data via the tidyr and dplyr packages as well as ggplot2 for visualisation. 
--	Day 3 will look at functional programming tools using the purrr package, which greatly simplifies repeating operations. Many statistical packages have complicated and idiosyncratic data structures. The broom package helps to convert them to consistent data structures. 
--	Participants are encouraged to bring their own data for analysis, convert existing code to tidyverse or perform a project on Day 4.
+- Day 1 will review the basics of `R` and loading data via the `readr` package as well as `Rmarkdown`. 
+-	Day 2 will introduce tidying and organising data via the `tidyr` and `dplyr` packages as well as `ggplot2` for visualisation. 
+-	Day 3 will look at functional programming tools using the `purrr` package, which greatly simplifies repeating operations. 
+Many statistical packages have complicated and idiosyncratic data structures. The `broom` package helps to convert them to consistent data structures. 
+-	Participants are encouraged to bring their own data for analysis, convert existing code to **tidyverse** or perform a project on Day 4.
 
 
 The course will be held at:
@@ -57,7 +69,7 @@ In the Salle polyvalente, Maison du Savoir, 1st floor.
 
 ## ECTS
 
-Students will receive **2 ECTS** in category 1, which requires handing in a short report at the end of the course.
+PhD students that enrolled through the doctoral school will receive **2 ECTS** in category 1, which requires handing in a short report at the end of the course.
 
 
 ## Elixir

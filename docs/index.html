@@ -339,37 +339,43 @@ div.tocify {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>R is a powerful language for data science in many disciplines of research with a steep learning curve. The tidyverse group of packages provide a dialect that greatly simplifies data importing, cleaning, processing, and visualization as well as providing reproducible workflows, replacing many intricacies of R with clear and easy to learn syntax. The four day course provides a complete introduction to data science in R with the tidyverse. Participants should have basic experience in programming environments such as Matlab, Octave or other programming languages or complete a simple free online course as this one offered by DataCamp. The course will not go deep into statistics but rather getting data ready, some exploratory analysis, visualization and handling models. Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course.</p>
+<p><a href="https://cran.r-project.org/"><em>R</em></a> is a powerful language for data science in many disciplines of research with a steep learning curve. The <a href="http://tidyverse.org/">tidyverse</a> group of packages provide a dialect that greatly simplifies:</p>
+<ul>
+<li>data importing</li>
+<li>cleaning</li>
+<li>processing</li>
+<li>visualization as well as providing reproducible workflows using pipelines (<code>%&gt;%</code>)</li>
+</ul>
+<p>Adopt <a href="http://hadley.nz/">Hadley Wickham</a>, Chief Scientist at <a href="https://www.rstudio.com/products/RStudio/">RStudio</a>, philosophy: take each step of data science and replace many intricacies of <em>R</em> with clear, consistent and easy to learn syntax. <a href="https://www.rstudio.com/products/RStudio/">RStudio</a> will be the software to use since it eases package management, scripting, plotting and data handling.</p>
+<p>The four day course provides a complete introduction to data science in <em>R</em> with the <strong>tidyverse</strong>. The course will not go deep into statistics but rather getting data ready, some exploratory analysis, visualization and handling models.</p>
+<p><strong>Preparing data</strong> takes up to 90% of the time spent in analysis — speeding this up is the mission of this course.</p>
 </div>
 <div id="tidyverse" class="section level2">
 <h2>Tidyverse</h2>
-<p>Replace <a href="https://cran.r-project.org/"><em>R</em></a> base functions by the <a href="tidyverse" class="uri">tidyverse</a> which is now an official <a href="https://cran.r-project.org/package=tidyverse">CRAN package</a>. Adopt <a href="http://hadley.nz/">Hadley Wickham</a> philosophy, take each step of data science and simplify the tools. Keeping what make them helpful and removing inconsistent and historic behaviors. His proposed workflow is described as follow in his must-read book <a href="http://r4ds.had.co.nz/"><em>R</em> for data science</a></p>
-<ul>
-<li>Provide strong practical skills in the analysis of large-scale data sets with <a href="https://www.rstudio.com/products/RStudio/">RStudio</a></li>
-</ul>
+<p>The <strong>tidyverse</strong> is an official <a href="https://cran.r-project.org/package=tidyverse">CRAN package</a> and its <a href="https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html">manifesto</a>. Hadley proposed workflow is described as follow in his must-read book <a href="http://r4ds.had.co.nz/"><em>R</em> for data science</a></p>
 <div class="figure">
 <img src="https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/data-science-explore.png" />
 
 </div>
 <p>H. Wickham - <a href="http://r4ds.had.co.nz/introduction-1.html"><em>R</em> for data science</a>, <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/">licence CC</a></p>
 <p>In terms of <em>R</em> packages, the workflow is nicely depicted as in this picture, by <a href="http://varianceexplained.org/">David Robinson</a></p>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png" />
-
 </div>
+<div id="section" class="section level2">
+<h2><img src="https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png" /></h2>
 </div>
 <div id="requirements" class="section level2">
 <h2>Requirements</h2>
-<p>Each student should bring their own laptop with <em>R</em> and Rstudio installed with recent versions. Please look at <a href="install_tutorial.html">install tutorial</a> to set it up prior to the course.</p>
+<p>Participants should have <strong>basic experience</strong> in programming environments such as Matlab, Octave or other programming languages or complete a simple free online course as <a href="https://www.datacamp.com/courses/free-introduction-to-r">this one</a> offered by <a href="https://www.datacamp.com/">DataCamp</a>.</p>
+<p>Each student must bring their <strong>own laptop</strong> with <em>R</em> and Rstudio installed with recent versions. Please look at <a href="install_tutorial.html">install tutorial</a> to set it up prior to the course.</p>
 </div>
 <div id="schedule-location" class="section level2">
 <h2>Schedule, location</h2>
 <p>From: <strong>2nd May</strong> to <strong>5th May</strong> 2017.</p>
 <ul>
-<li>Day 1 will review the basics of R and loading data via the readr package as well as Rmarkdown.</li>
-<li>Day 2 will introduce tidying and organising data via the tidyr and dplyr packages as well as ggplot2 for visualisation.</li>
-<li>Day 3 will look at functional programming tools using the purrr package, which greatly simplifies repeating operations. Many statistical packages have complicated and idiosyncratic data structures. The broom package helps to convert them to consistent data structures.</li>
-<li>Participants are encouraged to bring their own data for analysis, convert existing code to tidyverse or perform a project on Day 4.</li>
+<li>Day 1 will review the basics of <code>R</code> and loading data via the <code>readr</code> package as well as <code>Rmarkdown</code>.</li>
+<li>Day 2 will introduce tidying and organising data via the <code>tidyr</code> and <code>dplyr</code> packages as well as <code>ggplot2</code> for visualisation.</li>
+<li>Day 3 will look at functional programming tools using the <code>purrr</code> package, which greatly simplifies repeating operations. Many statistical packages have complicated and idiosyncratic data structures. The <code>broom</code> package helps to convert them to consistent data structures.</li>
+<li>Participants are encouraged to bring their own data for analysis, convert existing code to <strong>tidyverse</strong> or perform a project on Day 4.</li>
 </ul>
 <p>The course will be held at: University of Luxembourg Esch-sur-Alzette Luxembourg See map: <a href="http://maps.google.com/?q=11%2C+porte+des+Sciences+%2C+Esch-sur-Alzette%2C+%2C+%2C+lu">Google Maps</a></p>
 <p>In the Salle polyvalente, Maison du Savoir, 1st floor.</p>
@@ -380,7 +386,7 @@ div.tocify {
 </div>
 <div id="ects" class="section level2">
 <h2>ECTS</h2>
-<p>Students will receive <strong>2 ECTS</strong> in category 1, which requires handing in a short report at the end of the course.</p>
+<p>PhD students that enrolled through the doctoral school will receive <strong>2 ECTS</strong> in category 1, which requires handing in a short report at the end of the course.</p>
 </div>
 <div id="elixir" class="section level2">
 <h2>Elixir</h2>
