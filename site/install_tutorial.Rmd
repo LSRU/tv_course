@@ -1,0 +1,152 @@
+---
+title: "Install tutorial"
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+---
+
+
+
+## Install R
+
+![](https://lsru.github.io/r_workshop/img/Rlogo_90.png)
+
+`R` is available for free for Windows, GNU/Linux and MacOS.  
+As for now, the latest version is `3.3.2`.
+
+One common complain about `R` is the frequency of updates. This is true, but can be sorted out with a good **package manager**. Of note, major updates (`3.3`, early May 2016) are the only one forcing you to reinstall extra-packages and are released on a yearly basis.
+
+### Windows
+
+Visit the [download page](https://cloud.r-project.org/) and choose the corresponding installer for your platform.
+
+Mind that you will [Rtools](https://cran.r-project.org/bin/windows/Rtools/) to compile and install some packages.
+
+To circumvent the lack of a package manager in Windows, it is possible to install the `R` library
+`installr`. This package provides the `updateR()` function which takes care of updating your R installation
+and migrates your installed libraries whenever a major `R` update is released. Recently, a package has been released which can also [help you](#reinstallr) in this task .
+
+### MacOS
+
+You can either browse to the [download page](https://cloud.r-project.org/) or better use the [Homebrew package manager](http://brew.sh/).
+
+Once `homebrew` is installed, you can easily install/uninstall many programs with their dependencies and utilities. This implies to use the terminal. If you're not comfortable with the use of the terminal, ask me! It is worth it.
+To install `R` using brew write in the following:
+
+```{r, eval=FALSE}
+brew install r
+```
+
+Updates for all your software can be easily performed and will be automatically handled by the following line:
+```{r, eval=FALSE}
+brew update; brew upgrade
+```
+
+### GNU/Linux
+
+Any Linux distributions is bundled with a great package manager such as `dpkg` or `rpm`.
+Visit the appropriate webpage for your distribution [here](http://cran.us.r-project.org/bin/linux/).
+
+After you get the correct entry in your package manager, it should quite easy
+```{r, eval=FALSE}
+sudo apt-get install r-base r-base-dev
+```
+
+## Install Rstudio
+
+![](https://lsru.github.io/r_workshop/img/rstudiosticker_110.png)
+
+Rstudio is an Integrated Development Editor, it wraps and interfaces `R` but, `R` needs to be installed first.
+The free-version contains everything you need.
+
+Visit the [download page](https://www.rstudio.com/products/rstudio/download/) and
+choose the corresponding installer for your platform. As for now, the latest version is `1.0.136`.
+
+See the [blog entry](https://blog.rstudio.org/2016/11/01/announcing-rstudio-v1-0/) about this major release.
+
+Of note, this version 1 comes with new features, such as [notebooks](http://rmarkdown.rstudio.com/r_notebooks.html) and inline results to get chunks and executation one after the other.
+
+## Open rstudio
+
+They are 4 main panels in rstudio, but as the top-left is for scripting and by default missing, the layout should looks like
+
+![](https://lsru.github.io/r_workshop/img/rstudio_blank_700.png)
+
+### install R packages from the Comprensive R Archive Network (CRAN)
+
+On the bottom-right panel, 5 tabs are present:
+
+- Files
+- Plots
+- Packages
+- Help
+- Viewer
+
+Click on the `Packages` tab (1.) and select the select the `Install` button (2.). Type `tidyverse, devtools` in (3.)
+
+
+![](https://lsru.github.io/r_workshop/img/install_packages_300.png)
+
+It takes some time, usually 10 seconds up to 5 minutes for a single package depending on its size and compilation stage.
+
+The packages can also be installed in the console (*i.e.* the bottom-left panel). The snapshot below shows you how to install `devtools` using the console:
+
+![](https://lsru.github.io/r_workshop/img/install_console_200.png)
+
+Of note, `devtools` is handy when you want to install a development version, for example if a bug was fixed 
+but the package not yet submitted to CRAN.
+
+```{r, eval=FALSE}
+devtools::install_github("hadley/dplyr")
+```
+
+#### A note about package updates
+
+The complaint of very frequent updates might be legitimate as it could be cumbersome to maintain `R` up-to-date when you have many packages. Actually, it is as easy as:
+
+```{r, eval=FALSE}
+update.packages()
+```
+
+But, you should rather use the green `Update` button next to the `Install` (located in the `Packages` tab). The advantage is that you can check which package you would like to update and look at the actual changes by clicking on the `NEWS` link.
+
+### install bioconductor packages
+
+The [bioconductor](https://www.bioconductor.org/) resource will be detailed later, but to save time, copy / paste the following code into the console to install the useful packages:
+
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+# to install the version 3.4 of the bioconductor installer.
+biocLite(c("limma", "Biobase", "GEOquery"))
+```
+
+#### Package updates
+
+There is no interface for bioconductor packages thus you need to run the following lines to update the packages (you will be asked if you want to update some / all):
+
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite()
+```
+
+
+## Testing your installation
+
+Copy / paste the code below and you should obtain the following plot.
+```{r}
+library("tidyverse")
+
+mtcars %>%
+  gather(key, value, c(drat, wt)) %>%
+  ggplot(aes(x = value, y = mpg, colour = key)) +
+  geom_point() +
+  theme_bw(14)
+```
+
+If not, please [contact me](mailto:aurelien.ginolhac@uni.lu) with the error produced and the output of
+```{r}
+devtools::session_info()
+```
+
+

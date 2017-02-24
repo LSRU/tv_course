@@ -1,0 +1,50 @@
+---
+title: "Teachers"
+---
+
+
+We are all working at the [University of Luxembourg](http://wwwen.uni.lu/)
+
+- [Aurélien Ginolhac](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/people/aurelien_ginolhac)
+- [Eric Koncina](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina)
+- [Roland Krause](http://wwwen.uni.lu/lcsb/people/roland_krause)
+
+Aurélien and Eric are working at the [Life Sciences Research Unit](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit) 
+and Roland at the [LCSB](http://wwwen.uni.lu/lcsb)
+
+
+## Acknowledgements
+
+Some of the figures were taken from:
+
+- [LEGO pictures](https://github.com/jennybc/lego-rstats) by Jennifer Bryan
+
+
+[![](logo_dc_dark.png)](https://www.datacamp.com/)
+
+[DataCamp](https://www.datacamp.com/) offers online tutorials and courses to help students learn R and Python for data science. You can try their free courses here: 
+
+- Learn R with [Introduction to R](https://www.datacamp.com/courses/free-introduction-to-r)
+- Learn Python with [Intro to Python for Data Science](https://www.datacamp.com/courses/intro-to-python-for-data-science)
+
+## Technical description
+
+This website was built using [rmarkdown websites](http://rmarkdown.rstudio.com/rmarkdown_websites.html). Specifically:
+
+- slides using [ioslides](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) base enhanced with  [iosp](https://github.com/koncina/iosp) developed by [Eric Koncina](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina)
+- practicals using a Rmarkdown template, [unilur](https://github.com/koncina/unilur) developed by [Eric Koncina](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina)
+
+
+## Licence
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+
+## Versions of key packages
+
+```{r}
+devtools::session_info(c("tidyverse", "broom"))
+```
+

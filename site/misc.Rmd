@@ -1,0 +1,78 @@
+---
+title: "Miscellaneous"
+output: 
+  html_document: 
+    toc: yes
+    toc_float: yes
+---
+
+## Useful rstudio shortcuts
+
+- Scripting (replace  <kbd>Cmd</kbd> by <kbd>Ctrl</kbd> for PC)
+    + <kbd>Cmd</kbd> + <kbd>-</kbd>: insert <kbd> <- </kbd>
+    + <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>: insert <kbd>%>%</kbd>
+    + <kbd>Cmd</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>: insert code chunk
+    + <kbd>Alt</kbd> + <kbd>↑</kbd> or <kbd>↓</kbd>: move line up / down
+    + <kbd>Cmd</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> or <kbd>↓</kbd>: copy line up   / down
+    + <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>↑</kbd> or <kbd>↓</kbd>: multi-line edition
+    
+- `# analysis step ####` for navigating in your then tagged code
+- Running
+    + <kbd>Cmd</kbd> + <kbd>Enter</kbd>: run code
+    + <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd>: re-run Previous code
+    + <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>: run Current chunk
+    + <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd>: Knit document
+
+
+See the [Rstudio blog, with GIFs](https://www.rstudio.com/rviews/2016/12/09/december-16-rstudio-tips-and-tricks/)
+
+## Recommended reading
+
+- [R for data science](http://r4ds.had.co.nz/) by Hadley
+
+```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
+knitr::include_graphics("https://raw.githubusercontent.com/hadley/r4ds/master/cover.png")
+```
+
+- [ggplot2 - book](http://ggplot2.org/book/) by Hadley
+- [Rmarkdown](http://rmarkdown.rstudio.com/) by Rstudio
+- [Advanced in R](http://adv-r.had.co.nz/) by Hadley
+- [Introduction to data science and statistical programming with R](https://leanpub.com/datascience_and_R) by [Thomas Mailund](http://www.mailund.dk/) ([free text on github](https://github.com/mailund/introduction-to-data-science))
+```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
+knitr::include_graphics("https://s3.amazonaws.com/titlepages.leanpub.com/datascience_and_R/hero?1467461198")
+```
+- [Functional Programming in R](https://leanpub.com/functional_programming_in_R) by Thomas Mailund ([free text on github](https://github.com/mailund/functional-programming-in-R))
+```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
+knitr::include_graphics("https://s3.amazonaws.com/titlepages.leanpub.com/functional_programming_in_R/hero?1470512054")
+```
+
+
+
+- About R weirdness
+    + [R inferno](http://www.burns-stat.com/documents/books/the-r-inferno/) by Patrick Burns
+    + [Rbitrary](https://ironholds.org/projects/rbitrary/) by [Oliver Keyes](https://ironholds.org/), See why:
+        - `<-` and not `=`
+        - `::` and not `:::`
+        - `library` and not `require` etc.
+    + [R assignments <- and ->](http://www.win-vector.com/blog/2016/12/the-case-for-using-in-r/)
+
+
+
+## Recommended videos
+
+### Hadley Wickham
+
+- [dplyr, tutorial 1/2](https://www.youtube.com/watch?v=8SGif63VW6E)
+- [dplyr, tutorial 2/2](https://www.youtube.com/watch?v=Ue08LVuk790)
+- [managing many models](https://www.youtube.com/watch?v=rz3_FDVt9eg)
+- [data science with R](https://www.youtube.com/watch?v=K-ss_ag2k9E)
+
+
+## Jennifer Bryan
+
+- [Data wrangling](https://www.youtube.com/watch?v=4MfUCX_KpdE)
+
+### David Robinson
+
+- [broom introduction](https://www.youtube.com/watch?v=eM3Ha0kTAz4)
+

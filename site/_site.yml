@@ -1,0 +1,29 @@
+name: "Data processing with R tidyverse"
+title: "Data processing with R tidyverse"
+output_dir: "../docs"
+exclude: ["*.html", "*.pdf", "libs"]
+navbar:
+  title: "R tidyverse"
+  left:
+    - text: "Lectures"
+      icon: fa-graduation-cap
+      menu:
+        - text: "---------"        
+        - text: "slides, keyboard shortcuts:"
+        - text: "o: outline"
+        - text: "w: widescreen on/off"
+        - text: "f: fullscreen on/off"
+        - text: "ctrl +/ ctrl -: zoom in/out"
+    - text: "Practicals"
+      icon: fa-desktop
+      href: practicals.html
+    - text: "Install"
+      icon: fa-cogs
+      href: install_tutorial.html
+    - text: "Misc"
+      icon: fa-book
+      href: misc.html    
+  right:
+    - text: "About"
+      icon: fa-question fa-lg
+      href: about.html

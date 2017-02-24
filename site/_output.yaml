@@ -1,0 +1,7 @@
+html_document:
+  theme: cosmo
+  highlight: textmate
+  include:
+    in_header: header.html
+    after_body: footer.html
+  css: css/site.css
