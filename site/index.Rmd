@@ -98,9 +98,9 @@ Luxembourg
 [View Larger Map](https://www.openstreetmap.org/?mlat=49.50441&amp;mlon=5.94910#map=17/49.50441/5.94910)
 
 
-In the Salle polyvalente, Maison du Savoir, 1st floor.
+In the **room 4.510**, Maison du Savoir, 4th floor.
 
-![salle polyvalente](img/salle_polyvalente_MSA.png)
+![room 4.510](img/room_4510.png)
 
 ## Registration
 
