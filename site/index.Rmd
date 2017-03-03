@@ -24,7 +24,7 @@ The course will not go deep into statistics but rather getting data ready, some 
 
 **Preparing data** takes up to 90% of the time spent in analysis — speeding this up is the mission of this course.
 
-## Tidyverse
+### Tidyverse
 
 The **tidyverse** is an official [CRAN package](https://cran.r-project.org/package=tidyverse) and its [manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html). 
 Hadley proposed workflow is described as follow in his must-read book [_R_ for data science](http://r4ds.had.co.nz/)
@@ -41,26 +41,61 @@ picture, by [David Robinson](http://varianceexplained.org/)
 
 ## Requirements
 
+
+### Prior knowledge
+
 Participants should have **basic experience** in programming environments such as Matlab, Octave or other programming languages
 or complete a simple free online course as [this one](https://www.datacamp.com/courses/free-introduction-to-r) offered by [DataCamp](https://www.datacamp.com/).
 
+
+### Material
+
 Each student must bring their **own laptop** with _R_ and Rstudio installed with recent versions. Please look at [install tutorial](install_tutorial.html) to set it up prior to the course.
 
-## Schedule, location
+## Schedule
+
+
+### Dates and time
 
 From: **2nd May** to **5th May** 2017.
 
-- Day 1 will review the basics of `R` and loading data via the `readr` package as well as `Rmarkdown`. 
--	Day 2 will introduce tidying and organising data via the `tidyr` and `dplyr` packages as well as `ggplot2` for visualisation. 
--	Day 3 will look at functional programming tools using the `purrr` package, which greatly simplifies repeating operations. 
-Many statistical packages have complicated and idiosyncratic data structures. The `broom` package helps to convert them to consistent data structures. 
--	Participants are encouraged to bring their own data for analysis, convert existing code to **tidyverse** or perform a project on Day 4.
 
+Each day, the workshop will be a mixture of lectures and practicals from:
+
+- 9h30 - 12h30
+- 13h30 - 18h
+
+Coffee breaks will serve at each morning and afternoon sessions.
+
+### Program
+
+- **Day 1** will review the basics of `R` and loading data via the `readr` package as well as `Rmarkdown`. 
+-	**Day 2** will introduce tidying and organising data via the `tidyr` and `dplyr` packages as well as `ggplot2` for visualisation. 
+-	**Day 3** will look at functional programming tools using the `purrr` package, which greatly simplifies repeating operations. 
+Many statistical packages have complicated and idiosyncratic data structures. The `broom` package helps to convert them to consistent data structures. 
+-	Participants are encouraged to bring their own data for analysis, convert existing code to **tidyverse** or perform a project on **Day 4**.
+
+
+
+
+
+### location
 
 The course will be held at:
+
+Maison du Savoir
+
 University of Luxembourg
-Esch-sur-Alzette
+
+2 Avenue de l'Université
+
+4365 Esch-sur-Alzette
+
 Luxembourg
+
+<iframe width="450" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://www.openstreetmap.org/export/embed.html?bbox=5.94385027885437%2C49.501322159629254%2C5.95434308052063%2C49.507488126641405&amp;layer=mapnik&amp;marker=49.504405240266465%2C5.9490966796875" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=49.50441&amp;mlon=5.94910#map=17/49.50441/5.94910">View Larger Map</a></small>
+
+
 See map: [Google Maps](http://maps.google.com/?q=11%2C+porte+des+Sciences+%2C+Esch-sur-Alzette%2C+%2C+%2C+lu)
 
 In the Salle polyvalente, Maison du Savoir, 1st floor.
@@ -72,16 +107,17 @@ In the Salle polyvalente, Maison du Savoir, 1st floor.
 the course is limited to 25 participants. Register through [this form](https://goo.gl/forms/KVq5ek5PcStkrAK92)
 
 
-## ECTS
+### ECTS
 
-PhD students that enrolled through the doctoral school will receive **2 ECTS** in category 1, which requires handing in a short report at the end of the course.
+PhD students that enrolled through the doctoral school will receive **2 ECTS** in category 1, 
+which requires handing in a short report (deadline **19th May 2017**).
 
 
-## Elixir
+### Elixir
 
 This event is supported by [ELIXIR-Luxembourg]( http://elixir-luxembourg.org/data-processing-r-tidyverse)
 
 ## Contact
 
-
-[Roland Krause](mailto:roland.krause@elixir-luxembourg.org)
+- [Roland Krause](mailto:roland.krause@elixir-luxembourg.org)
+- [Aurélien Ginolhac](mailto:aurelien.ginolhac@uni.lu)
