@@ -33,9 +33,15 @@ See the [Rstudio blog, with GIFs](https://www.rstudio.com/rviews/2016/12/09/dece
 knitr::include_graphics("https://raw.githubusercontent.com/hadley/r4ds/master/cover.png")
 ```
 
-- [ggplot2 - book](http://ggplot2.org/book/) by Hadley
+- [ggplot2 - book](https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/331924275X/ref=dp_ob_title_bk) by Hadley
+```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
+knitr::include_graphics("https://images-na.ssl-images-amazon.com/images/I/31ymj6YEOIL._SX328_BO1,204,203,200_.jpg")
+```
 - [Rmarkdown](http://rmarkdown.rstudio.com/) by Rstudio
 - [Advanced in R](http://adv-r.had.co.nz/) by Hadley
+```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
+knitr::include_graphics("https://images-na.ssl-images-amazon.com/images/I/41Qkod8KOBL._SX329_BO1,204,203,200_.jpg")
+```
 - [Introduction to data science and statistical programming with R](http://www.goodreads.com/book/show/31120883-introduction-to-data-science-and-statistical-programming-with-r) by [Thomas Mailund](http://www.mailund.dk/)
 ```{r, echo = FALSE, out.width='10%', fig.align = 'right'}
 knitr::include_graphics("https://s3.amazonaws.com/titlepages.leanpub.com/datascience_and_R/hero?1467461198")
