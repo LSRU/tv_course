@@ -1,0 +1,310 @@
+---
+title: "Data processing with R tidyverse"
+subtitle: ggplot2
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "2 May 2017"
+output:
+  iosp::ioslides_plus:
+    preview: yes
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(fig.align = "center")
+```
+
+## Materials
+
+content from:
+
+>- David Childs
+>- Garrett Grolemund
+
+Reading:
+
+>* Ewen Gallic: [`R` and programming](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf) (in French)
+>* Hadley Wickham & community: [doc ggplot2](http://docs.ggplot2.org/dev/)
+
+# ggplot2
+
+![](img/03_ggplot2_overview.jpg)
+
+## What is ggplot2
+
+- `ggplot2` stands for **g**rammar of **graphics** plot version 2
+    + Inspired by Leland Wilkinsons work on the [grammar of graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448)
+    + The idea is to split a graph into layers: for example axis, curve(s), labels.
+- `ggplot2` introduced the possibility for the community to contribute and create **extensions**. They are referenced on a [dedicated site](https://www.ggplot2-exts.org/)
+
+- Even newspapers like [Financial Times](http://johnburnmurdoch.github.io/slides/r-ggplot/) use _ggplot2_
+
+## Installation of ggplot2
+
+From the command line:
+
+```{r, eval = FALSE}
+install.packages("ggplot2")
+```
+
+Using Rstudio:
+
+In the lower right panel: Packages > Install
+
+`ggplot2` is integrated in the brand new `tidyverse` package (contains other useful libraries you will learn to use)
+
+## Draw your first plot
+
+```{r, fig.height = 4}
+library("ggplot2")
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length))
+```
+
+`ggplot` uses a `data.frame` and builds the plot **layer by layer**.
+
+## Geoms
+
+Geoms, or geometric objects, define the type of plot which will be drawn.
+
+Examples of `geom` are:
+
+- `geom_point()` to draw a scatter plot
+- `geom_boxplot()` to draw boxplots
+- `geom_line()` to draw lines
+- `geom_histogram()` to draw histograms
+- `geom_density()` to draw density curves
+- Have a look at the [cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf) or the ggplot2 online [documentation](http://docs.ggplot2.org/) to list more possibilities.
+
+## Mapping aesthetics
+
+**aesthetics** map the variables of a `data.frame` to the variable each ggplot2 `geom` is expecting.
+
+For example `geom_point()` (used to draw a scatter plot) requires the _**x**_ and _**y**_ coordinates for each point.
+
+```{r, fig.height = 4, eval = FALSE}
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length))
+```
+
+```{r, results = "asis", echo = FALSE}
+iris %>%
+  head() %>%
+  knitr::kable()
+```
+
+
+## Mapping aesthetics
+
+**aesthetics** map the variables of a `data.frame` to the variable each ggplot2 `geom` is expecting.
+
+For example `geom_point()` (used to draw a scatter plot) requires the _**x**_ and _**y**_ coordinates for each point.
+
+```{r, fig.height = 4}
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length))
+```
+
+## Mapping aesthetics
+
+We can specify additional arguments such as the `colour`, the transparency (`alpha`) or the `size`.
+
+```{r, fig.height = 4}
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length),
+             colour = "blue", alpha = 0.6, size = 3)
+```
+
+## Mapping aesthetics | colour
+
+`colour`, `alpha` or `size` can also be mapped to a column in the data frame.
+
+For example: We can attribute a different color to each species:
+
+```{r, fig.height = 3.5}
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length, colour = Species), alpha = 0.6, size = 3)
+```
+
+Note that the `colour` argument now is **inside** `aes()` and **must** refer to a column in the dataframe.
+
+## Mapping aesthetics | shape
+
+```{r}
+ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length, shape = Species, colour = Species), alpha = 0.6, size = 3)
+```
+
+## Title and axis labels
+
+It is easy to adjust axis labels and the title
+
+```{r, fig.height = 4, fig.align = "center"}
+ggplot(iris)+
+  geom_point(aes(x = Petal.Width, y = Petal.Length, colour = Species), alpha = 0.6, size = 3) +
+  xlab("Width") +
+  ylab("Length") +
+  ggtitle("Iris: petal")
+```
+
+## Facets
+
+`facet_grid()` is used to lay out panels in a grid: Specify a **formula** with the rows on the left and columns on the right separated by a tilde `~`. A dot (`.`) specifies that no facetting should be performed.
+
+```{r, fig.height = 3, fig.align = "center"}
+ggplot(iris)+
+  geom_point(aes(x = Petal.Width, y = Petal.Length,
+                 shape = Species, colour = Species), alpha = 0.6, size = 3) +
+  facet_grid(. ~ Species)
+```
+
+## Histograms
+
+```{r, fig.height = 4, fig.align = "center"}
+ggplot(iris) +
+  geom_histogram(aes(x = Petal.Length, fill = Species), alpha = 0.5) 
+```
+
+Note that the filling colour can also be adjusted on some geoms.
+
+## Density plot
+
+The density is the count divided by the total number of occurences.
+
+```{r}
+ggplot(iris) +
+  geom_density(aes(x = Petal.Length, fill = Species), alpha = 0.6)
+```
+
+## Overlaying plots | Density plot and histogram
+
+```{r}
+ggplot(iris) +
+  geom_histogram(aes(x = Petal.Length, y = ..density..), fill = "darkgrey", binwidth = 0.1) +
+  geom_density(aes(x = Petal.Length, fill = Species, colour = Species), alpha = 0.4)+
+  theme_classic()
+```
+
+## stat functions
+
+- We used a new variable in the previous plot: `..density..`
+- In ggplot2, variables surrounded by two pair of dots (`..<variable>..`) are intermediate values calculated by ggplot2 using stat functions
+
+- Every `geom` uses a `stat` function to transform the data:
+    + For example `geom_histogram()` and `geom_density()` need to perform calculations in order to display the histogram or the density curve (Not as simple as plotting _x_ and _y_ values from two columns)
+    + `geom_histogram()` uses `stat_bin()` to divide the distributions into _bins_ and count the number of observations in each _bin_.
+    + `stat_bin()` computes for example: `count`, `density`, `ncount` and `ndensity` (see `?stat_bin()`)
+    + Here `..density..` specifies that we would like to use such a computed `density` column.
+    
+## Barcharts | Categorical variables
+
+- By default, `geom_bar()` counts the number of occurences for each values of a categorical variable.
+- `geom_bar()` uses `stat_count()` to compute these values (creating a new `count` column)
+
+```{r, fig.height = 3.5}
+ggplot(iris) +
+  geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))
+```
+
+## Barcharts | Categorical variables
+
+- To map a continous variable on the _y_ axis, we need to override the default call to `stat_count()`
+- `stat = "identity"` will force `geom_bar()` to use `stat_identity()` instead (leaving the original data unchanged)
+- `Petal.Length` and not `..Petal.Length..` as it is not "new" and is already present in the original data frame
+
+```{r, fig.height = 3.2}
+ggplot(iris) +
+  geom_bar(aes(x = Species, y = Petal.Length), stat = "identity")
+```
+
+## Stacked barchart | Categorical variables
+
+```{r}
+mtcars %>%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)))
+```
+
+## Dodged barchart (side by side) | Categorical variables
+
+```{r}
+mtcars %>%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = "dodge")
+```
+
+## Stacked barchart for proportions | Categorical variables
+
+```{r}
+mtcars %>%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = "fill")
+```
+
+## Stacked barchart for proportions | Categorical variables
+
+We can easily switch to polar coordinates:
+
+```{r}
+mtcars %>%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = "fill") +
+  coord_polar()
+```
+
+## Boxplot | Categorical variables
+
+```{r}
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg))
+```
+
+## Boxplot | Categorical variables
+
+```{r}
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am)))
+```
+
+## Custom colors
+
+- It is possible to manually adjust the colors using `scale_fill_manual()` and `scale_color_manual()`
+- Is not very handy as you **must** provide as much colors as groups
+
+```{r, fig.height = 4}
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am), color = factor(am))) +
+  scale_fill_manual(values=c("red", "lightblue")) +
+  scale_color_manual(values = c("purple", "blue"))
+```
+
+## Custom colors | Using predefined color palettes
+
+```{r, echo = c(1, 3), fig.height = 5.5}
+library(RColorBrewer)
+par(mar = c(0, 4, 0, 0))
+display.brewer.all()
+```
+
+## Custom colors | Using predefined color palettes
+
+```{r, fig.height = 4}
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am), colour = factor(am))) +
+  scale_fill_brewer(palette = "Pastel2") +
+  scale_colour_brewer(palette = "Set1")
+```
+
+## Using or exporting plots
+
+<div class = "float-r">
+![](img/03_export_plot.png)
+</div>
+- Using the Export button in the _Plots_ panel
+- Integrate them in your Rmarkdown reports
+    + If required, adjust the chunk options: `fig.height`, `fig.align`

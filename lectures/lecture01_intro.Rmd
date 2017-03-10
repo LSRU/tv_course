@@ -1,0 +1,538 @@
+---
+title: "Data processing with R tidyverse"
+subtitle: Introduction
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "2 May 2017"
+output:
+  iosp::ioslides_plus:
+    preview: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+The goal is to learn statistics applied to biology using ![](./img/Rlogo_90.png)
+
+This workshop is composed of:
+
+>- lectures, ~ X hours
+>- practical sessions, ~ X hours
+
+## Contents
+
+- Introduction to programming, basic concepts of algorithm building using R language
+
+
+## Materials
+
+### Content from:
+
+
+
+### Reading:
+
+
+- Excellent recent ressource about `R` by [Ewen Gallic](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf)
+- Recommended book by Michael Crawley
+- [R for data science](http://r4ds.had.co.nz/) by Hadley Wickham & Garrett Grolemund
+
+## What is R?
+
+"R" is shorthand for ["GNU R"](https://www.r-project.org):
+
+- An interactive programming language
+- Focus on data analysis ("stats") and plotting
+- "R" is also shorthand for the ecosystem around this language
+    + Book authors
+    + Package developers
+    + Ordinary useRs
+  
+Learning to use R will make you **more efficient** and **facilitate the use** of advanced data analysis tools
+
+## Why use R?
+
+- It's *free!*
+- easy to install / maintain
+- easy to process big files and analyse huge amounts of data
+- integrated data visualisation tools, *even dynamic*
+- fast, and even faster with *C++* integration via [Rcpp](http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf).
+- easy to get help<div class = "float-r">![](./img/01_r_community.jpg)</div>
+    + [huge R community in the web](https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R)
+    + [stackoverflow](http://stackoverflow.com/questions/tagged/r) with a lot of tags like **dplyr**, **ggplot2** etc.
+    + [rbloggers](http://www.r-bloggers.com)
+    + [`#rstats`](https://twitter.com/search?q=%23rstats) on twitter
+
+
+## Constant trend
+
+```{r, out.width = "70%", echo = FALSE, fig.align = "center"}
+knitr::include_graphics("./img/r_progression.png")
+```
+
+From [Touchon & McCoy. _Ecosphere_. 2016](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full)
+
+## Packages   
+
+- CRAN *<span class="green2">reliable: package is checked during submit process</span>*
+- [GitHub](https://github.com/) using [devtools](https://github.com/hadley/devtools). *<span class="yellow2">Check [status](https://github.com/hadley/readr)</span>*
+
+    ```{r, eval=FALSE}
+    # install.packages("devtools")
+    devtools::install_github("hadley/readr")
+    ```
+
+- [bioconductor](https://www.bioconductor.org/). *<span class="yellow2">Check [status](https://www.bioconductor.org/packages/release/bioc/html/limma.html)</span>*
+    ```{r, eval=FALSE}
+    source("https://bioconductor.org/biocLite.R")
+    biocLite("limma")
+    ```
+
+<div class="centered">
+![](./img/01_packages_install_cran.jpg)
+![](./img/01_packages_install_devtools.jpg)
+</div>
+
+## Help
+
+2 possibilities
+```{r}
+?log
+help(log)
+```
+
+In **Rstudio**, the help page can be viewed in the bottom right pane
+
+```{r}
+apropos("log")
+```
+
+## Drawback: Steep learning curve | Period of much suckiness
+
+```{r, echo=FALSE}
+#devtools::install_github("ijlyttle/vembedr")
+library("vembedr")
+suppressPackageStartupMessages(library("dplyr"))
+embed_youtube("8SGif63VW6E", query = list(start = secs("4m12s"), end = secs("4m52s")))
+# use_start_time() exists but no way to setup a stop time with a helper function?
+```
+
+## Tidyverse
+
+**R base** is complex, [**tidyverse**](https://github.com/hadley/tidyverse) is better.
+
+[Hadley Wickham](http://had.co.nz) is a chief scientist at **Rstudio** and a developer that creates and maintains the fundamental packages from the _tidyverse_ such as:
+
+```{r, eval = FALSE}
+library("ggplot2")  # awesome plotting by layers
+library("tidyr")    # shape data correct
+library("readr")    # alternative to read.table
+library("dplyr")    # apply made easy
+library("magrittr") # pipe for R
+```
+
+# RStudio
+
+![](./img/01_logo_RStudio.png)
+
+## Rstudio | What is it?
+
+[RStudio](https://www.rstudio.com/products/RStudio/) is an Integrated Development Environment.  
+It makes working with R much easier
+
+### Features
+
+>- _Console_ to run **R**, with syntax highlighter
+>- _Editor_ to work with scripts
+>- _Package management_ (including building)
+>- _autocompletion_ using <kbd>TAB</kbd>
+>- Cheatsheets
+>- Keyboard shortcuts
+
+Don't mix up **R** and **RStudio**.  
+**R** needs to be installed first.
+
+## Rstudio | The 4 panels layout
+
+![](./img/01_rstudio_layout.jpg)
+
+## Getting started
+
+Let's get ready to use **R** and **RStudio**. Do the following:
+
+- Open up RStudio
+- Maximise the RStudio window
+- Click the Console pane, at the prompt (`>`) type in `3 + 2` and hit enter
+
+```{r, eval = FALSE, prompt = TRUE}
+3 + 2
+```
+
+## Arithmetic operations
+
+You will not be surprised that **R** is very good at sums. It has all the arithmetic operators you would expect to see:
+
+- `+`: addition  
+- `-`: subtraction  
+- `*`: multiplication  
+- `/`: division  
+- `^` or `**`: exponentiation 
+- `%%`: modulo (remainder after division)
+- `%/%`: integer division
+
+**Remember** that **R** will:
+
+- first perform **exponentiation**
+- then multiplications and/or divisions
+- and finally additions and/or subtractions.
+
+If you need to change the priority during the evaluation, use parentheses – _i.e._ `(` and `)` – to group calculations.
+
+## Rstudio | Working directory and projects
+
+### Working directory
+
+It is where **R** is looking for files (read or write).  
+Using the console, try:
+
+```{r, prompt = TRUE, eval = FALSE}
+getwd()
+```
+
+- It is possible to change the location using `setwd()` (in the console or interactively in _RStudio_)
+- A better way is to use projects in Rstudio
+
+### Projects
+
+They solve most issues with working directories: get rid of `setwd()`
+
+<div class = "centered">
+![](./img/01_rstudio_project.jpg)
+</div>
+
+# Data types and structures
+
+## 4 main types
+
+Type          | Example
+------------- | ---------------------------
+numeric       | integer (2), double (2.34)
+string        | "biostat !"
+boolean       | TRUE / FALSE
+complex       | 2+0i
+
+### Special case
+
+```{r, eval = FALSE}
+NA   # not available, missing data
+NULL # empty
+```
+
+## Structures
+
+>- Vectors
+>- Factors
+>- Matrix (2D), Arrays ($\geq$ 3D)
+>- Lists
+>- Data frames
+
+
+## Data types 2
+
+```{r, eval = TRUE}
+# evaluate
+typeof(2)
+# check
+is.integer(2.34)
+# convert
+as.integer(2.34)
+```
+
+## Vectors
+
+**Vectors** are the simplest type of "object" in R.
+```{r}
+print(5)
+```
+
+**[1]** means we made a numeric vector of length 1.
+Now look at what the **`:`** operator does:
+
+```{r}
+1:30
+```
+
+How many elements are in the thing we made here? What does the **[24]** signify?
+
+<!-- ---- splitting does not work with smaller: true -->
+##
+
+Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the **`c`** function:
+
+```{r}
+c(2, TRUE, "a string")
+```
+
+We can use the assignment operator to associate a name to our vectors in order to reuse them:
+```{r}
+myvec <- c(3, 4, 1:3)
+myvec
+```
+
+##
+
+The following will build a character vector. We know this because the elements are all in quotes.
+
+```{r}
+char.vec <- c("dog", "cat", "ape")
+```
+
+Now use the **`c`** function to combine a length-one vector number of the number `4` with the `char.vec`. What happens?
+
+```{r}
+c(4, char.vec)
+```
+
+Notice that the 4 is quoted. R turned it into a character vector and then combined it with char.vec.   All the elements in a vector must be of the same type.
+
+##
+
+R has a few built in vectors. One of these is `LETTERS`. What does it contain?
+
+```{r}
+LETTERS
+```
+
+How do extract the first element from this (the letter A). Here is how to do it:
+
+```{r}
+LETTERS[1]
+```
+
+Use the square brakets to subset vectors
+
+##
+
+What do we do if we need more than one element? Here is how to get elements in position 3 through to 10:
+
+```{r}
+LETTERS[3:10]
+```
+
+Remember what the : operator does? Take a look:
+
+```{r}
+3:10
+```
+
+Can you see how `LETTERS[3:10]` works now?
+
+##
+
+Exercise
+
+- find a way to output the following
+```{r, echo = FALSE}
+LETTERS[2:5]
+```
+
+- find a way to output the following
+```{r, echo = FALSE}
+LETTERS[c(2:5, 7)]
+```
+
+- find a way to output first 5 letters + one to the last
+```{r, echo = FALSE}
+LETTERS[c(1:5, length(LETTERS) - 1)]
+```
+
+
+##
+
+Solution
+
+```{r, eval = FALSE}
+LETTERS[2:5]
+```
+
+```{r, eval = FALSE}
+LETTERS[c(2:5, 7)]
+```
+```{r, eval = TRUE}
+LETTERS[c(1:5, length(LETTERS) - 1)]
+```
+
+## Vectorized operation
+
+```{r}
+myvec <- 10:18
+myvec + 2
+```
+
+**R** recycles vectors that are too short:
+
+```{r}
+myvec * c(1:3)
+```
+
+## Vectorized operation
+
+Have a look at the following operation:
+
+```{r}
+c(1:3) + c(1:2) * c(1:4)
+```
+
+The detailed steps _R_ performs _behind the scene_ are:
+
+```{r, eval = FALSE}
+c(1, 2, 3, 1) + (c(1, 2, 1, 2) * c(1, 2, 3, 4))
+c(1, 2, 3, 1) + c(1, 4, 3, 8)
+```
+
+## Factors
+
+Vectors with qualitative data
+
+```{r}
+factor(c("cytoplasm", "nucleus", "extracellular", "nucleus", "nucleus"))
+```
+
+## Matrix
+
+A matrix is a **2D** array
+
+```{r}
+M <- matrix(1:6, ncol = 2, nrow = 3)
+M
+```
+```{r}
+M <- matrix(1:6, ncol = 2, nrow = 3, byrow = TRUE)
+M
+```
+
+## Array
+
+Similar to a matrix but with dimensions $\geq$ 3D
+
+```{r}
+A <- array(1:24, dim = c(2, 4, 3))
+A
+```
+
+## Lists
+
+Most permissive type. Could be anything!
+```{r}
+l <- list(name = "Farina", firstname = "Geoff", year = 1995)
+```
+<div class = "float-r">![](./img/hadley_pepper.png)</div>
+```{r}
+l["firstname"]
+l[["firstname"]]
+```
+
+Have a look at [R for data science](http://r4ds.had.co.nz/lists.html) for a description of the analogy by Hadley Wickham.
+
+## Data frame
+
+It's the most important type to recall.  
+`ggplot2` and `dplyr` are focusing on those.
+
+```{r}
+women
+```
+
+## Convert to a data frame
+
+The function `as.data.frame()` allows to convert a matrix / list into a `data.frame`.  
+A data frame can be considered as a collection of vectors having the **same length**.
+
+We can extract a vector from a data frame in a few different ways:
+
+```{r}
+# Using the name and the $ operator
+women$height
+# using [[]], name in quotes or indices
+women[["height"]]
+```
+
+Remember the analogy introduced by Hadley Wickham to explain lists indexing:  The _pepper shaker_ also applies to data frames.
+What would be the output of `women["height"]`?
+
+## Data frame as a table
+
+A data frame can be considered as a table and extract a specify a cell by its `row` and `column`:
+
+```{r}
+head(women, 5)
+women[4, 2] # [row, col]
+```
+
+## Logical operators
+
+In addition to the arithmetic operators (that were already presented) R provides the possiblity to perform comparisons:
+
+* `==` equal
+* `!=` different
+* `<` smaller
+* `<=` smaller **or** equal
+* `>` greater
+* `>=` greater **or** equal
+* `!` is not
+* `&`, `&&` and
+* `|`, `||` or
+
+## Logical operators | Subtle differences
+
+The **double logicals** (`||` and `&&`) are **not** vectorized compared to the single ones (`|` and `&`).
+
+```{r}
+((-2:2) >= 0) & ((-2:2) <= 0)
+((-2:2) >= 0) && ((-2:2) <= 0)
+```
+
+The double-character version evaluates only the first elements of each vector!
+
+see section [8.2.17 in R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf)
+
+## Identifying missing data
+
+```{r}
+v <- c(1:3, NA, NA, 5:8, NA)
+v
+is.na(v)
+```
+
+```{r}
+which(is.na(v)) # Extract index of NA values
+v[!is.na(v)]    # Return vector elements which are not NA
+```
+
+
+## Style
+
+`R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
+
+See [Hadley's recommendations](http://adv-r.had.co.nz/Style.html)
+
+In summary:
+
+- use **spaces**
+- use more **lines**
+    + `}` alone on their line except for
+      ```{r, eval = FALSE}
+      } else {
+      ```
+    + using the pipe `%>%` to display a single instruction per line
+    + break list definitions, function arguments ...
+- avoid using names of existing functions and variables
+  
+```{r}
+# Bad (example from http://adv-r.had.co.nz/Style.html)
+T <- FALSE
+c <- 10
+mean <- function(x) sum(x)
+```
