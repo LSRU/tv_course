@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-The goal is to learn statistics applied to biology using ![](./img/Rlogo_90.png)
+The goal is to learn statistics applied to biology using ![](./img/01_Rlogo_90.png)
 
 This workshop is composed of:
 
@@ -69,7 +69,7 @@ Learning to use R will make you **more efficient** and **facilitate the use** of
 ## Constant trend
 
 ```{r, out.width = "70%", echo = FALSE, fig.align = "center"}
-knitr::include_graphics("./img/r_progression.png")
+knitr::include_graphics("./img/01_r_progression.png")
 ```
 
 From [Touchon & McCoy. _Ecosphere_. 2016](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full)
