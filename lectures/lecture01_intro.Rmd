@@ -1,6 +1,5 @@
 ---
 title: "Data processing with R tidyverse"
-subtitle: Introduction
 author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
@@ -24,6 +23,38 @@ This workshop is composed of:
 ## Contents
 
 - Introduction to programming, basic concepts of algorithm building using R language
+
+## Time table
+
+- Day 1 -- Session 1
+    + Introduction to R and RStudio (AG)
+    + Transiting from other languages 
+    + Basic data types, control structures, loops
+
+- Day 1 -- Session 2
+    + Markdown (EK)
+    + Importing data into R (readr) 
+- Day 1 -- Preparation for Bring your own data session (see Day 4 )
+
+## Time table (cont.)
+
+- Day 2 -- Session 1
+    + Introduction to tidy data (RK)
+- Day 2 -- Session 2
+    + ggplot2 (AG)
+- Day 2 -- Session 3
+    + dplyr (RK)
+    
+## Time table (cont.)
+
+- Day 3 -- Session 1
+    + purrr (EK)
+- Day 3 -- Session 2  
+    + broom (AG)
+
+- Day 4 — Project work 
+    + Project (BYOD) 
+    + Microarray analysis
 
 
 ## Materials
