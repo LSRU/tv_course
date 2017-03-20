@@ -13,7 +13,7 @@ output:
 ![](https://lsru.github.io/r_workshop/img/Rlogo_90.png)
 
 `R` is available for free for Windows, GNU/Linux and MacOS.  
-As for now, the latest version is `3.3.2`.
+As for now, the latest version is `3.3.3`.
 
 One common complain about `R` is the frequency of updates. This is true, but can be sorted out with a good **package manager**. Of note, major updates (`3.3`, early May 2016) are the only one forcing you to reinstall extra-packages and are released on a yearly basis.
 
@@ -21,7 +21,7 @@ One common complain about `R` is the frequency of updates. This is true, but can
 
 Visit the [download page](https://cloud.r-project.org/) and choose the corresponding installer for your platform.
 
-Mind that you will [Rtools](https://cran.r-project.org/bin/windows/Rtools/) to compile and install some packages.
+Mind that you will need [Rtools](https://cran.r-project.org/bin/windows/Rtools/) to compile and install some packages.
 
 To circumvent the lack of a package manager in Windows, it is possible to install the `R` library
 `installr`. This package provides the `updateR()` function which takes care of updating your R installation

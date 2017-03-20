@@ -1,0 +1,114 @@
+---
+title: "Next year TODO"
+---
+
+## schedule 2017
+
+- rewrite the [Details](http://lsru.github.io/biostat2/details.html) page with updated content
+- hypothese testing, examples from daily life by [cardinal on SO](http://stats.stackexchange.com/questions/6966/why-continue-to-teach-and-use-hypothesis-testing/6980#6980)
+- bootstrap, using Anscombe's data, animation in [Robinson's PLOTCON](https://youtu.be/9Y7Y1s4-VdA?t=20m50s)
+- lm: the $R^2$ is also the $cor^2$ of the difference between predicted and response values (page 9 of extenting the linear model Faraway)
+- lm, see `drop1` and `add1` command (page 13 Faraway)
+- lm, see `MASS::boxcox` command (page 18 Faraway)
+- lm, see `step` command (page 21 Faraway)
+- about diagnostic plots "to check whether the model is not grossly wrong" Faraway. page 14. Investigate the function `termplot`
+- `dplyr`:  introduce `case_when`, `recode` and so on described [here](https://twitter.com/nj_tierney/status/811142191187783680)
+- `tidyr`:  introduce `complete`, described [here](https://twitter.com/hadleywickham/status/695651076033290240)
+- PCA, see perfect video by [F. Husson](https://www.youtube.com/watch?v=8qw0bNfK4H0), dataset `temperature <- read.table("http://factominer.free.fr/book/temperature.csv",header=TRUE, sep=";", dec=".", row.names=1)` 
+- ANOVA
+    + add interaction plots using means see ggplot2 in [SO](http://stackoverflow.com/questions/7323246/interaction-plot-in-ggplot2)
+    + report corresponding linear equations to see coefficients and slopes applied to dummy variables
+    + type II / type III Anova
+- contrasts: link them to coef estiamtes in linear equations [nice lecture](http://www.unc.edu/courses/2006spring/ecol/145/001/docs/lectures/lecture26.htm)
+- GLM [lecture](http://www.unc.edu/courses/2006spring/ecol/145/001/docs/lectures/lecture20.htm)
+    + add over/under dispersion with df / deviance
+    + introduce then `quasipoisson`
+    + logistic, do ISOLATION + AREA as in Crawley but plot both predictions
+- linear mixed models!
+- [Las Vegas Jenny](https://twitter.com/hadleywickham/status/799632267077222400) for purrr lecture
+- make inkscape figure about 3 broom functions
+- make statistical learning figure (draft in `figure/super_unspervised_learning.jpg`)
+- non linear model, maximum likelihood
+- Robinson animation to explain [density kernel](http://varianceexplained.org/files/bandwidth.html)
+- git, assignment could be done via github
+- purrr, add the `map_df` example with 10 qPCR files (`demos/`)
+- link Simpson's paradox et lm [here](http://blog.revolutionanalytics.com/2015/11/fun-with-simpsons-paradox-simulating-confounders.html)
+- eurodist, test PCA, test MDS with 2 components, test MASS::isoMDS see [blog post](https://www.r-statistics.com/2016/01/multidimensional-scaling-with-r-from-mastering-data-analysis-with-r/)
+- _p-value hacking_, tells the story that fits the ADF method: [Bolnick's retractation](https://twitter.com/EcoEvoEvoEco/status/804726868138229761)
+- suggest the warnings in Rstudio for missing spaces to respect tidyverse's style. Tools / Diagnotiscs / Provide R style diagnostics
+- R dialect, [R base not defined](), [tidyverse not so thick](https://twitter.com/hadleywickham/status/819610201946984451)
+- _tidyverse_ contreversy, see [SO's comment](http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr)
+
+![](tidyverse_contreversy.png)
+
+but Hadley's [manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html)
+
+- see [job issue with tidyverse](https://twitter.com/Yeedle/status/837448170963668992)
+- [reverse dependency](https://twitter.com/MilesMcBain/status/841023423962734592) on the tidyverse
+- precedence using pipes! [detailed](https://stat.ethz.ch/R-manual/R-devel/library/base/html/Syntax.html) from this [tweet](https://twitter.com/MilesMcBain/status/828448458826674176) see example
+```{r}
+a <- c(TRUE, FALSE, FALSE)
+!is.na(a) %>% which()
+```
+
+- from [Kevin's post](http://kevinushey.github.io/blog/2015/04/05/debugging-with-valgrind/) see nasty example
+```{r}
+x <- numeric(10)
+x[100] <- 1
+head(x, 20)
+```
+
+- [NSE vignette from lazyeval](https://cran.r-project.org/web/packages/lazyeval/vignettes/lazyeval.html)
+- intervals, nice Fig. 1 [Nature methods 2013](http://www.nature.com/nmeth/journal/v10/n10/full/nmeth.2659.html)
+- full series available [here](http://www.nature.com/collections/qghhqm/pointsofsignificance)
+- Max Kuhn [presentation at UseR2016](https://github.com/topepo/useR2016/blob/master/Kuhn.pdf)
+  + see OKCupid [dataset](https://github.com/rudeboybert/JSE_OkCupid)
+
+- sex ratios practical from [Ilya Kashnitsky](https://ikashnitsky.github.io/2017/hmd-all-sex-ratio/)
+- dplyr less known tricks [Bruno Rodrigues](http://www.brodrigues.co/blog/2017-02-17-lesser_known_tricks/)
+
+## exams
+
+- great ressource [biostat lyon1](http://pbil.univ-lyon1.fr/R/pdf/exoj.pdf)
+
+## books
+
+- [Statistical Rethinking](http://xcelab.net/rm/statistical-rethinking/) by Richaard McElreath
+- [Categorical Data Analysis](https://www.amazon.com/Categorical-Data-Analysis-Alan-Agresti/dp/0470463635/ref=sr_1_1?ie=UTF8&qid=1473180895&sr=8-1&keywords=categorical+data+analysis&tag=gettgenedone-20) by Alan Agresti
+- [R data science](https://www.amazon.com/Data-Science-Visualize-Model-Transform/dp/1491910399/ref=sr_1_1?ie=UTF8&qid=1480939463&sr=8-1&keywords=R+for+data+science) by Hadley
+- [Computer Age Statistical Inference](https://www.amazon.com/Computer-Age-Statistical-Inference-Mathematical/dp/1107149894/ref=sr_1_1?ie=UTF8&qid=1480939488&sr=8-1&keywords=hastie+computer) by Efron & Hastie
+- [Regression Modeling Strategies](https://www.amazon.com/Regression-Modeling-Strategies-Applications-Statistics-ebook/dp/B0140XQAXI/ref=sr_1_1?s=books&ie=UTF8&qid=1484339676&sr=1-1&keywords=regression+modeling+strategies) by Frank E. Harrell
+- [Functional programming](http://www.brodrigues.co/fput/) by Bruno Rodrigues
+
+see list on [Peter Ellis's blog](http://ellisp.github.io/blog/2017/01/14/books.html)
+
+
+## unilur
+
+- output a template of `Rmarkdown` with all questions reported for the practical.
+Students answer could be highlighted in specific boxes. Maybe in `TDbiostat2`?
+- more relevant, a template with 2 chunks, one for installing packages with `eval = FALSE` and one to load `tidyverse` and `broom`
+- avoid boxes to be splitted across 2 pages
+- marks for the template exam
+
+## Practicals
+
+- [dplyr and human genome](https://bioinfo-fr.net/dplyr-et-le-genome-humain)
+- [Disney's princesses and baby names](http://rpubs.com/bhaskarvk/disney)
+- [Turner, bioconnector](http://bioconnector.org/workshops/index.html) for lectures and workshops
+- **Belly Button** [biodiversity](http://navels.yourwildlife.org/bbb-project/results-and-data/)
+file [here]("Resources/Belly\ Button\ Batch2_OTU\ and\ Metadata_17Nov14.xlsx")
+- **Ship routes world** from [kaggle](https://www.kaggle.com/), files [here]("Ressouces/climate-ocean-route/*.csv")
+
+### TD Robinson
+
+http://varianceexplained.org/r/tidy-genomics-broom/
+
+with _limma_:
+
+http://varianceexplained.org/r/tidy-genomics-biobroom/
+
+### TD diamonds
+
+http://amarder.github.io/post/diamonds/
+
