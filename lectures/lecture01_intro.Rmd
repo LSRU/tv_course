@@ -35,27 +35,29 @@ This workshop is composed of:
 - Day 1 -- Session 2
     + Markdown (EK)
     + Importing data into R (readr) 
-- Day 1 -- Preparation for Bring your own data session (see Day 4 )
+    
+- Day 1 -- Session 3
+    + Preparation for Bring your own data session (see Day 4 )
 
 ## Time table (cont.)
 
 - Day 2 -- Session 1
     + Introduction to tidy data (RK)
 - Day 2 -- Session 2
-    + ggplot2 (AG)
+    + Visualizatio with ggplot2 (AG)
 - Day 2 -- Session 3
-    + dplyr (RK)
+    + Data wrangling with dplyr (RK)
     
 ## Time table (cont.)
 
 - Day 3 -- Session 1
-    + purrr (EK)
+    + Functional programming with purrr (EK)
 - Day 3 -- Session 2  
-    + broom (AG)
+    + Handling statistical models with broom (AG)
 
 - Day 4 — Project work 
     + Project (BYOD) 
-    + Microarray analysis
+    + Microarray analysis project
 
 
 ## Materials
