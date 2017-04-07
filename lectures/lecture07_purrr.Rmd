@@ -157,7 +157,7 @@ a list can contain _anything_, here 2 *tibbles*
 ```{r}
 gmt %>%
   group_by(go_id, go_name) %>%
-  nest(data)
+  nest()
 ```
 
 ## Creating a GMT file | nesting and expanding
