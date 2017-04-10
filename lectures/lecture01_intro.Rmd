@@ -4,7 +4,9 @@ author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
   iosp::ioslides_plus:
-    preview: yes
+    footer: "Created with [ioslides plus](https://github.com/koncina/iosp)"
+    box_colours:
+      orange: darkorange2
 ---
 
 ```{r setup, include=FALSE}
@@ -15,62 +17,61 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The goal is to learn statistics applied to biology using ![](./img/01_Rlogo_90.png)
 
-This workshop is composed of:
+This workshop is composed of 30 hours:
 
->- lectures, ~ X hours
->- practical sessions, ~ X hours
+>- lectures, ~ 8 hours
+>- practical sessions, ~ 15 hours
+>- bring your own data, ~ 7 hours
 
-## Contents
 
-- Introduction to programming, basic concepts of algorithm building using R language
 
-## Time table
+## Time table and contents
 
-- Day 1 -- Session 1
+
+### Day 1 {.col-8 .box .bg-green}
+- Session 1
     + Introduction to R and RStudio (AG)
     + Transiting from other languages 
     + Basic data types, control structures, loops
 
-- Day 1 -- Session 2
+- Session 2
     + Markdown (EK)
-    + Importing data into R (readr) 
-- Day 1 -- Preparation for Bring your own data session (see Day 4 )
+    + Importing data into R (`readr`) 
+- Setup _Bring Your Own data Session_ (Day 4 )
 
-## Time table (cont.)
+## Time table | (cont.)
 
-- Day 2 -- Session 1
+### Day 2 {.col-8 .box .bg-green}
+- Session 1
     + Introduction to tidy data (RK)
-- Day 2 -- Session 2
-    + ggplot2 (AG)
-- Day 2 -- Session 3
-    + dplyr (RK)
+- Session 2
+    + `ggplot2` (AG)
+- Session 3
+    + `dplyr` (RK)
     
-## Time table (cont.)
+## Time table | (cont.)
 
-- Day 3 -- Session 1
-    + purrr (EK)
-- Day 3 -- Session 2  
-    + broom (AG)
+### Day 3 {.col-8 .box .bg-green}
+- Session 1
+    + `purrr` (EK)
+- Session 2  
+    + `broom` (AG)
 
-- Day 4 — Project work 
-    + Project (BYOD) 
+### Day 4 {.col-8 .box .bg-green}
+- Project work 
+    + Project (_BYOD_) or
     + Microarray analysis
 
 
-## Materials
-
-### Content from:
 
 
-
-### Reading:
+## Reading
 
 
 - Excellent recent ressource about `R` by [Ewen Gallic](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf)
-- Recommended book by Michael Crawley
 - [R for data science](http://r4ds.had.co.nz/) by Hadley Wickham & Garrett Grolemund
 
-## What is R?
+## What is R? {.vs2}
 
 "R" is shorthand for ["GNU R"](https://www.r-project.org):
 
@@ -83,18 +84,27 @@ This workshop is composed of:
   
 Learning to use R will make you **more efficient** and **facilitate the use** of advanced data analysis tools
 
-## Why use R?
+## Why use R? {.vs2}
 
 - It's *free!*
 - easy to install / maintain
 - easy to process big files and analyse huge amounts of data
 - integrated data visualisation tools, *even dynamic*
 - fast, and even faster with *C++* integration via [Rcpp](http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf).
-- easy to get help<div class = "float-r">![](./img/01_r_community.jpg)</div>
+- easy to get help
     + [huge R community in the web](https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R)
     + [stackoverflow](http://stackoverflow.com/questions/tagged/r) with a lot of tags like **dplyr**, **ggplot2** etc.
     + [rbloggers](http://www.r-bloggers.com)
-    + [`#rstats`](https://twitter.com/search?q=%23rstats) on twitter
+    
+    
+## Twitter R community    
+
+[`#rstats`](https://twitter.com/search?q=%23rstats) on twitter
+
+```{r, echo = FALSE, out.width = "95%"}
+knitr::include_graphics("img/01_r_community.jpg")
+```
+
 
 
 ## Constant trend
@@ -105,7 +115,7 @@ knitr::include_graphics("./img/01_r_progression.png")
 
 From [Touchon & McCoy. _Ecosphere_. 2016](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full)
 
-## Packages   
+## Packages
 
 - CRAN *<span class="green2">reliable: package is checked during submit process</span>*
 - [GitHub](https://github.com/) using [devtools](https://github.com/hadley/devtools). *<span class="yellow2">Check [status](https://github.com/hadley/readr)</span>*
@@ -144,25 +154,53 @@ apropos("log")
 
 ```{r, echo=FALSE}
 #devtools::install_github("ijlyttle/vembedr")
-library("vembedr")
-suppressPackageStartupMessages(library("dplyr"))
-embed_youtube("8SGif63VW6E", query = list(start = secs("4m12s"), end = secs("4m52s")))
-# use_start_time() exists but no way to setup a stop time with a helper function?
+vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"), end = vembedr::secs("4m52s")))
 ```
 
-## Tidyverse
+## Tidyverse | creator {.vs2}
 
-**R base** is complex, [**tidyverse**](https://github.com/hadley/tidyverse) is better.
+**R base** is complex, [**tidyverse**](http://tidyverse.org/) is better.
 
-[Hadley Wickham](http://had.co.nz) is a chief scientist at **Rstudio** and a developer that creates and maintains the fundamental packages from the _tidyverse_ such as:
 
-```{r, eval = FALSE}
-library("ggplot2")  # awesome plotting by layers
-library("tidyr")    # shape data correct
-library("readr")    # alternative to read.table
-library("dplyr")    # apply made easy
-library("magrittr") # pipe for R
+### Hadley Wickham {.box .col-8}
+
+[Hadley](http://had.co.nz), chief scientist at **Rstudio**, coined the _tidyverse_ at [userR meeting in 2016](https://twitter.com/drob/status/748196885307920385).
+He developed and maintains most of the core _tidyverse_ packages
+
+### {.col-4}
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg")
 ```
+
+
+## Tidyverse  | packages {.vs1}
+
+![](./img/01_tidyverse_components.png)
+
+
+## Tidyverse criticism  | dialect {.vs1}
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr"><a href="https://twitter.com/ucfagls">@ucfagls</a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+## Tidyverse criticism | controversy
+
+[SO's comment](http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr)
+
+![](img/01_tidyverse_contreversy.png)
+
+See the popularity of the [data.table versus dplyr](http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly) question.
+
+Easily summarised: [`data.table`](https://github.com/Rdatatable/data.table/wiki) is faster, for less than 10 m rows, negligible.
+
+## Tidyverse criticism  | jobs {.vs2}
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for  job which requires knowledge of R.</p>&mdash; Yeedle N. (@Yeedle) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Anyway, learning the _tidyverse_ does not prevent to learn _R base_, it helps to get things done early in the process
 
 # RStudio
 
@@ -173,21 +211,27 @@ library("magrittr") # pipe for R
 [RStudio](https://www.rstudio.com/products/RStudio/) is an Integrated Development Environment.  
 It makes working with R much easier
 
-### Features
+### Features {.col-9 .box .bg-green}
 
 >- _Console_ to run **R**, with syntax highlighter
 >- _Editor_ to work with scripts
+>- _Viewer_ for data / plots / website
 >- _Package management_ (including building)
 >- _autocompletion_ using <kbd>TAB</kbd>
->- Cheatsheets
->- Keyboard shortcuts
+>- [_Cheatsheets_](https://www.rstudio.com/resources/cheatsheets/)
+>- _git_ integration for versioning
+>- _inline_ outputs (>= v1.03)
+>- _Keyboard shortcuts_
 
+### Warning {.col-3 .box .bg-orange}
 Don't mix up **R** and **RStudio**.  
 **R** needs to be installed first.
 
 ## Rstudio | The 4 panels layout
 
 ![](./img/01_rstudio_layout.jpg)
+
+
 
 ## Getting started
 
@@ -203,7 +247,9 @@ Let's get ready to use **R** and **RStudio**. Do the following:
 
 ## Arithmetic operations
 
-You will not be surprised that **R** is very good at sums. It has all the arithmetic operators you would expect to see:
+You will not be surprised that **R** is very good at computing
+
+### arithmetic operators {.col-8 .bg-green}
 
 - `+`: addition  
 - `-`: subtraction  
@@ -213,7 +259,9 @@ You will not be surprised that **R** is very good at sums. It has all the arithm
 - `%%`: modulo (remainder after division)
 - `%/%`: integer division
 
-**Remember** that **R** will:
+### Remember {.col-8 .bg-orange}
+
+ **R** will:
 
 - first perform **exponentiation**
 - then multiplications and/or divisions
@@ -250,7 +298,7 @@ They solve most issues with working directories: get rid of `setwd()`
 Type          | Example
 ------------- | ---------------------------
 numeric       | integer (2), double (2.34)
-string        | "biostat !"
+string        | "tidyverse !"
 boolean       | TRUE / FALSE
 complex       | 2+0i
 
@@ -258,6 +306,10 @@ complex       | 2+0i
 
 ```{r, eval = FALSE}
 NA   # not available, missing data
+NA_real_
+NA_integer_
+NA_character_
+NA_complex_
 NULL # empty
 ```
 
@@ -297,7 +349,6 @@ Now look at what the **`:`** operator does:
 
 How many elements are in the thing we made here? What does the **[24]** signify?
 
-<!-- ---- splitting does not work with smaller: true -->
 ##
 
 Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the **`c`** function:
@@ -547,7 +598,7 @@ v[!is.na(v)]    # Return vector elements which are not NA
 
 `R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
 
-See [Hadley's recommendations](http://adv-r.had.co.nz/Style.html)
+See [Hadley's recommendations](http://style.tidyverse.org/)
 
 In summary:
 

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing with R tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data processing with R tidyverse',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture01_intro_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-orange {
+      background-color: #EE7600;
+    }
+  
+    .box.bg-orange {
+      border: 2px solid #773B00;
+      color: #000;
+    }
+  
+    .box.bg-orange > h3:first-child {
+      background-color: #773B00;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture01_intro_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
+
+<p>The goal is to learn statistics applied to biology using <img src='img/01_Rlogo_90.png' title=''/></p>
+
+<p>This workshop is composed of 30 hours:</p>
+
+<ul class = 'build'>
+<li>lectures, ~ 8 hours</li>
+<li>practical sessions, ~ 15 hours</li>
+<li>bring your own data, ~ 7 hours</li>
+</ul>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Time table and contents</h2></hgroup><article  id="time-table-and-contents" class="smaller ">
+
+<div class = 'row'><div class = 'col-8 box bg-green'><h3>Day 1</h3>
+
+<ul>
+<li>Session 1
+
+<ul>
+<li>Introduction to R and RStudio (AG)</li>
+<li>Transiting from other languages</li>
+<li>Basic data types, control structures, loops</li>
+</ul></li>
+<li>Session 2
+
+<ul>
+<li>Markdown (EK)</li>
+<li>Importing data into R (<code>readr</code>)</li>
+</ul></li>
+<li>Setup <em>Bring Your Own data Session</em> (Day 4 )</li>
+</ul>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont." class="smaller ">
+
+<div class = 'row'><div class = 'col-8 box bg-green'><h3>Day 2</h3>
+
+<ul>
+<li>Session 1
+
+<ul>
+<li>Introduction to tidy data (RK)</li>
+</ul></li>
+<li>Session 2
+
+<ul>
+<li><code>ggplot2</code> (AG)</li>
+</ul></li>
+<li>Session 3
+
+<ul>
+<li><code>dplyr</code> (RK)</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont.-1" class="smaller ">
+
+<div class = 'row'><div class = 'col-8 box bg-green'><h3>Day 3</h3>
+
+<ul>
+<li>Session 1
+
+<ul>
+<li><code>purrr</code> (EK)</li>
+</ul></li>
+<li>Session 2
+
+<ul>
+<li><code>broom</code> (AG)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'col-8 box bg-green'><h3>Day 4</h3>
+
+<ul>
+<li>Project work
+
+<ul>
+<li>Project (<em>BYOD</em>) or</li>
+<li>Microarray analysis</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Reading</h2></hgroup><article  id="reading" class="smaller ">
+
+<ul>
+<li>Excellent recent ressource about <code>R</code> by <a href='http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf' title=''>Ewen Gallic</a></li>
+<li><a href='http://r4ds.had.co.nz/' title=''>R for data science</a> by Hadley Wickham &amp; Garrett Grolemund</li>
+</ul>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
+
+<p>&quot;R&quot; is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
+
+<ul>
+<li>An interactive programming language</li>
+<li>Focus on data analysis (&quot;stats&quot;) and plotting</li>
+<li>&quot;R&quot; is also shorthand for the ecosystem around this language
+
+<ul>
+<li>Book authors</li>
+<li>Package developers</li>
+<li>Ordinary useRs</li>
+</ul></li>
+</ul>
+
+<p>Learning to use R will make you <strong>more efficient</strong> and <strong>facilitate the use</strong> of advanced data analysis tools</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Why use R?</h2></hgroup><article  id="why-use-r" class="smaller vs2">
+
+<ul>
+<li>It&#39;s <em>free!</em></li>
+<li>easy to install / maintain</li>
+<li>easy to process big files and analyse huge amounts of data</li>
+<li>integrated data visualisation tools, <em>even dynamic</em></li>
+<li>fast, and even faster with <em>C++</em> integration via <a href='http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf' title=''>Rcpp</a>.</li>
+<li>easy to get help
+
+<ul>
+<li><a href='https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R' title=''>huge R community in the web</a></li>
+<li><a href='http://stackoverflow.com/questions/tagged/r' title=''>stackoverflow</a> with a lot of tags like <strong>dplyr</strong>, <strong>ggplot2</strong> etc.</li>
+<li><a href='http://www.r-bloggers.com' title=''>rbloggers</a></li>
+</ul></li>
+</ul>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Twitter R community</h2></hgroup><article  id="twitter-r-community" class="smaller ">
+
+<p><a href='https://twitter.com/search?q=%23rstats' title=''><code>#rstats</code></a> on twitter</p>
+
+<p><img src="img/01_r_community.jpg" width="95%" /></p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Constant trend</h2></hgroup><article  id="constant-trend" class="smaller ">
+
+<p><img src="img/01_r_progression.png" width="70%" style="display: block; margin: auto;" /></p>
+
+<p>From <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Packages</h2></hgroup><article  id="packages" class="smaller ">
+
+<ul>
+<li>CRAN <em><span class="green2">
+reliable: package is checked during submit process</span></em></li>
+<li><p><a href='https://github.com/' title=''>GitHub</a> using <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <em><span class="yellow2">
+Check <a href='https://github.com/hadley/readr' title=''>status</a></span></em></p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;hadley/readr&quot;)</pre></div></li>
+<li><p><a href='https://www.bioconductor.org/' title=''>bioconductor</a>. <em><span class="yellow2">
+Check <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></span></em></p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;limma&quot;)</pre></div></li>
+</ul>
+
+<div class="centered">
+<p><img src='img/01_packages_install_cran.jpg' title=''/> <img src='img/01_packages_install_devtools.jpg' title=''/></p></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Help</h2></hgroup><article  id="help" class="smaller ">
+
+<p>2 possibilities</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>?log
+help(log)</pre></div>
+
+<p>In <strong>Rstudio</strong>, the help page can be viewed in the bottom right pane</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>apropos(&quot;log&quot;)</pre>
+
+<pre > [1] &quot;.__C__logical&quot;         &quot;.__C__logLik&quot;         
+ [3] &quot;.__T__Logic:base&quot;      &quot;as.data.frame.logical&quot;
+ [5] &quot;as.logical&quot;            &quot;as.logical.factor&quot;    
+ [7] &quot;dlogis&quot;                &quot;is.logical&quot;           
+ [9] &quot;log&quot;                   &quot;log10&quot;                
+[11] &quot;log1p&quot;                 &quot;log2&quot;                 
+[13] &quot;logb&quot;                  &quot;Logic&quot;                
+[15] &quot;logical&quot;               &quot;logLik&quot;               
+[17] &quot;loglin&quot;                &quot;plogis&quot;               
+[19] &quot;qlogis&quot;                &quot;rlogis&quot;               
+[21] &quot;SSlogis&quot;              </pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
+
+<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator" class="smaller vs2">
+
+<p><strong>R base</strong> is complex, <a href='http://tidyverse.org/' title=''><strong>tidyverse</strong></a> is better.</p>
+
+<div class = 'row'><div class = 'box col-8'><h3>Hadley Wickham</h3>
+
+<p><a href='http://had.co.nz' title=''>Hadley</a>, chief scientist at <strong>Rstudio</strong>, coined the <em>tidyverse</em> at <a href='https://twitter.com/drob/status/748196885307920385' title=''>userR meeting in 2016</a>. He developed and maintains most of the core <em>tidyverse</em> packages</p>
+
+</div><div class = 'col-4'>
+
+<p><img src="https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg" width="100%" /></p>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages</h3></hgroup><article  id="tidyverse-packages" class="smaller vs1">
+
+<img src='img/01_tidyverse_components.png' title='fig:'/>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> dialect</h3></hgroup><article  id="tidyverse-criticism-dialect" class="smaller vs1">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+<a href="https://twitter.com/ucfagls"><span class="cite">@ucfagls</span></a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a>
+
+</blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> controversy</h3></hgroup><article  id="tidyverse-criticism-controversy" class="smaller ">
+
+<p><a href='http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr' title=''>SO&#39;s comment</a></p>
+
+<img src='img/01_tidyverse_contreversy.png' title='fig:'/>
+
+<p>See the popularity of the <a href='http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly' title=''>data.table versus dplyr</a> question.</p>
+
+<p>Easily summarised: <a href='https://github.com/Rdatatable/data.table/wiki' title=''><code>data.table</code></a> is faster, for less than 10 m rows, negligible.</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> jobs</h3></hgroup><article  id="tidyverse-criticism-jobs" class="smaller vs2">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for job which requires knowledge of R.
+
+</p>
+
+— Yeedle N. (<span class="cite">@Yeedle</span>) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a>
+
+</blockquote>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Anyway, learning the <em>tidyverse</em> does not prevent to learn <em>R base</em>, it helps to get things done early in the process</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>RStudio</h2></hgroup><article  id="rstudio" class="smaller ">
+
+<img src='img/01_logo_RStudio.png' title='fig:'/>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> What is it?</h3></hgroup><article  id="rstudio-what-is-it" class="smaller ">
+
+<p><a href='https://www.rstudio.com/products/RStudio/' title=''>RStudio</a> is an Integrated Development Environment.<br/>It makes working with R much easier</p>
+
+<div class = 'row'><div class = 'col-9 box bg-green'><h3>Features</h3>
+
+<ul class = 'build'>
+<li><em>Console</em> to run <strong>R</strong>, with syntax highlighter</li>
+<li><em>Editor</em> to work with scripts</li>
+<li><em>Viewer</em> for data / plots / website</li>
+<li><em>Package management</em> (including building)</li>
+<li><em>autocompletion</em> using <kbd>TAB</kbd></li>
+<li><a href='https://www.rstudio.com/resources/cheatsheets/' title=''><em>Cheatsheets</em></a></li>
+<li><em>git</em> integration for versioning</li>
+<li><em>inline</em> outputs (&gt;= v1.03)</li>
+<li><em>Keyboard shortcuts</em></li>
+</ul>
+
+</div><div class = 'col-3 box bg-orange'><h3>Warning</h3>
+
+<p>Don&#39;t mix up <strong>R</strong> and <strong>RStudio</strong>.<br/><strong>R</strong> needs to be installed first.</p>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> The 4 panels layout</h3></hgroup><article  id="rstudio-the-4-panels-layout" class="smaller ">
+
+<img src='img/01_rstudio_layout.jpg' title='fig:'/>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Getting started</h2></hgroup><article  id="getting-started" class="smaller ">
+
+<p>Let&#39;s get ready to use <strong>R</strong> and <strong>RStudio</strong>. Do the following:</p>
+
+<ul>
+<li>Open up RStudio</li>
+<li>Maximise the RStudio window</li>
+<li>Click the Console pane, at the prompt (<code>&gt;</code>) type in <code>3 + 2</code> and hit enter</li>
+</ul>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>&gt; 3 + 2</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Arithmetic operations</h2></hgroup><article  id="arithmetic-operations" class="smaller ">
+
+<p>You will not be surprised that <strong>R</strong> is very good at computing</p>
+
+<div class = 'row'><div class = 'col-8 bg-green'><h3>arithmetic operators</h3>
+
+<ul>
+<li><code>+</code>: addition<br/></li>
+<li><code>-</code>: subtraction<br/></li>
+<li><code>*</code>: multiplication<br/></li>
+<li><code>/</code>: division<br/></li>
+<li><code>^</code> or <code>**</code>: exponentiation</li>
+<li><code>%%</code>: modulo (remainder after division)</li>
+<li><code>%/%</code>: integer division</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'col-8 bg-orange'><h3>Remember</h3>
+
+<p><strong>R</strong> will:</p>
+
+<ul>
+<li>first perform <strong>exponentiation</strong></li>
+<li>then multiplications and/or divisions</li>
+<li>and finally additions and/or subtractions.</li>
+</ul>
+
+<p>If you need to change the priority during the evaluation, use parentheses – <em>i.e.</em> <code>(</code> and <code>)</code> – to group calculations.</p>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> Working directory and projects</h3></hgroup><article  id="rstudio-working-directory-and-projects" class="smaller ">
+
+<h3>Working directory</h3>
+
+<p>It is where <strong>R</strong> is looking for files (read or write).<br/>Using the console, try:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>&gt; getwd()</pre></div>
+
+<ul>
+<li>It is possible to change the location using <code>setwd()</code> (in the console or interactively in <em>RStudio</em>)</li>
+<li>A better way is to use projects in Rstudio</li>
+</ul>
+
+<h3>Projects</h3>
+
+<p>They solve most issues with working directories: get rid of <code>setwd()</code></p>
+
+<div class="centered">
+<img src='img/01_rstudio_project.jpg' title='fig:'/></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Data types and structures</h2></hgroup><article  id="data-types-and-structures" class="smaller ">
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>4 main types</h2></hgroup><article  id="main-types" class="smaller ">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Type</th>
+<th align="left">Example</th>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">integer (2), double (2.34)</td>
+</tr>
+<tr class="even">
+<td align="left">string</td>
+<td align="left">&quot;tidyverse !&quot;</td>
+</tr>
+<tr class="odd">
+<td align="left">boolean</td>
+<td align="left">TRUE / FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">complex</td>
+<td align="left">2+0i</td>
+</tr>
+</table>
+
+<h3>Special case</h3>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>NA   # not available, missing data
+NA_real_
+NA_integer_
+NA_character_
+NA_complex_
+NULL # empty</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Structures</h2></hgroup><article  id="structures" class="smaller ">
+
+<ul class = 'build'>
+<li>Vectors</li>
+<li>Factors</li>
+<li>Matrix (2D), Arrays (\(\geq\) 3D)</li>
+<li>Lists</li>
+<li>Data frames</li>
+</ul>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Data types 2</h2></hgroup><article  id="data-types-2" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># evaluate
+typeof(2)</pre>
+
+<pre >[1] &quot;double&quot;</pre>
+
+<pre class = 'prettyprint lang-r'># check
+is.integer(2.34)</pre>
+
+<pre >[1] FALSE</pre>
+
+<pre class = 'prettyprint lang-r'># convert
+as.integer(2.34)</pre>
+
+<pre >[1] 2</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Vectors</h2></hgroup><article  id="vectors" class="smaller ">
+
+<p><strong>Vectors</strong> are the simplest type of &quot;object&quot; in R.</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>print(5)</pre>
+
+<pre >[1] 5</pre></div>
+
+<p><strong>[1]</strong> means we made a numeric vector of length 1. Now look at what the <strong><code>:</code></strong> operator does:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:30</pre>
+
+<pre > [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+[24] 24 25 26 27 28 29 30</pre></div>
+
+<p>How many elements are in the thing we made here? What does the <strong>[24]</strong> signify?</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-1" class="smaller ">
+
+<p>Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the <strong><code>c</code></strong> function:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>c(2, TRUE, &quot;a string&quot;)</pre>
+
+<pre >[1] &quot;2&quot;        &quot;TRUE&quot;     &quot;a string&quot;</pre></div>
+
+<p>We can use the assignment operator to associate a name to our vectors in order to reuse them:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>myvec &lt;- c(3, 4, 1:3)
+myvec</pre>
+
+<pre >[1] 3 4 1 2 3</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-2" class="smaller ">
+
+<p>The following will build a character vector. We know this because the elements are all in quotes.</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>char.vec &lt;- c(&quot;dog&quot;, &quot;cat&quot;, &quot;ape&quot;)</pre></div>
+
+<p>Now use the <strong><code>c</code></strong> function to combine a length-one vector number of the number <code>4</code> with the <code>char.vec</code>. What happens?</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>c(4, char.vec)</pre>
+
+<pre >[1] &quot;4&quot;   &quot;dog&quot; &quot;cat&quot; &quot;ape&quot;</pre></div>
+
+<p>Notice that the 4 is quoted. R turned it into a character vector and then combined it with char.vec. All the elements in a vector must be of the same type.</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-3" class="smaller ">
+
+<p>R has a few built in vectors. One of these is <code>LETTERS</code>. What does it contain?</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS</pre>
+
+<pre > [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot;
+[18] &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</pre></div>
+
+<p>How do extract the first element from this (the letter A). Here is how to do it:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS[1]</pre>
+
+<pre >[1] &quot;A&quot;</pre></div>
+
+<p>Use the square brakets to subset vectors</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-4" class="smaller ">
+
+<p>What do we do if we need more than one element? Here is how to get elements in position 3 through to 10:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS[3:10]</pre>
+
+<pre >[1] &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot;</pre></div>
+
+<p>Remember what the : operator does? Take a look:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>3:10</pre>
+
+<pre >[1]  3  4  5  6  7  8  9 10</pre></div>
+
+<p>Can you see how <code>LETTERS[3:10]</code> works now?</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-5" class="smaller ">
+
+<p>Exercise</p>
+
+<ul>
+<li>find a way to output the following</li>
+</ul>
+
+<div class="chunk shadow">
+<pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</pre></div>
+
+<ul>
+<li>find a way to output the following</li>
+</ul>
+
+<div class="chunk shadow">
+<pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;G&quot;</pre></div>
+
+<ul>
+<li>find a way to output first 5 letters + one to the last</li>
+</ul>
+
+<div class="chunk shadow">
+<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-6" class="smaller ">
+
+<p>Solution</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS[2:5]</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS[c(2:5, 7)]</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>LETTERS[c(1:5, length(LETTERS) - 1)]</pre>
+
+<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Vectorized operation</h2></hgroup><article  id="vectorized-operation" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>myvec &lt;- 10:18
+myvec + 2</pre>
+
+<pre >[1] 12 13 14 15 16 17 18 19 20</pre></div>
+
+<p><strong>R</strong> recycles vectors that are too short:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>myvec * c(1:3)</pre>
+
+<pre >[1] 10 22 36 13 28 45 16 34 54</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Vectorized operation</h2></hgroup><article  id="vectorized-operation-1" class="smaller ">
+
+<p>Have a look at the following operation:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>c(1:3) + c(1:2) * c(1:4)</pre>
+
+<pre >Warning in c(1:3) + c(1:2) * c(1:4): longer object length is not a multiple
+of shorter object length</pre>
+
+<pre >[1] 2 6 6 9</pre></div>
+
+<p>The detailed steps <em>R</em> performs <em>behind the scene</em> are:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>c(1, 2, 3, 1) + (c(1, 2, 1, 2) * c(1, 2, 3, 4))
+c(1, 2, 3, 1) + c(1, 4, 3, 8)</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors" class="smaller ">
+
+<p>Vectors with qualitative data</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>factor(c(&quot;cytoplasm&quot;, &quot;nucleus&quot;, &quot;extracellular&quot;, &quot;nucleus&quot;, &quot;nucleus&quot;))</pre>
+
+<pre >[1] cytoplasm     nucleus       extracellular nucleus       nucleus      
+Levels: cytoplasm extracellular nucleus</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Matrix</h2></hgroup><article  id="matrix" class="smaller ">
+
+<p>A matrix is a <strong>2D</strong> array</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>M &lt;- matrix(1:6, ncol = 2, nrow = 3)
+M</pre>
+
+<pre >     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+[3,]    3    6</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>M &lt;- matrix(1:6, ncol = 2, nrow = 3, byrow = TRUE)
+M</pre>
+
+<pre >     [,1] [,2]
+[1,]    1    2
+[2,]    3    4
+[3,]    5    6</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Array</h2></hgroup><article  id="array" class="smaller ">
+
+<p>Similar to a matrix but with dimensions \(\geq\) 3D</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>A &lt;- array(1:24, dim = c(2, 4, 3))
+A</pre>
+
+<pre >, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]    1    3    5    7
+[2,]    2    4    6    8
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]    9   11   13   15
+[2,]   10   12   14   16
+
+, , 3
+
+     [,1] [,2] [,3] [,4]
+[1,]   17   19   21   23
+[2,]   18   20   22   24</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Lists</h2></hgroup><article  id="lists" class="smaller ">
+
+<p>Most permissive type. Could be anything!</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l &lt;- list(name = &quot;Farina&quot;, firstname = &quot;Geoff&quot;, year = 1995)</pre></div>
+
+<div class="float-r">
+<img src='./img/hadley_pepper.png' title=''/></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l[&quot;firstname&quot;]</pre>
+
+<pre >$firstname
+[1] &quot;Geoff&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>l[[&quot;firstname&quot;]]</pre>
+
+<pre >[1] &quot;Geoff&quot;</pre></div>
+
+<p>Have a look at <a href='http://r4ds.had.co.nz/lists.html' title=''>R for data science</a> for a description of the analogy by Hadley Wickham.</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Data frame</h2></hgroup><article  id="data-frame" class="smaller ">
+
+<p>It&#39;s the most important type to recall.<br/><code>ggplot2</code> and <code>dplyr</code> are focusing on those.</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>women</pre>
+
+<pre >   height weight
+1      58    115
+2      59    117
+3      60    120
+4      61    123
+5      62    126
+6      63    129
+7      64    132
+8      65    135
+9      66    139
+10     67    142
+11     68    146
+12     69    150
+13     70    154
+14     71    159
+15     72    164</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Convert to a data frame</h2></hgroup><article  id="convert-to-a-data-frame" class="smaller ">
+
+<p>The function <code>as.data.frame()</code> allows to convert a matrix / list into a <code>data.frame</code>.<br/>A data frame can be considered as a collection of vectors having the <strong>same length</strong>.</p>
+
+<p>We can extract a vector from a data frame in a few different ways:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># Using the name and the $ operator
+women$height</pre>
+
+<pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre>
+
+<pre class = 'prettyprint lang-r'># using [[]], name in quotes or indices
+women[[&quot;height&quot;]]</pre>
+
+<pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre></div>
+
+<p>Remember the analogy introduced by Hadley Wickham to explain lists indexing: The <em>pepper shaker</em> also applies to data frames. What would be the output of <code>women[&quot;height&quot;]</code>?</p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Data frame as a table</h2></hgroup><article  id="data-frame-as-a-table" class="smaller ">
+
+<p>A data frame can be considered as a table and extract a specify a cell by its <code>row</code> and <code>column</code>:</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>head(women, 5)</pre>
+
+<pre >  height weight
+1     58    115
+2     59    117
+3     60    120
+4     61    123
+5     62    126</pre>
+
+<pre class = 'prettyprint lang-r'>women[4, 2] # [row, col]</pre>
+
+<pre >[1] 123</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Logical operators</h2></hgroup><article  id="logical-operators" class="smaller ">
+
+<p>In addition to the arithmetic operators (that were already presented) R provides the possiblity to perform comparisons:</p>
+
+<ul>
+<li><code>==</code> equal</li>
+<li><code>!=</code> different</li>
+<li><code>&lt;</code> smaller</li>
+<li><code>&lt;=</code> smaller <strong>or</strong> equal</li>
+<li><code>&gt;</code> greater</li>
+<li><code>&gt;=</code> greater <strong>or</strong> equal</li>
+<li><code>!</code> is not</li>
+<li><code>&amp;</code>, <code>&amp;&amp;</code> and</li>
+<li><code>|</code>, <code>||</code> or</li>
+</ul>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Logical operators </h2><h3> Subtle differences</h3></hgroup><article  id="logical-operators-subtle-differences" class="smaller ">
+
+<p>The <strong>double logicals</strong> (<code>||</code> and <code>&amp;&amp;</code>) are <strong>not</strong> vectorized compared to the single ones (<code>|</code> and <code>&amp;</code>).</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>((-2:2) &gt;= 0) &amp; ((-2:2) &lt;= 0)</pre>
+
+<pre >[1] FALSE FALSE  TRUE FALSE FALSE</pre>
+
+<pre class = 'prettyprint lang-r'>((-2:2) &gt;= 0) &amp;&amp; ((-2:2) &lt;= 0)</pre>
+
+<pre >[1] FALSE</pre></div>
+
+<p>The double-character version evaluates only the first elements of each vector!</p>
+
+<p>see section <a href='http://www.burns-stat.com/pages/Tutor/R_inferno.pdf' title=''>8.2.17 in R inferno</a></p>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Identifying missing data</h2></hgroup><article  id="identifying-missing-data" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>v &lt;- c(1:3, NA, NA, 5:8, NA)
+v</pre>
+
+<pre > [1]  1  2  3 NA NA  5  6  7  8 NA</pre>
+
+<pre class = 'prettyprint lang-r'>is.na(v)</pre>
+
+<pre > [1] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>which(is.na(v)) # Extract index of NA values</pre>
+
+<pre >[1]  4  5 10</pre>
+
+<pre class = 'prettyprint lang-r'>v[!is.na(v)]    # Return vector elements which are not NA</pre>
+
+<pre >[1] 1 2 3 5 6 7 8</pre></div>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Style</h2></hgroup><article  id="style" class="smaller ">
+
+<p><code>R</code> is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.</p>
+
+<p>See <a href='http://style.tidyverse.org/' title=''>Hadley&#39;s recommendations</a></p>
+
+<p>In summary:</p>
+
+<ul>
+<li>use <strong>spaces</strong></li>
+<li>use more <strong>lines</strong>
+
+<ul>
+<li><code>}</code> alone on their line except for</li>
+</ul>
+
+<div class="chunk shadow">
+<p><code>r   } else {</code></p></div>
+
+<ul>
+<li>using the pipe <code>%&gt;%</code> to display a single instruction per line</li>
+<li>break list definitions, function arguments &#8230;</li>
+</ul></li>
+<li>avoid using names of existing functions and variables</li>
+</ul>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># Bad (example from http://adv-r.had.co.nz/Style.html)
+T &lt;- FALSE
+c &lt;- 10
+mean &lt;- function(x) sum(x)</pre></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture01_intro_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
