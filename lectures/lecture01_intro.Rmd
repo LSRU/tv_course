@@ -200,6 +200,15 @@ knitr::include_graphics("img/01_tidyverse_data_science.png")
 ```
 
 
+## Tidyverse | workflow
+
+### Pipeline {.col-9}
+
+![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png)
+
+### David Robinson {.col-3 .box}
+
+![](https://pbs.twimg.com/profile_images/777175344/David_Robinson.jpg)
 
 ## Tidyverse criticism  | dialect {.vs1}
 
@@ -253,6 +262,15 @@ Don't mix up **R** and **RStudio**.
 
 ![](./img/01_rstudio_layout.jpg)
 
+## Four panels
+
+XX
+
+
+## Opions
+
+to activate / deactivate
+
 ## The dream team
 
 
@@ -274,7 +292,7 @@ Let's get ready to use **R** and **RStudio**. Do the following:
 
 You will not be surprised that **R** is very good at computing
 
-### arithmetic operators {.col-8 .bg-green}
+### arithmetic operators {.col-6 .bg-green .box}
 
 - `+`: addition  
 - `-`: subtraction  
@@ -284,7 +302,7 @@ You will not be surprised that **R** is very good at computing
 - `%%`: modulo (remainder after division)
 - `%/%`: integer division
 
-### Remember {.col-8 .bg-orange}
+### Remember {.col-6 .bg-orange .box}
 
  **R** will:
 
@@ -296,27 +314,33 @@ If you need to change the priority during the evaluation, use parentheses – _i
 
 ## Rstudio | Working directory and projects
 
-### Working directory
-
 It is where **R** is looking for files (read or write).  
 Using the console, try:
 
+###{.col-4}
 ```{r, prompt = TRUE, eval = FALSE}
 getwd()
 ```
 
+### setwd() or relative paths {.col-8 .box .bg-red}
+
 - It is possible to change the location using `setwd()` (in the console or interactively in _RStudio_)
 - A better way is to use projects in Rstudio
 
-### Projects
+### Projects {.box .col-8 .bg-green}
 
 They solve most issues with working directories: get rid of `setwd()`
 
-<div class = "centered">
-![](./img/01_rstudio_project.jpg)
-</div>
+### {.col-4}
 
-# Data types and structures
+![](./img/01_rstudio_project.jpg)
+
+
+### R base {.bg-orange .col-12 .box}
+
+We could let **base** down, but the **tidyverse** is wrapping around it. Some functions need to be known
+
+# Data types and structures | R base
 
 ## 4 main types
 
@@ -340,12 +364,72 @@ NULL # empty
 
 ## Structures
 
->- Vectors
->- Factors
->- Matrix (2D), Arrays ($\geq$ 3D)
->- Lists
->- Data frames
 
+### Vectors {.col-5 .box .stretch}
+
+`c()` is the function for **concatenate**
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+```{r, row = TRUE, collapse = TRUE}
+4
+c(43, 5.6, 2.90)
+```
+
+
+### Factors {.col-5 .box .stretch}
+
+convert strings to factors, `levels` is the dictionary
+
+### Example {.col-7 .box .bg-cobalt}
+
+```{r, row = TRUE, collapse = TRUE}
+factor(c("AA", "BB", "AA", "CC"))
+```
+
+### Matrix (2D), Arrays ($\geq$ 3D) {.col-5 .box .stretch}
+
+won't dig into those
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+```{r, row = TRUE, collapse = TRUE}
+matrix(1:4, nrow = 2)
+```
+
+### Lists {.col-5 .box .bg-green}
+
+very important as can contain anything
+
+### Example {.col-7 .box .bg-cobalt}
+
+```{r, row = TRUE, collapse = TRUE}
+list(f = factor(c("AA", "AA")),
+     v = c(43, 5.6, 2.90),
+     s = 4)
+```
+
+
+## Data frames are special lists
+
+###  `data.frame` {.col-5 .box .bg-green .stretch}
+
+same as list **but** where all objects _must_ have the **same** length
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+
+```{r, include=FALSE}
+library(dplyr)
+```
+
+
+```{r, row = TRUE, collapse = TRUE}
+data.frame(
+  f = c("AA", "AA", "BB") %>% factor(),
+  v = c(43, 5.6, 2.90),
+  s = rep(4, 3))
+```
 
 ## Data types 2
 
@@ -354,6 +438,8 @@ NULL # empty
 typeof(2)
 # check
 is.integer(2.34)
+# check with an actual integer
+is.integer(2L)
 # convert
 as.integer(2.34)
 ```
@@ -436,9 +522,7 @@ Remember what the : operator does? Take a look:
 
 Can you see how `LETTERS[3:10]` works now?
 
-##
-
-Exercise
+## Exercise
 
 - find a way to output the following
 ```{r, echo = FALSE}
@@ -596,6 +680,61 @@ In addition to the arithmetic operators
 * `|`, `||` or
 
 
+## Using `library()`
+
+
+### library {col-6 .box .bg-green}
+
+
+```{r}
+library(dplyr)
+```
+
+### Conflicts! {col-6 .box .bg-red}
+
+When 2 packges export a function with the same name, the latest loaded wins
+
+
+
+**Solution**: using the `::` operator to ensure calling a function from a specific package 
+
+```{r, eval = FALSE}
+dplyr::select()
+```
+
+
+## Pipes with magrittr | developped by Stefan Milton Bache
+
+![](https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/3632/small/1419844831/magrittr.png)
+
+compare the approaches between classic parenthesis and the [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) pipeline
+
+### R base {.bg-yellow .box .col-6}
+
+```{r}
+set.seed(12)
+round(mean(rnorm(5)), 2)
+```
+
+
+### magrittr {.bg-green .box .col-6}
+
+```{r}
+set.seed(12)
+rnorm(5) %>%
+  mean() %>%
+  round(2)
+```
+
+Of note, `magrittr` needs to loading with either
+```{r, eval = FALSE}
+library(magrittr)
+library(dplyr)
+library(tidyverse)
+```
+
+
+
 ## Coding's style
 
 `R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
@@ -620,7 +759,7 @@ In summary:
   
 ### Bad {.bg-red .box .col-6}  
   
-```{r}
+```{r, eval = FALSE}
 # example from http://adv-r.had.co.nz/Style.html
 T <- FALSE
 c <- 10
