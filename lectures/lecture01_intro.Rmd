@@ -15,13 +15,30 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-The goal is to learn statistics applied to biology using ![](./img/01_Rlogo_90.png)
+The four day course provides a complete introduction to data science in ![](./img/01_Rlogo_90.png) with the **tidyverse**. 
+Focusing on getting data ready, some exploratory analysis, visualization and handling models.
+
+Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course
 
 This workshop is composed of 30 hours:
 
->- lectures, ~ 8 hours
->- practical sessions, ~ 15 hours
->- bring your own data, ~ 7 hours
+
+### lectures {.col-4 .box .bg-green}
+
+- ~ 8 hours
+- available online
+- convert them to pdf using chrome
+
+### practical sessions {.col-4 .box .bg-yellow .stretch}
+
+- ~ 15 hours
+- using your own laptop
+
+### bring your own data  {.col-4 .box .bg-orange}
+
+- ~ 7 hours (Day 4)
+- teachers available
+- project provided for those that don't have data yet
 
 
 
@@ -63,13 +80,6 @@ This workshop is composed of 30 hours:
     + Microarray analysis
 
 
-
-
-## Reading
-
-
-- Excellent recent ressource about `R` by [Ewen Gallic](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf)
-- [R for data science](http://r4ds.had.co.nz/) by Hadley Wickham & Garrett Grolemund
 
 ## What is R? {.vs2}
 
@@ -179,6 +189,11 @@ knitr::include_graphics("https://pbs.twimg.com/profile_images/677589103710306304
 ![](./img/01_tidyverse_components.png)
 
 
+## Tidyverse | packages in processes
+
+![](img/01_tidyverse_data_science.png)
+
+
 ## Tidyverse criticism  | dialect {.vs1}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr"><a href="https://twitter.com/ucfagls">@ucfagls</a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a></blockquote>
@@ -231,7 +246,10 @@ Don't mix up **R** and **RStudio**.
 
 ![](./img/01_rstudio_layout.jpg)
 
+## The dream team
 
+
+![](img/01_r_community_rstudio.png)
 
 ## Getting started
 
@@ -555,7 +573,10 @@ women[4, 2] # [row, col]
 
 ## Logical operators
 
-In addition to the arithmetic operators (that were already presented) R provides the possiblity to perform comparisons:
+In addition to the arithmetic operators 
+
+
+### Perform comparisons {.bg-green .box .col-9}
 
 * `==` equal
 * `!=` different
@@ -567,40 +588,17 @@ In addition to the arithmetic operators (that were already presented) R provides
 * `&`, `&&` and
 * `|`, `||` or
 
-## Logical operators | Subtle differences
 
-The **double logicals** (`||` and `&&`) are **not** vectorized compared to the single ones (`|` and `&`).
-
-```{r}
-((-2:2) >= 0) & ((-2:2) <= 0)
-((-2:2) >= 0) && ((-2:2) <= 0)
-```
-
-The double-character version evaluates only the first elements of each vector!
-
-see section [8.2.17 in R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf)
-
-## Identifying missing data
-
-```{r}
-v <- c(1:3, NA, NA, 5:8, NA)
-v
-is.na(v)
-```
-
-```{r}
-which(is.na(v)) # Extract index of NA values
-v[!is.na(v)]    # Return vector elements which are not NA
-```
-
-
-## Style
+## Coding's style
 
 `R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
 
 See [Hadley's recommendations](http://style.tidyverse.org/)
 
 In summary:
+
+
+### Good {.bg-green .box .col-6}
 
 - use **spaces**
 - use more **lines**
@@ -612,8 +610,11 @@ In summary:
     + break list definitions, function arguments ...
 - avoid using names of existing functions and variables
   
+  
+### Bad {.bg-red .box .col-6}  
+  
 ```{r}
-# Bad (example from http://adv-r.had.co.nz/Style.html)
+# example from http://adv-r.had.co.nz/Style.html
 T <- FALSE
 c <- 10
 mean <- function(x) sum(x)

@@ -117,17 +117,36 @@
 
 <slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
 
-<p>The goal is to learn statistics applied to biology using <img src='img/01_Rlogo_90.png' title=''/></p>
+<p>The four day course provides a complete introduction to data science in <img src='img/01_Rlogo_90.png' title=''/> with the <strong>tidyverse</strong>. Focusing on getting data ready, some exploratory analysis, visualization and handling models.</p>
+
+<p>Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course</p>
 
 <p>This workshop is composed of 30 hours:</p>
 
-<ul class = 'build'>
-<li>lectures, ~ 8 hours</li>
-<li>practical sessions, ~ 15 hours</li>
-<li>bring your own data, ~ 7 hours</li>
+<div class = 'row'><div class = 'col-4 box bg-green'><h3>lectures</h3>
+
+<ul>
+<li>~ 8 hours</li>
+<li>available online</li>
+<li>convert them to pdf using chrome</li>
 </ul>
 
-</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Time table and contents</h2></hgroup><article  id="time-table-and-contents" class="smaller ">
+</div><div class = 'col-4 box bg-yellow stretch'><h3>practical sessions</h3>
+
+<ul>
+<li>~ 15 hours</li>
+<li>using your own laptop</li>
+</ul>
+
+</div><div class = 'col-4 box bg-orange'><h3>bring your own data</h3>
+
+<ul>
+<li>~ 7 hours (Day 4)</li>
+<li>teachers available</li>
+<li>project provided for those that don&#39;t have data yet</li>
+</ul>
+
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Time table and contents</h2></hgroup><article  id="time-table-and-contents" class="smaller ">
 
 <div class = 'row'><div class = 'col-8 box bg-green'><h3>Day 1</h3>
 
@@ -198,14 +217,7 @@
 </ul></li>
 </ul>
 
-</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Reading</h2></hgroup><article  id="reading" class="smaller ">
-
-<ul>
-<li>Excellent recent ressource about <code>R</code> by <a href='http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf' title=''>Ewen Gallic</a></li>
-<li><a href='http://r4ds.had.co.nz/' title=''>R for data science</a> by Hadley Wickham &amp; Garrett Grolemund</li>
-</ul>
-
-</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
 
 <p>&quot;R&quot; is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
 
@@ -319,6 +331,10 @@ help(log)</pre></div>
 
 <img src='img/01_tidyverse_components.png' title='fig:'/>
 
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
+
+<img src='img/01_tidyverse_data_science.png' title='fig:'/>
+
 </article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> dialect</h3></hgroup><article  id="tidyverse-criticism-dialect" class="smaller vs1">
 
 <blockquote class="twitter-tweet" data-lang="fr">
@@ -392,6 +408,10 @@ Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyve
 </div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> The 4 panels layout</h3></hgroup><article  id="rstudio-the-4-panels-layout" class="smaller ">
 
 <img src='img/01_rstudio_layout.jpg' title='fig:'/>
+
+</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
+
+<img src='img/01_r_community_rstudio.png' title='fig:'/>
 
 </article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Getting started</h2></hgroup><article  id="getting-started" class="smaller ">
 
@@ -825,7 +845,9 @@ women[[&quot;height&quot;]]</pre>
 
 </article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Logical operators</h2></hgroup><article  id="logical-operators" class="smaller ">
 
-<p>In addition to the arithmetic operators (that were already presented) R provides the possiblity to perform comparisons:</p>
+<p>In addition to the arithmetic operators</p>
+
+<div class = 'row'><div class = 'bg-green box col-9'><h3>Perform comparisons</h3>
 
 <ul>
 <li><code>==</code> equal</li>
@@ -839,51 +861,15 @@ women[[&quot;height&quot;]]</pre>
 <li><code>|</code>, <code>||</code> or</li>
 </ul>
 
-</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Logical operators </h2><h3> Subtle differences</h3></hgroup><article  id="logical-operators-subtle-differences" class="smaller ">
-
-<p>The <strong>double logicals</strong> (<code>||</code> and <code>&amp;&amp;</code>) are <strong>not</strong> vectorized compared to the single ones (<code>|</code> and <code>&amp;</code>).</p>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>((-2:2) &gt;= 0) &amp; ((-2:2) &lt;= 0)</pre>
-
-<pre >[1] FALSE FALSE  TRUE FALSE FALSE</pre>
-
-<pre class = 'prettyprint lang-r'>((-2:2) &gt;= 0) &amp;&amp; ((-2:2) &lt;= 0)</pre>
-
-<pre >[1] FALSE</pre></div>
-
-<p>The double-character version evaluates only the first elements of each vector!</p>
-
-<p>see section <a href='http://www.burns-stat.com/pages/Tutor/R_inferno.pdf' title=''>8.2.17 in R inferno</a></p>
-
-</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Identifying missing data</h2></hgroup><article  id="identifying-missing-data" class="smaller ">
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>v &lt;- c(1:3, NA, NA, 5:8, NA)
-v</pre>
-
-<pre > [1]  1  2  3 NA NA  5  6  7  8 NA</pre>
-
-<pre class = 'prettyprint lang-r'>is.na(v)</pre>
-
-<pre > [1] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE</pre></div>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>which(is.na(v)) # Extract index of NA values</pre>
-
-<pre >[1]  4  5 10</pre>
-
-<pre class = 'prettyprint lang-r'>v[!is.na(v)]    # Return vector elements which are not NA</pre>
-
-<pre >[1] 1 2 3 5 6 7 8</pre></div>
-
-</article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Style</h2></hgroup><article  id="style" class="smaller ">
+</div></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide><slide class=''><hgroup><h2>Coding&#39;s style</h2></hgroup><article  id="codings-style" class="smaller ">
 
 <p><code>R</code> is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.</p>
 
 <p>See <a href='http://style.tidyverse.org/' title=''>Hadley&#39;s recommendations</a></p>
 
 <p>In summary:</p>
+
+<div class = 'row'><div class = 'bg-green box col-6'><h3>Good</h3>
 
 <ul>
 <li>use <strong>spaces</strong></li>
@@ -903,8 +889,10 @@ v</pre>
 <li>avoid using names of existing functions and variables</li>
 </ul>
 
+</div><div class = 'bg-red box col-6'><h3>Bad</h3>
+
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'># Bad (example from http://adv-r.had.co.nz/Style.html)
+<pre class = 'prettyprint lang-r'># example from http://adv-r.had.co.nz/Style.html
 T &lt;- FALSE
 c &lt;- 10
 mean &lt;- function(x) sum(x)</pre></div></article><div class ="footer">Created with <a href='https://github.com/koncina/iosp'>ioslides plus</a></div></slide>
