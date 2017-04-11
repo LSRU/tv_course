@@ -27,12 +27,15 @@ This workshop is composed of 30 hours:
 
 - ~ 8 hours
 - available online
+- very short exercises included
 - convert them to pdf using chrome
 
 ### practical sessions {.col-4 .box .bg-yellow .stretch}
 
 - ~ 15 hours
 - using your own laptop
+- teachers available
+- supplementary exercises if needed
 
 ### bring your own data  {.col-4 .box .bg-orange}
 
@@ -191,13 +194,17 @@ knitr::include_graphics("https://pbs.twimg.com/profile_images/677589103710306304
 
 ## Tidyverse | packages in processes
 
-![](img/01_tidyverse_data_science.png)
+
+```{r, echo = FALSE, out.width = "80%"}
+knitr::include_graphics("img/01_tidyverse_data_science.png")
+```
+
 
 
 ## Tidyverse criticism  | dialect {.vs1}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr"><a href="https://twitter.com/ucfagls">@ucfagls</a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 ## Tidyverse criticism | controversy
@@ -213,7 +220,7 @@ Easily summarised: [`data.table`](https://github.com/Rdatatable/data.table/wiki)
 ## Tidyverse criticism  | jobs {.vs2}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for  job which requires knowledge of R.</p>&mdash; Yeedle N. (@Yeedle) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Anyway, learning the _tidyverse_ does not prevent to learn _R base_, it helps to get things done early in the process
 
