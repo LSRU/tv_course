@@ -6,6 +6,8 @@ date: "2 May 2017"
 output:
   iosp::ioslides_plus:
     preview: yes
+    box_colours:
+      bg-my_colour: "slateblue2"
 ---
 
 ```{r setup, include=FALSE}
@@ -49,7 +51,7 @@ library("nycflights13")
 ## Tibbles | Tibbles vs data frames
 
 - Use `as_tibble` to convert a data frame to a tibble
-- Tibbles:
+### Tibbles
     + have a refined print method that shows only the first 10 rows.
     + show all the columns that fit on screen and list the name of remaining ones.
     + each column reports its type.
