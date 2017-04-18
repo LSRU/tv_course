@@ -57,6 +57,7 @@ This workshop is composed of 30 hours:
 - Session 2
     + Markdown (EK)
     + Importing data into R (`readr`) 
+    
 - Setup _Bring Your Own data Session_ (Day 4 )
 
 ## Time table | (cont.)
@@ -65,17 +66,22 @@ This workshop is composed of 30 hours:
 - Session 1
     + Introduction to tidy data (RK)
 - Session 2
-    + `ggplot2` (AG)
+    + Visualization with `ggplot2` (AG)
 - Session 3
-    + `dplyr` (RK)
-    
+    + Data wrangling with `dplyr` (RK)
+
 ## Time table | (cont.)
 
 ### Day 3 {.col-8 .box .bg-green}
-- Session 1
-    + `purrr` (EK)
-- Session 2  
-    + `broom` (AG)
+
+- Day 3 -- Session 1
+    + Functional programming with `purrr` (EK)
+- Day 3 -- Session 2  
+    + Handling statistical models with `broom` (AG)
+
+- Day 4 — Project work 
+    + Project (BYOD) 
+    + Microarray analysis project
 
 ### Day 4 {.col-8 .box .bg-green}
 - Project work 
