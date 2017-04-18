@@ -56,25 +56,18 @@ This workshop is composed of 30 hours:
 
 - Session 2
     + Markdown (EK)
-<<<<<<< HEAD
-    + Importing data into R (readr) 
-    
-- Day 1 -- Session 3
-    + Preparation for Bring your own data session (see Day 4 )
-=======
     + Importing data into R (`readr`) 
+    
 - Setup _Bring Your Own data Session_ (Day 4 )
->>>>>>> 1c52c655299aa7d7aaeb5e2da69594418b63be16
 
 ## Time table | (cont.)
 
 ### Day 2 {.col-8 .box .bg-green}
 - Session 1
     + Introduction to tidy data (RK)
-<<<<<<< HEAD
-- Day 2 -- Session 2
+- Session 2
     + Visualization with `ggplot2` (AG)
-- Day 2 -- Session 3
+- Session 3
     + Data wrangling with `dplyr` (RK)
 
 ## Time table | (cont.)
