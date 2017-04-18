@@ -138,7 +138,7 @@ Copy / paste the code below and you should obtain the following plot.
 library("tidyverse")
 
 mtcars %>%
-  gather(key, value, c(drat, wt)) %>%
+  gather(key, value, drat, wt) %>%
   ggplot(aes(x = value, y = mpg, colour = key)) +
   geom_point() +
   theme_bw(14)

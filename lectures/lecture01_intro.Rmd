@@ -4,7 +4,7 @@ author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
   iosp::ioslides_plus:
-    footer: "Created with [ioslides plus](https://github.com/koncina/iosp)"
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
     box_colours:
       orange: darkorange2
 ---
@@ -37,7 +37,7 @@ This workshop is composed of 30 hours:
 - teachers available
 - supplementary exercises if needed
 
-### bring your own data  {.col-4 .box .bg-orange}
+### bring your own data  {.col-4 .box .bg-orange .stretch}
 
 - ~ 7 hours (Day 4)
 - teachers available
@@ -175,6 +175,11 @@ vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"
 **R base** is complex, [**tidyverse**](http://tidyverse.org/) is better.
 
 
+http://r4stats.com/articles/why-r-is-hard-to-learn/
+
+XX
+
+
 ### Hadley Wickham {.box .col-8}
 
 [Hadley](http://had.co.nz), chief scientist at **Rstudio**, coined the _tidyverse_ at [userR meeting in 2016](https://twitter.com/drob/status/748196885307920385).
@@ -204,19 +209,60 @@ knitr::include_graphics("img/01_tidyverse_data_science.png")
 
 ### Pipeline {.col-9}
 
-![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png)
+![](img/01_drob_r_pipeline_600.png)
 
-### David Robinson {.col-3 .box}
+### David Robinson {.col-3}
+
+@drob on twitter
 
 ![](https://pbs.twimg.com/profile_images/777175344/David_Robinson.jpg)
 
-## Tidyverse criticism  | dialect {.vs1}
+
+![](img/01_logo_broom.png)
+
+## Tidyverse criticism  | core / extended
+
+### Core {.box .col-6 .bg-green}
+
+- `ggplot2`, for data visualisation
+- `dplyr`, for data manipulation
+- `tidyr`, for data tidying
+- `readr`, for data import
+- `purrr`, for functional programming
+- `tibble`, for tibbles, a modern re-imagining of data frames
+
+
+### Extended {.box .col-6 .bg-yellow}
+
+- Working with specific types of vectors:
+    + `hms`, for times
+    + `stringr`, for strings
+    + `lubridate`, for date/times
+    + `forcats`, for factors
+
+- Importing other types of data:
+    + `feather`, for sharing with other languages
+    + `haven`, for SPSS, SAS and Stata files
+    + `httr`, for web apis
+    + `jsonlite` for JSON
+    + `readxl`, for .xls and .xlsx files
+    + `rvest`, for web scraping
+    + `xml2`, for XML
+
+- Modelling
+    + `modelr`, for modelling within a pipeline
+    + `broom`, for turning models into tidy data
+
+
+> source: http://tidyverse.tidyverse.org/ | H.Wickham
+
+## Tidyverse criticism  | dialect {.vs2}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr"><a href="https://twitter.com/ucfagls">@ucfagls</a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-## Tidyverse criticism | controversy
+## Tidyverse criticism | controversy {.vs2}
 
 [SO's comment](http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr)
 
@@ -226,12 +272,40 @@ See the popularity of the [data.table versus dplyr](http://stackoverflow.com/que
 
 Easily summarised: [`data.table`](https://github.com/Rdatatable/data.table/wiki) is faster, for less than 10 m rows, negligible.
 
+Personal complain:
+- still young so change quickly and drastically. Backward compatibility is not always maintained.
+- `tibbles` are nice but a lot of non-tidyverse packages require `matrices`. `rownames` still an issue.
+
 ## Tidyverse criticism  | jobs {.vs2}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for  job which requires knowledge of R.</p>&mdash; Yeedle N. (@Yeedle) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 Anyway, learning the _tidyverse_ does not prevent to learn _R base_, it helps to get things done early in the process
+
+
+## Tidyverse  | trends
+
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics("img/01_r_documentation_trends_20170418.png")
+```
+
+### {.offset-4 .col-6 }
+
+source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)
+
+
+## Tidyverse | trends
+
+
+
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics("img/01_r_documentation_trends_20170418_tv.png")
+```
+
+### {.col-6 .offset-4} 
+
+source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)
 
 # RStudio
 
@@ -248,11 +322,12 @@ It makes working with R much easier
 >- _Editor_ to work with scripts
 >- _Viewer_ for data / plots / website
 >- _Package management_ (including building)
->- _autocompletion_ using <kbd>TAB</kbd>
+>- _Autocompletion_ using <kbd>TAB</kbd>
 >- [_Cheatsheets_](https://www.rstudio.com/resources/cheatsheets/)
->- _git_ integration for versioning
->- _inline_ outputs (>= v1.03)
+>- _Git_ integration for versioning
+>- _Inline_ outputs (>= v1.03)
 >- _Keyboard shortcuts_
+>- [_Notebooks_](https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/)
 
 ### Warning {.col-3 .box .bg-orange}
 Don't mix up **R** and **RStudio**.  
@@ -262,19 +337,43 @@ Don't mix up **R** and **RStudio**.
 
 ![](./img/01_rstudio_layout.jpg)
 
-## Four panels
+## Four panels {.vs2}
 
-XX
+### scripting {.col-6 .box .bg-green .stretch}
 
+- could be your main window
+- should be a **Rmarkdown** doc
+- tabs are great
 
-## Opions
+### Environment {.col-6 .box .bg-yellow .stretch}
+
+- Environment, display loaded objects and their `str()`
+- History is useless IMO
+- nice `git` integration
+
+### Console {.col-6 .box .stretch}
+
+- could be hidden with **inline** outputs
+- in the preview, embed a nice `terminal` tab
+
+### Files / Plots / Help {.col-6 .box .bg-yellow .stretch}
+
+- necessary package management tab
+- plots becomes useless when using **inline** outputs
+- very useful help tab
+
+## Options
 
 to activate / deactivate
+
+
 
 ## The dream team
 
 
 ![](img/01_r_community_rstudio.png)
+
+# Hands on
 
 ## Getting started
 
@@ -765,3 +864,16 @@ T <- FALSE
 c <- 10
 mean <- function(x) sum(x)
 ```
+
+
+## Hexbins
+
+After David Robinson' laptop, see and get inspired!
+
+### Hadley Wickham {.col-6}
+
+![](img/01_hexbin_hadley.jpg)
+
+### Bob Rudis {.col-6}
+
+![](img/01_hexbin_hrbrmstr.jpg)
