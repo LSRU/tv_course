@@ -1,0 +1,10 @@
+iosp::ioslides_plus:
+  fig_height: 5
+  fig_width: 6
+  keep_md: no
+  logo: img/uni_elixir.png
+  smaller: yes
+  widescreen: yes
+  self_contained: false
+  lib_dir: libs
+  fig_retina: null

@@ -51,6 +51,7 @@ knitr::include_graphics("https://s3.amazonaws.com/titlepages.leanpub.com/datasci
 knitr::include_graphics("https://s3.amazonaws.com/titlepages.leanpub.com/functional_programming_in_R/hero?1470512054")
 ```
 
+- Excellent and free ressource about `R` (in **French**) by [Ewen Gallic](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf)
 
 
 - About R weirdness

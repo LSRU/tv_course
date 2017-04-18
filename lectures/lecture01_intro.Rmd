@@ -4,7 +4,9 @@ author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
   iosp::ioslides_plus:
-    preview: yes
+    footer: "Created with [ioslides plus](https://github.com/koncina/iosp)"
+    box_colours:
+      orange: darkorange2
 ---
 
 ```{r setup, include=FALSE}
@@ -13,66 +15,89 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Overview
 
-The goal is to learn statistics applied to biology using ![](./img/01_Rlogo_90.png)
+The four day course provides a complete introduction to data science in ![](./img/01_Rlogo_90.png) with the **tidyverse**. 
+Focusing on getting data ready, some exploratory analysis, visualization and handling models.
 
-This workshop is composed of:
+Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course
 
->- lectures, ~ X hours
->- practical sessions, ~ X hours
+This workshop is composed of 30 hours:
 
-## Contents
 
-- Introduction to programming, basic concepts of algorithm building using R language
+### lectures {.col-4 .box .bg-green}
 
-## Time table
+- ~ 8 hours
+- available online
+- very short exercises included
+- convert them to pdf using chrome
 
-- Day 1 -- Session 1
+### practical sessions {.col-4 .box .bg-yellow .stretch}
+
+- ~ 15 hours
+- using your own laptop
+- teachers available
+- supplementary exercises if needed
+
+### bring your own data  {.col-4 .box .bg-orange}
+
+- ~ 7 hours (Day 4)
+- teachers available
+- project provided for those that don't have data yet
+
+
+
+## Time table and contents
+
+
+### Day 1 {.col-8 .box .bg-green}
+- Session 1
     + Introduction to R and RStudio (AG)
     + Transiting from other languages 
     + Basic data types, control structures, loops
 
-- Day 1 -- Session 2
+- Session 2
     + Markdown (EK)
+<<<<<<< HEAD
     + Importing data into R (readr) 
     
 - Day 1 -- Session 3
     + Preparation for Bring your own data session (see Day 4 )
+=======
+    + Importing data into R (`readr`) 
+- Setup _Bring Your Own data Session_ (Day 4 )
+>>>>>>> 1c52c655299aa7d7aaeb5e2da69594418b63be16
 
-## Time table (cont.)
+## Time table | (cont.)
 
-- Day 2 -- Session 1
+### Day 2 {.col-8 .box .bg-green}
+- Session 1
     + Introduction to tidy data (RK)
+<<<<<<< HEAD
 - Day 2 -- Session 2
-    + Visualizatio with ggplot2 (AG)
+    + Visualization with `ggplot2` (AG)
 - Day 2 -- Session 3
-    + Data wrangling with dplyr (RK)
-    
-## Time table (cont.)
+    + Data wrangling with `dplyr` (RK)
+
+## Time table | (cont.)
+
+### Day 3 {.col-8 .box .bg-green}
 
 - Day 3 -- Session 1
-    + Functional programming with purrr (EK)
+    + Functional programming with `purrr` (EK)
 - Day 3 -- Session 2  
-    + Handling statistical models with broom (AG)
+    + Handling statistical models with `broom` (AG)
 
 - Day 4 — Project work 
     + Project (BYOD) 
     + Microarray analysis project
 
-
-## Materials
-
-### Content from:
-
-
-
-### Reading:
+### Day 4 {.col-8 .box .bg-green}
+- Project work 
+    + Project (_BYOD_) or
+    + Microarray analysis
 
 
-- Excellent recent ressource about `R` by [Ewen Gallic](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf)
-- Recommended book by Michael Crawley
-- [R for data science](http://r4ds.had.co.nz/) by Hadley Wickham & Garrett Grolemund
 
-## What is R?
+## What is R? {.vs2}
 
 "R" is shorthand for ["GNU R"](https://www.r-project.org):
 
@@ -85,18 +110,27 @@ This workshop is composed of:
   
 Learning to use R will make you **more efficient** and **facilitate the use** of advanced data analysis tools
 
-## Why use R?
+## Why use R? {.vs2}
 
 - It's *free!*
 - easy to install / maintain
 - easy to process big files and analyse huge amounts of data
 - integrated data visualisation tools, *even dynamic*
 - fast, and even faster with *C++* integration via [Rcpp](http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf).
-- easy to get help<div class = "float-r">![](./img/01_r_community.jpg)</div>
+- easy to get help
     + [huge R community in the web](https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R)
     + [stackoverflow](http://stackoverflow.com/questions/tagged/r) with a lot of tags like **dplyr**, **ggplot2** etc.
     + [rbloggers](http://www.r-bloggers.com)
-    + [`#rstats`](https://twitter.com/search?q=%23rstats) on twitter
+    
+    
+## Twitter R community    
+
+[`#rstats`](https://twitter.com/search?q=%23rstats) on twitter
+
+```{r, echo = FALSE, out.width = "95%"}
+knitr::include_graphics("img/01_r_community.jpg")
+```
+
 
 
 ## Constant trend
@@ -107,7 +141,7 @@ knitr::include_graphics("./img/01_r_progression.png")
 
 From [Touchon & McCoy. _Ecosphere_. 2016](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full)
 
-## Packages   
+## Packages
 
 - CRAN *<span class="green2">reliable: package is checked during submit process</span>*
 - [GitHub](https://github.com/) using [devtools](https://github.com/hadley/devtools). *<span class="yellow2">Check [status](https://github.com/hadley/readr)</span>*
@@ -146,25 +180,71 @@ apropos("log")
 
 ```{r, echo=FALSE}
 #devtools::install_github("ijlyttle/vembedr")
-library("vembedr")
-suppressPackageStartupMessages(library("dplyr"))
-embed_youtube("8SGif63VW6E", query = list(start = secs("4m12s"), end = secs("4m52s")))
-# use_start_time() exists but no way to setup a stop time with a helper function?
+vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"), end = vembedr::secs("4m52s")))
 ```
 
-## Tidyverse
+## Tidyverse | creator {.vs2}
 
-**R base** is complex, [**tidyverse**](https://github.com/hadley/tidyverse) is better.
+**R base** is complex, [**tidyverse**](http://tidyverse.org/) is better.
 
-[Hadley Wickham](http://had.co.nz) is a chief scientist at **Rstudio** and a developer that creates and maintains the fundamental packages from the _tidyverse_ such as:
 
-```{r, eval = FALSE}
-library("ggplot2")  # awesome plotting by layers
-library("tidyr")    # shape data correct
-library("readr")    # alternative to read.table
-library("dplyr")    # apply made easy
-library("magrittr") # pipe for R
+### Hadley Wickham {.box .col-8}
+
+[Hadley](http://had.co.nz), chief scientist at **Rstudio**, coined the _tidyverse_ at [userR meeting in 2016](https://twitter.com/drob/status/748196885307920385).
+He developed and maintains most of the core _tidyverse_ packages
+
+### {.col-4}
+
+```{r, echo = FALSE, out.width = "100%"}
+knitr::include_graphics("https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg")
 ```
+
+
+## Tidyverse  | packages {.vs1}
+
+![](./img/01_tidyverse_components.png)
+
+
+## Tidyverse | packages in processes
+
+
+```{r, echo = FALSE, out.width = "80%"}
+knitr::include_graphics("img/01_tidyverse_data_science.png")
+```
+
+
+## Tidyverse | workflow
+
+### Pipeline {.col-9}
+
+![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/drob_r_pipeline_450.png)
+
+### David Robinson {.col-3 .box}
+
+![](https://pbs.twimg.com/profile_images/777175344/David_Robinson.jpg)
+
+## Tidyverse criticism  | dialect {.vs1}
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr"><a href="https://twitter.com/ucfagls">@ucfagls</a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick</p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+## Tidyverse criticism | controversy
+
+[SO's comment](http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr)
+
+![](img/01_tidyverse_contreversy.png)
+
+See the popularity of the [data.table versus dplyr](http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly) question.
+
+Easily summarised: [`data.table`](https://github.com/Rdatatable/data.table/wiki) is faster, for less than 10 m rows, negligible.
+
+## Tidyverse criticism  | jobs {.vs2}
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for  job which requires knowledge of R.</p>&mdash; Yeedle N. (@Yeedle) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Anyway, learning the _tidyverse_ does not prevent to learn _R base_, it helps to get things done early in the process
 
 # RStudio
 
@@ -175,21 +255,39 @@ library("magrittr") # pipe for R
 [RStudio](https://www.rstudio.com/products/RStudio/) is an Integrated Development Environment.  
 It makes working with R much easier
 
-### Features
+### Features {.col-9 .box .bg-green}
 
 >- _Console_ to run **R**, with syntax highlighter
 >- _Editor_ to work with scripts
+>- _Viewer_ for data / plots / website
 >- _Package management_ (including building)
 >- _autocompletion_ using <kbd>TAB</kbd>
->- Cheatsheets
->- Keyboard shortcuts
+>- [_Cheatsheets_](https://www.rstudio.com/resources/cheatsheets/)
+>- _git_ integration for versioning
+>- _inline_ outputs (>= v1.03)
+>- _Keyboard shortcuts_
 
+### Warning {.col-3 .box .bg-orange}
 Don't mix up **R** and **RStudio**.  
 **R** needs to be installed first.
 
 ## Rstudio | The 4 panels layout
 
 ![](./img/01_rstudio_layout.jpg)
+
+## Four panels
+
+XX
+
+
+## Opions
+
+to activate / deactivate
+
+## The dream team
+
+
+![](img/01_r_community_rstudio.png)
 
 ## Getting started
 
@@ -205,7 +303,9 @@ Let's get ready to use **R** and **RStudio**. Do the following:
 
 ## Arithmetic operations
 
-You will not be surprised that **R** is very good at sums. It has all the arithmetic operators you would expect to see:
+You will not be surprised that **R** is very good at computing
+
+### arithmetic operators {.col-6 .bg-green .box}
 
 - `+`: addition  
 - `-`: subtraction  
@@ -215,7 +315,9 @@ You will not be surprised that **R** is very good at sums. It has all the arithm
 - `%%`: modulo (remainder after division)
 - `%/%`: integer division
 
-**Remember** that **R** will:
+### Remember {.col-6 .bg-orange .box}
+
+ **R** will:
 
 - first perform **exponentiation**
 - then multiplications and/or divisions
@@ -225,34 +327,40 @@ If you need to change the priority during the evaluation, use parentheses – _i
 
 ## Rstudio | Working directory and projects
 
-### Working directory
-
 It is where **R** is looking for files (read or write).  
 Using the console, try:
 
+###{.col-4}
 ```{r, prompt = TRUE, eval = FALSE}
 getwd()
 ```
 
+### setwd() or relative paths {.col-8 .box .bg-red}
+
 - It is possible to change the location using `setwd()` (in the console or interactively in _RStudio_)
 - A better way is to use projects in Rstudio
 
-### Projects
+### Projects {.box .col-8 .bg-green}
 
 They solve most issues with working directories: get rid of `setwd()`
 
-<div class = "centered">
-![](./img/01_rstudio_project.jpg)
-</div>
+### {.col-4}
 
-# Data types and structures
+![](./img/01_rstudio_project.jpg)
+
+
+### R base {.bg-orange .col-12 .box}
+
+We could let **base** down, but the **tidyverse** is wrapping around it. Some functions need to be known
+
+# Data types and structures | R base
 
 ## 4 main types
 
 Type          | Example
 ------------- | ---------------------------
 numeric       | integer (2), double (2.34)
-string        | "biostat !"
+string        | "tidyverse !"
 boolean       | TRUE / FALSE
 complex       | 2+0i
 
@@ -260,17 +368,81 @@ complex       | 2+0i
 
 ```{r, eval = FALSE}
 NA   # not available, missing data
+NA_real_
+NA_integer_
+NA_character_
+NA_complex_
 NULL # empty
 ```
 
 ## Structures
 
->- Vectors
->- Factors
->- Matrix (2D), Arrays ($\geq$ 3D)
->- Lists
->- Data frames
 
+### Vectors {.col-5 .box .stretch}
+
+`c()` is the function for **concatenate**
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+```{r, row = TRUE, collapse = TRUE}
+4
+c(43, 5.6, 2.90)
+```
+
+
+### Factors {.col-5 .box .stretch}
+
+convert strings to factors, `levels` is the dictionary
+
+### Example {.col-7 .box .bg-cobalt}
+
+```{r, row = TRUE, collapse = TRUE}
+factor(c("AA", "BB", "AA", "CC"))
+```
+
+### Matrix (2D), Arrays ($\geq$ 3D) {.col-5 .box .stretch}
+
+won't dig into those
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+```{r, row = TRUE, collapse = TRUE}
+matrix(1:4, nrow = 2)
+```
+
+### Lists {.col-5 .box .bg-green}
+
+very important as can contain anything
+
+### Example {.col-7 .box .bg-cobalt}
+
+```{r, row = TRUE, collapse = TRUE}
+list(f = factor(c("AA", "AA")),
+     v = c(43, 5.6, 2.90),
+     s = 4)
+```
+
+
+## Data frames are special lists
+
+###  `data.frame` {.col-5 .box .bg-green .stretch}
+
+same as list **but** where all objects _must_ have the **same** length
+
+### Example {.col-7 .box .bg-cobalt .stretch}
+
+
+```{r, include=FALSE}
+library(dplyr)
+```
+
+
+```{r, row = TRUE, collapse = TRUE}
+data.frame(
+  f = c("AA", "AA", "BB") %>% factor(),
+  v = c(43, 5.6, 2.90),
+  s = rep(4, 3))
+```
 
 ## Data types 2
 
@@ -279,6 +451,8 @@ NULL # empty
 typeof(2)
 # check
 is.integer(2.34)
+# check with an actual integer
+is.integer(2L)
 # convert
 as.integer(2.34)
 ```
@@ -299,7 +473,6 @@ Now look at what the **`:`** operator does:
 
 How many elements are in the thing we made here? What does the **[24]** signify?
 
-<!-- ---- splitting does not work with smaller: true -->
 ##
 
 Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the **`c`** function:
@@ -362,9 +535,7 @@ Remember what the : operator does? Take a look:
 
 Can you see how `LETTERS[3:10]` works now?
 
-##
-
-Exercise
+## Exercise
 
 - find a way to output the following
 ```{r, echo = FALSE}
@@ -506,7 +677,10 @@ women[4, 2] # [row, col]
 
 ## Logical operators
 
-In addition to the arithmetic operators (that were already presented) R provides the possiblity to perform comparisons:
+In addition to the arithmetic operators 
+
+
+### Perform comparisons {.bg-green .box .col-9}
 
 * `==` equal
 * `!=` different
@@ -518,40 +692,72 @@ In addition to the arithmetic operators (that were already presented) R provides
 * `&`, `&&` and
 * `|`, `||` or
 
-## Logical operators | Subtle differences
 
-The **double logicals** (`||` and `&&`) are **not** vectorized compared to the single ones (`|` and `&`).
+## Using `library()`
+
+
+### library {col-6 .box .bg-green}
+
 
 ```{r}
-((-2:2) >= 0) & ((-2:2) <= 0)
-((-2:2) >= 0) && ((-2:2) <= 0)
+library(dplyr)
 ```
 
-The double-character version evaluates only the first elements of each vector!
+### Conflicts! {col-6 .box .bg-red}
 
-see section [8.2.17 in R inferno](http://www.burns-stat.com/pages/Tutor/R_inferno.pdf)
+When 2 packges export a function with the same name, the latest loaded wins
 
-## Identifying missing data
 
-```{r}
-v <- c(1:3, NA, NA, 5:8, NA)
-v
-is.na(v)
-```
 
-```{r}
-which(is.na(v)) # Extract index of NA values
-v[!is.na(v)]    # Return vector elements which are not NA
+**Solution**: using the `::` operator to ensure calling a function from a specific package 
+
+```{r, eval = FALSE}
+dplyr::select()
 ```
 
 
-## Style
+## Pipes with magrittr | developped by Stefan Milton Bache
+
+![](https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/3632/small/1419844831/magrittr.png)
+
+compare the approaches between classic parenthesis and the [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html) pipeline
+
+### R base {.bg-yellow .box .col-6}
+
+```{r}
+set.seed(12)
+round(mean(rnorm(5)), 2)
+```
+
+
+### magrittr {.bg-green .box .col-6}
+
+```{r}
+set.seed(12)
+rnorm(5) %>%
+  mean() %>%
+  round(2)
+```
+
+Of note, `magrittr` needs to loading with either
+```{r, eval = FALSE}
+library(magrittr)
+library(dplyr)
+library(tidyverse)
+```
+
+
+
+## Coding's style
 
 `R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
 
-See [Hadley's recommendations](http://adv-r.had.co.nz/Style.html)
+See [Hadley's recommendations](http://style.tidyverse.org/)
 
 In summary:
+
+
+### Good {.bg-green .box .col-6}
 
 - use **spaces**
 - use more **lines**
@@ -563,8 +769,11 @@ In summary:
     + break list definitions, function arguments ...
 - avoid using names of existing functions and variables
   
-```{r}
-# Bad (example from http://adv-r.had.co.nz/Style.html)
+  
+### Bad {.bg-red .box .col-6}  
+  
+```{r, eval = FALSE}
+# example from http://adv-r.had.co.nz/Style.html
 T <- FALSE
 c <- 10
 mean <- function(x) sum(x)
