@@ -30,7 +30,7 @@ This workshop is composed of 30 hours:
 - very short exercises included
 - convert them to pdf using chrome
 
-### practical sessions {.col-4 .box .bg-yellow .stretch}
+### practical sessions {.boxl-4 .bg-yellow .stretch}
 
 - ~ 15 hours
 - using your own laptop
@@ -48,21 +48,21 @@ This workshop is composed of 30 hours:
 ## Time table and contents
 
 
-### Day 1 {.col-8 .box .bg-green}
+### Day 1 {.box-8 .bg-green}
 - Session 1
     + Introduction to R and RStudio (AG)
-    + Transiting from other languages 
-    + Basic data types, control structures, loops
+    + Basic data types, control structures
 
 - Session 2
     + Markdown (EK)
-    + Importing data into R (`readr`) 
+    + Importing data into R (`readr`) (EK)
     
-- Setup _Bring Your Own data Session_ (Day 4 )
+- Setup _Bring Your Own data Session_ (Day 4)
 
 ## Time table | (cont.)
 
-### Day 2 {.col-8 .box .bg-green}
+### Day 2 {.box-8 .bg-green}
+
 - Session 1
     + Introduction to tidy data (RK)
 - Session 2
@@ -72,22 +72,20 @@ This workshop is composed of 30 hours:
 
 ## Time table | (cont.)
 
-### Day 3 {.col-8 .box .bg-green}
+### Day 3 {.box-8 .bg-green}
 
-- Day 3 -- Session 1
+- Session 1
     + Functional programming with `purrr` (EK)
-- Day 3 -- Session 2  
+- Session 2  
     + Handling statistical models with `broom` (AG)
+- Session 3  
+    + Programming with `tidyeval` (AG)
 
-- Day 4 — Project work 
-    + Project (BYOD) 
-    + Microarray analysis project
+### Day 4 {.box-8 .bg-green}
 
-### Day 4 {.col-8 .box .bg-green}
 - Project work 
     + Project (_BYOD_) or
     + Microarray analysis
-
 
 
 ## What is R? {.vs2}
@@ -321,7 +319,7 @@ knitr::include_graphics("img/01_r_documentation_trends_20170418.png")
 
 ### {.offset-4 .col-6 }
 
-source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)
+<span class="x-small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
 
 
 ## Tidyverse | trends
@@ -334,7 +332,7 @@ knitr::include_graphics("img/01_r_documentation_trends_20170418_tv.png")
 
 ### {.col-6 .offset-4} 
 
-<span class="xx-small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
+<span class="x-small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
 
 
 # RStudio
@@ -360,7 +358,7 @@ It makes working with R much easier
 >- _Keyboard shortcuts_
 >- [_Notebooks_](https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/)
 
-### Warning {.col-3 .box .bg-orange}
+### Warning {.box-3 .bg-orange}
 Don't mix up **R** and **RStudio**.  
 **R** needs to be installed first.
 
@@ -430,7 +428,7 @@ You will not be surprised that **R** is very good at computing
 - `%%`: modulo (remainder after division)
 - `%/%`: integer division
 
-### Remember {.col-6 .bg-orange .box}
+### Remember {.box-6 .bg-orange .stretch}
 
  **R** will:
 
@@ -509,7 +507,7 @@ c(43, 5.6, 2.90)
 
 convert strings to factors, `levels` is the dictionary
 
-### Example {.col-7 .box .bg-cobalt}
+### Example {.box-7 .bg-cobalt .stretch}
 
 ```{r, row = TRUE, collapse = TRUE}
 factor(c("AA", "BB", "AA", "CC"))
@@ -811,7 +809,7 @@ In addition to the arithmetic operators
 ## Using `library()` {.vs2}
 
 
-###  {.col-6 .box .bg-yellow}
+### with only `base` loaded {.col-6 .box .bg-yellow}
 
 ```{r, include=FALSE}
 detach("package:dplyr", unload = TRUE)
@@ -824,19 +822,28 @@ filter(x, rep(1, 3))
 ```
 
 
-### Conflicts! when 2 packages export a function {.col-6 .box .bg-red}
+### Conflicts! when 2 packages export a function {.box-6 .bg-red}
 
 with the same name, the latest loaded wins
 
 ```{r, eval = FALSE}
 library(dplyr)
 filter(x, rep(1, 3))
-
-#Error in UseMethod("filter_") : no applicable method for 'filter_' applied to an object of class "c('integer', 'numeric')"
 ```
 
-### **Solution** using the `::` operator to call a function from a specific package {.box .col-10 .offset-1 .bg-green}
+```{css}
+.error {
+    font-family: monospace;
+    color: red;
+}
+```
 
+<span class = "error">Error in UseMethod("filter_") : no applicable method for 'filter_' applied to an object of class "c('integer', 'numeric')</span>
+
+
+### **Solution**  {.box-10 .offset-1 .bg-green}
+
+using the `::` operator to call a function from a specific package
 
 ```{r}
 stats::filter(x, rep(1, 3))
