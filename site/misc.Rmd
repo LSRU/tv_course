@@ -6,10 +6,12 @@ output:
     toc_float: yes
 ---
 
-## Useful rstudio shortcuts
+## Useful Rstudio shortcuts
 
-- Scripting (replace  <kbd>Cmd</kbd> by <kbd>Ctrl</kbd> for PC)
-    + <kbd>Cmd</kbd> + <kbd>-</kbd>: insert <kbd> <- </kbd>
+replace <kbd>Cmd</kbd> by <kbd>Ctrl</kbd> for PC
+
+- Scripting 
+    + <kbd>Alt</kbd> + <kbd>-</kbd>: insert <kbd> <- </kbd>
     + <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd>: insert <kbd>%>%</kbd>
     + <kbd>Cmd</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd>: insert code chunk
     + <kbd>Alt</kbd> + <kbd>↑</kbd> or <kbd>↓</kbd>: move line up / down

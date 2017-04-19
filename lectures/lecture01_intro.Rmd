@@ -178,7 +178,7 @@ vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"
 
 **R base** is complex, has a long history and many contributors
 
-### Why R is hard to learn {.bg-yellow .box .col-11}
+### Why R is hard to learn {.bg-yellow .box-11}
 
 >- Unhelpful help `?print`
 >- generic methods `print.data.frame`
@@ -191,7 +191,7 @@ vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"
 
 ### {.col-8 .offset-4} 
 
-source: [Robert A. Muenchen' blog](http://r4stats.com/articles/why-r-is-hard-to-learn/)
+<span class = "small">source: [Robert A. Muenchen' blog](http://r4stats.com/articles/why-r-is-hard-to-learn/)</span>
 
 %end%
 
@@ -205,7 +205,7 @@ We think the [**tidyverse**](http://tidyverse.org/) is better, especially for be
 - unified
 - consistent
 
-### Hadley Wickham {.box .col-8}
+### Hadley Wickham {.box-8}
 
 [Hadley](http://had.co.nz), chief scientist at **Rstudio**, coined the _tidyverse_ at [userR meeting in 2016](https://twitter.com/drob/status/748196885307920385).
 He developed and maintains most of the core _tidyverse_ packages
@@ -319,7 +319,7 @@ knitr::include_graphics("img/01_r_documentation_trends_20170418.png")
 
 ### {.offset-4 .col-6 }
 
-<span class="x-small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
+<span class="small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
 
 
 ## Tidyverse | trends
@@ -332,7 +332,7 @@ knitr::include_graphics("img/01_r_documentation_trends_20170418_tv.png")
 
 ### {.col-6 .offset-4} 
 
-<span class="x-small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
+<span class="small">source: [rdocumentation](https://www.rdocumentation.org/trends) (2017/04/18)</span>
 
 
 # RStudio
@@ -570,9 +570,11 @@ is.integer(2L)
 as.integer(2.34)
 ```
 
+# Vectors
+
 ## Vectors
 
-**Vectors** are the simplest type of "object" in R.
+**Vectors** are the simplest type of _object_ in **R**.
 ```{r}
 print(5)
 ```
@@ -586,37 +588,61 @@ Now look at what the **`:`** operator does:
 
 How many elements are in the thing we made here? What does the **[24]** signify?
 
-##
+## Vectors | concatenate
 
-Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the **`c`** function:
+Think of vectors as collections of simple things (like numbers) that are ordered.
+We can create vectors from other vectors using the **`c`** function:
 
 ```{r}
 c(2, TRUE, "a string")
 ```
 
-We can use the assignment operator to associate a name to our vectors in order to reuse them:
+We can use the **assignment operator** `<-` to associate a name to our vectors in order to reuse them:
 ```{r}
-myvec <- c(3, 4, 1:3)
-myvec
+my_vec <- c(3, 4, 1:3)
+my_vec
 ```
 
-##
+### Tip {.box-6 .bg-green}
 
-The following will build a character vector. We know this because the elements are all in quotes.
+Rstudio has the built-in shortcut <kbd>Alt</kbd>+<kbd>-</kbd> for `<-`
+
+
+### Advice {.box-6 .bg-orange .stretch}
+
+Even if `=` works also for `<-`, don't use it, see [why](https://ironholds.org/projects/rbitrary/#okay.-and-should-we-be-using---or-people-keep-telling-me-to-use--.)
+
+## Vectors | (cont.)
+
+The following will build a _character_ vector. We know this because the elements are all in "quotes".
 
 ```{r}
-char.vec <- c("dog", "cat", "ape")
+char_vec <- c("dog", "cat", "ape")
 ```
 
-Now use the **`c`** function to combine a length-one vector number of the number `4` with the `char.vec`. What happens?
+Now use the **`c`** function to combine a length-one vector number of the number `4` with the `char_vec`. What happens?
 
 ```{r}
-c(4, char.vec)
+c(4, char_vec)
 ```
 
-Notice that the 4 is quoted. R turned it into a character vector and then combined it with char.vec.   All the elements in a vector must be of the same type.
+Notice that the 4 is quoted. **R** turned it into a **character** vector and then combined it with `char_vec`.   
 
-##
+### Remember {.box-6 .bg-green}
+
+All elements in a **atomic** vector **must** be of the **same** type. Otherwise, they are silently coerced.
+
+
+## Vectors | Hierachy {.vs2}
+
+```{r, echo = FALSE, out.width = "50%"}
+knitr::include_graphics("http://r4ds.had.co.nz/diagrams/data-structures-overview.png")
+```
+
+
+<span class = "small">source: **H. Wickham** - [_R_ for data science](http://r4ds.had.co.nz/vectors.html), [licence CC](http://creativecommons.org/licenses/by-nc-nd/3.0/us/)</span>
+
+## Vectors | built-in
 
 R has a few built in vectors. One of these is `LETTERS`. What does it contain?
 
@@ -624,77 +650,133 @@ R has a few built in vectors. One of these is `LETTERS`. What does it contain?
 LETTERS
 ```
 
-How do extract the first element from this (the letter A). Here is how to do it:
+How do extract the first element from this (the letter `A`). Here is how to do it:
+
+### {.col-6}
 
 ```{r}
 LETTERS[1]
 ```
 
-Use the square brackets to subset vectors
+### {.col-6}
 
-##
+Use the square brackets `[]` to subset vectors
 
-What do we do if we need more than one element? Here is how to get elements in position 3 through to 10:
+## Vectors | subset {.vs2}
+
+### Important {.box-8 .offset-2 .bg-orange}
+
+Unlike **python** or **Perl**, vectors use **1-based** index!!
+
+%end%
+
+### How to extract > 1 element {.col-6}
+
+select elements from position **3** to **10**:
 
 ```{r}
 LETTERS[3:10]
 ```
 
-Remember what the : operator does? Take a look:
+### Remember what the `:` operator does? {.col-6}
+
+Take a look:
 
 ```{r}
 3:10
 ```
 
+%end%
+
 Can you see how `LETTERS[3:10]` works now?
 
-## Exercise
+## Exercise {.vs2}
 
-- find a way to output the following
+### find a way to output {.box-8}
 ```{r, echo = FALSE}
 LETTERS[2:5]
 ```
 
-- find a way to output the following
+%end%
+
+###  find a way to output{.box-8}
 ```{r, echo = FALSE}
 LETTERS[c(2:5, 7)]
 ```
+%end%
 
-- find a way to output first 5 letters + one to the last
+###  find a way to output first 5 letters + one to the last {.box-8 .stretch}
 ```{r, echo = FALSE}
 LETTERS[c(1:5, length(LETTERS) - 1)]
 ```
 
+###  Tip {.box-4 .bg-blue}
 
-##
+the length of a vector is provided by `length()`
 
-Solution
+###  find a way to output all letters **except** the first one {.box-8 .stretch}
+```{r, echo = FALSE}
+LETTERS[-1]
+```
 
-```{r, eval = FALSE}
+###  Tip {.box-4 .bg-blue}
+
+subsetting could use negative indexes
+
+## Solution {.vs2}
+
+- indexes from **2** to **5**
+```{r, row = TRUE}
 LETTERS[2:5]
 ```
-
-```{r, eval = FALSE}
+</br>
+- indexes from **2** to **5** + **7**
+```{r, row = TRUE}
 LETTERS[c(2:5, 7)]
 ```
-```{r, eval = TRUE}
+</br>
+- indexes from **1** to **5** + last one
+```{r, row = TRUE}
 LETTERS[c(1:5, length(LETTERS) - 1)]
 ```
-
-## Vectorized operation
-
-```{r}
-myvec <- 10:18
-myvec + 2
+</br>
+- indexes except **1** 
+```{r, row = TRUE}
+LETTERS[-1]
 ```
 
-**R** recycles vectors that are too short:
+## Named vectors {.vs2}
+
+Like the `dict` in **python** or associative array in **Perl**, characters can be used as indexes
 
 ```{r}
-myvec * c(1:3)
+char_vec[1]
+names(char_vec) <- c("first", "second", "third")
+char_vec["first"]
 ```
 
-## Vectorized operation
+Of note, see that the `[1]` is no longer displayed
+
+```{r}
+char_vec
+```
+
+
+## Vectorized operation {.vs2}
+
+```{r}
+my_vec <- 10:18
+my_vec + 2
+```
+</br>
+
+**R** _recycles_ vectors that are too short, without any warnings:
+
+```{r}
+my_vec * c(1:3)
+```
+
+## Vectorized operation | (cont.) {.vs2}
 
 Have a look at the following operation:
 
@@ -702,22 +784,69 @@ Have a look at the following operation:
 c(1:3) + c(1:2) * c(1:4)
 ```
 
-The detailed steps _R_ performs _behind the scene_ are:
+### Details {.box-8 .bg-green}
 
-```{r, eval = FALSE}
+Steps _R_ performs _behind the scene_ are:
+
+```{r}
 c(1, 2, 3, 1) + (c(1, 2, 1, 2) * c(1, 2, 3, 4))
+```
+```{r}
 c(1, 2, 3, 1) + c(1, 4, 3, 8)
 ```
+
+
+
+## Vectors | tricky filling {.vs2}
+
+```{r}
+x <- numeric(10)
+x[20] <- 1
+head(x, 20)
+```
+
+<span class = "small">source: [Kevin Ushey](http://kevinushey.github.io/blog/2015/04/05/debugging-with-valgrind/)</span>
+
+### Warning! {.box-6 .bg-orange}
+
+Unlike **python** that will output <span class = "error">index out of range</span>, R **expand** and fill with **missing values** silently
 
 ## Factors
 
 Vectors with qualitative data
 
 ```{r}
-factor(c("cytoplasm", "nucleus", "extracellular", "nucleus", "nucleus"))
+my_f <- factor(c("cytoplasm", "nucleus", "extracellular", "nucleus", "nucleus"))
+my_f
 ```
 
-## Matrix
+### Representation {.box-6}
+
+Actually, data are represented with numbers 
+
+```{r}
+str(my_f)
+```
+
+
+### Dictionary {.box-6 .stretch}
+
+ids are called **levels**. Default is alphabetical sorting
+
+```{r}
+levels(my_f)
+```
+
+%end%
+
+### {.col-10 .middle}
+For moving around those `levels`, safest way is to use the [forcats](http://forcats.tidyverse.org/) package
+
+### {.col-2 .box}
+
+![](http://forcats.tidyverse.org/logo.png)
+
+## Matrix {.vs2}
 
 A matrix is a **2D** array
 
@@ -739,53 +868,103 @@ A <- array(1:24, dim = c(2, 4, 3))
 A
 ```
 
-## Lists
+## Lists {.vs2}
 
-Most permissive type. Could be anything!
-```{r}
-l <- list(name = "Farina", firstname = "Geoff", year = 1995)
+Also named _recursive vectors_. Most permissive type, could contain anything and be nested!
+
+### {.box-8}
+
+
+```{r, echo = FALSE, out.width = "90%"}
+knitr::include_graphics("http://r4ds.had.co.nz/diagrams/lists-structure.png")
 ```
-<div class = "float-r">![](./img/hadley_pepper.png)</div>
+
+
+### {.col-4}
+
+- **squares** are atomic
+- **rounded** are lists
+
+<span class = "small">source: **H. Wickham** - [_R_ for data science](http://r4ds.had.co.nz/vectors.html#lists), [licence CC](http://creativecommons.org/licenses/by-nc-nd/3.0/us/)</span>
+
+## Lists | Pepper analogy {.vs2}
+
+### {.col-6}
+
+<blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a>. Inspired by the Residence Inn <a href="http://t.co/YQ6axb2w7t">pic.twitter.com/YQ6axb2w7t</a></p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/643381054758363136">14 septembre 2015</a></blockquote>
+<script async src="https//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+### Example {.box-6}
+
+```{r}
+l <- list(name = "Farina",
+          firstname = "Geoff",
+          year = 1995)
+```
+
 ```{r}
 l["firstname"]
 l[["firstname"]]
 ```
 
-Have a look at [R for data science](http://r4ds.had.co.nz/lists.html) for a description of the analogy by Hadley Wickham.
+### Question {.box-5 .bg-yellow}
 
-## Data frame
+How to subset a single pepper seed?
 
-It's the most important type to recall.  
-`ggplot2` and `dplyr` are focusing on those.
+
+
+## Data frames {.vs2}
+
+It's the most important type to recall. All the `tidyverse` is focusing on those. 
+
+Actually on tweaked `data.frame`: **tibbles**
+
+### definition {.box-6 .bg-green}
+
+data.frame are lists where all columns (_i.e_ `vectors`) are of the **same** length
+
+### built-in example {.box-6}
 
 ```{r}
 women
 ```
 
-## Convert to a data frame
+##  Data frames | subset
 
-The function `as.data.frame()` allows to convert a matrix / list into a `data.frame`.  
-A data frame can be considered as a collection of vectors having the **same length**.
+We can extract a vector (colum) from a data frame in a few different ways:
 
-We can extract a vector from a data frame in a few different ways:
-
+### Using the double `[[]]` {.box-6}
 ```{r}
-# Using the name and the $ operator
-women$height
-# using [[]], name in quotes or indices
 women[["height"]]
 ```
 
-Remember the analogy introduced by Hadley Wickham to explain lists indexing:  The _pepper shaker_ also applies to data frames.
+### Or its alias: the `$` operator {.box-6}
+```{r}
+women$height
+```
+
+</br> 
+
+### Remember the _pepper analogy_ introduced by Hadley? {.box-9 .bg-yellow}
+
 What would be the output of `women["height"]`?
 
-## Data frame as a table
+
+## Data frame as a table {.vs2}
 
 A data frame can be considered as a table and extract a specify a cell by its `row` and `column`:
 
+### first 5 rows {.box-6}
 ```{r}
 head(women, 5)
-women[4, 2] # [row, col]
+```
+
+### only one cell with `[]` {.box-6}
+
+- first coordinate = **row**, col]
+- second coordinate = **col**
+```{r}
+women[4, 2] 
 ```
 
 ## Logical operators
@@ -854,7 +1033,7 @@ library(dplyr)
 ```
 
 
-## Pipes with magrittr | developped by Stefan Milton Bache
+## Pipes with magrittr | developed by Stefan Milton Bache
 
 ![](https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/3632/small/1419844831/magrittr.png)
 
@@ -877,7 +1056,7 @@ rnorm(5) %>%
   round(2)
 ```
 
-Of note, `magrittr` needs to loading with either
+Of note, `magrittr` needs to loaded with either:
 ```{r, eval = FALSE}
 library(magrittr)
 library(dplyr)
@@ -890,7 +1069,7 @@ library(tidyverse)
 
 `R` is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.
 
-See [Hadley's recommendations](http://style.tidyverse.org/)
+See [tidyverse style's recommendations](http://style.tidyverse.org/)
 
 In summary:
 
@@ -906,7 +1085,7 @@ In summary:
     + using the pipe `%>%` to display a single instruction per line
     + break list definitions, function arguments ...
 - avoid using names of existing functions and variables
-  
+- use **`snake_case`** more than `CamelCases`  
   
 ### Bad {.bg-red .box .col-6}  
   
@@ -915,6 +1094,10 @@ In summary:
 T <- FALSE
 c <- 10
 mean <- function(x) sum(x)
+```
+```{r, eval=FALSE}
+# lack spaces for readibility
+average<-mean(feet/12+inches,na.rm=TRUE)
 ```
 
 

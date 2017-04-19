@@ -341,7 +341,8 @@ help(log)</pre></div>
 
 </div></div><div class = 'row'><div class = 'col-8 offset-4'>
 
-<p>source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>Robert A. Muenchen&#39; blog</a></p>
+<p><span class="small">
+source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>Robert A. Muenchen&#39; blog</a></span></p>
 
 </div></div>
 
@@ -493,7 +494,7 @@ Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyve
 
 <div class = 'row'><div class = 'offset-4 col-6'>
 
-<p><span class="x-small">
+<p><span class="small">
 source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends-1" class="smaller ">
@@ -502,7 +503,7 @@ source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation<
 
 <div class = 'row'><div class = 'col-6 offset-4'>
 
-<p><span class="x-small">
+<p><span class="small">
 source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>RStudio</h2></hgroup><article  id="rstudio" class="smaller ">
@@ -803,9 +804,11 @@ as.integer(2.34)</pre>
 
 <pre >[1] 2</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors</h2></hgroup><article  id="vectors-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Vectors</h2></hgroup><article  id="vectors-1" class="smaller ">
 
-<p><strong>Vectors</strong> are the simplest type of &quot;object&quot; in R.</p>
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors</h2></hgroup><article  id="vectors-2" class="smaller ">
+
+<p><strong>Vectors</strong> are the simplest type of <em>object</em> in <strong>R</strong>.</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>print(5)</pre>
@@ -822,7 +825,7 @@ as.integer(2.34)</pre>
 
 <p>How many elements are in the thing we made here? What does the <strong>[24]</strong> signify?</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-6" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> concatenate</h3></hgroup><article  id="vectors-concatenate" class="smaller ">
 
 <p>Think of vectors as collections of simple things (like numbers) that are ordered. We can create vectors from other vectors using the <strong><code>c</code></strong> function:</p>
 
@@ -831,31 +834,50 @@ as.integer(2.34)</pre>
 
 <pre >[1] &quot;2&quot;        &quot;TRUE&quot;     &quot;a string&quot;</pre></div>
 
-<p>We can use the assignment operator to associate a name to our vectors in order to reuse them:</p>
+<p>We can use the <strong>assignment operator</strong> <code>&lt;-</code> to associate a name to our vectors in order to reuse them:</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>myvec &lt;- c(3, 4, 1:3)
-myvec</pre>
+<pre class = 'prettyprint lang-r'>my_vec &lt;- c(3, 4, 1:3)
+my_vec</pre>
 
 <pre >[1] 3 4 1 2 3</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-7" class="smaller ">
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>Tip</h3>
 
-<p>The following will build a character vector. We know this because the elements are all in quotes.</p>
+<p>Rstudio has the built-in shortcut <kbd>Alt</kbd>+<kbd>-</kbd> for <code>&lt;-</code></p>
+
+</div><div class = 'box col-6 bg-orange stretch'><h3>Advice</h3>
+
+<p>Even if <code>=</code> works also for <code>&lt;-</code>, don&#39;t use it, see <a href='https://ironholds.org/projects/rbitrary/#okay.-and-should-we-be-using---or-people-keep-telling-me-to-use--.' title=''>why</a></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> (cont.)</h3></hgroup><article  id="vectors-cont." class="smaller ">
+
+<p>The following will build a <em>character</em> vector. We know this because the elements are all in &quot;quotes&quot;.</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>char.vec &lt;- c(&quot;dog&quot;, &quot;cat&quot;, &quot;ape&quot;)</pre></div>
+<pre class = 'prettyprint lang-r'>char_vec &lt;- c(&quot;dog&quot;, &quot;cat&quot;, &quot;ape&quot;)</pre></div>
 
-<p>Now use the <strong><code>c</code></strong> function to combine a length-one vector number of the number <code>4</code> with the <code>char.vec</code>. What happens?</p>
+<p>Now use the <strong><code>c</code></strong> function to combine a length-one vector number of the number <code>4</code> with the <code>char_vec</code>. What happens?</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>c(4, char.vec)</pre>
+<pre class = 'prettyprint lang-r'>c(4, char_vec)</pre>
 
 <pre >[1] &quot;4&quot;   &quot;dog&quot; &quot;cat&quot; &quot;ape&quot;</pre></div>
 
-<p>Notice that the 4 is quoted. R turned it into a character vector and then combined it with char.vec. All the elements in a vector must be of the same type.</p>
+<p>Notice that the 4 is quoted. <strong>R</strong> turned it into a <strong>character</strong> vector and then combined it with <code>char_vec</code>.</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-8" class="smaller ">
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>Remember</h3>
+
+<p>All elements in a <strong>atomic</strong> vector <strong>must</strong> be of the <strong>same</strong> type. Otherwise, they are silently coerced.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> Hierachy</h3></hgroup><article  id="vectors-hierachy" class="smaller vs2">
+
+<p><img src="http://r4ds.had.co.nz/diagrams/data-structures-overview.png" width="50%" /></p>
+
+<p><span class="small">
+source: <strong>H. Wickham</strong> - <a href='http://r4ds.had.co.nz/vectors.html' title=''><em>R</em> for data science</a>, <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/us/' title=''>licence CC</a></span></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> built-in</h3></hgroup><article  id="vectors-built-in" class="smaller ">
 
 <p>R has a few built in vectors. One of these is <code>LETTERS</code>. What does it contain?</p>
 
@@ -865,87 +887,170 @@ myvec</pre>
 <pre > [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot;
 [18] &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</pre></div>
 
-<p>How do extract the first element from this (the letter A). Here is how to do it:</p>
+<p>How do extract the first element from this (the letter <code>A</code>). Here is how to do it:</p>
+
+<div class = 'row'><div class = 'col-6'>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>LETTERS[1]</pre>
 
 <pre >[1] &quot;A&quot;</pre></div>
 
-<p>Use the square brackets to subset vectors</p>
+</div><div class = 'col-6'>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-9" class="smaller ">
+<p>Use the square brackets <code>[]</code> to subset vectors</p>
 
-<p>What do we do if we need more than one element? Here is how to get elements in position 3 through to 10:</p>
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> subset</h3></hgroup><article  id="vectors-subset" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-orange'><h3>Important</h3>
+
+<p>Unlike <strong>python</strong> or <strong>Perl</strong>, vectors use <strong>1-based</strong> index!!</p>
+
+</div></div>
+
+<div class = 'row'><div class = 'col-6'><h3>How to extract &gt; 1 element</h3>
+
+<p>select elements from position <strong>3</strong> to <strong>10</strong>:</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>LETTERS[3:10]</pre>
 
 <pre >[1] &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot;</pre></div>
 
-<p>Remember what the : operator does? Take a look:</p>
+</div><div class = 'col-6'><h3>Remember what the <code>:</code> operator does?</h3>
+
+<p>Take a look:</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>3:10</pre>
 
 <pre >[1]  3  4  5  6  7  8  9 10</pre></div>
 
+</div></div>
+
 <p>Can you see how <code>LETTERS[3:10]</code> works now?</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exercise</h2></hgroup><article  id="exercise" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exercise</h2></hgroup><article  id="exercise" class="smaller vs2">
 
-<ul>
-<li>find a way to output the following</li>
-</ul>
+<div class = 'row'><div class = 'box col-8'><h3>find a way to output</h3>
 
 <div class="chunk shadow">
 <pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</pre></div>
 
-<ul>
-<li>find a way to output the following</li>
-</ul>
+</div></div>
+
+<div class = 'row'><div class = 'box col-8'><h3>find a way to output</h3>
 
 <div class="chunk shadow">
 <pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;G&quot;</pre></div>
 
+</div></div>
+
+<div class = 'row'><div class = 'box col-8 stretch'><h3>find a way to output first 5 letters + one to the last</h3>
+
+<div class="chunk shadow">
+<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div>
+
+</div><div class = 'box col-4 bg-blue'><h3>Tip</h3>
+
+<p>the length of a vector is provided by <code>length()</code></p>
+
+</div></div><div class = 'row'><div class = 'box col-8 stretch'><h3>find a way to output all letters <strong>except</strong> the first one</h3>
+
+<div class="chunk shadow">
+<pre > [1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot;
+[18] &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</pre></div>
+
+</div><div class = 'box col-4 bg-blue'><h3>Tip</h3>
+
+<p>subsetting could use negative indexes</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution</h2></hgroup><article  id="solution" class="smaller vs2">
+
 <ul>
-<li>find a way to output first 5 letters + one to the last</li>
+<li>indexes from <strong>2</strong> to <strong>5</strong></li>
 </ul>
 
 <div class="chunk shadow">
-<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-10" class="smaller ">
-
-<p>Solution</p>
-
-<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
 <pre class = 'prettyprint lang-r'>LETTERS[2:5]</pre></div>
 
+<div class="col-6">
+<pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</pre></div></div></div>
+
+<p></br> - indexes from <strong>2</strong> to <strong>5</strong> + <strong>7</strong></p>
+
 <div class="chunk shadow">
+<div class="row">
+<div class="col-6">
 <pre class = 'prettyprint lang-r'>LETTERS[c(2:5, 7)]</pre></div>
 
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>LETTERS[c(1:5, length(LETTERS) - 1)]</pre>
+<div class="col-6">
+<pre >[1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;G&quot;</pre></div></div></div>
 
-<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectorized operation</h2></hgroup><article  id="vectorized-operation" class="smaller ">
+<p></br> - indexes from <strong>1</strong> to <strong>5</strong> + last one</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>myvec &lt;- 10:18
-myvec + 2</pre>
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>LETTERS[c(1:5, length(LETTERS) - 1)]</pre></div>
+
+<div class="col-6">
+<pre >[1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;Y&quot;</pre></div></div></div>
+
+<p></br> - indexes except <strong>1</strong></p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>LETTERS[-1]</pre></div>
+
+<div class="col-6">
+<pre > [1] &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;J&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;O&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot;
+[18] &quot;S&quot; &quot;T&quot; &quot;U&quot; &quot;V&quot; &quot;W&quot; &quot;X&quot; &quot;Y&quot; &quot;Z&quot;</pre></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Named vectors</h2></hgroup><article  id="named-vectors" class="smaller vs2">
+
+<p>Like the <code>dict</code> in <strong>python</strong> or associative array in <strong>Perl</strong>, characters can be used as indexes</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>char_vec[1]</pre>
+
+<pre >[1] &quot;dog&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>names(char_vec) &lt;- c(&quot;first&quot;, &quot;second&quot;, &quot;third&quot;)
+char_vec[&quot;first&quot;]</pre>
+
+<pre >first 
+&quot;dog&quot; </pre></div>
+
+<p>Of note, see that the <code>[1]</code> is no longer displayed</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>char_vec</pre>
+
+<pre > first second  third 
+ &quot;dog&quot;  &quot;cat&quot;  &quot;ape&quot; </pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectorized operation</h2></hgroup><article  id="vectorized-operation" class="smaller vs2">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>my_vec &lt;- 10:18
+my_vec + 2</pre>
 
 <pre >[1] 12 13 14 15 16 17 18 19 20</pre></div>
 
-<p><strong>R</strong> recycles vectors that are too short:</p>
+<p></br></p>
+
+<p><strong>R</strong> <em>recycles</em> vectors that are too short, without any warnings:</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>myvec * c(1:3)</pre>
+<pre class = 'prettyprint lang-r'>my_vec * c(1:3)</pre>
 
 <pre >[1] 10 22 36 13 28 45 16 34 54</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectorized operation</h2></hgroup><article  id="vectorized-operation-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectorized operation </h2><h3> (cont.)</h3></hgroup><article  id="vectorized-operation-cont." class="smaller vs2">
 
 <p>Have a look at the following operation:</p>
 
@@ -957,23 +1062,77 @@ of shorter object length</pre>
 
 <pre >[1] 2 6 6 9</pre></div>
 
-<p>The detailed steps <em>R</em> performs <em>behind the scene</em> are:</p>
+<div class = 'row'><div class = 'box col-8 bg-green'><h3>Details</h3>
+
+<p>Steps <em>R</em> performs <em>behind the scene</em> are:</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>c(1, 2, 3, 1) + (c(1, 2, 1, 2) * c(1, 2, 3, 4))
-c(1, 2, 3, 1) + c(1, 4, 3, 8)</pre></div>
+<pre class = 'prettyprint lang-r'>c(1, 2, 3, 1) + (c(1, 2, 1, 2) * c(1, 2, 3, 4))</pre>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-1" class="smaller ">
+<pre >[1] 2 6 6 9</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>c(1, 2, 3, 1) + c(1, 4, 3, 8)</pre>
+
+<pre >[1] 2 6 6 9</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Vectors </h2><h3> tricky filling</h3></hgroup><article  id="vectors-tricky-filling" class="smaller vs2">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x &lt;- numeric(10)
+x[20] &lt;- 1
+head(x, 20)</pre>
+
+<pre > [1]  0  0  0  0  0  0  0  0  0  0 NA NA NA NA NA NA NA NA NA  1</pre></div>
+
+<p><span class="small">
+source: <a href='http://kevinushey.github.io/blog/2015/04/05/debugging-with-valgrind/' title=''>Kevin Ushey</a></span></p>
+
+<div class = 'row'><div class = 'box col-6 bg-orange'><h3>Warning!</h3>
+
+<p>Unlike <strong>python</strong> that will output <span class="error">
+index out of range</span>, R <strong>expand</strong> and fill with <strong>missing values</strong> silently</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-1" class="smaller ">
 
 <p>Vectors with qualitative data</p>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>factor(c(&quot;cytoplasm&quot;, &quot;nucleus&quot;, &quot;extracellular&quot;, &quot;nucleus&quot;, &quot;nucleus&quot;))</pre>
+<pre class = 'prettyprint lang-r'>my_f &lt;- factor(c(&quot;cytoplasm&quot;, &quot;nucleus&quot;, &quot;extracellular&quot;, &quot;nucleus&quot;, &quot;nucleus&quot;))
+my_f</pre>
 
 <pre >[1] cytoplasm     nucleus       extracellular nucleus       nucleus      
 Levels: cytoplasm extracellular nucleus</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matrix</h2></hgroup><article  id="matrix" class="smaller ">
+<div class = 'row'><div class = 'box col-6'><h3>Representation</h3>
+
+<p>Actually, data are represented with numbers</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>str(my_f)</pre>
+
+<pre > Factor w/ 3 levels &quot;cytoplasm&quot;,&quot;extracellular&quot;,..: 1 3 2 3 3</pre></div>
+
+</div><div class = 'box col-6 stretch'><h3>Dictionary</h3>
+
+<p>ids are called <strong>levels</strong>. Default is alphabetical sorting</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>levels(my_f)</pre>
+
+<pre >[1] &quot;cytoplasm&quot;     &quot;extracellular&quot; &quot;nucleus&quot;      </pre></div>
+
+</div></div>
+
+<div class = 'row'><div class = 'col-10 middle'>
+
+<p>For moving around those <code>levels</code>, safest way is to use the <a href='http://forcats.tidyverse.org/' title=''>forcats</a> package</p>
+
+</div><div class = 'col-2 box'>
+
+<img src='http://forcats.tidyverse.org/logo.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matrix</h2></hgroup><article  id="matrix" class="smaller vs2">
 
 <p>A matrix is a <strong>2D</strong> array</p>
 
@@ -1021,15 +1180,48 @@ A</pre>
 [1,]   17   19   21   23
 [2,]   18   20   22   24</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Lists</h2></hgroup><article  id="lists-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Lists</h2></hgroup><article  id="lists-1" class="smaller vs2">
 
-<p>Most permissive type. Could be anything!</p>
+<p>Also named <em>recursive vectors</em>. Most permissive type, could contain anything and be nested!</p>
+
+<div class = 'row'><div class = 'box col-8'>
+
+<p><img src="http://r4ds.had.co.nz/diagrams/lists-structure.png" width="90%" /></p>
+
+</div><div class = 'col-4'>
+
+<ul>
+<li><strong>squares</strong> are atomic</li>
+<li><strong>rounded</strong> are lists</li>
+</ul>
+
+<p><span class="small">
+source: <strong>H. Wickham</strong> - <a href='http://r4ds.had.co.nz/vectors.html#lists' title=''><em>R</em> for data science</a>, <a href='http://creativecommons.org/licenses/by-nc-nd/3.0/us/' title=''>licence CC</a></span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Lists </h2><h3> Pepper analogy</h3></hgroup><article  id="lists-pepper-analogy" class="smaller vs2">
+
+<div class = 'row'><div class = 'col-6'>
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a>. Inspired by the Residence Inn <a href="http://t.co/YQ6axb2w7t">pic.twitter.com/YQ6axb2w7t</a>
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/643381054758363136">14 septembre 2015</a>
+
+</blockquote>
+
+<script async src="https//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div><div class = 'box col-6'><h3>Example</h3>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>l &lt;- list(name = &quot;Farina&quot;, firstname = &quot;Geoff&quot;, year = 1995)</pre></div>
-
-<div class="float-r">
-<img src='./img/hadley_pepper.png' title=''/></div>
+<pre class = 'prettyprint lang-r'>l &lt;- list(name = &quot;Farina&quot;,
+          firstname = &quot;Geoff&quot;,
+          year = 1995)</pre></div>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l[&quot;firstname&quot;]</pre>
@@ -1041,11 +1233,21 @@ A</pre>
 
 <pre >[1] &quot;Geoff&quot;</pre></div>
 
-<p>Have a look at <a href='http://r4ds.had.co.nz/lists.html' title=''>R for data science</a> for a description of the analogy by Hadley Wickham.</p>
+</div></div><div class = 'row'><div class = 'box col-5 bg-yellow'><h3>Question</h3>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frame</h2></hgroup><article  id="data-frame" class="smaller ">
+<p>How to subset a single pepper seed?</p>
 
-<p>It&#39;s the most important type to recall.<br/><code>ggplot2</code> and <code>dplyr</code> are focusing on those.</p>
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frames</h2></hgroup><article  id="data-frames" class="smaller vs2">
+
+<p>It&#39;s the most important type to recall. All the <code>tidyverse</code> is focusing on those.</p>
+
+<p>Actually on tweaked <code>data.frame</code>: <strong>tibbles</strong></p>
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>definition</h3>
+
+<p>data.frame are lists where all columns (<em>i.e</em> <code>vectors</code>) are of the <strong>same</strong> length</p>
+
+</div><div class = 'box col-6'><h3>built-in example</h3>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>women</pre>
@@ -1067,28 +1269,35 @@ A</pre>
 14     71    159
 15     72    164</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Convert to a data frame</h2></hgroup><article  id="convert-to-a-data-frame" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frames </h2><h3> subset</h3></hgroup><article  id="data-frames-subset" class="smaller ">
 
-<p>The function <code>as.data.frame()</code> allows to convert a matrix / list into a <code>data.frame</code>.<br/>A data frame can be considered as a collection of vectors having the <strong>same length</strong>.</p>
+<p>We can extract a vector (colum) from a data frame in a few different ways:</p>
 
-<p>We can extract a vector from a data frame in a few different ways:</p>
+<div class = 'row'><div class = 'box col-6'><h3>Using the double <code>[[]]</code></h3>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'># Using the name and the $ operator
-women$height</pre>
-
-<pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre>
-
-<pre class = 'prettyprint lang-r'># using [[]], name in quotes or indices
-women[[&quot;height&quot;]]</pre>
+<pre class = 'prettyprint lang-r'>women[[&quot;height&quot;]]</pre>
 
 <pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre></div>
 
-<p>Remember the analogy introduced by Hadley Wickham to explain lists indexing: The <em>pepper shaker</em> also applies to data frames. What would be the output of <code>women[&quot;height&quot;]</code>?</p>
+</div><div class = 'box col-6'><h3>Or its alias: the <code>$</code> operator</h3>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frame as a table</h2></hgroup><article  id="data-frame-as-a-table" class="smaller ">
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>women$height</pre>
+
+<pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre></div>
+
+<p></br></p>
+
+</div></div><div class = 'row'><div class = 'box col-9 bg-yellow'><h3>Remember the <em>pepper analogy</em> introduced by Hadley?</h3>
+
+<p>What would be the output of <code>women[&quot;height&quot;]</code>?</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frame as a table</h2></hgroup><article  id="data-frame-as-a-table" class="smaller vs2">
 
 <p>A data frame can be considered as a table and extract a specify a cell by its <code>row</code> and <code>column</code>:</p>
+
+<div class = 'row'><div class = 'box col-6'><h3>first 5 rows</h3>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>head(women, 5)</pre>
@@ -1098,13 +1307,21 @@ women[[&quot;height&quot;]]</pre>
 2     59    117
 3     60    120
 4     61    123
-5     62    126</pre>
+5     62    126</pre></div>
 
-<pre class = 'prettyprint lang-r'>women[4, 2] # [row, col]</pre>
+</div><div class = 'box col-6'><h3>only one cell with <code>[]</code></h3>
+
+<ul>
+<li>first coordinate = <strong>row</strong>, col]</li>
+<li>second coordinate = <strong>col</strong></li>
+</ul>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>women[4, 2] </pre>
 
 <pre >[1] 123</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Logical operators</h2></hgroup><article  id="logical-operators" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Logical operators</h2></hgroup><article  id="logical-operators" class="smaller ">
 
 <p>In addition to the arithmetic operators</p>
 
@@ -1167,7 +1384,7 @@ End = 10
 Frequency = 1 
  [1] NA  6  9 12 15 18 21 24 27 NA</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pipes with magrittr </h2><h3> developped by Stefan Milton Bache</h3></hgroup><article  id="pipes-with-magrittr-developped-by-stefan-milton-bache" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pipes with magrittr </h2><h3> developed by Stefan Milton Bache</h3></hgroup><article  id="pipes-with-magrittr-developed-by-stefan-milton-bache" class="smaller ">
 
 <img src='https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/3632/small/1419844831/magrittr.png' title='fig:'/>
 
@@ -1191,7 +1408,7 @@ rnorm(5) %&gt;%
 
 <pre >[1] -0.76</pre></div>
 
-<p>Of note, <code>magrittr</code> needs to loading with either</p>
+<p>Of note, <code>magrittr</code> needs to loaded with either:</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(magrittr)
@@ -1202,7 +1419,7 @@ library(tidyverse)</pre></div>
 
 <p><code>R</code> is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.</p>
 
-<p>See <a href='http://style.tidyverse.org/' title=''>Hadley&#39;s recommendations</a></p>
+<p>See <a href='http://style.tidyverse.org/' title=''>tidyverse style&#39;s recommendations</a></p>
 
 <p>In summary:</p>
 
@@ -1224,6 +1441,7 @@ library(tidyverse)</pre></div>
 <li>break list definitions, function arguments &#8230;</li>
 </ul></li>
 <li>avoid using names of existing functions and variables</li>
+<li>use <strong><code>snake_case</code></strong> more than <code>CamelCases</code></li>
 </ul>
 
 </div><div class = 'bg-red box col-6'><h3>Bad</h3>
@@ -1233,6 +1451,10 @@ library(tidyverse)</pre></div>
 T &lt;- FALSE
 c &lt;- 10
 mean &lt;- function(x) sum(x)</pre></div>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># lack spaces for readibility
+average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Hexbins</h2></hgroup><article  id="hexbins" class="smaller ">
 
@@ -1244,7 +1466,7 @@ mean &lt;- function(x) sum(x)</pre></div>
 
 </div><div class = 'col-6'><h3>Bob Rudis</h3>
 
-<img src='img/01_hexbin_hrbrmstr.jpg' title='fig:'/></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<img src='img/01_hexbin_hrbrmstr.jpg' title='fig:'/></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
@@ -1256,7 +1478,7 @@ mean &lt;- function(x) sum(x)</pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

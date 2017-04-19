@@ -1,0 +1,16 @@
+<style type="text/css">
+
+  .bg-my_colour {
+    background-color: #7A67EE;
+  }
+
+  .box.bg-my_colour {
+    border: 2px solid #3D3477;
+    color: #fff;
+  }
+
+  .box.bg-my_colour > h3:first-child {
+    background-color: #3D3477;
+    color: #fff;
+  }
+</style>
