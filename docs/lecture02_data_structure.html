@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Data processing with R tidyverse</title>
+  <title>Data structures</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -20,12 +20,12 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Data processing with R tidyverse',
+                title: 'Data structures',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
-                        favIcon: 'lecture01_intro_files/logo.png',
+                        favIcon: 'lecture02_data_structure_files/logo.png',
               },
 
       // Author information
@@ -105,7 +105,7 @@
 <slides class="layout-widescreen">
 
   <slide class="title-slide segue nobackground">
-        <aside class="gdbar"><img src="lecture01_intro_files/logo.png"></aside>
+        <aside class="gdbar"><img src="lecture02_data_structure_files/logo.png"></aside>
         <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
@@ -115,541 +115,15 @@
           </hgroup>
   </slide>
 
-<slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
+<slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Data types and structures </h2><h3> R base</h3></hgroup><article  id="data-types-and-structures-r-base" class="smaller ">
 
-<p>The four day course provides a complete introduction to data science in <img src='img/01_Rlogo_90.png' title=''/> with the <strong>tidyverse</strong>. Focusing on getting data ready, some exploratory analysis, visualization and handling models.</p>
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Necessary R base</h2></hgroup><article  id="necessary-r-base" class="smaller vs2">
 
-<p>Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course</p>
-
-<p>This workshop is composed of 30 hours:</p>
-
-<div class = 'row'><div class = 'col-4 box bg-green'><h3>lectures</h3>
-
-<ul>
-<li>~ 8 hours</li>
-<li>available online</li>
-<li>very short exercises included</li>
-<li>convert them to pdf using chrome</li>
-</ul>
-
-</div><div class = 'boxl-4 bg-yellow stretch col-6'><h3>practical sessions</h3>
-
-<ul>
-<li>~ 15 hours</li>
-<li>using your own laptop</li>
-<li>teachers available</li>
-<li>supplementary exercises if needed</li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'col-4 box bg-orange stretch'><h3>bring your own data</h3>
-
-<ul>
-<li>~ 7 hours (Day 4)</li>
-<li>teachers available</li>
-<li>project provided for those that don&#39;t have data yet</li>
-</ul>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table and contents</h2></hgroup><article  id="time-table-and-contents" class="smaller ">
-
-<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 1</h3>
-
-<ul>
-<li>Session 1
-
-<ul>
-<li>Introduction to R and RStudio (AG)</li>
-<li>Basic data types, control structures (AG)</li>
-</ul></li>
-<li>Session 2
-
-<ul>
-<li>Markdown (EK)</li>
-<li>Importing data into R (<code>readr</code>) (EK)</li>
-</ul></li>
-<li>Setup <em>Bring Your Own data Session</em> (Day 4)</li>
-</ul>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont." class="smaller ">
-
-<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 2</h3>
-
-<ul>
-<li>Session 1
-
-<ul>
-<li>Introduction to tidy data (RK)</li>
-</ul></li>
-<li>Session 2
-
-<ul>
-<li>Visualization with <code>ggplot2</code> (AG)</li>
-</ul></li>
-<li>Session 3
-
-<ul>
-<li>Data wrangling with <code>dplyr</code> (RK)</li>
-</ul></li>
-</ul>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont.-1" class="smaller ">
-
-<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 3</h3>
-
-<ul>
-<li>Session 1
-
-<ul>
-<li>Functional programming with <code>purrr</code> (EK)</li>
-</ul></li>
-<li>Session 2
-
-<ul>
-<li>Handling statistical models with <code>broom</code> (AG)</li>
-</ul></li>
-<li>Session 3
-
-<ul>
-<li>Programming with <code>tidyeval</code> (AG)</li>
-</ul></li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 4</h3>
-
-<ul>
-<li>Project work
-
-<ul>
-<li>Project (<em>BYOD</em>) or</li>
-<li>Microarray analysis</li>
-</ul></li>
-</ul>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
-
-<p><strong>R</strong> is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
-
-<ul>
-<li>An interactive programming language</li>
-<li>Focus on data analysis (&quot;stats&quot;) and plotting</li>
-<li><strong>R</strong> is also shorthand for the ecosystem around this language
-
-<ul>
-<li>Book authors</li>
-<li>Package developers</li>
-<li>Ordinary useRs</li>
-</ul></li>
-</ul>
-
-<p>Learning to use <strong>R</strong> will make you <strong>more efficient</strong> and <strong>facilitate the use</strong> of advanced data analysis tools</p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Why use R?</h2></hgroup><article  id="why-use-r" class="smaller vs2">
-
-<ul>
-<li>It&#39;s <em>free!</em></li>
-<li>easy to install / maintain</li>
-<li>easy to process big files and analyse huge amounts of data</li>
-<li>integrated data visualization tools, <em>even dynamic</em></li>
-<li>fast, and even faster with <em>C++</em> integration via <a href='http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf' title=''>Rcpp</a>.</li>
-<li>easy to get help
-
-<ul>
-<li><a href='https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R' title=''>huge R community in the web</a></li>
-<li><a href='http://stackoverflow.com/questions/tagged/r' title=''>stackoverflow</a> with a lot of tags like <strong>tidyverse</strong>, <strong>dplyr</strong>, <strong>ggplot2</strong> etc.</li>
-<li><a href='http://www.r-bloggers.com' title=''>rbloggers</a></li>
-</ul></li>
-</ul>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Twitter R community</h2></hgroup><article  id="twitter-r-community" class="smaller ">
-
-<p><a href='https://twitter.com/search?q=%23rstats' title=''><code>#rstats</code></a> on twitter</p>
-
-<p><img src="img/01_r_community.jpg" width="95%" /></p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Constant trend</h2></hgroup><article  id="constant-trend" class="smaller ">
-
-<p><img src="img/01_r_progression.png" width="70%" style="display: block; margin: auto;" /></p>
-
-<p>From <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Packages</h2></hgroup><article  id="packages" class="smaller ">
-
-<ul>
-<li>CRAN <em><span class="green2">
-reliable: package is checked during submit process</span></em></li>
-<li><p><a href='https://github.com/' title=''>GitHub</a> using <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <em><span class="yellow2">
-Check <a href='https://github.com/hadley/readr' title=''>status</a></span></em></p>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;hadley/readr&quot;)</pre></div></li>
-<li><p><a href='https://www.bioconductor.org/' title=''>bioconductor</a>. <em><span class="yellow2">
-Check <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></span></em></p>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
-biocLite(&quot;limma&quot;)</pre></div></li>
-</ul>
-
-<div class="centered">
-<p><img src='img/01_packages_install_cran.jpg' title=''/> <img src='img/01_packages_install_devtools.jpg' title=''/></p></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
-
-<p>2 possibilities for manual pages. <strong>Vignettes</strong> are usually better</p>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>?log
-help(log)</pre></div>
-
-<p>In <strong>Rstudio</strong>, the help page can be viewed in the bottom right pane</p>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>apropos(&quot;log&quot;)</pre>
-
-<pre > [1] &quot;as.data.frame.logical&quot; &quot;as.logical&quot;           
- [3] &quot;as.logical.factor&quot;     &quot;dlogis&quot;               
- [5] &quot;is.logical&quot;            &quot;log&quot;                  
- [7] &quot;log10&quot;                 &quot;log1p&quot;                
- [9] &quot;log2&quot;                  &quot;logb&quot;                 
-[11] &quot;logical&quot;               &quot;logLik&quot;               
-[13] &quot;loglin&quot;                &quot;plogis&quot;               
-[15] &quot;qlogis&quot;                &quot;rlogis&quot;               
-[17] &quot;SSlogis&quot;              </pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
-
-<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><a href='http://tidyverse.org/' title=''>Tidyverse</a> </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator" class="smaller vs1">
-
-<p><strong>R base</strong> is complex, has a long history and many contributors</p>
-
-<div class = 'row'><div class = 'bg-yellow box col-11'><h3>Why R is hard to learn</h3>
-
-<ul class = 'build'>
-<li>Unhelpful help <code>?print</code></li>
-<li>generic methods <code>print.data.frame</code></li>
-<li>too many commands <em>open source</em></li>
-<li>inconsistent names <code>read.csv, load, readRDS</code></li>
-<li>inconsistent syntax <em>open source</em></li>
-<li>too many ways to select variables <code>df$x, df$&quot;x&quot;, df[,&quot;x&quot;], df[[1]]</code></li>
-<li>[&#8230;] see <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>r4stats&#39; post</a> for the full list</li>
-<li>the tidyverse curse</li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'col-8 offset-4'>
-
-<p><span class="small">
-source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>Robert A. Muenchen&#39; blog</a></span></p>
-
-</div></div>
-
-<blockquote class = 'bg-orange'>
-<p>Navigating the balance between base R and the tidyverse is a challenge to learn <cite> Robert A. Muenchen </p></cite>
-</blockquote>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator-1" class="smaller vs2">
-
-<p>We think the <a href='http://tidyverse.org/' title=''><strong>tidyverse</strong></a> is better, especially for beginners. It is</p>
-
-<ul>
-<li>recent (both an issue and an advantage)</li>
-<li>unified</li>
-<li>consistent</li>
-</ul>
-
-<div class = 'row'><div class = 'box col-8'><h3>Hadley Wickham</h3>
-
-<p><a href='http://had.co.nz' title=''>Hadley</a>, chief scientist at <strong>Rstudio</strong>, coined the <em>tidyverse</em> at <a href='https://twitter.com/drob/status/748196885307920385' title=''>userR meeting in 2016</a>. He developed and maintains most of the core <em>tidyverse</em> packages</p>
-
-</div><div class = 'col-4'>
-
-<p><img src="https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg" width="75%" /></p>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages</h3></hgroup><article  id="tidyverse-packages" class="smaller vs1">
-
-<img src='img/01_tidyverse_components.png' title='fig:'/>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
-
-<p><img src="img/01_tidyverse_data_science.png" width="80%" /></p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> workflow</h3></hgroup><article  id="tidyverse-workflow" class="smaller ">
-
-<div class = 'row'><div class = 'col-9'><h3>Pipeline</h3>
-
-<img src='img/01_drob_r_pipeline_600.png' title='fig:'/>
-
-</div><div class = 'col-3'><h3>David Robinson</h3>
-
-<p><span class="cite">@drob</span> on twitter</p>
-
-<img src='https://pbs.twimg.com/profile_images/777175344/David_Robinson.jpg' title='fig:'/>
-
-<img src='img/01_logo_broom.png' title='fig:'/>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> core / extended</h3></hgroup><article  id="tidyverse-criticism-core-extended" class="smaller ">
-
-<div class = 'row'><div class = 'box col-6 bg-green'><h3>Core</h3>
-
-<ul>
-<li><code>ggplot2</code>, for data visualization</li>
-<li><code>dplyr</code>, for data manipulation</li>
-<li><code>tidyr</code>, for data tidying</li>
-<li><code>readr</code>, for data import</li>
-<li><code>purrr</code>, for functional programming</li>
-<li><code>tibble</code>, for tibbles, a modern re-imagining of data frames</li>
-</ul>
-
-</div><div class = 'box col-6 bg-yellow'><h3>Extended</h3>
-
-<ul>
-<li>Working with specific types of vectors:
-
-<ul>
-<li><code>hms</code>, for times</li>
-<li><code>stringr</code>, for strings</li>
-<li><code>lubridate</code>, for date/times</li>
-<li><code>forcats</code>, for factors</li>
-</ul></li>
-<li>Importing other types of data:
-
-<ul>
-<li><code>feather</code>, for sharing with other languages</li>
-<li><code>haven</code>, for SPSS, SAS and Stata files</li>
-<li><code>httr</code>, for web apis</li>
-<li><code>jsonlite</code> for JSON</li>
-<li><code>readxl</code>, for .xls and .xlsx files</li>
-<li><code>rvest</code>, for web scraping</li>
-<li><code>xml2</code>, for XML</li>
-</ul></li>
-<li>Modelling
-
-<ul>
-<li><code>modelr</code>, for modelling within a pipeline</li>
-<li><code>broom</code>, for turning models into tidy data</li>
-</ul></li>
-</ul>
-
-<blockquote>
-<p>source: <a href='http://tidyverse.tidyverse.org/' title=''>http://tidyverse.tidyverse.org/</a> <cite> H.Wickham</p></cite>
-</blockquote>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> dialect</h3></hgroup><article  id="tidyverse-criticism-dialect" class="smaller vs2">
-
-<blockquote class="twitter-tweet" data-lang="fr">
-
-<p lang="en" dir="ltr">
-
-<a href="https://twitter.com/ucfagls"><span class="cite">@ucfagls</span></a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick
-
-</p>
-
-— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a>
-
-</blockquote>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> controversy</h3></hgroup><article  id="tidyverse-criticism-controversy" class="smaller vs2">
-
-<p><a href='http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr' title=''>SO&#39;s comment</a></p>
-
-<img src='img/01_tidyverse_contreversy.png' title='fig:'/>
-
-<p>See the popularity of the <a href='http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly' title=''>data.table versus dplyr</a> question.</p>
-
-<p>Easily summarized: <a href='https://github.com/Rdatatable/data.table/wiki' title=''><code>data.table</code></a> is faster, for less than 10 m rows, negligible.</p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> jobs</h3></hgroup><article  id="tidyverse-criticism-jobs" class="smaller vs2">
-
-<blockquote class="twitter-tweet" data-lang="fr">
-
-<p lang="en" dir="ltr">
-
-Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for job which requires knowledge of R.
-
-</p>
-
-— Yeedle N. (<span class="cite">@Yeedle</span>) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a>
-
-</blockquote>
-
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-<p>Personal complains:</p>
-
-<ul>
-<li>still young so change quickly and drastically. Backward compatibility is not always maintained.</li>
-<li><code>tibbles</code> are nice but a lot of non-tidyverse packages require <code>matrices</code>. <code>rownames</code> still an issue.</li>
-</ul>
-
-<p>Anyway, learning the <em>tidyverse</em> does not prevent to learn <em>R base</em>, it helps to get things done early in the process</p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends" class="smaller ">
-
-<p><img src="img/01_r_documentation_trends_20170418.png" width="90%" /></p>
-
-<div class = 'row'><div class = 'offset-4 col-6'>
-
-<p><span class="small">
-source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends-1" class="smaller ">
-
-<p><img src="img/01_r_documentation_trends_20170418_tv.png" width="90%" /></p>
-
-<div class = 'row'><div class = 'col-6 offset-4'>
-
-<p><span class="small">
-source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>RStudio</h2></hgroup><article  id="rstudio" class="smaller ">
-
-<img src='img/01_logo_RStudio.png' title='fig:'/>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> What is it?</h3></hgroup><article  id="rstudio-what-is-it" class="smaller ">
-
-<p><a href='https://www.rstudio.com/products/RStudio/' title=''>RStudio</a> is an Integrated Development Environment.<br/>It makes working with R much easier</p>
-
-<div class = 'row'><div class = 'col-9 box bg-green'><h3>Features</h3>
-
-<ul class = 'build'>
-<li><em>Console</em> to run <strong>R</strong>, with syntax highlighter</li>
-<li><em>Editor</em> to work with scripts</li>
-<li><em>Viewer</em> for data / plots / website</li>
-<li><em>Package management</em> (including building)</li>
-<li><em>Autocompletion</em> using <kbd>TAB</kbd></li>
-<li><a href='https://www.rstudio.com/resources/cheatsheets/' title=''><em>Cheatsheets</em></a></li>
-<li><em>Git</em> integration for versioning</li>
-<li><em>Inline</em> outputs (&gt;= v1.03)</li>
-<li><em>Keyboard shortcuts</em></li>
-<li><a href='https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/' title=''><em>Notebooks</em></a></li>
-</ul>
-
-</div><div class = 'box col-3 bg-orange'><h3>Warning</h3>
-
-<p>Don&#39;t mix up <strong>R</strong> and <strong>RStudio</strong>.<br/><strong>R</strong> needs to be installed first.</p>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> The 4 panels layout</h3></hgroup><article  id="rstudio-the-4-panels-layout" class="smaller ">
-
-<img src='img/01_rstudio_layout.jpg' title='fig:'/>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Four panels</h2></hgroup><article  id="four-panels" class="smaller vs2">
-
-<div class = 'row'><div class = 'col-6 box bg-green stretch'><h3>scripting</h3>
-
-<ul>
-<li>could be your main window</li>
-<li>should be a <strong>Rmarkdown</strong> doc</li>
-<li>tabs are great</li>
-</ul>
-
-</div><div class = 'col-6 box bg-yellow stretch'><h3>Environment</h3>
-
-<ul>
-<li>Environment, display loaded objects and their <code>str()</code></li>
-<li>History is useless IMO</li>
-<li>nice <code>git</code> integration</li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'col-6 box stretch'><h3>Console</h3>
-
-<ul>
-<li>could be hidden with <strong>inline</strong> outputs</li>
-<li>in the preview, embed a nice <code>terminal</code> tab</li>
-</ul>
-
-</div><div class = 'col-6 box bg-yellow stretch'><h3>Files / Plots / Help</h3>
-
-<ul>
-<li>necessary package management tab</li>
-<li>plots becomes useless when using <strong>inline</strong> outputs</li>
-<li>very useful help tab</li>
-</ul>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>For reproducibility, options to activate / deactivate</h2></hgroup><article  id="for-reproducibility-options-to-activate-deactivate" class="smaller ">
-
-<img src='http://talklab.psy.gla.ac.uk/L1_labs/lab_1/prep/repro.png' title='fig:'/>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
-
-<img src='img/01_r_community_rstudio.png' title='fig:'/>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Hands on</h2></hgroup><article  id="hands-on" class="smaller ">
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Getting started</h2></hgroup><article  id="getting-started" class="smaller ">
-
-<p>Let&#39;s get ready to use <strong>R</strong> and <strong>RStudio</strong>. Do the following:</p>
-
-<ul>
-<li>Open up RStudio</li>
-<li>Maximize the RStudio window</li>
-<li>Click the Console pane, at the prompt (<code>&gt;</code>) type in <code>3 + 2</code> and hit enter</li>
-</ul>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>&gt; 3 + 2</pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Arithmetic operations</h2></hgroup><article  id="arithmetic-operations" class="smaller ">
-
-<p>You will not be surprised that <strong>R</strong> is very good at computing</p>
-
-<div class = 'row'><div class = 'col-6 bg-green box'><h3>arithmetic operators</h3>
-
-<ul>
-<li><code>+</code>: addition<br/></li>
-<li><code>-</code>: subtraction<br/></li>
-<li><code>*</code>: multiplication<br/></li>
-<li><code>/</code>: division<br/></li>
-<li><code>^</code> or <code>**</code>: exponentiation</li>
-<li><code>%%</code>: modulo (remainder after division)</li>
-<li><code>%/%</code>: integer division</li>
-</ul>
-
-</div><div class = 'box col-6 bg-orange stretch'><h3>Remember</h3>
-
-<p><strong>R</strong> will:</p>
-
-<ul>
-<li>first perform <strong>exponentiation</strong></li>
-<li>then multiplications and/or divisions</li>
-<li>and finally additions and/or subtractions.</li>
-</ul>
-
-<p>If you need to change the priority during the evaluation, use parentheses – <em>i.e.</em> <code>(</code> and <code>)</code> – to group calculations.</p>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> Working directory and projects</h3></hgroup><article  id="rstudio-working-directory-and-projects" class="smaller ">
-
-<p>It is where <strong>R</strong> is looking for files (read or write).<br/>Using the console, try:</p>
-
-<div class = 'row'><div class = 'col-4'>
-
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>&gt; getwd()</pre></div>
-
-</div><div class = 'col-8 box bg-red'><h3>setwd() or relative paths</h3>
-
-<ul>
-<li>It is possible to change the location using <code>setwd()</code> (in the console or interactively in <em>RStudio</em>)</li>
-<li>A better way is to use projects in Rstudio</li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'box col-8 bg-green'><h3>Projects</h3>
-
-<p>They solve most issues with working directories: get rid of <code>setwd()</code></p>
-
-</div><div class = 'col-4'>
-
-<img src='img/01_rstudio_project.jpg' title='fig:'/>
-
-</div></div><div class = 'row'><div class = 'bg-orange col-12 box'><h3>R base</h3>
+<div class = 'row'><div class = 'bg-orange col-12 box'><h3>R base</h3>
 
 <p>We could let <strong>base</strong> down, but the <strong>tidyverse</strong> is wrapping around it. Some functions need to be known</p>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Data types and structures </h2><h3> R base</h3></hgroup><article  id="data-types-and-structures-r-base" class="smaller ">
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>4 main types</h2></hgroup><article  id="main-types" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>4 main types</h2></hgroup><article  id="main-types" class="smaller ">
 
 <table class = 'rmdtable'>
 <tr class="header">
@@ -1460,11 +934,11 @@ average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
 
 <div class = 'row'><div class = 'col-6'><h3>Hadley Wickham</h3>
 
-<img src='img/01_hexbin_hadley.jpg' title='fig:'/>
+<img src='img/02_hexbin_hadley.jpg' title='fig:'/>
 
 </div><div class = 'col-6'><h3>Bob Rudis</h3>
 
-<img src='img/01_hexbin_hrbrmstr.jpg' title='fig:'/></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<img src='img/02_hexbin_hrbrmstr.jpg' title='fig:'/></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
@@ -1486,7 +960,7 @@ average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
     footers = document.getElementsByClassName('footer');
     //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
     [].slice.call(footers).forEach(function (footer) {
-      footer.innerHTML = "<img src=lecture01_intro_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      footer.innerHTML = "<img src=lecture02_data_structure_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
       //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
     });
   })();

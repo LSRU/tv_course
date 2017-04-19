@@ -6,7 +6,7 @@ output:
   iosp::ioslides_plus:
     footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
     box_colours:
-      orange: darkorange2
+      orange: darkorange
 ---
 
 ```{r setup, include=FALSE}
@@ -51,7 +51,7 @@ This workshop is composed of 30 hours:
 ### Day 1 {.box-8 .bg-green}
 - Session 1
     + Introduction to R and RStudio (AG)
-    + Basic data types, control structures
+    + Basic data types, control structures (AG)
 
 - Session 2
     + Markdown (EK)
