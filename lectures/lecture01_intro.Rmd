@@ -30,14 +30,14 @@ This workshop is composed of 30 hours:
 - very short exercises included
 - convert them to pdf using chrome
 
-### practical sessions {.boxl-4 .bg-yellow .stretch}
+### practical sessions {.box-4 .bg-yellow .stretch}
 
 - ~ 15 hours
 - using your own laptop
 - teachers available
 - supplementary exercises if needed
 
-### bring your own data  {.col-4 .box .bg-orange .stretch}
+### bring your own data  {.box-4 .bg-orange .stretch}
 
 - ~ 7 hours (Day 4)
 - teachers available
@@ -169,7 +169,7 @@ apropos("log")
 
 ## Drawback: Steep learning curve | Period of much suckiness
 
-```{r, echo=FALSE}
+```{r, echo = FALSE}
 #devtools::install_github("ijlyttle/vembedr")
 vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"), end = vembedr::secs("4m52s")))
 ```

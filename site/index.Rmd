@@ -26,7 +26,7 @@ The course will not go deep into statistics but rather getting data ready, some 
 
 ### Tidyverse
 
-The **tidyverse** is an official [CRAN package](https://cran.r-project.org/package=tidyverse) and its [manifesto](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html). 
+The **tidyverse** is an official [CRAN package](https://cran.r-project.org/package=tidyverse) and its [manifesto](http://tidyverse.tidyverse.org/articles/manifesto.html). 
 Hadley proposed workflow is described as follow in his must-read book [_R_ for data science](http://r4ds.had.co.nz/)
 
 ![](https://raw.githubusercontent.com/LSRU/r_workshop/gh-pages/img/data-science-explore.png)

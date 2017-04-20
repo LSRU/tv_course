@@ -1,11 +1,13 @@
 ---
-title: "Data processing with R tidyverse"
+title: "Data plotting"
 subtitle: ggplot2
 author: "A. Ginolhac, E. Koncina, R. Krause"
-date: "2 May 2017"
+date: "3 May 2017"
 output:
   iosp::ioslides_plus:
-    preview: yes
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
+    box_colours:
+      orange: darkorange
 ---
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -20,14 +22,10 @@ content from:
 >- David Childs
 >- Garrett Grolemund
 
-Reading:
-
->* Ewen Gallic: [`R` and programming](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf) (in French)
->* Hadley Wickham & community: [doc ggplot2](http://docs.ggplot2.org/dev/)
 
 # ggplot2
 
-![](img/03_ggplot2_overview.jpg)
+![](img/06_ggplot2_overview.jpg)
 
 ## What is ggplot2
 
@@ -38,19 +36,16 @@ Reading:
 
 - Even newspapers like [Financial Times](http://johnburnmurdoch.github.io/slides/r-ggplot/) use _ggplot2_
 
-## Installation of ggplot2
 
-From the command line:
 
-```{r, eval = FALSE}
-install.packages("ggplot2")
-```
+## layers
 
-Using Rstudio:
 
-In the lower right panel: Packages > Install
+![](http://static.thinkr.fr/ggplot-3-300x193.png)
 
-`ggplot2` is integrated in the brand new `tidyverse` package (contains other useful libraries you will learn to use)
+<span class = "small">source: [thinkR](http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/)</span>
+
+<span class = "small"></span> 
 
 ## Draw your first plot
 
@@ -308,3 +303,15 @@ ggplot(mtcars) +
 - Using the Export button in the _Plots_ panel
 - Integrate them in your Rmarkdown reports
     + If required, adjust the chunk options: `fig.height`, `fig.align`
+
+
+
+
+## Art | by Marcus Volz
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">A compilation of some of my gifs created with <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://twitter.com/hashtag/ggplot2?src=hash">#ggplot2</a> <a href="https://twitter.com/hashtag/gganimate?src=hash">#gganimate</a> <a href="https://twitter.com/hashtag/tweenr?src=hash">#tweenr</a> <a href="https://t.co/nCppSOZv4W">https://t.co/nCppSOZv4W</a></p>&mdash; Marcus Volz (@mgvolz) <a href="https://twitter.com/mgvolz/status/849375922297991168">4 avril 2017</a></blockquote>
+
+```{r, echo = FALSE}
+vembedr::embed_youtube("DQiKHlpy70Q")
+```
+
