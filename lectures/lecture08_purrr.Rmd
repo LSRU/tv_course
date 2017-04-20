@@ -3,9 +3,7 @@ title: "Data processing with R tidyverse"
 subtitle: "_purrr_"
 author: "Aurélien Ginolhac"
 date: "12 December 2016"
-output:
-  iosp::ioslides_plus:
-    preview: yes
+output: iosp::ioslides_plus
 ---
 
 ```{r setup, include=FALSE}
@@ -14,9 +12,7 @@ ggplot2::theme_set(ggplot2::theme_bw(14))
 library(tidyverse)
 ```
 
-
-## Reading {.vs2}
-
+## Reading
 
 ### {.col-8}
 
@@ -31,10 +27,9 @@ library(tidyverse)
 
 ### {.col-4}
 
-![](https://www.stickermule.com/marketplace/embed_img/13594)
+![](img/08_purrr.png)
 
-## functional programming {.vs1}
-
+## functional programming
 
 >  **functional programming** is a programming paradigm—a style of building the structure and elements of computer programs—that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data | Wikipedia
 
@@ -87,8 +82,7 @@ map_dbl(mtcars, mean)
     + perfect input for `purrr::map`
 
 
-## lists as a column in a tibble {.vs1}
-
+## lists as a column in a tibble
 
 ### {.col-5}
 
@@ -103,7 +97,8 @@ tibble(numbers = 1:8,
                       d = 2:3, e = 4:6, f = "Z", g = 1:4))
 ```
 
-### {.box .col-5}
+### {.box-5}
+
 check out what `data.frame` will do
 
 
@@ -112,9 +107,8 @@ check out what `data.frame` will do
 Won't work with a *data.frame*
 
 ```{r, echo = FALSE, out.width = "90%"}
-knitr::include_graphics("img/07_gmt_format.png")
+knitr::include_graphics("img/08_gmt_format.png")
 ```
-
 
 [source broadinstitute](http://software.broadinstitute.org/cancer/software/gsea/wiki/index.php/Data_formats#GMT:_Gene_Matrix_Transposed_file_format_.28.2A.gmt.29)
 
@@ -126,13 +120,13 @@ options(tibble.print_min = 5)
 gmt
 ```
 
-### gene ontologies {.box .col-4 .bg-cobalt}
+### gene ontologies {.box-4 .bg-cobalt}
 
 ```{r}
 count(gmt, go_id)
 ```
 
-### Ensembl ids {.box .col-8 .bg-cobalt}
+### Ensembl ids {.box-8 .bg-cobalt}
 
 ```{r}
 count(gmt, go_id, data)
@@ -146,7 +140,6 @@ count(gmt, go_id, data)
 How to create a GMT from this unequal data?
 
 ## Creating a GMT file | nesting
-
 
 ### Reminder {.box .col-10 .bg-green} 
 
@@ -385,11 +378,11 @@ library("gganimate")
 p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, 
                            color = continent, frame = year))+
   geom_point()+scale_x_log10()
-gg_animate(p, 'img/07_gapminder.gif')
+gg_animate(p, 'img/08_gapminder.gif')
 ```
 
 ```{r, echo=FALSE, out.width='50%'}
-knitr::include_graphics("img/07_gapminder.gif")
+knitr::include_graphics("img/08_gapminder.gif")
 ```
 
 
