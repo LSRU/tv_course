@@ -13,6 +13,43 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Getting started
+
+Let's get ready to use **R** and **RStudio**. Do the following:
+
+- Open up RStudio
+- Maximize the RStudio window
+- Click the Console pane, at the prompt (`>`) type in `3 + 2` and hit enter
+
+```{r, eval = FALSE, prompt = TRUE}
+3 + 2
+```
+
+## Arithmetic operations
+
+You will not be surprised that **R** is very good at computing
+
+### arithmetic operators {.col-6 .bg-green .box}
+
+- `+`: addition  
+- `-`: subtraction  
+- `*`: multiplication  
+- `/`: division  
+- `^` or `**`: exponentiation 
+- `%%`: modulo (remainder after division)
+- `%/%`: integer division
+
+### Remember {.box-6 .bg-orange .stretch}
+
+ **R** will:
+
+- first perform **exponentiation**
+- then multiplications and/or divisions
+- and finally additions and/or subtractions.
+
+If you need to change the priority during the evaluation, use parentheses – _i.e._ `(` and `)` – to group calculations.
+
+
 # Data types and structures | R base
 
 ## Necessary R base {.vs2}
