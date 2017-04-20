@@ -271,54 +271,86 @@
 
 <p>From <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Packages</h2></hgroup><article  id="packages" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Packages </h2><h3> +10,000 in Jan 2017</h3></hgroup><article  id="packages-10000-in-jan-2017" class="smaller ">
 
-<ul>
-<li>CRAN <em><span class="green2">
-reliable: package is checked during submit process</span></em></li>
-<li><p><a href='https://github.com/' title=''>GitHub</a> using <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <em><span class="yellow2">
-Check <a href='https://github.com/hadley/readr' title=''>status</a></span></em></p>
+<div class = 'row'><div class = 'box col-4 bg-green stretch'><h3><a href='https://cran.r-project.org/web/packages/available_packages_by_date.html' title=''>CRAN</a></h3>
 
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;hadley/readr&quot;)</pre></div></li>
-<li><p><a href='https://www.bioconductor.org/' title=''>bioconductor</a>. <em><span class="yellow2">
-Check <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></span></em></p>
+<p><strong>reliable</strong>: package is checked during submission process</p>
+
+<p><a href='https://mran.microsoft.com/packages/' title=''>MRAN</a> for Windows users</p>
+
+</div><div class = 'box col-4 bg-green stretch'><h3><a href='https://www.bioconductor.org/' title=''>bioconductor</a></h3>
+
+<p>dedicated to biology. <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></p>
+
+<p>typical install:</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
-biocLite(&quot;limma&quot;)</pre></div></li>
-</ul>
+biocLite(&quot;limma&quot;)</pre></div>
 
-<div class="centered">
-<p><img src='img/01_packages_install_cran.jpg' title=''/> <img src='img/01_packages_install_devtools.jpg' title=''/></p></div>
+</div><div class = 'box col-4 bg-yellow stretch'><h3><a href='https://github.com/' title=''>GitHub</a></h3>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
+<p>easy install thanks to <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <a href='https://github.com/hadley/readr' title=''>status</a></p>
 
-<p>2 possibilities for manual pages. <strong>Vignettes</strong> are usually better</p>
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;tidyverse/readr&quot;)</pre></div>
+
+<p>could be a security issue (see next slide)</p>
+
+</div></div><div class = 'row'><div class = 'col-6'><h3>CRAN install from Rstudio</h3>
+
+<img src='img/01_packages_install_cran.jpg' title='fig:'/>
+
+</div><div class = 'col-6'><h3>github install from Rstudio&#39; console</h3>
+
+<img src='img/01_packages_install_devtools.jpg' title='fig:'/>
+
+<p>more in the article from <a href='http://blog.revolutionanalytics.com/2017/01/cran-10000.html' title=''>David Smith</a></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Security</h2></hgroup><article  id="security" class="smaller ">
+
+<div class = 'row'><div class = 'col-9'>
+
+<p><img src="https://i0.wp.com/rud.is/b/wp-content/uploads/2017/02/hieRarchy.png" width="70%" /></p>
+
+</div><div class = 'col-3 middle'>
+
+<p><span class="small">
+source <a href='https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-systems-and-data-science-community-security/' title=''>Bob Rudis&#39; blog</a></span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
+
+<style type="text/css">
+.to_right > p {
+  text-align: right;
+}
+</style>
+
+<div class = 'row'><div class = 'col-6 middle to_right'>
+
+<p>2 possibilities for manual pages.</p>
+
+</div><div class = 'col-6'>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>?log
 help(log)</pre></div>
 
+</div></div>
+
 <p>In <strong>Rstudio</strong>, the help page can be viewed in the bottom right pane</p>
 
-<div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>apropos(&quot;log&quot;)</pre>
+<div class = 'row'><div class = 'col-8'>
 
-<pre > [1] &quot;.__C__logical&quot;         &quot;.__C__logLik&quot;         
- [3] &quot;.__T__Logic:base&quot;      &quot;as.data.frame.logical&quot;
- [5] &quot;as.logical&quot;            &quot;as.logical.factor&quot;    
- [7] &quot;dlogis&quot;                &quot;is.logical&quot;           
- [9] &quot;log&quot;                   &quot;log10&quot;                
-[11] &quot;log1p&quot;                 &quot;log2&quot;                 
-[13] &quot;logb&quot;                  &quot;Logic&quot;                
-[15] &quot;logical&quot;               &quot;logLik&quot;               
-[17] &quot;loglin&quot;                &quot;plogis&quot;               
-[19] &quot;qlogis&quot;                &quot;rlogis&quot;               
-[21] &quot;SSlogis&quot;              </pre></div>
+<img src='img/01_help_RStudio.png' title='fig:'/>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
+</div><div class = 'box col-4 bg-orange'><h3>Sadly</h3>
+
+<p>manpages are often unhelpful, now <strong>vignettes</strong> (and <a href='http://readxl.tidyverse.org/articles/sheet-geometry.html' title=''><strong>articles</strong></a> on tidyverse) are better and described workflows.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
 
 <iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
 
@@ -346,11 +378,13 @@ source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>R
 
 </div></div>
 
+<div class = 'row build'><div class = 'col-12 '>
+
 <blockquote class = 'bg-orange'>
 <p>Navigating the balance between base R and the tidyverse is a challenge to learn <cite> Robert A. Muenchen </p></cite>
 </blockquote>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator-1" class="smaller vs2">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator-1" class="smaller vs2">
 
 <p>We think the <a href='http://tidyverse.org/' title=''><strong>tidyverse</strong></a> is better, especially for beginners. It is</p>
 
@@ -574,7 +608,22 @@ source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation<
 
 <img src='http://talklab.psy.gla.ac.uk/L1_labs/lab_1/prep/repro.png' title='fig:'/>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Code diagnostics, highly recommended</h2></hgroup><article  id="code-diagnostics-highly-recommended" class="smaller ">
+
+<p>using <code>Global Options -&gt; Code -&gt; Diagnostics</code> editing pane:</p>
+
+<div class = 'row'><div class = 'col-8'>
+
+<img src='img/01_diag_RStudio.png' title='fig:'/>
+
+</div><div class = 'col-4'>
+
+<img src='https://support.rstudio.com/hc/en-us/article_attachments/201712378/Screen_Shot_2015-04-30_at_2.01.17_PM.png' title='fig:'/>
+
+<p><span class="small">
+source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics?version=1.1.133&amp;mode=desktop' title=''>Kevin Ushey&#39; article</a></span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
 
 <img src='img/01_r_community_rstudio.png' title='fig:'/>
 

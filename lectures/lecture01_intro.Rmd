@@ -132,40 +132,87 @@ knitr::include_graphics("./img/01_r_progression.png")
 
 From [Touchon & McCoy. _Ecosphere_. 2016](http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full)
 
-## Packages
+## Packages | +10,000 in Jan 2017
 
-- CRAN *<span class="green2">reliable: package is checked during submit process</span>*
-- [GitHub](https://github.com/) using [devtools](https://github.com/hadley/devtools). *<span class="yellow2">Check [status](https://github.com/hadley/readr)</span>*
 
-    ```{r, eval=FALSE}
-    # install.packages("devtools")
-    devtools::install_github("hadley/readr")
-    ```
+### [CRAN](https://cran.r-project.org/web/packages/available_packages_by_date.html) {.box-4 .bg-green .stretch}
 
-- [bioconductor](https://www.bioconductor.org/). *<span class="yellow2">Check [status](https://www.bioconductor.org/packages/release/bioc/html/limma.html)</span>*
-    ```{r, eval=FALSE}
-    source("https://bioconductor.org/biocLite.R")
-    biocLite("limma")
-    ```
+**reliable**: package is checked during submission process
 
-<div class="centered">
+[MRAN](https://mran.microsoft.com/packages/) for Windows users
+
+### [bioconductor](https://www.bioconductor.org/) {.box-4 .bg-green .stretch}
+
+dedicated to biology. [status](https://www.bioconductor.org/packages/release/bioc/html/limma.html)
+
+typical install:
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("limma")
+```
+
+### [GitHub](https://github.com/) {.box-4 .bg-yellow .stretch}
+
+easy install thanks to [devtools](https://github.com/hadley/devtools). [status](https://github.com/hadley/readr)
+
+```{r, eval=FALSE}
+# install.packages("devtools")
+devtools::install_github("tidyverse/readr")
+```
+
+could be a security issue (see next slide)
+
+### CRAN install from Rstudio {.col-6}
+
 ![](./img/01_packages_install_cran.jpg)
+
+### github install from Rstudio' console {.col-6}
+
 ![](./img/01_packages_install_devtools.jpg)
-</div>
+
+more in the article from [David Smith](http://blog.revolutionanalytics.com/2017/01/cran-10000.html)
+
+
+## Security
+
+### {.col-9}
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("https://i0.wp.com/rud.is/b/wp-content/uploads/2017/02/hieRarchy.png")
+```
+
+### {.col-3 .middle}
+
+<span class = "small">source [Bob Rudis' blog](https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-systems-and-data-science-community-security/)</span>  
 
 ## Help pages
 
-2 possibilities for manual pages. **Vignettes** are usually better
+```{css}
+.to_right > p {
+  text-align: right;
+}
+```
+
+### {.col-6 .middle .to_right}
+2 possibilities for manual pages. 
+
+### {.col-6}
 ```{r}
 ?log
 help(log)
 ```
 
+%end% 
+
 In **Rstudio**, the help page can be viewed in the bottom right pane
 
-```{r}
-apropos("log")
-```
+### {.col-8}
+
+![](img/01_help_RStudio.png)
+
+### Sadly {.box-4 .bg-orange}
+
+manpages are often unhelpful, 
+now **vignettes** (and [**articles**](http://readxl.tidyverse.org/articles/sheet-geometry.html) on tidyverse) are better and described workflows.
 
 ## Drawback: Steep learning curve | Period of much suckiness
 
@@ -195,6 +242,7 @@ vembedr::embed_youtube("8SGif63VW6E", query = list(start = vembedr::secs("4m12s"
 
 %end%
 
+### {.col-12 .build}
 > Navigating the balance between base R and the tidyverse is a challenge to learn | Robert A. Muenchen {.bg-orange}
 
 ## Tidyverse | creator {.vs2}
@@ -394,6 +442,20 @@ Don't mix up **R** and **RStudio**.
 ## For reproducibility, options to activate / deactivate
 
 ![](http://talklab.psy.gla.ac.uk/L1_labs/lab_1/prep/repro.png)
+
+## Code diagnostics, highly recommended
+
+using  `Global Options -> Code -> Diagnostics` editing pane:
+
+### {.col-8}
+
+![](img/01_diag_RStudio.png)
+
+### {.col-4}
+
+![](https://support.rstudio.com/hc/en-us/article_attachments/201712378/Screen_Shot_2015-04-30_at_2.01.17_PM.png)
+
+<span class = "small">source: [Kevin Ushey' article](https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics?version=1.1.133&mode=desktop)</span> 
 
 ## The dream team
 
