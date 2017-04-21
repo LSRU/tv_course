@@ -12,6 +12,8 @@ navbar:
           href: lecture01_intro.html
         - text: "Lecture 02 - data types & structures"
           href: lecture02_data_structure.html
+        - text: "Lecture 06 - data plotting"
+          href: lecture06_plotting.html
         - text: "---------"        
         - text: "slides, keyboard shortcuts:"
         - text: "o: outline"

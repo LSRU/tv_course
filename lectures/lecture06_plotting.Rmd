@@ -7,7 +7,11 @@ output:
   iosp::ioslides_plus:
     footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
     box_colours:
-      orange: darkorange
+      orange: "darkorange"
+      slate: "slateblue2"
+      yellow: ["yellow", "gold2"]
+      yellow2: ["lightgoldenrod1", "goldenrod2"] # from Eric
+      grgold: ["springgreen4", header_text: "#FFD700"]
 ---
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -15,37 +19,212 @@ library(tidyverse)
 knitr::opts_chunk$set(fig.align = "center")
 ```
 
-## Materials
-
-content from:
-
->- David Childs
->- Garrett Grolemund
-
 
 # ggplot2
 
 ![](img/06_ggplot2_overview.jpg)
 
-## What is ggplot2
+## Before, there was `ggplot1`
+
+Released in **2005** until **2008** by [Hadley Wickham](https://github.com/hadley/ggplot1).
+
+> If the pipe ( %>% in 2014) had been invented before, `ggplot2` would have never existed | Hadley Wickham
+
+### Original syntax {.box-6 .bg-yellow .build}
+
+```{r, eval = FALSE}
+# devtools::install_github("hadley/ggplot1")
+p <- ggplot(mtcars, list(x = mpg, y = wt)) %>% 
+scbrewer(ggpoint(p, list(colour = gear)))
+```
+
+### with the pipe {.box-6 .bg-yellow2 .build}
+
+```{r, eval = FALSE}
+# devtools::install_github("hadley/ggplot1")
+library(ggplot1)
+mtcars %>% 
+  ggplot(list(x = mpg, y = wt)) %>% 
+  ggpoint(list(colour = gear)) %>% 
+  scbrewer()
+```
+
+
+```{css}
+.bg-green2 > h3:first-child > a:hover {
+  color: white !important;
+}
+```
+
+
+
+### [ggplot2](my link) {.box-8 .offset-1 .bg-grgold .build .stretch}
+
+```{r, eval = FALSE}
+library(ggplot2)
+mtcars %>% 
+  ggplot(aes(x = mpg, y = wt)) + 
+  geom_point(aes(colour = as.factor(gear))) +
+  scale_color_brewer("gear", type = "qual")
+```
+
+
+### Issue {.box-3 .bg-red .build .stretch}
+
+Introduced a break in the workflow from ` %>% ` to `+`
+
+
+
+## What is `ggplot2` | released in 2007 {.vs2}
 
 - `ggplot2` stands for **g**rammar of **graphics** plot version 2
-    + Inspired by Leland Wilkinsons work on the [grammar of graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448)
+    + Inspired by Leland Wilkinsons work on the [grammar of graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448) in 2005.
     + The idea is to split a graph into layers: for example axis, curve(s), labels.
-- `ggplot2` introduced the possibility for the community to contribute and create **extensions**. They are referenced on a [dedicated site](https://www.ggplot2-exts.org/)
 
-- Even newspapers like [Financial Times](http://johnburnmurdoch.github.io/slides/r-ggplot/) use _ggplot2_
+### {.col-8}
 
+![](img/06_graphic_objects.png)
 
+### {.col-4}
 
-## layers
-
+<span class = "small">[Wickham H. 2007. _J. Comp. Graph. Stat._ **19**:3–28](http://www.tandfonline.com/doi/abs/10.1198/jcgs.2009.07098)</span> 
 
 ![](http://static.thinkr.fr/ggplot-3-300x193.png)
 
 <span class = "small">source: [thinkR](http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/)</span>
 
-<span class = "small"></span> 
+
+## Simple example | Wickham 2007
+
+
+### dataset {.box-6 .stretch}
+
+------------------
+x     y    shape
+----  ---- -------
+25    11   circle
+
+0     0    circle
+
+75    53   square
+
+200   300  square
+
+------------------
+
+### 3 layers combined {.box-6}
+
+![](img/06_simple_plot.png)
+
+### Faceting (treillis / latticing) {.box-8 .offset-2 .bg-grgold .build}
+
+What is we want to split _circles_ and _squares_?
+
+
+## Faceting | Wickham 2007 {.vs1}
+
+### Split by the **shape** {.col-8 .offset-2}
+
+![](img/06_simple_facet.png)
+
+%end%
+
+
+### Redundancy {.box-8 .offset-2 .bg-grgold .build}
+
+Now, **dot shapes** and **facets** give the same information. Shapes could be freed for another meaningful variable
+
+
+## layers {.vs2}
+
+```{r, echo = FALSE, out.width = "50%"}
+knitr::include_graphics("img/06_ggplot2_layers.jpg")
+```
+
+
+## for real
+
+```{r, row = TRUE, fig.height=4}
+tribble(
+    ~x,   ~y,    ~shape,
+   25L,  11L,  "circle",
+    0L,   0L,  "circle",
+   75L,  53L,  "square",
+  200L, 300L,  "square"
+  ) %>%
+  ggplot(aes(x = x, y = y, shape = shape)) +
+  geom_point(size = 4) +
+  facet_wrap(~ shape) +
+  coord_cartesian() +
+  theme_classic(base_size = 18)
+```
+
+### Tip {.box-8 .bg-yellow}
+
+awesome [addin](https://rstudio.github.io/rstudioaddins/): [datapasta](https://github.com/MilesMcBain/datapasta), paste as *tribbles* (transposed *tibbles*)
+
+by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0ystej_bigger.jpg)
+
+## Motivation for this layered system | football example
+
+> [Data visualisation] is not meant just to be seen but to be read, like written text - Alberto Cairo
+
+### Questions {.box-5 .bg-yellow2 .build}
+
+1. which countries have the best teams?
+2. which leagues are the most/least balanced?
+3. what is the 'quality gap' between a given pair of leagues?
+4. how does the nth best team in league x today compare to its predecessors?
+5. how have all of the above changed over time?
+
+### Stat solutions  {.box-4 .bg-green .build .stretch}
+
+1. linear comparison
+2. distribution of parts within the whole
+3. difference in area between two curves
+4. value in context
+5. evolution of an already detailed pattern over time
+  
+### Visual solutions  {.box-3 .bg-grgold .build .stretch}
+
+1. points
+
+2. points on a line
+
+3. ribbon*
+
+4. shaded range
+
+5. faceted plots
+
+%end%
+
+<span class = "small">source [John Burn-Murdoch](http://johnburnmurdoch.github.io/slides/r-ggplot/) working at the Financial Times</span> 
+
+
+## 1. which countries have the best teams in 2016?
+
+```{r, echo = FALSE}
+# https://github.com/johnburnmurdoch/johnburnmurdoch.github.io/blob/master/slides/r-ggplot/r-scripts.R
+#allSeasons <- read_csv("https://raw.githubusercontent.com/johnburnmurdoch/johnburnmurdoch.github.io/master/slides/r-ggplot/changing-tides-of-football.csv")
+#write_rds(allSeasons, "allseasons.rds")
+```
+```{r}
+library(tidyverse)
+allSeasons <- read_rds("allseasons.rds")
+oneSeason <- allSeasons %>% filter(year == 2016)
+```
+
+### {.col-12 .build}
+
+```{r, row = TRUE, fig.height=3, fig.width=3}
+ggplot(oneSeason
+       ,aes(x = year, y = score, colour = country)) + 
+  geom_point(size = 3) +
+  scale_x_discrete() +
+  theme_bw()
+```
+
 
 ## Draw your first plot
 
@@ -99,6 +278,12 @@ ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length))
 ```
 
+
+```{r}
+knitr::knit_exit()
+```
+
+
 ## Mapping aesthetics
 
 We can specify additional arguments such as the `colour`, the transparency (`alpha`) or the `size`.
@@ -134,7 +319,7 @@ ggplot(iris) +
 It is easy to adjust axis labels and the title
 
 ```{r, fig.height = 4, fig.align = "center"}
-ggplot(iris)+
+ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length, colour = Species), alpha = 0.6, size = 3) +
   xlab("Width") +
   ylab("Length") +
@@ -146,7 +331,7 @@ ggplot(iris)+
 `facet_grid()` is used to lay out panels in a grid: Specify a **formula** with the rows on the left and columns on the right separated by a tilde `~`. A dot (`.`) specifies that no facetting should be performed.
 
 ```{r, fig.height = 3, fig.align = "center"}
-ggplot(iris)+
+ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length,
                  shape = Species, colour = Species), alpha = 0.6, size = 3) +
   facet_grid(. ~ Species)
@@ -175,7 +360,7 @@ ggplot(iris) +
 ```{r}
 ggplot(iris) +
   geom_histogram(aes(x = Petal.Length, y = ..density..), fill = "darkgrey", binwidth = 0.1) +
-  geom_density(aes(x = Petal.Length, fill = Species, colour = Species), alpha = 0.4)+
+  geom_density(aes(x = Petal.Length, fill = Species, colour = Species), alpha = 0.4) +
   theme_classic()
 ```
 
@@ -199,6 +384,14 @@ ggplot(iris) +
 ggplot(iris) +
   geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))
 ```
+
+
+
+
+
+
+
+
 
 ## Barcharts | Categorical variables
 
@@ -273,7 +466,7 @@ ggplot(mtcars) +
 ggplot(mtcars) +
   geom_boxplot(aes(x = factor(cyl), y = mpg,
                    fill = factor(am), color = factor(am))) +
-  scale_fill_manual(values=c("red", "lightblue")) +
+  scale_fill_manual(values = c("red", "lightblue")) +
   scale_color_manual(values = c("purple", "blue"))
 ```
 
@@ -305,6 +498,11 @@ ggplot(mtcars) +
     + If required, adjust the chunk options: `fig.height`, `fig.align`
 
 
+## Extensions
+
+`ggplot2` introduced the possibility for the community to contribute and create **extensions**. 
+
+They are referenced on a [dedicated site](https://www.ggplot2-exts.org/)
 
 
 ## Art | by Marcus Volz

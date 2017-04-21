@@ -6,7 +6,10 @@ output:
   iosp::ioslides_plus:
     footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
     box_colours:
-      orange: darkorange
+      orange: "darkorange"
+      slate: "slateblue2"
+      yellow: ["yellow", "gold2"]
+      grgold: ["springgreen4", header_text: "#FFD700"]
 ---
 
 ```{r setup, include=FALSE}
