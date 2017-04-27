@@ -207,7 +207,7 @@ mtcars %&gt;%
 }
 </style>
 
-</div></div><div class = 'row build'><div class = 'box col-8 offset-1 bg-grgold  stretch'><h3><a href='my%20link' title=''>ggplot2</a></h3>
+</div></div><div class = 'row build'><div class = 'box col-8 offset-1 bg-grgold  stretch'><h3>ggplot2</h3>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(ggplot2)
@@ -331,11 +331,39 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
 
 <p>by Miles McBrain <img src='https://pbs.twimg.com/profile_images/702995114075955200/8s0ystej_bigger.jpg' title=''/></p>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Motivation for this layered system </h2><h3> football example</h3></hgroup><article  id="motivation-for-this-layered-system-football-example" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Motivation for this layered system </h2><h3> football example</h3></hgroup><article  id="motivation-for-this-layered-system-football-example" class="smaller vs1">
 
 <blockquote>
-<p>[Data visualisation] is not meant just to be seen but to be read, like written text - Alberto Cairo</p>
+<p><em>Data visualisation</em> is not meant just to be seen but to be read, like written text - Alberto Cairo</p>
 </blockquote>
+
+<p>Using the following dataset</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(tidyverse)
+allSeasons &lt;- read_rds(&quot;allseasons.rds&quot;)
+oneSeason &lt;- allSeasons %&gt;% filter(year == 2016)
+allSeasons</pre>
+
+<pre ># A tibble: 1,556 × 12
+            club score  year country     n  rank allRank   atb   atw    eb
+           &lt;chr&gt; &lt;int&gt; &lt;int&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1      ManUnited  1876  2001     ENG    20     1       6  2031  1831  1927
+2      Liverpool  1876  2001     ENG    20     2       5  2020  1826  1918
+3          Leeds  1843  2001     ENG    20     3      11  1979  1793  1880
+4        Arsenal  1820  2001     ENG    20     4      14  1946  1776  1868
+5        Chelsea  1794  2001     ENG    20     5      18  1860  1738  1865
+6        Ipswich  1744  2001     ENG    20     6      31  1830  1710  1840
+7     Sunderland  1732  2001     ENG    20     7      34  1802  1688  1813
+8     AstonVilla  1725  2001     ENG    20     8      42  1775  1667  1796
+9      Newcastle  1704  2001     ENG    20     9      46  1765  1663  1792
+10 Middlesbrough  1699  2001     ENG    20    10      49  1737  1661  1791
+# ... with 1,546 more rows, and 2 more variables: ew &lt;int&gt;, tenth &lt;int&gt;</pre></div>
+
+<p><span class="small">
+source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John Burn-Murdoch</a> working at the Financial Times</span></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>questions &amp; solutions</h2></hgroup><article  id="questions-solutions" class="smaller ">
 
 <div class = 'row build'><div class = 'box col-5 bg-yellow2 '><h3>Questions</h3>
 
@@ -362,7 +390,7 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
 <ol>
 <li><p>points</p></li>
 <li><p>points on a line</p></li>
-<li><p>ribbon*</p></li>
+<li><p>ribbon</p></li>
 <li><p>shaded range</p></li>
 <li><p>faceted plots</p></li>
 </ol>
@@ -374,56 +402,321 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>1. which countries have the best teams in 2016?</h2></hgroup><article  id="which-countries-have-the-best-teams-in-2016" class="smaller ">
 
+<div class = 'row build'><div class = 'col-12 '>
+
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>library(tidyverse)
-allSeasons &lt;- read_rds(&quot;allseasons.rds&quot;)
-oneSeason &lt;- allSeasons %&gt;% filter(year == 2016)</pre></div>
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  ggplot(aes(x = year, y = score, colour = country)) + 
+  geom_point(size = 3) +
+  scale_x_discrete() +
+  theme_bw(18)</pre></div>
+
+<div class="col-4">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<ul>
+<li><code>size = 3</code> increases the size of <em>all</em> dots. Not in <code>aes()</code></li>
+<li><code>scale_x_discrete</code> is to force the 1 value on the x axis to be discrete</li>
+<li><code>theme_bw()</code> is a pre-defined <em>black/white</em> theme, where all fonts are set to size = 18</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'offset-3 box col-6 bg-red '><h3>Issue</h3>
+
+<p>we can&#39;t see much. Improve the <strong>x</strong> mapping</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>1. which countries have the best teams in 2016? </h2><h3> with rank</h3></hgroup><article  id="which-countries-have-the-best-teams-in-2016-with-rank" class="smaller ">
 
 <div class = 'row build'><div class = 'col-12 '>
 
 <div class="chunk shadow">
 <div class="row">
-<div class="col-6">
-<pre class = 'prettyprint lang-r'>ggplot(oneSeason
-       ,aes(x = year, y = score, colour = country)) + 
+<div class="col-5">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  ggplot(aes(x = rank, y = score,
+             colour = country)) + 
   geom_point(size = 3) +
-  scale_x_discrete() +
-  theme_bw()</pre></div>
+  theme_bw(18)</pre></div>
 
-<div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<div class="col-7">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<ul>
+<li><code>scale_x_discrete</code> is useless now, we have a continuous variable.</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'offset-2 box col-8 bg-grgold '><h3>Spain</h3>
+
+<p>Now obvious that Spain does well, even for low ranking clubs</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>2. which leagues are most/least balanced in 2016?</h2></hgroup><article  id="which-leagues-are-mostleast-balanced-in-2016" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-5">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  ggplot(aes(rank, score, 
+             colour = country)) +
+   geom_line() + 
+   geom_point(size = 3) + 
+   theme_bw(18)</pre></div>
+
+<div class="col-7">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<ul>
+<li><code>x</code> and <code>y</code> could be omitted, better to specify them though.</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'offset-2 box col-8 bg-red '><h3>Issue</h3>
+
+<p>Hard to see differences, ENG seems more coherent</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>2. which leagues are most/least balanced in 2016? </h2><h3> with range</h3></hgroup><article  id="which-leagues-are-mostleast-balanced-in-2016-with-range" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  group_by(country) %&gt;%
+  summarise(min = min(score),
+            max = max(score),
+            range = max - min) %&gt;%
+  mutate(country = forcats::fct_reorder(country, range)) %&gt;%
+  ggplot(aes(x = &quot;2016&quot;, y = range, fill = country)) +
+  geom_col(position = &quot;dodge&quot;) +
+  theme_classic(18)</pre></div>
+
+<div class="col-4">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'box col-4 bg-yellow  stretch'><h3>Tip x-axis</h3>
+
+<p>force the discretization using 2016 as character</p>
+
+</div><div class = 'box col-4 bg-yellow  stretch'><h3>Tip fill</h3>
+
+<p>use dodging to get all bars on the same x index</p>
+
+</div><div class = 'box col-4 bg-yellow '><h3>Tip fill order</h3>
+
+<p>reorder levels based on a numeric variable using <code>fct_reorder</code></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>3. <em>Quality gap</em> between England and Spain in 2016? </h2><h3> score diff at each rank</h3></hgroup><article  id="quality-gap-between-england-and-spain-in-2016-score-diff-at-each-rank" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  select(score, rank, country) %&gt;%
+  filter(country %in% c(&quot;ENG&quot;, &quot;ESP&quot;)) %&gt;%
+  spread(country, score) %&gt;%
+  rowwise() %&gt;%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %&gt;%
+  ggplot(aes(x = rank, fill = gap &gt; 0)) + 
+  geom_rect(aes(xmin = rank - 0.5, 
+                xmax = rank + 0.5, 
+                ymin = min, ymax = max), alpha = 0.8) + 
+  theme_classic(18) +
+  scale_fill_manual(name = &quot;gap&quot;, labels = c(&quot;ENG&quot;, &quot;ESP&quot;), 
+                    values = c(&quot;royalblue&quot;, &quot;red3&quot;)) +
+  labs(title = &quot;quality gap&quot;,
+       subtitle = &quot;between England and Spain&quot;,
+       caption = &quot;by John Burn-Murdoch&quot;)</pre></div>
+
+<div class="col-5">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'offset-2 box col-8 bg-grgold '><h3>Spain clubs</h3>
+
+<p>are performing better at every rank except #11</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>3. <em>Quality gap</em> between England and Spain in 2016? </h2><h3> dumbbell</h3></hgroup><article  id="quality-gap-between-england-and-spain-in-2016-dumbbell" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  select(score, rank, country) %&gt;%
+  filter(country %in% c(&quot;ENG&quot;, &quot;ESP&quot;)) %&gt;%
+  spread(country, score) %&gt;%
+  rowwise() %&gt;%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %&gt;%
+  ggplot() + 
+  ggalt::geom_dumbbell(aes(y = rank, x = min, xend = max, colour = gap &gt; 0),
+                         size = 1.5, size_x = 3, size_xend = 1,
+                       colour_x = &quot;#5b8124&quot;, colour_xend = &quot;#bad744&quot;) + 
+  scale_colour_manual(values =  c(&quot;#5b8124&quot;, &quot;#bad744&quot;)) +
+  theme_classic(18)</pre></div>
+
+<div class="col-5">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<p><a href='https://rud.is/b/2016/04/17/ggplot2-exercising-with-ggalt-dumbbells/' title=''>Bob Rudis&#39;s post</a></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>4.How does the <em>nth</em> best English team in 2016 compare to its predecessors?</h2></hgroup><article  id="how-does-the-nth-best-english-team-in-2016-compare-to-its-predecessors" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
+  filter(country == &quot;ENG&quot;) %&gt;%
+  ggplot(aes(x = rank, y = score)) + 
+  geom_ribbon(aes(ymin = atw, ymax = atb),
+              fill = &quot;royalblue&quot;, alpha = 0.5) + 
+  geom_line(size = 1.5, colour = &quot;royalblue&quot;) + 
+  geom_point(size = 3, colour = &quot;royalblue&quot;) + 
+  theme_bw(18) + 
+  scale_fill_manual(name = &quot;gap&quot;, labels = c(&quot;ENG&quot;, &quot;ESP&quot;), 
+                    values = c(&quot;royalblue&quot;, &quot;red3&quot;)) +
+  labs(title = &quot;Comparison of the nth best team to
+                its predecessors&quot;,
+       subtitle = &quot;in England in 2016&quot;,
+       caption = &quot;by John Burn-Murdoch&quot;)</pre></div>
+
+<div class="col-5">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: best country</h3></hgroup><article  id="how-to-visualise-over-time-facet-best-country" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>allSeasons %&gt;%
+  ggplot(aes(rank, score, 
+             colour = country)) +
+  geom_line() + 
+  #geom_point(size = 1.5) + 
+  theme_classic(18) +
+  facet_wrap(~ year)</pre></div>
+
+<div class="col-8">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: gap code</h3></hgroup><article  id="how-to-visualise-over-time-facet-gap-code" class="smaller ">
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>allSeasons %&gt;%
+  select(score, year, rank, country) %&gt;%
+  filter(country %in% c(&quot;ENG&quot;, &quot;ESP&quot;)) %&gt;%
+  spread(country, score) %&gt;%
+  rowwise() %&gt;%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %&gt;%
+  ggplot(aes(x = rank, fill = gap &gt; 0)) + 
+  geom_rect(aes(xmin = rank - 0.5, 
+                xmax = rank + 0.5, 
+                ymin = min, ymax = max), alpha = 0.8) + 
+  theme_classic(18) +
+  scale_fill_manual(name = &quot;gap&quot;, labels = c(&quot;ENG&quot;, &quot;ESP&quot;), 
+                    values = c(&quot;royalblue&quot;, &quot;red3&quot;)) +
+  labs(title = &quot;quality gap&quot;,
+       subtitle = &quot;between England and Spain&quot;,
+       caption = &quot;by John Burn-Murdoch&quot;) +
+  facet_wrap(~ year)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: gap plot</h3></hgroup><article  id="how-to-visualise-over-time-facet-gap-plot" class="smaller ">
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>your turn</h2></hgroup><article  id="your-turn" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>iris dataset</h2></hgroup><article  id="iris-dataset" class="smaller vs1">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris &lt;- as_tibble(iris)
+iris</pre>
+
+<pre ># A tibble: 150 × 5
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+1           5.1         3.5          1.4         0.2  setosa
+2           4.9         3.0          1.4         0.2  setosa
+3           4.7         3.2          1.3         0.2  setosa
+4           4.6         3.1          1.5         0.2  setosa
+5           5.0         3.6          1.4         0.2  setosa
+6           5.4         3.9          1.7         0.4  setosa
+7           4.6         3.4          1.4         0.3  setosa
+8           5.0         3.4          1.5         0.2  setosa
+9           4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+# ... with 140 more rows</pre></div>
+
+<div class = 'row'><div class = 'box col-6 bg-grgold stretch'><h3>global definition of the iris dataset</h3>
+
+<p>as a <code>tibble</code> to avoid printing all 150 rows</p>
+
+</div><div class = 'box col-6 bg-yellow '><h3>global definition of the iris dataset</h3>
+
+<p>I set for this course the following to avoid the grey bg and bigger text</p>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot2::theme_set(ggplot2::theme_bw(18))</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Draw your first plot</h2></hgroup><article  id="draw-your-first-plot" class="smaller ">
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>library(&quot;ggplot2&quot;)
-ggplot(iris) +
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  ggplot() +
   geom_point(aes(x = Petal.Width, y = Petal.Length))</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /></p></div>
 
-<p><code>ggplot</code> uses a <code>data.frame</code> and builds the plot <strong>layer by layer</strong>.</p>
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>geometric objects </h2><h3> geoms define the type of plot which will be drawn.</h3></hgroup><article  id="geometric-objects-geoms-define-the-type-of-plot-which-will-be-drawn." class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Geoms</h2></hgroup><article  id="geoms" class="smaller ">
+<div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_point()</code></h3>
 
-<p>Geoms, or geometric objects, define the type of plot which will be drawn.</p>
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /></p>
 
-<p>Examples of <code>geom</code> are:</p>
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_line()</code></h3>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /></p>
+
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_bar()</code></h3>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /></p>
+
+</div></div><div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_boxplot()</code></h3>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /></p>
+
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_histogram()</code></h3>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /></p>
+
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_density()</code></h3>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /></p>
 
 <ul>
-<li><code>geom_point()</code> to draw a scatter plot</li>
-<li><code>geom_boxplot()</code> to draw boxplots</li>
-<li><code>geom_line()</code> to draw lines</li>
-<li><code>geom_histogram()</code> to draw histograms</li>
-<li><code>geom_density()</code> to draw density curves</li>
-<li>Have a look at the <a href='https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf' title=''>cheatsheet</a> or the ggplot2 online <a href='http://docs.ggplot2.org/' title=''>documentation</a> to list more possibilities.</li>
+<li>Have a look at the <a href='https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf' title=''>cheatsheet</a> or the ggplot2 online <a href='http://ggplot2.tidyverse.org/' title=''>documentation</a> to list more possibilities.</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics</h2></hgroup><article  id="mapping-aesthetics" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics</h2></hgroup><article  id="mapping-aesthetics" class="smaller ">
 
-<p><strong>aesthetics</strong> map the variables of a <code>data.frame</code> to the variable each ggplot2 <code>geom</code> is expecting.</p>
+<p><strong>aesthetics</strong> map the columns of a <code>data.frame</code>/<code>tibble</code> to the variable each ggplot2 <code>geom</code> is expecting.</p>
 
-<p>For example <code>geom_point()</code> (used to draw a scatter plot) requires the <em><strong>x</strong></em> and <em><strong>y</strong></em> coordinates for each point.</p>
+<p>For example <code>geom_point()</code> requires <strong>at least</strong> the <em><strong>x</strong></em> and <em><strong>y</strong></em> coordinates for each point.</p>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
@@ -458,43 +751,415 @@ ggplot(iris) +
 <td align="right">0.2</td>
 <td align="left">setosa</td>
 </tr>
-<tr class="even">
-<td align="right">4.6</td>
-<td align="right">3.1</td>
-<td align="right">1.5</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="odd">
-<td align="right">5.0</td>
-<td align="right">3.6</td>
-<td align="right">1.4</td>
-<td align="right">0.2</td>
-<td align="left">setosa</td>
-</tr>
-<tr class="even">
-<td align="right">5.4</td>
-<td align="right">3.9</td>
-<td align="right">1.7</td>
-<td align="right">0.4</td>
-<td align="left">setosa</td>
-</tr>
 </table>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics</h2></hgroup><article  id="mapping-aesthetics-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Unmapped paramaters</h2></hgroup><article  id="unmapped-paramaters" class="smaller ">
 
-<p><strong>aesthetics</strong> map the variables of a <code>data.frame</code> to the variable each ggplot2 <code>geom</code> is expecting.</p>
+<p>Additional arguments such as the <code>colour</code>, the transparency (<code>alpha</code>) or the <code>size</code>.</p>
 
-<p>For example <code>geom_point()</code> (used to draw a scatter plot) requires the <em><strong>x</strong></em> and <em><strong>y</strong></em> coordinates for each point.</p>
+<div class = 'row'><div class = 'col-6'>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length))</pre>
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length),
+             colour = &quot;blue&quot;, alpha = 0.6, 
+             size = 3)</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /></p></div>
+
+</div><div class = 'box col-6 bg-red'><h3>Important</h3>
+
+<p>see that paramaters define <strong>outside</strong> the aesthetics <code>aes()</code> are applied to <strong>all</strong> data</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics </h2><h3> colour</h3></hgroup><article  id="mapping-aesthetics-colour" class="smaller ">
+
+<p><code>colour</code>, <code>alpha</code> or <code>size</code> can also be mapped to a column in the data frame.</p>
+
+<p>For example: We can attribute a different color to each species:</p>
+
+<div class = 'row'><div class = 'col-6'>
 
 <div class="chunk shadow">
-<pre class = 'prettyprint lang-r'>knitr::knit_exit()</pre></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length,
+                 colour = Species),
+             alpha = 0.6, size = 3)</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /></p></div>
+
+</div><div class = 'box col-6 bg-red'><h3>Important</h3>
+
+<p>Note that the <code>colour</code> argument now is <strong>inside</strong> <code>aes()</code> and <strong>must</strong> refer to a column in the dataframe.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics </h2><h3> shape</h3></hgroup><article  id="mapping-aesthetics-shape" class="smaller vs1">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_point(aes(x = Petal.Width, y = Petal.Length, shape = Species, colour = Species), alpha = 0.6, size = 3)</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Labels</h2></hgroup><article  id="labels" class="smaller vs2">
+
+<p>It is easy to adjust axis labels and the title</p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length,
+                 colour = Species), 
+             alpha = 0.6, size = 3) +
+  labs(x = &quot;Width&quot;,
+       y = &quot;Length&quot;,
+       title = &quot;Iris&quot;,
+       subtitle = &quot;petal measures&quot;,
+       caption = &quot;Fisher, R. A. (1936)&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Histograms</h2></hgroup><article  id="histograms" class="smaller ">
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_histogram(aes(x = Petal.Length,
+                     fill = Species),
+                 alpha = 0.6) </pre></div>
+
+<div class="col-6">
+<pre >`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Density plot</h2></hgroup><article  id="density-plot" class="smaller ">
+
+<p>The density is the count divided by the total number of occurences.</p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_density(aes(x = Petal.Length,
+                   fill = Species),
+               alpha = 0.6)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Overlaying plots </h2><h3> Density plot and histogram</h3></hgroup><article  id="overlaying-plots-density-plot-and-histogram" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_histogram(aes(x = Petal.Length, y = ..density..), fill = &quot;darkgrey&quot;, binwidth = 0.1) +
+  geom_density(aes(x = Petal.Length, fill = Species, colour = Species), alpha = 0.4) +
+  theme_classic()</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>stat functions</h2></hgroup><article  id="stat-functions" class="smaller ">
+
+<ul>
+<li>We used a new variable in the density plot: <code>..density..</code></li>
+<li><p>In <code>ggplot2</code>, variables surrounded by two pair of dots (<code>..&lt;variable&gt;..</code>) are intermediate values calculated by <code>ggplot2</code> using stat functions</p></li>
+<li>Every <code>geom</code> uses a <code>stat</code> function to transform the data:
+
+<ul>
+<li>For example <code>geom_histogram()</code> and <code>geom_density()</code> need to perform calculations in order to display the histogram or the density curve (Not as simple as plotting <em>x</em> and <em>y</em> values from two columns)</li>
+<li><code>geom_histogram()</code> uses <code>stat_bin()</code> to divide the distributions into <em>bins</em> and count the number of observations in each <em>bin</em>.</li>
+<li><code>stat_bin()</code> computes for example: <code>count</code>, <code>density</code>, <code>ncount</code> and <code>ndensity</code> (see <code>?stat_bin()</code>)</li>
+<li>Here <code>..density..</code> specifies that we would like to use such a computed <code>density</code> column.</li>
+</ul></li>
+</ul>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables" class="smaller ">
+
+<ul>
+<li>By default, <code>geom_bar()</code> counts the number of occurences for each values of a categorical variable.</li>
+<li><code>geom_bar()</code> uses <code>stat_count()</code> to compute these values (creating a new <code>count</code> column)</li>
+</ul>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables-1" class="smaller ">
+
+<ul>
+<li>To map a continous variable on the <em>y</em> axis, we need to override the default call to <code>stat_count()</code></li>
+<li><code>stat = &quot;identity&quot;</code> will force <code>geom_bar()</code> to use <code>stat_identity()</code> instead (leaving the original data unchanged)</li>
+<li><code>Petal.Length</code> and not <code>..Petal.Length..</code> as it is not &quot;new&quot; and is already present in the original data frame</li>
+</ul>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_bar(aes(x = Species, y = Petal.Length), stat = &quot;identity&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<div class = 'row build'><div class = 'box col-6 bg-grgold '><h3>Update v2.1</h3>
+
+<p>since version 2.1, thanks to Bob Rudis, <code>geom_col</code> does require a <strong>y</strong> variable</p>
+
+</div><div class = 'box col-6 bg-cobalt stretch '><h3><code>geom_col</code></h3>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(iris) +
+  geom_col(aes(x = Species, y = Petal.Length))</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-categorical-variables" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)))</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Dodged barchart (side by side) </h2><h3> Categorical variables</h3></hgroup><article  id="dodged-barchart-side-by-side-categorical-variables" class="smaller ">
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = &quot;dodge&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-for-proportions-categorical-variables" class="smaller ">
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = &quot;fill&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-for-proportions-categorical-variables-1" class="smaller ">
+
+<p>We can easily switch to polar coordinates:</p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot() +
+  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+           position = &quot;fill&quot;) +
+  coord_polar()</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> Categorical variables</h3></hgroup><article  id="boxplot-categorical-variables" class="smaller ">
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg))</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> Categorical variables</h3></hgroup><article  id="boxplot-categorical-variables-1" class="smaller ">
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am)))</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors</h2></hgroup><article  id="custom-colors" class="smaller ">
+
+<ul>
+<li>It is possible to manually adjust the colors using <code>scale_fill_manual()</code> and <code>scale_color_manual()</code></li>
+<li>Is not very handy as you <strong>must</strong> provide as much colours as groups</li>
+</ul>
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am), color = factor(am))) +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;lightblue&quot;)) +
+  scale_color_manual(values = c(&quot;purple&quot;, &quot;blue&quot;))</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors </h2><h3> Using predefined color palettes</h3></hgroup><article  id="custom-colors-using-predefined-color-palettes" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(RColorBrewer)
+display.brewer.all()</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors </h2><h3> Using predefined color palettes</h3></hgroup><article  id="custom-colors-using-predefined-color-palettes-1" class="smaller ">
+
+<div class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg,
+                   fill = factor(am), colour = factor(am))) +
+  scale_fill_brewer(palette = &quot;Pastel2&quot;) +
+  scale_colour_brewer(palette = &quot;Set1&quot;)</pre>
+
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_wrap()</h3></hgroup><article  id="facets-facet_wrap" class="smaller ">
+
+<p>the easiest way to create facet is to provide <code>facet_wrap()</code> with a column name</p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, ncol = 2)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-51-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_grid()</h3></hgroup><article  id="facets-facet_grid" class="smaller ">
+
+<p><code>facet_grid()</code> is used to lay out panels in a grid</p>
+
+<div class = 'row'><div class = 'box col-6 bg-yellow'><h3>Specify a <strong>formula</strong></h3>
+
+<p>the rows on the left and columns on the right separated by a tilde <code>~</code> (<em>i.e</em> <strong>by</strong>)</p>
+
+</div><div class = 'box col-6 bg-yellow'><h3>Specify one row/column</h3>
+
+<p>A dot (<code>.</code>) specifies that no faceting should be performed. Mimic <code>facet_wrap()</code></p>
+
+</div></div>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(am ~ cyl)</pre></div>
+
+<div class="col-8">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(. ~ cyl)</pre></div>
+
+<div class="col-8">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-53-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>facet </h2><h3> labeller</h3></hgroup><article  id="facet-labeller" class="smaller ">
+
+<p>Add the column names with <code>labeller</code></p>
+
+<div class="chunk shadow">
+<div class="row">
+<div class="col-5">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(am ~ cyl,
+             labeller = label_both)</pre></div>
+
+<div class="col-7">
+<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exporting</h2></hgroup><article  id="exporting" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-6 bg-grgold'><h3>right panel</h3>
+
+<ul>
+<li>Using the Export button in the <em>Plots</em> panel</li>
+<li>Integrate them in your Rmarkdown reports
+
+<ul>
+<li>If required, adjust the chunk options: <code>fig.height</code>, <code>fig.align</code></li>
+</ul></li>
+</ul>
+
+</div><div class = 'col-6 middle'>
+
+<img src='img/06_export_plot.png' title=''/>
+
+</div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extensions</h2></hgroup><article  id="extensions" class="smaller ">
+
+<p><code>ggplot2</code> introduced the possibility for the community to contribute and <a href='http://ggplot2.tidyverse.org/articles/extending-ggplot2.html' title=''>create <strong>extensions</strong></a>.</p>
+
+<p>They are referenced on a <a href='https://www.ggplot2-exts.org/' title=''>dedicated site</a></p>
+
+<p><img src="img/06_extensions.jpg" width="85%" style="display: block; margin: auto;" /></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Art </h2><h3> by Marcus Volz</h3></hgroup><article  id="art-by-marcus-volz" class="smaller ">
+
+<blockquote class="twitter-tweet">
+
+<p lang="en" dir="ltr">
+
+A compilation of some of my gifs created with <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://twitter.com/hashtag/ggplot2?src=hash">#ggplot2</a> <a href="https://twitter.com/hashtag/gganimate?src=hash">#gganimate</a> <a href="https://twitter.com/hashtag/tweenr?src=hash">#tweenr</a> <a href="https://t.co/nCppSOZv4W">https://t.co/nCppSOZv4W</a>
+
+</p>
+
+— Marcus Volz (<span class="cite">@mgvolz</span>) <a href="https://twitter.com/mgvolz/status/849375922297991168">4 avril 2017</a>
+
+</blockquote>
+
+<style type="text/css">
+.vembedr {
+  border-radius: 25px; /* adjust it to your needs */
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none;
+}
+</style>
+
+<div class = "vembedr">
+
+<iframe src="https://www.youtube.com/embed/DQiKHlpy70Q" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+
+<iframe src="https://www.youtube.com/embed/DQiKHlpy70Q" width="420" height="315" frameborder="0" allowfullscreen=""></iframe></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>

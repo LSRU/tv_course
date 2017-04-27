@@ -58,7 +58,7 @@ mtcars %>%
 
 
 
-### [ggplot2](my link) {.box-8 .offset-1 .bg-grgold .build .stretch}
+### ggplot2 {.box-8 .offset-1 .bg-grgold .build .stretch}
 
 ```{r, eval = FALSE}
 library(ggplot2)
@@ -165,9 +165,27 @@ awesome [addin](https://rstudio.github.io/rstudioaddins/): [datapasta](https://g
 
 by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0ystej_bigger.jpg)
 
-## Motivation for this layered system | football example
+## Motivation for this layered system | football example {.vs1}
 
-> [Data visualisation] is not meant just to be seen but to be read, like written text - Alberto Cairo
+> *Data visualisation* is not meant just to be seen but to be read, like written text - Alberto Cairo
+
+```{r, echo = FALSE}
+# https://github.com/johnburnmurdoch/johnburnmurdoch.github.io/blob/master/slides/r-ggplot/r-scripts.R
+#allSeasons <- read_csv("https://raw.githubusercontent.com/johnburnmurdoch/johnburnmurdoch.github.io/master/slides/r-ggplot/changing-tides-of-football.csv")
+#write_rds(allSeasons, "allseasons.rds")
+```
+Using the following dataset
+
+```{r}
+library(tidyverse)
+allSeasons <- read_rds("allseasons.rds")
+oneSeason <- allSeasons %>% filter(year == 2016)
+allSeasons
+```
+
+<span class = "small">source [John Burn-Murdoch](http://johnburnmurdoch.github.io/slides/r-ggplot/) working at the Financial Times</span> 
+
+## questions & solutions
 
 ### Questions {.box-5 .bg-yellow2 .build}
 
@@ -191,7 +209,7 @@ by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0
 
 2. points on a line
 
-3. ribbon*
+3. ribbon
 
 4. shaded range
 
@@ -204,56 +222,328 @@ by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0
 
 ## 1. which countries have the best teams in 2016?
 
-```{r, echo = FALSE}
-# https://github.com/johnburnmurdoch/johnburnmurdoch.github.io/blob/master/slides/r-ggplot/r-scripts.R
-#allSeasons <- read_csv("https://raw.githubusercontent.com/johnburnmurdoch/johnburnmurdoch.github.io/master/slides/r-ggplot/changing-tides-of-football.csv")
-#write_rds(allSeasons, "allseasons.rds")
+### {.col-12 .build}
+
+```{r, row = c(8, 4), fig.height=3, fig.width=3}
+oneSeason %>%
+  ggplot(aes(x = year, y = score, colour = country)) + 
+  geom_point(size = 3) +
+  scale_x_discrete() +
+  theme_bw(18)
 ```
-```{r}
-library(tidyverse)
-allSeasons <- read_rds("allseasons.rds")
-oneSeason <- allSeasons %>% filter(year == 2016)
-```
+
+- `size = 3` increases the size of *all* dots. Not in `aes()`
+- `scale_x_discrete` is to force the 1 value on the x axis to be discrete 
+- `theme_bw()` is a pre-defined *black/white* theme, where all fonts are set to size = 18
+
+### Issue {.offset-3 .box-6 .bg-red .build}
+
+we can't see much. Improve the **x** mapping
+
+## 1. which countries have the best teams in 2016? | with rank
 
 ### {.col-12 .build}
 
-```{r, row = TRUE, fig.height=3, fig.width=3}
-ggplot(oneSeason
-       ,aes(x = year, y = score, colour = country)) + 
+```{r, row = c(5, 7), fig.height=4, fig.width=5}
+oneSeason %>%
+  ggplot(aes(x = rank, y = score,
+             colour = country)) + 
   geom_point(size = 3) +
-  scale_x_discrete() +
-  theme_bw()
+  theme_bw(18)
 ```
+
+- `scale_x_discrete` is useless now, we have a continuous variable.
+
+### Spain {.offset-2 .box-8 .bg-grgold .build}
+
+Now obvious that Spain does well, even for low ranking clubs
+
+
+## 2. which leagues are most/least balanced in 2016?
+
+### {.col-12 .build}
+
+```{r, row = c(5, 7), fig.height=4, fig.width=5}
+oneSeason %>%
+  ggplot(aes(rank, score, 
+             colour = country)) +
+   geom_line() + 
+   geom_point(size = 3) + 
+   theme_bw(18)
+```
+
+- `x` and `y` could be omitted, better to specify them though.
+
+
+### Issue {.offset-2 .box-8 .bg-red .build}
+
+Hard to see differences, ENG seems more coherent
+
+## 2. which leagues are most/least balanced in 2016? | with range
+
+### {.col-12 .build}
+
+```{r, row = c(8, 4), fig.height=4, fig.width=5}
+oneSeason %>%
+  group_by(country) %>%
+  summarise(min = min(score),
+            max = max(score),
+            range = max - min) %>%
+  mutate(country = forcats::fct_reorder(country, range)) %>%
+  ggplot(aes(x = "2016", y = range, fill = country)) +
+  geom_col(position = "dodge") +
+  theme_classic(18)
+```
+
+
+### Tip x-axis {.box-4 .bg-yellow .build .stretch}
+
+force the discretization using 2016 as character
+
+### Tip fill  {.box-4 .bg-yellow .build .stretch}
+
+use dodging to get all bars on the same x index
+
+### Tip fill order {.box-4 .bg-yellow .build}
+
+reorder levels based on a numeric variable using `fct_reorder`
+
+
+
+## 3. _Quality gap_ between England and Spain in 2016? | score diff at each rank  
+
+### {.col-12 .build}
+
+```{r, row = c(7, 5), fig.height=4, fig.width=5}
+oneSeason %>%
+  select(score, rank, country) %>%
+  filter(country %in% c("ENG", "ESP")) %>%
+  spread(country, score) %>%
+  rowwise() %>%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %>%
+  ggplot(aes(x = rank, fill = gap > 0)) + 
+  geom_rect(aes(xmin = rank - 0.5, 
+                xmax = rank + 0.5, 
+                ymin = min, ymax = max), alpha = 0.8) + 
+  theme_classic(18) +
+  scale_fill_manual(name = "gap", labels = c("ENG", "ESP"), 
+                    values = c("royalblue", "red3")) +
+  labs(title = "quality gap",
+       subtitle = "between England and Spain",
+       caption = "by John Burn-Murdoch")
+```
+
+
+### Spain clubs {.offset-2 .box-8 .bg-grgold .build}
+
+are performing better at every rank except #11
+
+
+ 
+## 3. _Quality gap_ between England and Spain in 2016? | dumbbell 
+
+### {.col-12 .build}
+
+```{r, row = c(7, 5), fig.height=4, fig.width=5}
+oneSeason %>%
+  select(score, rank, country) %>%
+  filter(country %in% c("ENG", "ESP")) %>%
+  spread(country, score) %>%
+  rowwise() %>%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %>%
+  ggplot() + 
+  ggalt::geom_dumbbell(aes(y = rank, x = min, xend = max, colour = gap > 0),
+                         size = 1.5, size_x = 3, size_xend = 1,
+                       colour_x = "#5b8124", colour_xend = "#bad744") + 
+  scale_colour_manual(values =  c("#5b8124", "#bad744")) +
+  theme_classic(18)
+```
+
+[Bob Rudis's post](https://rud.is/b/2016/04/17/ggplot2-exercising-with-ggalt-dumbbells/)
+
+
+## 4.How does the _nth_ best English team in 2016 compare to its predecessors? 
+
+### {.col-12 .build}
+
+```{r, row = c(7, 5), fig.height=5, fig.width=5}
+oneSeason %>%
+  filter(country == "ENG") %>%
+  ggplot(aes(x = rank, y = score)) + 
+  geom_ribbon(aes(ymin = atw, ymax = atb),
+              fill = "royalblue", alpha = 0.5) + 
+  geom_line(size = 1.5, colour = "royalblue") + 
+  geom_point(size = 3, colour = "royalblue") + 
+  theme_bw(18) + 
+  scale_fill_manual(name = "gap", labels = c("ENG", "ESP"), 
+                    values = c("royalblue", "red3")) +
+  labs(title = "Comparison of the nth best team to
+                its predecessors",
+       subtitle = "in England in 2016",
+       caption = "by John Burn-Murdoch")
+```
+
+## 5. How to visualise over time? | facet: best country
+
+### {.col-12 .build}
+
+```{r, row = c(4, 8), fig.height=6, fig.width=6}
+allSeasons %>%
+  ggplot(aes(rank, score, 
+             colour = country)) +
+  geom_line() + 
+  #geom_point(size = 1.5) + 
+  theme_classic(18) +
+  facet_wrap(~ year)
+```
+
+## 5. How to visualise over time? | facet: gap code
+
+### {.col-12 .build}
+
+```{r, eval = FALSE, fig.height=6, fig.width=6}
+allSeasons %>%
+  select(score, year, rank, country) %>%
+  filter(country %in% c("ENG", "ESP")) %>%
+  spread(country, score) %>%
+  rowwise() %>%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %>%
+  ggplot(aes(x = rank, fill = gap > 0)) + 
+  geom_rect(aes(xmin = rank - 0.5, 
+                xmax = rank + 0.5, 
+                ymin = min, ymax = max), alpha = 0.8) + 
+  theme_classic(18) +
+  scale_fill_manual(name = "gap", labels = c("ENG", "ESP"), 
+                    values = c("royalblue", "red3")) +
+  labs(title = "quality gap",
+       subtitle = "between England and Spain",
+       caption = "by John Burn-Murdoch") +
+  facet_wrap(~ year)
+```
+
+## 5. How to visualise over time? | facet: gap plot 
+
+
+
+```{r, echo = FALSE, fig.height=7, fig.width=7}
+allSeasons %>%
+  select(score, year, rank, country) %>%
+  filter(country %in% c("ENG", "ESP")) %>%
+  spread(country, score) %>%
+  rowwise() %>%
+  mutate(gap = ESP - ENG,
+         min = min(ESP, ENG),
+         max = max(ESP, ENG)) %>%
+  ggplot(aes(x = rank, fill = gap > 0)) + 
+  geom_rect(aes(xmin = rank - 0.5, 
+                xmax = rank + 0.5, 
+                ymin = min, ymax = max), alpha = 0.8) + 
+  theme_classic(18) +
+  scale_fill_manual(name = "gap", labels = c("ENG", "ESP"), 
+                    values = c("royalblue", "red3")) +
+  labs(title = "quality gap",
+       subtitle = "between England and Spain",
+       caption = "by John Burn-Murdoch") +
+  facet_wrap(~ year)
+```
+
+# your turn
+
+
+## iris dataset {.vs1}
+
+
+```{r}
+iris <- as_tibble(iris)
+iris
+```
+
+### global definition of the iris dataset {.box-6 .bg-grgold .stretch}
+
+as a `tibble` to avoid printing all 150 rows
+
+### global definition of the iris dataset {.box-6 .bg-yellow .build}
+
+I set for this course the following to avoid the grey bg and bigger text
+```{r}
+ggplot2::theme_set(ggplot2::theme_bw(18))
+```
+
 
 
 ## Draw your first plot
 
 ```{r, fig.height = 4}
-library("ggplot2")
-ggplot(iris) +
+iris %>%
+  ggplot() +
   geom_point(aes(x = Petal.Width, y = Petal.Length))
 ```
 
-`ggplot` uses a `data.frame` and builds the plot **layer by layer**.
 
-## Geoms
+## geometric objects | geoms define the type of plot which will be drawn.
 
-Geoms, or geometric objects, define the type of plot which will be drawn.
+### `geom_point()` {.box-4 .bg-cobalt .build}
 
-Examples of `geom` are:
+```{r, echo = FALSE}
+iris %>%
+  ggplot() +
+  geom_point(aes(x = Petal.Width, y = Petal.Length))
+```
 
-- `geom_point()` to draw a scatter plot
-- `geom_boxplot()` to draw boxplots
-- `geom_line()` to draw lines
-- `geom_histogram()` to draw histograms
-- `geom_density()` to draw density curves
-- Have a look at the [cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/12/ggplot2-cheatsheet-2.0.pdf) or the ggplot2 online [documentation](http://docs.ggplot2.org/) to list more possibilities.
+### `geom_line()` {.box-4 .bg-cobalt .build}
+
+```{r, echo = FALSE}
+oneSeason %>%
+  ggplot(aes(rank, score, 
+             colour = country)) +
+  geom_line()
+```
+
+### `geom_bar()` {.box-4 .bg-cobalt .build}
+
+```{r, echo = FALSE}
+oneSeason %>%
+  ggplot(aes(rank, score, 
+             fill = country)) +
+  geom_col(position = "dodge")
+```
+
+
+### `geom_boxplot()` {.box-4 .bg-cobalt .build}
+
+```{r, echo = FALSE}
+ggplot(mtcars) +
+  geom_boxplot(aes(x = factor(cyl), y = mpg))
+```
+
+### `geom_histogram()` {.box-4 .bg-cobalt .build}
+
+```{r, echo = FALSE}
+ggplot(iris) +
+  geom_histogram(aes(x = Sepal.Width), bins = 20)
+```
+
+### `geom_density()` {.box-4 .bg-cobalt .build}
+
+```{r, echo = FALSE}
+ggplot(iris) +
+  geom_density(aes(x = Sepal.Width, fill = Species, colour = Species), alpha = 0.6)
+```
+
+
+- Have a look at the [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) or the ggplot2 online [documentation](http://ggplot2.tidyverse.org/) to list more possibilities.
 
 ## Mapping aesthetics
 
-**aesthetics** map the variables of a `data.frame` to the variable each ggplot2 `geom` is expecting.
+**aesthetics** map the columns of a `data.frame`/`tibble` to the variable each ggplot2 `geom` is expecting.
 
-For example `geom_point()` (used to draw a scatter plot) requires the _**x**_ and _**y**_ coordinates for each point.
+For example `geom_point()` requires **at least** the _**x**_ and _**y**_ coordinates for each point.
 
 ```{r, fig.height = 4, eval = FALSE}
 ggplot(iris) +
@@ -262,37 +552,27 @@ ggplot(iris) +
 
 ```{r, results = "asis", echo = FALSE}
 iris %>%
-  head() %>%
+  head(3) %>%
   knitr::kable()
 ```
 
+## Unmapped paramaters
 
-## Mapping aesthetics
+Additional arguments such as the `colour`, the transparency (`alpha`) or the `size`.
 
-**aesthetics** map the variables of a `data.frame` to the variable each ggplot2 `geom` is expecting.
-
-For example `geom_point()` (used to draw a scatter plot) requires the _**x**_ and _**y**_ coordinates for each point.
-
-```{r, fig.height = 4}
-ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length))
-```
-
-
-```{r}
-knitr::knit_exit()
-```
-
-
-## Mapping aesthetics
-
-We can specify additional arguments such as the `colour`, the transparency (`alpha`) or the `size`.
+### {.col-6}
 
 ```{r, fig.height = 4}
 ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length),
-             colour = "blue", alpha = 0.6, size = 3)
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length),
+             colour = "blue", alpha = 0.6, 
+             size = 3)
 ```
+
+### Important {.box-6 .bg-red}
+
+see that paramaters define **outside** the aesthetics `aes()` are applied to **all** data
 
 ## Mapping aesthetics | colour
 
@@ -300,59 +580,64 @@ ggplot(iris) +
 
 For example: We can attribute a different color to each species:
 
+### {.col-6}
+
 ```{r, fig.height = 3.5}
 ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length, colour = Species), alpha = 0.6, size = 3)
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length,
+                 colour = Species),
+             alpha = 0.6, size = 3)
 ```
+
+### Important {.box-6 .bg-red}
 
 Note that the `colour` argument now is **inside** `aes()` and **must** refer to a column in the dataframe.
 
-## Mapping aesthetics | shape
+## Mapping aesthetics | shape {.vs1}
 
 ```{r}
 ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length, shape = Species, colour = Species), alpha = 0.6, size = 3)
 ```
 
-## Title and axis labels
+## Labels {.vs2}
 
 It is easy to adjust axis labels and the title
 
-```{r, fig.height = 4, fig.align = "center"}
+```{r, row = TRUE, fig.height = 4}
 ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length, colour = Species), alpha = 0.6, size = 3) +
-  xlab("Width") +
-  ylab("Length") +
-  ggtitle("Iris: petal")
-```
-
-## Facets
-
-`facet_grid()` is used to lay out panels in a grid: Specify a **formula** with the rows on the left and columns on the right separated by a tilde `~`. A dot (`.`) specifies that no facetting should be performed.
-
-```{r, fig.height = 3, fig.align = "center"}
-ggplot(iris) +
-  geom_point(aes(x = Petal.Width, y = Petal.Length,
-                 shape = Species, colour = Species), alpha = 0.6, size = 3) +
-  facet_grid(. ~ Species)
+  geom_point(aes(x = Petal.Width,
+                 y = Petal.Length,
+                 colour = Species), 
+             alpha = 0.6, size = 3) +
+  labs(x = "Width",
+       y = "Length",
+       title = "Iris",
+       subtitle = "petal measures",
+       caption = "Fisher, R. A. (1936)")
 ```
 
 ## Histograms
 
-```{r, fig.height = 4, fig.align = "center"}
+```{r, fig.height = 4, row = TRUE}
 ggplot(iris) +
-  geom_histogram(aes(x = Petal.Length, fill = Species), alpha = 0.5) 
+  geom_histogram(aes(x = Petal.Length,
+                     fill = Species),
+                 alpha = 0.6) 
 ```
 
-Note that the filling colour can also be adjusted on some geoms.
+
 
 ## Density plot
 
 The density is the count divided by the total number of occurences.
 
-```{r}
+```{r, row = TRUE}
 ggplot(iris) +
-  geom_density(aes(x = Petal.Length, fill = Species), alpha = 0.6)
+  geom_density(aes(x = Petal.Length,
+                   fill = Species),
+               alpha = 0.6)
 ```
 
 ## Overlaying plots | Density plot and histogram
@@ -364,10 +649,11 @@ ggplot(iris) +
   theme_classic()
 ```
 
+
 ## stat functions
 
-- We used a new variable in the previous plot: `..density..`
-- In ggplot2, variables surrounded by two pair of dots (`..<variable>..`) are intermediate values calculated by ggplot2 using stat functions
+- We used a new variable in the density plot: `..density..`
+- In `ggplot2`, variables surrounded by two pair of dots (`..<variable>..`) are intermediate values calculated by `ggplot2` using stat functions
 
 - Every `geom` uses a `stat` function to transform the data:
     + For example `geom_histogram()` and `geom_density()` need to perform calculations in order to display the histogram or the density curve (Not as simple as plotting _x_ and _y_ values from two columns)
@@ -380,16 +666,10 @@ ggplot(iris) +
 - By default, `geom_bar()` counts the number of occurences for each values of a categorical variable.
 - `geom_bar()` uses `stat_count()` to compute these values (creating a new `count` column)
 
-```{r, fig.height = 3.5}
+```{r, row = TRUE, fig.height = 4}
 ggplot(iris) +
   geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))
 ```
-
-
-
-
-
-
 
 
 
@@ -399,9 +679,20 @@ ggplot(iris) +
 - `stat = "identity"` will force `geom_bar()` to use `stat_identity()` instead (leaving the original data unchanged)
 - `Petal.Length` and not `..Petal.Length..` as it is not "new" and is already present in the original data frame
 
-```{r, fig.height = 3.2}
+```{r, row = TRUE, fig.height = 3}
 ggplot(iris) +
   geom_bar(aes(x = Species, y = Petal.Length), stat = "identity")
+```
+
+### Update v2.1 {.box-6 .bg-grgold .build}
+
+since version 2.1, thanks to Bob Rudis, `geom_col` does require a **y** variable
+
+### `geom_col` {.box-6 .bg-cobalt .stretch .build}
+
+```{r, eval = FALSE}
+ggplot(iris) +
+  geom_col(aes(x = Species, y = Petal.Length))
 ```
 
 ## Stacked barchart | Categorical variables
@@ -414,7 +705,7 @@ mtcars %>%
 
 ## Dodged barchart (side by side) | Categorical variables
 
-```{r}
+```{r, row = TRUE}
 mtcars %>%
   ggplot() +
   geom_bar(aes(x = factor(cyl), fill = factor(gear)),
@@ -423,7 +714,7 @@ mtcars %>%
 
 ## Stacked barchart for proportions | Categorical variables
 
-```{r}
+```{r, row = TRUE}
 mtcars %>%
   ggplot() +
   geom_bar(aes(x = factor(cyl), fill = factor(gear)),
@@ -434,7 +725,7 @@ mtcars %>%
 
 We can easily switch to polar coordinates:
 
-```{r}
+```{r, row = TRUE}
 mtcars %>%
   ggplot() +
   geom_bar(aes(x = factor(cyl), fill = factor(gear)),
@@ -444,14 +735,14 @@ mtcars %>%
 
 ## Boxplot | Categorical variables
 
-```{r}
+```{r, row = TRUE}
 ggplot(mtcars) +
   geom_boxplot(aes(x = factor(cyl), y = mpg))
 ```
 
 ## Boxplot | Categorical variables
 
-```{r}
+```{r, row = TRUE}
 ggplot(mtcars) +
   geom_boxplot(aes(x = factor(cyl), y = mpg,
                    fill = factor(am)))
@@ -460,7 +751,7 @@ ggplot(mtcars) +
 ## Custom colors
 
 - It is possible to manually adjust the colors using `scale_fill_manual()` and `scale_color_manual()`
-- Is not very handy as you **must** provide as much colors as groups
+- Is not very handy as you **must** provide as much colours as groups
 
 ```{r, fig.height = 4}
 ggplot(mtcars) +
@@ -488,26 +779,110 @@ ggplot(mtcars) +
   scale_colour_brewer(palette = "Set1")
 ```
 
-## Using or exporting plots
 
-<div class = "float-r">
-![](img/03_export_plot.png)
-</div>
+## Facets | facet_wrap()
+
+
+the easiest way to create facet is to provide `facet_wrap()` with a column name
+
+```{r, row = TRUE, fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl)
+```
+
+```{r, row = TRUE, fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, ncol = 2)
+```
+
+## Facets | facet_grid()
+
+
+`facet_grid()` is used to lay out panels in a grid
+
+### Specify a **formula** {.box-6 .bg-yellow}
+
+the rows on the left and columns on the right separated by a tilde `~` (_i.e_ **by**)
+
+### Specify one row/column {.box-6 .bg-yellow} 
+
+A dot (`.`) specifies that no faceting should be performed. Mimic `facet_wrap()`
+
+%end% 
+
+```{r, row = c(4, 8), fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(am ~ cyl)
+```
+
+
+```{r, row = c(4, 8), fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(. ~ cyl)
+```
+
+## facet | labeller
+
+Add the column names with `labeller`
+
+```{r, row = c(5, 7), fig.height = 4.5}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_grid(am ~ cyl,
+             labeller = label_both)
+```
+
+
+## Exporting  {.vs2}
+
+### right panel {.box-6 .bg-grgold}
+
 - Using the Export button in the _Plots_ panel
 - Integrate them in your Rmarkdown reports
     + If required, adjust the chunk options: `fig.height`, `fig.align`
 
 
+### {.col-6 .middle}
+
+![](img/06_export_plot.png)
+</div>
+
+
 ## Extensions
 
-`ggplot2` introduced the possibility for the community to contribute and create **extensions**. 
+`ggplot2` introduced the possibility for the community to contribute and [create **extensions**](http://ggplot2.tidyverse.org/articles/extending-ggplot2.html). 
 
 They are referenced on a [dedicated site](https://www.ggplot2-exts.org/)
+
+```{r, echo = FALSE, out.width = "85%"}
+knitr::include_graphics("img/06_extensions.jpg")
+```
 
 
 ## Art | by Marcus Volz
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">A compilation of some of my gifs created with <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://twitter.com/hashtag/ggplot2?src=hash">#ggplot2</a> <a href="https://twitter.com/hashtag/gganimate?src=hash">#gganimate</a> <a href="https://twitter.com/hashtag/tweenr?src=hash">#tweenr</a> <a href="https://t.co/nCppSOZv4W">https://t.co/nCppSOZv4W</a></p>&mdash; Marcus Volz (@mgvolz) <a href="https://twitter.com/mgvolz/status/849375922297991168">4 avril 2017</a></blockquote>
+
+```{css}
+.vembedr {
+  border-radius: 25px; /* adjust it to your needs */
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none;
+}
+```
+
+<div class = "vembedr">
+```{r, echo = FALSE}
+vembedr::embed_youtube("DQiKHlpy70Q")
+```
 
 ```{r, echo = FALSE}
 vembedr::embed_youtube("DQiKHlpy70Q")

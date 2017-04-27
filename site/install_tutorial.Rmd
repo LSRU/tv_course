@@ -31,6 +31,8 @@ and migrates your installed libraries whenever a major `R` update is released. R
 
 You can either browse to the [download page](https://cloud.r-project.org/) or better use the [Homebrew package manager](http://brew.sh/).
 
+[Robert Rudis](https://rud.is/b/about/) wrote a nice blog post about a [100% homebrew r install](https://rud.is/b/2015/10/22/installing-r-on-os-x-100-homebrew-edition/).
+
 Once `homebrew` is installed, you can easily install/uninstall many programs with their dependencies and utilities. This implies to use the terminal. If you're not comfortable with the use of the terminal, ask me! It is worth it.
 To install `R` using brew write in the following:
 
