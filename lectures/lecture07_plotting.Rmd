@@ -24,6 +24,15 @@ knitr::opts_chunk$set(fig.align = "center")
 
 ![](img/06_ggplot2_overview.jpg)
 
+## Learning objectives {.vs2}
+
+By the end you should be able to:
+
+- Understand the basic grammar of ggplot2 (data, geoms, aesthetics, facets).
+- Make quick exploratory plots of your multidimensional data.
+- Know how to find help on `ggplot2` when you run into problems.
+
+
 ## Before, there was `ggplot1`
 
 Released in **2005** until **2008** by [Hadley Wickham](https://github.com/hadley/ggplot1).
@@ -49,13 +58,44 @@ mtcars %>%
   scbrewer()
 ```
 
-
 ```{css}
-.bg-green2 > h3:first-child > a:hover {
+.bg-green2 > h3:first-child > a:hover,
+.bg-green2 > h3:first-child > a {
   color: white !important;
 }
-```
 
+.bg-grgold a:hover,
+.bg-grgold a {
+  color: white !important;
+}
+
+article.maximise {
+  margin-top: -20px;
+}
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+}
+
+.col-list li {
+  float: left;
+  display: inline;
+  padding-left: 50px;
+}
+
+.col-list li:before {
+    content: "\2022";
+    font-size: 150%;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+```
 
 
 ### ggplot2 {.box-8 .offset-1 .bg-grgold .build .stretch}
@@ -341,30 +381,6 @@ oneSeason %>%
 are performing better at every rank except #11
 
 
- 
-## 3. _Quality gap_ between England and Spain in 2016? | dumbbell 
-
-### {.col-12 .build}
-
-```{r, row = c(7, 5), fig.height=4, fig.width=5}
-oneSeason %>%
-  select(score, rank, country) %>%
-  filter(country %in% c("ENG", "ESP")) %>%
-  spread(country, score) %>%
-  rowwise() %>%
-  mutate(gap = ESP - ENG,
-         min = min(ESP, ENG),
-         max = max(ESP, ENG)) %>%
-  ggplot() + 
-  ggalt::geom_dumbbell(aes(y = rank, x = min, xend = max, colour = gap > 0),
-                         size = 1.5, size_x = 3, size_xend = 1,
-                       colour_x = "#5b8124", colour_xend = "#bad744") + 
-  scale_colour_manual(values =  c("#5b8124", "#bad744")) +
-  theme_classic(18)
-```
-
-[Bob Rudis's post](https://rud.is/b/2016/04/17/ggplot2-exercising-with-ggalt-dumbbells/)
-
 
 ## 4.How does the _nth_ best English team in 2016 compare to its predecessors? 
 
@@ -468,7 +484,7 @@ iris
 
 as a `tibble` to avoid printing all 150 rows
 
-### global definition of the iris dataset {.box-6 .bg-yellow .build}
+### change default theme {.box-6 .bg-yellow .build}
 
 I set for this course the following to avoid the grey bg and bigger text
 ```{r}
@@ -650,14 +666,17 @@ ggplot(iris) +
 ```
 
 
-## stat functions
+## stat functions {.vs1}
 
 - We used a new variable in the density plot: `..density..`
-- In `ggplot2`, variables surrounded by two pair of dots (`..<variable>..`) are intermediate values calculated by `ggplot2` using stat functions
+- In `ggplot2`, variables surrounded by two pair of dots (`..<variable>..`) 
+are intermediate values calculated by `ggplot2` using stat functions
 
 - Every `geom` uses a `stat` function to transform the data:
-    + For example `geom_histogram()` and `geom_density()` need to perform calculations in order to display the histogram or the density curve (Not as simple as plotting _x_ and _y_ values from two columns)
-    + `geom_histogram()` uses `stat_bin()` to divide the distributions into _bins_ and count the number of observations in each _bin_.
+    + For example `geom_histogram()` and `geom_density()` need to perform calculations 
+    in order to display the histogram or the density curve (Not as simple as plotting _x_ and _y_ values from two columns)
+    + `geom_histogram()` uses `stat_bin()` to divide the distributions into _bins_ 
+    and count the number of observations in each _bin_.
     + `stat_bin()` computes for example: `count`, `density`, `ncount` and `ndensity` (see `?stat_bin()`)
     + Here `..density..` specifies that we would like to use such a computed `density` column.
     
@@ -695,56 +714,73 @@ ggplot(iris) +
   geom_col(aes(x = Species, y = Petal.Length))
 ```
 
-## Stacked barchart | Categorical variables
+## Stacked barchart | categorical variables
 
 ```{r}
 mtcars %>%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)))
+  geom_bar(aes(x = factor(cyl),
+               fill = factor(gear)))
 ```
 
 ## Dodged barchart (side by side) | Categorical variables
 
 ```{r, row = TRUE}
 mtcars %>%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %>%
+  complete(cyl, gear) %>%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = "dodge")
 ```
 
-## Stacked barchart for proportions | Categorical variables
+XX missing values ??
+
+## Stacked barchart for proportions | categorical variables
 
 ```{r, row = TRUE}
 mtcars %>%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %>%
+  complete(cyl, gear) %>%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = "fill")
 ```
 
-## Stacked barchart for proportions | Categorical variables
+## Stacked barchart for proportions | pie charts
 
 We can easily switch to polar coordinates:
 
 ```{r, row = TRUE}
 mtcars %>%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %>%
+  complete(cyl, gear) %>%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = "fill") +
   coord_polar()
 ```
 
-## Boxplot | Categorical variables
+## Boxplot | IQR, median
 
 ```{r, row = TRUE}
 ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg))
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg))
 ```
 
-## Boxplot | Categorical variables
+## Boxplot | dodge by default
 
 ```{r, row = TRUE}
 ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
                    fill = factor(am)))
 ```
 
@@ -755,13 +791,15 @@ ggplot(mtcars) +
 
 ```{r, fig.height = 4}
 ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
-                   fill = factor(am), color = factor(am))) +
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
+                   fill = factor(am),
+                   color = factor(am))) +
   scale_fill_manual(values = c("red", "lightblue")) +
   scale_color_manual(values = c("purple", "blue"))
 ```
 
-## Custom colors | Using predefined color palettes
+## Predefined color palettes
 
 ```{r, echo = c(1, 3), fig.height = 5.5}
 library(RColorBrewer)
@@ -769,14 +807,77 @@ par(mar = c(0, 4, 0, 0))
 display.brewer.all()
 ```
 
-## Custom colors | Using predefined color palettes
+## Custom colors | using brewer
 
 ```{r, fig.height = 4}
 ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
-                   fill = factor(am), colour = factor(am))) +
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
+                   fill = factor(am),
+                   colour = factor(am))) +
   scale_fill_brewer(palette = "Pastel2") +
   scale_colour_brewer(palette = "Set1")
+```
+
+## colour gradient | ggplot2 default is ugly
+
+
+### default {.bg-cobalt .box-6}
+
+```{r, row = TRUE}
+mtcars %>%
+  ggplot(aes(x = wt,
+             y = mpg,
+             colour = hp)) +
+  geom_point(size = 3)
+```
+### viridis {.bg-cobalt .box-6}
+
+```{r, row = TRUE}
+mtcars %>%
+  ggplot(aes(x = wt,
+             y = mpg,
+             colour = hp)) +
+  geom_point(size = 3) +
+  viridis::scale_colour_viridis()
+```
+
+%end% 
+
+[viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) is color blind friendly and nice in b&w
+
+### 4 different scales {.col-8 .offset-2}
+
+```{r, echo = FALSE, out.width = "70%"}
+knitr::include_graphics("img/07_viridis_palette.png")
+```
+
+## aesthetic trick 
+
+Actually, one can use a plain character inside `aes()`, will be used to build the legend. Useful for few layers when lazy enough to create the variable in the dataframe.
+
+```{r, row = c(7, 5)}
+set.seed(123)
+dens <- tibble(x = c(rnorm(500), 
+                     rnorm(200, 3, 3)))
+ggplot(dens) +
+  geom_line(aes(x), stat = "density") +
+  geom_vline(aes(xintercept = mean(x), colour = "mean"),
+             size = 1.1) +
+  geom_vline(aes(xintercept = median(x), colour = "median"),
+             size = 1.1) -> p
+p
+```
+
+## the data argument | each layer can get its own 
+
+
+```{r, fig.height=4.5}
+dens_mode <- tibble(mode = density(dens$x)$x[which.max(density(dens$x)$y)])
+p + geom_vline(data = dens_mode,
+               aes(xintercept = mode, colour = "mode"), size = 1.1) +
+  theme(legend.position = "top") +
+  scale_colour_hue(name = NULL) # could be: labs(colour = NULL)
 ```
 
 
@@ -785,47 +886,66 @@ ggplot(mtcars) +
 
 the easiest way to create facet is to provide `facet_wrap()` with a column name
 
-```{r, row = TRUE, fig.height = 3}
+```{r, row = c(5, 7), fig.height = 3}
 ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_wrap(~ cyl)
 ```
 
-```{r, row = TRUE, fig.height = 3}
+```{r, row = c(5, 7), fig.height = 2.5}
 ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_wrap(~ cyl, ncol = 2)
 ```
 
-## Facets | facet_grid()
+
+## Facets | free scales
 
 
-`facet_grid()` is used to lay out panels in a grid
+```{r, row = c(5, 7), fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = "free_x")
+```
+
+```{r, row = c(5, 7), fig.height = 3}
+ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = "free")
+```
+
+
+## Facets | facet_grid() to lay out panels in a grid
 
 ### Specify a **formula** {.box-6 .bg-yellow}
 
 the rows on the left and columns on the right separated by a tilde `~` (_i.e_ **by**)
 
-### Specify one row/column {.box-6 .bg-yellow} 
-
-A dot (`.`) specifies that no faceting should be performed. Mimic `facet_wrap()`
-
 %end% 
 
-```{r, row = c(4, 8), fig.height = 3}
+```{r, row = c(4, 8), fig.height = 4}
 ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_grid(am ~ cyl)
 ```
 
+## Facets | facet_grid() cont.
 
-```{r, row = c(4, 8), fig.height = 3}
+### Specify one row/column {.box-6 .bg-yellow} 
+
+A dot (`.`) specifies that no faceting should be performed. Mimic `facet_wrap()`
+
+%end%
+
+```{r, row = c(4, 8), fig.height = 4}
 ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_grid(. ~ cyl)
 ```
 
-## facet | labeller
+
+
+## Facets | labeller
 
 Add the column names with `labeller`
 
@@ -837,20 +957,46 @@ ggplot(mtcars) +
 ```
 
 
-## Exporting  {.vs2}
+## Exporting | interactive or passive mode {.maximise .build}
 
 ### right panel {.box-6 .bg-grgold}
 
 - Using the Export button in the _Plots_ panel
-- Integrate them in your Rmarkdown reports
-    + If required, adjust the chunk options: `fig.height`, `fig.align`
 
 
-### {.col-6 .middle}
+
+### {.col-6}
 
 ![](img/06_export_plot.png)
-</div>
 
+
+### Rmarkdown reports {.box-6 .bg-grgold }
+
+- If needed, adjust the chunk options: 
+  + size: `fig.height`, `fig.width`
+  + ratio: `fig.asp`... 
+  + [others](https://yihui.name/knitr/options/?version=1.1.214&mode=desktop)
+      
+### {.col-6 }
+
+![](img/06_chunk_options.png)
+
+
+### ggsave {.box-6 .bg-grgold }
+
+- save the `ggplot` object, 2nd argument
+- guess the type of graphics by the extension
+
+```{r eval=FALSE}
+ggsave("aes_trick.png", p,
+       width = 60, height = 30, units = "mm")
+ggsave("aes_trick.pdf", p,
+       width = 50, height = 50, units = "mm")
+```
+
+### {.col-6 }
+
+![](aes_trick.png)
 
 ## Extensions
 
@@ -879,12 +1025,52 @@ knitr::include_graphics("img/06_extensions.jpg")
 }
 ```
 
-<div class = "vembedr">
-```{r, echo = FALSE}
-vembedr::embed_youtube("DQiKHlpy70Q")
-```
 
 ```{r, echo = FALSE}
-vembedr::embed_youtube("DQiKHlpy70Q")
+vembedr::embed_youtube("DQiKHlpy70Q") %>% htmltools::div(class = "vembedr")
 ```
+
+
+## Missing features {.maximise .build}
+
+### geoms list [here](http://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms) {.box-6 .bg-yellow2}
+
+- `geom_tile()` heatmap
+- `geom_bind2()` 2D binning
+- `geom_abline()` slope
+
+### stats list [here](http://ggplot2.tidyverse.org/reference/index.html#section-layer-stats) {.box-6 .bg-yellow2 .stretch}
+
+
+- `stat_ellipse()` 
+- `stat_summary()` easy mean 95CI etc.
+
+### plot on multi-pages {.box-6 .bg-grgold .stretch}
+
+- `ggforce::facet_grid_paginate()` facets
+- `gridExtra::marrangeGrob()` plots
+
+### positions list [here](http://ggplot2.tidyverse.org/reference/index.html#section-layer-position-adjustment) {.box-6 .bg-grgold .stretch}
+
+- `position_jitter()` random shift 
+
+### coordinate / transform {.box-6 .bg-blue .stretch}
+
+- `coord_cartesian()` for zooming in
+- `coord_flip()` exchanges _x_ & _y_
+- `scale_x_log10()` and _y_
+- `scale_x_sqrt()` and _y_
+
+### customise [_theme_](http://ggplot2.tidyverse.org/reference/index.html#section-themes) elements {.box-6 .bg-blue .stretch .col-list .c2}
+
+- legend & guide tweaks
+- major/minor grids
+- font, faces
+- margins
+- labels & ticks
+- strip positions
+
+### programming {.box-12 .bg-yellow2}
+
+- `aes_string()` for plotting inside `function`
 

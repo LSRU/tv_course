@@ -13,9 +13,9 @@ output:
 ![](https://lsru.github.io/r_workshop/img/Rlogo_90.png)
 
 `R` is available for free for Windows, GNU/Linux and MacOS.  
-As for now, the latest version is `3.3.3`.
+As for now, the latest version is `3.4.0`. 
 
-One common complain about `R` is the frequency of updates. This is true, but can be sorted out with a good **package manager**. Of note, major updates (`3.3`, early May 2016) are the only one forcing you to reinstall extra-packages and are released on a yearly basis.
+One common complain about `R` is the frequency of updates. This is true, but can be sorted out with a good **package manager**. Of note, major updates (`3.4.0`, late April 2017) are the only one forcing you to re-install extra-packages and are released on a yearly basis.
 
 ### Windows
 
