@@ -1,0 +1,361 @@
+---
+title: "Data processing with R tidyverse"
+subtitle: "Importing data"
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "2 May 2017"
+output:
+  iosp::ioslides_plus:
+    box_colours:
+      bg-yellow: ["lightgoldenrod1", "goldenrod2"]
+      bg-grayblue: ["#bfccd7"]
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+```{css}
+.compact-pre pre:not(.lang-r) {
+  line-height: 15px;
+}
+```
+
+
+## Importing data
+
+###{.box-8 .bg-blue .offset-1}
+
+- Represents probably the first step of your work
+- R can handle multiple data types
+    + flat files (`.tsv`, `.csv` ...)
+    + excel files (`.xls`, `.xlsx`)
+    + foreign statistical formats (`.sas` from SAS, `.sav` from SPSS, `.dta` from Stata)
+    + databases (SQL, SQLite ...)
+    
+### Tidyverse implementation {.box-8 .bg-blue .offset-1}
+
+- R base already provides functions for text files (_i.e._ `read.csv()`, `read.delim()`)
+- tidyverse redefines these functions with 2 main differences:
+    + speed
+    + character are not coerced to factors by default
+
+## readr
+
+```{css}
+.icon > img {
+  float: right;
+  margin-left: 20px;
+}
+```
+
+### Tidyverse packages to import your data {.box-10 .offset-1 .bg-blue .icon}
+
+![](https://raw.githubusercontent.com/tidyverse/readr/master/tools/logo.png)
+
+Seven file formats are supported by the readr package:
+
+- `read_csv()`: comma separated (CSV) files
+- `read_tsv()`: tab separated files
+- `read_delim()`: general delimited files
+- `read_fwf()`: fixed width files
+- `read_table()`: tabular files where colums are separated by white-space.
+- `read_log()`: web log files
+
+### readxl {.box-6 .bg-green .icon}
+
+![](https://raw.githubusercontent.com/tidyverse/readxl/master/logo.png)
+
+To import excel files (`.xls` and `.xlsx`):
+
+- `read_excel()`
+    + `read_xls()`
+    + `read_xlsx()`
+    
+    
+### haven {.box-6 .bg-red .icon .stretch}
+
+![](https://raw.githubusercontent.com/tidyverse/haven/master/logo.png)
+
+- `read_sas()` for SAS
+- `read_sav()` for SPSS
+- `read_dta()` for Stata
+
+## Rstudio data import | interactive call to `readr` or `readxl`
+
+```{css}
+/* Center two images in boxes*/
+.center-pair p {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.center-pair p > img {
+  max-width: 45%;
+  margin: auto;
+}
+```
+
+
+### Import button{.box-6 .bg-blue .center-pair}
+
+- Use the `Import Dataset` button in the upper right panel or click on the file in the lower right panel
+
+![](img/04_rstudio_import_option_1.jpg) ![](img/04_rstudio_import_option_2.jpg)
+
+- Will interactively select the appropriate function
+- Copy paste the generated command to your Rmarkdown document
+
+### Example{.box-6 .bg-green}
+
+- Create a new project (easier to setup the root project path)
+- Copy the example file provided by the `readr` package to the project folder using the following command:
+
+```{r, echo = TRUE, eval = FALSE}
+file.copy(
+  from = readr::readr_example("mtcars.csv"),
+  to = "mtcars.csv"
+  )
+```
+
+- Use the interactive `Import Dataset` button to import the data.
+
+## Rstudio data import | preview window
+
+###{.col-10 .offset-1}
+
+![](img/04_rstudio_import_preview.jpg)
+
+## Reading flat files | csv file
+
+### Example of `csv` file: _mtcars.csv_{.box-10 .offset-1 .bg-grayblue}
+
+```
+"mpg","cyl","disp","hp","drat","wt","qsec","vs","am","gear","carb"
+21,6,160,110,3.9,2.62,16.46,0,1,4,4
+21,6,160,110,3.9,2.875,17.02,0,1,4,4
+22.8,4,108,93,3.85,2.32,18.61,1,1,4,1
+21.4,6,258,110,3.08,3.215,19.44,1,0,3,1
+18.7,8,360,175,3.15,3.44,17.02,0,0,3,2
+...
+```
+
+### Using `read_csv()`{}{.box-10 .offset-1 .bg-blue}
+
+- `readr` provides some example files
+- use `readr::readr_example()` to access them
+- is able to read **local** and **remote** files
+- is able to read compressed files (`.zip`, `.gz`, ...)
+
+## Reading flat files | csv file
+
+### Using `read_csv()`{} {.box-10 .offset-1 .bg-cobalt .compact-pre}
+
+```{r}
+readr_example("mtcars.csv") %>% # Generates the path to the example file
+  read_csv() %>%
+  head(n = 6)
+```
+
+## Reading flat files | csv file
+
+### Column types{.box-7 .bg-blue}
+
+- are guessed from the **1000** first rows
+    + adjustable `guess_max` option
+- guessed types are displayed as a _message_
+- to hide this message:
+    + **lazy method 1**: set `message = FALSE` in your rmarkdown chunk option.
+    + **lazy method 2**: set `col_types = cols()`
+    + Hadley Wickham recommends to adjust the `col_types` to avoid any problem
+    
+### Message {.box-5 .bg-cobalt .stretch}
+
+```{r, echo = FALSE}
+dummy <- readr_example("mtcars.csv") %>% # Generates the path to the example file
+  read_csv()
+```
+
+## Reading flat files | csv file
+
+```{css}
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+  border-top: 1px solid #005c99;
+  padding-top: 10px;
+}
+
+.col-list li {
+  line-height: 1.1em;
+  border-bottom: 1px solid #005c99;
+  float: left;
+  display: inline;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+```
+
+### Explicit method {.box-5 .bg-blue .col-list .c2 .stretch}
+
+Use the following functions in `cols()`:
+
+- `col_double()`
+- `col_integer()`
+- `col_character()`
+- `col_logical()`
+- `col_factor()`
+- `col_date()`
+- `col_datetime()`
+- `col_time()`
+- `col_guess()`
+- `col_skip()`
+
+### Example 1 {.box-7 .bg-cobalt .stretch}
+
+```{r, eval = FALSE}
+readr_example("mtcars.csv") %>%
+  read_csv(col_types = cols(mpg = col_double(),
+                            cyl = col_integer(),
+                            disp = col_double(),
+                            hp = col_integer(),
+                            drat = col_double(),
+                            wt = col_double(),
+                            qsec = col_double(),
+                            vs = col_integer(),
+                            am = col_integer(),
+                            gear = col_integer(),
+                            carb = col_integer())
+  ) %>%
+  head(n = 6)
+```
+
+
+
+### Compact string shortcuts {.box-7 .bg-blue .col-list .c3 .stretch}
+
+- c = character
+- i = integer
+- n = number
+- d = double
+- l = logical
+- D = date
+- T = date time
+- t = time
+- ? = guess
+- _/- = skip
+
+### Example 2 {.box-5 .bg-cobalt .stretch}
+
+```{r, eval = FALSE}
+readr_example("mtcars.csv") %>%
+  read_csv(col_types = "dididddiiii")
+```
+
+## Try it yourself
+
+### Exercise 1{.box-10 .offset-1 .bg-green}
+
+import the `mtcars.csv` file and
+
+- import the **number of cylinders** as characters.
+- skip all columns except miles per gallon, cylinder and the number of gears
+
+
+### Answer {.box-10 .offset-1 .bg-cobalt .build}
+
+```{r}
+readr_example("mtcars.csv") %>%
+  read_csv(col_types = "dc_______i_") %>%
+  head(n = 6)
+```
+
+## Try it yourself
+
+```{css}
+/* we used two chunks to hide the local file access */
+#challenge_display {
+  border-bottom: none;
+  border-radius: 0;
+}
+
+#challenge_output {
+  margin-top: -10px;
+  border-top:none;
+  border-radius: 0;
+}
+```
+
+
+### Exercise 2{.box-10 .offset-1 .bg-green}
+
+- try to load the file `challenge.csv` (provided by `readr_example()`)
+- store the content in an object `challenge`
+
+### Step 1 {.box-10 .offset-1 .bg-grayblue .build .compact-pre}
+
+- what happened?
+- you can use `problems(challenge)` to list the failures again
+
+```{r, echo = FALSE, results = "hide"}
+# To avoid a long path in the error output
+file.copy(
+  from = readr::readr_example("challenge.csv"),
+  to = "challenge.csv"
+  )
+```
+
+```{r challenge_code, eval = FALSE}
+challenge <- readr_example("challenge.csv") %>% 
+  read_csv()
+```
+
+```{r challenge_output, echo = FALSE}
+challenge <- read_csv("challenge.csv")
+```
+
+## Try it yourself
+
+### Exercise 2{.box-10 .offset-1 .bg-green}
+
+- try to load the file `challenge.csv` (provided by `readr_example()`)
+- store the content in an object `challenge`
+- override the guessed column type to allow the import
+
+### Step 2 {.box-10 .offset-1 .bg-grayblue .build}
+
+- method 1
+
+```{r}
+challenge <- readr_example("challenge.csv") %>% 
+  read_csv(col_types = "cc")
+```
+
+- method 2 (not recommended)
+
+```{r}
+challenge <- readr_example("challenge.csv") %>% 
+  read_csv(guess_max = 1500) # n > 1000: look at the first row causing a failure
+```
+
+## Skipping lines
+
+### `skip` argument {.box-6 .bg-yellow}
+
+To skip the first _n_ rows
+
+### `n_max` argument {.box-6 .bg-red}
+
+To stop reading after _n_ rows
+
+## TODO
+
+- readxl (without map: will be shown again with the power of purrr)
+- `read_delim()`: the general functional which you can customize
+- deal with locales (for the french users...)
+- exercises: datacamp? Or adapt datacamp and/or HW examples?
