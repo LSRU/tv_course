@@ -3,30 +3,21 @@ title: "Data processing with R tidyverse"
 subtitle: Rmarkdown
 author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
-output: iosp::ioslides_plus
+output:
+  iosp::ioslides_plus:
+    box_colours:
+      bg-yellow: ["lightgoldenrod1", "goldenrod2"]
+      pink2: "pink2"
+      aquamarine2: "aquamarine2"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## RMarkdown
-
-###{.col-8}
-
-RMarkdown enables you to write detailed reports to:
-
-- ensure reproducibility
-- keep track of your analyses
-- comment/descibe different steps of your analyses
-- export a single (Rmd) document to various formats (Pdf, Html...)
-
-###{.col-4}
-
-![](img/03_rmarkdown_output.png)
-
-
 ```{css}
+/* my css codes. Some might get integrated in a future iosp version...*/
+
 article .my_flex > p {
   display: flex;
   display: -webkit-flex;
@@ -36,29 +27,55 @@ article .my_flex > p {
   -webkit-justify-content: space-around;
   font-size: 50px;
 }
+
+article.maximise {
+  margin-top: -20px;
+}
+
+.box li {
+  line-height: 1.1em; /* should be optimized in the main iosp css... */
+}
+
+article .my_code > pre {
+  background: none;
+  /*border-left: none;*/
+}
+
+.icon img {
+  float: right;
+  margin-left: 20px;
+}
+
+.my-code pre {
+  color: #c7254e;
+  background: none;
+  border-left: none;
+  padding-left: 50px;
+}
+
+.center img {
+  display: block;
+  margin: auto;
+  float: none;
+}
 ```
 
+## RMarkdown
 
-### Rmarkdown {.box-8 .offset-2 .bg-red .my_flex}
+### Why using `rmarkdown`?{.box-10 .offset-1 .bg-blue .icon}
+
+![](img/03_rmarkdown_output.png)
+
+- write detailed reports
+- ensure reproducibility
+- keep track of your analyses
+- comment/describe each step of your analysis
+- export a single (Rmd) document to various formats (Pdf, Html...)
+- text file that can be managed by a version control system (like [git](https://git-scm.com/))
+
+### Rmarkdown {.box-8 .offset-2 .bg-red .my_flex .vs1}
 
 ![](img/01_Rlogo_90.png) + ![](img/03_knit_logo.png) + ![](img/03_md_logo.png)
-
-```{r, echo = FALSE, eval = FALSE}
-# Hiding as the sound is not working in the room...
-vembedr::embed_vimeo("178485416")
-```
-
-## Rmarkdown document | Structure
-
-A Rmarkdown document document contains 3 elements:
-
-```{block, type = 'float-r'}
-![](img/03_rmd_example.png)
-```
-
-- A **<span class = "red">YAML header</span>** to define document wide options
-- Text which is formatted using the **<span class = "blue">markdown"</span>** syntax
-- **<span class = "green">chunks</span>** containing the code to be interpreted by _R_ 
 
 ## Markdown
 
@@ -89,13 +106,6 @@ A Rmarkdown document document contains 3 elements:
 
 - Easy to read and write as it uses simple tags (_e.g._ `#`)
 
-```{css}
-article .my_code > pre {
-  background: none;
-  /*border-left: none;*/
-}
-```
-
 ### MD {.box-6 .bg-green .my_code .stretch .build}
 
 ```
@@ -104,66 +114,212 @@ article .my_code > pre {
 This is some text in a paragraph
 ```
 
-## Markdown
+## Markdown | Most common text formatting **tags** are defined
 
-- Most common text formatting **tags** are defined:
-    + Headers (`#`, `##`, `###` ...)
-    + **bold** (`**`This will be bold`**`)
-    + *italic* (`*`This will be italic`*`)
-    + `code` (` ` `This will be some inline coding stuff` ` `)
-    + Links to URLs (`[Text describing the link](http://example.com)`)
-    + Many more: Have a look at the online documents on the [Rmarkdown website](http://rmarkdown.rstudio.com/lesson-8.html) or download the [cheatsheet as Pdf](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf) (the link can be found in the Rstudio Help menu)
+### Headers{.box-6 .bg-pink2 .stretch .build}
 
-### {.col-10 .offset-1}
+- Levels are defined using `#`, `##`, `###` ...
 
-![](img/03_rmd_cheatsheet.png)
+### Text style{.box-6 .bg-aquamarine2 .stretch .build}
+
+- **bold** (`**`This will be bold`**`)
+- *italic* (`*`This will be italic`*`)
+
+### Links and images{.box-6 .bg-yellow .stretch .build}
+
+- `[description](http://example.com)`
+- `![](path/to/image.jpg)`
+
+### Verbatim code{.box-6 .bg-blue .stretch .build .my-code} 
+- `code` (` ` `This will be some inline coding stuff` ` `)
+- triple backticks are delimiting code blocks
+
+~~~
+```
+This is *verbatim* code
+# Even headers are not interpreted
+```
+~~~
+
+### Rmarkdown cheatsheet {.box-12 .bg-green .icon .stretch .build}
+
+![](img/03_rmarkdown_cheatsheet.png)
+
+- Have a look at the online documents on the [Rmarkdown website](http://rmarkdown.rstudio.com/lesson-8.html)
+- Download the [cheatsheet as Pdf](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
+    + from the Rstudio `Help > Cheatsheets` menu
+
+
+## Exercise | Markdown
+
+### Learn to use the markdown syntax{.box-8 .offset-2 .bg-green .icon}
+
+![](img/03_md_logo.png)
+
+Before writing your own Rmarkdown document, use the excellent ressource on [www.markdowntutorial.com](http://www.markdowntutorial.com/) to learn the basics of markdown formatting.
 
 ## Including _R_ code
 
-### Inline code {.box-6 .bg-blue .build .middle}
+### Rmarkdown{.box-5 .bg-red .icon}
 
-To integrate small pieces of _R_ codes
+![](img/03_rmarkdown.png)
 
-- Use backticks (` ` `) combined to the keyword r (`` `r '\x60r <your R code>\x60'` ``)
-- Example: type in ``1 + 1 = `r '\x60r 1+1\x60'` `` to render 1 + 1 = `r 1+1`.
+- extends markdown
+- allows to integrate code chunks that will be interpreted
+    + **R code**
+    + bash
+    + python
+    + css
+    + ...
 
-### Code chunks {.box-6 .bg-blue}
+### Knitr{.box-7 .bg-red .icon}
 
-Can contain bigger pieces of _R_ code
+![](img/03_knitr.png)
+
+- R chunks are extracted, interpreted separately
+- The result is formatted (with or without the source code) and integrated into the markdown document
+- The markdown document is converted to the desired document format (Pdf, Html...)
+- Fully integrated in Rstudio (Knit button)
+
+```{block, type = "center"}
+![](img/03_rstudio_knit.png)
+```
+
+## Rmarkdown document | Create, step 1{.maximise}
+
+###{.col-10 .offset-1}
+
+![](img/03_rstudio_rmd_create_1.jpg)
+
+## Rmarkdown document | Create, step 2{.maximise}
+
+###{.col-10 .offset-1}
+
+![](img/03_rstudio_rmd_create_2.jpg)
+
+## Rmarkdown document | Structure
+
+A Rmarkdown document document contains 3 elements:
+
+```{block, type = 'float-r'}
+![](img/03_rmd_example.png)
+```
+
+- A **<span class = "red">YAML header</span>** to define document wide options
+- Text which is formatted using the **<span class = "blue">markdown"</span>** syntax
+- **<span class = "green">chunks</span>** containing the code to be interpreted by _R_ 
+
+## Rmarkdown document | Navigation{.maximise}
+
+###{.col-10 .offset-1}
+
+![](img/03_rstudio_index.jpg)
+
+## Rmarkdown document | Insert a chunk
+
+### Inserting a code chunk {.box-5 .bg-blue .build}
+
+![](img/03_rstudio_chunk_add.png)
+
+### R code chunks {.box-7 .bg-blue}
+
+![](img/03_chunk_example.png)
 
 - chunks are defined between two lines starting with a 3 backticks tag (` ``` `)
 - curly brackets define how to interprete the content (_R_ code but other languages such as Python are also supported)
   + ` ```{r} ` is the minimum to define a starting _R_ chunk
   + can contain more options (name of chunk, whether to show it or not, evaluate it or not)
 
-![](img/03_chunk_example.png)
+### Inline code {.box-10 .bg-blue .offset-1 .build}
 
-## Combining _R_ code and markdown text
+To integrate small pieces of _R_ codes
 
-### {.col-8}
-
-![](img/03_knit_logo.png)
-
-Both parts (_R_ code and markdown) are knitted together in the final document:
-
-- R chunks are extracted, interpreted separately
-- The result is formatted (together with the source code) and integrated into the markdown document
-- The markdown document is converted to the desired document format (Pdf, Html...)
-- Fully integrated in Rstudio (Knit button)
-
-![](img/03_knit_button.png)
+- Use backticks (` ` `) combined to the keyword r (`` `r '\x60r <your R code>\x60'` ``)
+- Example: type in ``1 + 1 = `r '\x60r 1+1\x60'` `` to render 1 + 1 = `r 1+1`.
 
 
-### {.col-4}
-
-![](img/03_rmd_example_pdf.png)
+## Rmarkdown document | generate
 
 
-# Exercise: Write your first document
+### Creating the output document {.box-6 .offset-3 .bg-blue .center .vs2}
 
-![](img/03_knit_logo.png)
-![](img/03_md_logo.png)
+- use the integrated **Knit** button.
+- call `rmarkdown::render()`
 
-## Learn to use the markdown syntax
+![](img/03_rstudio_knit.png)
 
-Before writing your own Rmarkdown document, use the excellent ressource on [www.markdowntutorial.com](http://www.markdowntutorial.com/) to learn the basics of markdown formatting.
+
+## Growing variety of output formats
+
+### Output documents {.box-10 .offset-1 .bg-blue .icon}
+
+![](img/03_rmarkdown_output.png)
+
+- Look on the [rmarkdown website](http://rmarkdown.rstudio.com/gallery.html)
+- Documents (HTML, PDF, MS Word...)
+- **interactive** documents (`shiny` package)
+- websites (like the sites of this workshop or [rmarkdown](http://rmarkdown.rstudio.com))
+
+### Books{.box-6 .bg-green .icon}
+
+![](img/00_book.png)
+
+- Bookdown package. Go on the [website](https://bookdown.org/yihui/bookdown/) to learn more about it.
+- Generate books as PDF, EPUB or MOBI files.
+- Have a look at the [R for Data Science](http://r4ds.had.co.nz/) website. It is also freely available in the bookdown format (but you might prefer the paid version to support the authors!)
+    
+### Slideshow presentations {.box-6 .bg-yellow}
+
+- **ioslides_presentation** (HTML)
+- slidy_presentation (HTML)
+- beamer_presentation (pdf, $\LaTeX$)
+- ...
+
+## Slideshow presentations
+
+### IOSlides Plus (`iosp`) {.box-6 .bg-blue}
+
+- extends **ioslides_presentation**
+- used for this presentation
+- customised css
+- shortcuts to create columns and/or boxes (`###` level 3 headers with attributes (`{}`))
+- have a look on [github](https://github.com/koncina/iosp)
+
+### Source{.box-6 .bg-cobalt}
+
+```
+## Slide with columns and boxes
+
+IOSlides Plus extends `ioslides_presentation` and allows to easily create boxes:
+
+### Box 1{.box-4 .bg-red}
+
+Test 1
+
+### Box 2{.box-6 .bg-green}
+
+- line 1
+- line 2
+
+### Box 3{.box-6 .bg-blue}
+
+This box has again a width of 6 col: it will be rendered in a new row.
+
+```
+
+## Slide with columns and boxes
+
+IOSlides Plus extends `ioslides_presentation` and allows to easily create boxes:
+
+### Box 1{.box-4 .bg-red}
+
+Test 1
+
+### Box 2{.box-6 .bg-green}
+
+- line 1
+- line 2
+
+### Box 3{.box-6 .bg-blue}
+
+This box has again a width of 6 col: it will be rendered in a new row.
