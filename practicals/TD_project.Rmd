@@ -1,8 +1,8 @@
 ---
 title: "Project"
 output:
-  unilur::tutorial_solution_pdf: default
   unilur::tutorial_pdf: default
+  unilur::tutorial_solution_pdf: default
 ---
 
 > Objective: practice a wrap-up project that encompasses most of the workshop

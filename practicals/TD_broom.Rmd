@@ -1,0 +1,452 @@
+---
+title: "practical broom"
+author: "Aurelien Ginolhac, Eric Koncina"
+date: "4 May 2017"
+output:
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solution: default
+subtitle: Yeast dataset
+---
+
+```{r setup, include=FALSE}
+library("tidyverse")
+library("broom")
+ggplot2::theme_set(ggplot2::theme_bw(14))
+```
+
+> This practical work is adapted from the exhaustive example published by David Robinson on [his blog](http://varianceexplained.org/r/tidy-genomics/).
+
+In [2008, Brauer et al.](http://www.molbiolcell.org/content/19/1/352.abstract) used microarrays to test the effect of starvation on the growth rate of yeast. 
+For example, they tried limiting the yeast's supply of glucose (sugar to metabolize into energy), of leucine (an essential amino acid), or of ammonium (a source of nitrogen).
+
+
+## Project - set-up
+
+- Create a folder `data`
+- Download [`Brauer2008_DataSet1.tds`](https://lsru.github.io/r_workshop/data/Brauer2008_DataSet1.tds) inside the `data` folder
+
+Load the [`Brauer2008_DataSet1.tds`] file as a `tibble` named `original_data`. This is the exact data that was published with the paper (though for some reason the link on the journal's page is broken).
+It thus serves as a good example of tidying a biological dataset "found in the wild".
+
+```{r, solution = TRUE}
+original_data <- read_tsv("https://lsru.github.io/r_workshop/data/Brauer2008_DataSet1.tds")
+```
+
+# 1 Tidying the data
+
+Have a look at the dataset. Is the data "tidy"?
+
+```{r, solution = TRUE}
+cat(as.character(original_data$NAME[1:3]), sep = "\n")
+# not tidy at all
+```
+
+## 1.1 Many variables are stored in one column
+
+* **Gene name** e.g. _SFB2_. Note that not all genes have a name.
+* **Biological process** e.g. "proteolysis and peptidolysis"
+* **Molecular function** e.g. "metalloendopeptidase activity"
+* **Systematic ID** e.g. _YNL049C_. Unlike a gene name, every gene in this dataset has a systematic ID.
+* **Another ID number** e.g. `1082129`. We don't know what this number means, and it's not annotated in the paper. Oh, well.
+
+1. Use the appropriate function provided in the `tidyr` library to split these values and generate a column for each variable.
+
+```{asis, boxtitle = "Tip", box = "lightblue"}
+Special characters such as pipes (`|`) must be despecialized as they have a specific meaning. 
+In R, you have to use 2 backslashes like `\\|` for one pipe `|`
+```
+
+
+```{r clean_separate, solution = TRUE}
+cleaned_data <- original_data %>%
+  separate(NAME, c("name", "BP", "MF", "systematic_name", "number"), sep = "\\|\\|")
+```
+
+2. Once you separated the variables delimited by two "`||`", check closer the new values: You will see that they might start and/or end with whitespaces which might be inconvinient during the subsequent use.
+    + To remove these whitespaces, R base provides a function called `trimws()`. Let's test how the function works:
+    + `dplyr` allows us to apply a function (in our case `trimws()`) to all columns. In other words, we would like to modify the content of each column with the output of the function `trimws()`. How can you achieve this? Save the result in a `tibble` called `cleaned_data`.
+
+<!-- Moving chunk down as it breaks the indentation in HTML (Is it working in Pdf?) -->
+```{r trimws demo}
+# Creating test string with whitespaces:
+s <- "  Removing whitespaces at both ends "
+s
+trimws(s)
+```
+
+```{r clean_trimws, solution = TRUE}
+cleaned_data <- original_data %>%
+  separate(NAME, c("name", "BP", "MF", "systematic_name", "number"), sep = "\\|\\|") %>%
+  mutate_each(funs(trimws), name:systematic_name)
+```
+
+3. We are not going to use every column of the dataframe. Remove the unnecessary columns: `number`, `GID`, `YORF` and `GWEIGHT`.
+
+```{r clean_rm, solution = TRUE}
+cleaned_data %>%
+  select(-number, -GID, -YORF, -GWEIGHT) -> cleaned_data
+```
+
+Look at the column names.  
+Do you think that our dataset is now "tidy"?
+
+```{asis, solution = TRUE}
+No, our tibble is still not tidy. We can see that the column names from G0.05 to U0.3 represent a variable.
+```
+
+## 1.2 Column headers are values, not variable names
+
++ Keep care to build a tibble with each column representing a variable: 
+At this point we are storing the sample name as a different column `sample` associated to values in `expression` column. Save as `cleaned_data_melt`
+
+```{r clean_gather, solution = TRUE}
+cleaned_data %>%
+  gather(sample, expression, G0.05:U0.3) -> cleaned_data_melt
+```
+
+Now look at the content of the `sample` column. We are again facing the problem that two variables are stored in a single column.  
+
+```{r uniq_sample, solution = TRUE}
+unique(cleaned_data_melt$sample)
+```
+
+Use the same function as before to split the `sample` column into two variables `nutrient` and `rate` (use the appropriate delimitation in `sep`.
+
+```{asis, boxtitle = "Tip", box = "lightblue"}
+Consider using the `convert` argument. It allows to convert strings to number when relevant like here.
+```
+
+```{r clean_sep_convert, solution = TRUE}
+cleaned_data_melt %>%
+  separate(sample, c("nutrient", "rate"), sep = 1, convert = TRUE) -> cleaned_data_melt
+```
+
+## 1.3 Turn nutrient letters into more comprehensive words
+
+Right now, the nutrients are designed by a single letter. It would be nice to have the full word instead.
+One could use a full mixture of `if` and `else` such as `if_else(nutrient == "G", "Glucose", if_else(nutrient == "L", "Leucine", etc ...))`
+But, that would be cumbersome. 
+
+using the following correspondences and `dplyr::recode`, recode all nutrient names.
+```{r, eval = FALSE}
+G = "Glucose", L = "Leucine", P = "Phosphate",
+S = "Sulfate", N = "Ammonia", U = "Uracil"
+```
+
+
+```{r recode_nutrient, solution = TRUE}
+cleaned_data_melt %>%
+  mutate(nutrient = recode(nutrient, G = "Glucose", L = "Leucine", P = "Phosphate",
+                                     S = "Sulfate", N = "Ammonia", U = "Uracil")) -> cleaned_data_melt
+```
+
+
+## 1.4 Cleaning up missing data
+
+Two variables must be present for the further analysis:
+
+- gene expression
+- systematic_name
+
+delete observations that are missing any of the two mandatory variables. How many rows did you remove?
+
+```{r clean_up, solution = TRUE}
+cleaned_data_melt %>%
+  filter(!is.na(expression), systematic_name != "") -> cleaned_data_melt
+# 199,332 - 198,430 = 902 rows deleted
+```
+
+
+# 2 Representing the data
+
+Tidying the data is a crucial step allowing easy handling and representing.
+
+## 2.1 Plot the expression data of the _LEU1_ gene
+
+Extract the data corresponding to the gene called _LEU1_ and draw a line for each nutrient showing the expression in function of the growth rate.
+
+```{r plot_leu1, solution = TRUE}
+cleaned_data_melt %>%
+  filter(name == "LEU1") %>%
+  ggplot(aes(rate, expression, colour = nutrient)) +
+  geom_line()
+```
+
+## 2.2 Plot the expression data of a biological process
+
+For this, we don't need to filter by single gene names as the raw data provides us some information on the biological process for each gene.  
+Extract all the genes in the **leucine biosynthesis** process and plot the expression in function of the growth rate for each nutrient.
+
+```{r plot_leubio, solution = TRUE}
+cleaned_data_melt %>%
+  filter(BP == "leucine biosynthesis") %>%
+  ggplot(aes(rate, expression, color = nutrient)) +
+  geom_line() +
+  facet_wrap(~ name)
+```
+
+## 2.3 Perform a linear regression in top of the plots
+
+Let's play with the graph a little more. These trends look vaguely linear.  
+Add a linear regression with the appropriate `ggplot2` function and carrefully adjust the `method` argument.
+
+```{r plot_leubio_lm, solution = TRUE}
+cleaned_data_melt %>%
+  filter(BP == "leucine biosynthesis") %>%
+  ggplot(aes(rate, expression, colour = nutrient)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ name)
+```
+
+## 2.4 Switch to another biological process
+
+Once the dataset is tidy, it is very easy to switch to another biological process.
+Instead of the "leucine biosynthesis", plot the data corresponding to **sulfur metabolism**.
+
+```{asis, boxtitle = "Tip", box = "lightblue"}
+you can combine the facet headers using `+` in `facet_wrap()`. Adding the systematic name allows to get a name when the gene name is missing.
+```
+
+```{r plot_sulfur_lm, solution = TRUE}
+cleaned_data_melt %>%
+  filter(BP == "sulfur metabolism") %>%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ name + systematic_name, scales = "free_y") # add 2 headers to facets with '+'
+```
+
+# 3. Linear models
+
+We can see that most genes follow a linear trend under a starvation stress. Instead of manipulating all data points, we would like to estimate just the 2 parameters of a linear model.
+What are they? And what do they represent for this experiment?
+
+```{asis, solution = TRUE}
+- Intercept, the value of gene expression for the maximum starvation
+- slope, the estimate of how the the gene expression varies in function of the starvation. A negative slope indicates that the gene is less expressed when starvation is relaxed
+```
+
+
+## 3.1 Perform all linear models
+
+Perform a linear regression of `expression` explained by `rate` for all group of name, systematic_name and nutrient.
+By sure to convert the linear models to a `tibble` using `broom` as saved as `cleaned_lm`
+
+```{asis, boxtitle = "Warning", boxcolor = "orange"}
+The computation takes ~ 60 sec on my macbook pro. For test purposes, you may want to subsample per group a small number of genes
+```
+
+
+```{r do_lm, solution = TRUE}
+cleaned_data_melt %>%
+  group_by(name, systematic_name, nutrient) %>%
+  do(tidy(lm(expression ~ rate, data = .))) -> cleaned_lm
+```
+
+- How many models did you perform?
+```{r, solution = TRUE}
+# divide by 2 since we have 2 coef per model
+nrow(cleaned_lm) / 2
+```
+
+- bonus question: you have observed a warning `essentially perfect fit: summary may be unreliable`, why? How can we clean up the dataset to avoid it?
+
+```{r do_lm_n6, solution = TRUE}
+# it is due to missing data where we have less than 6 points, which is already small to perform a linear model
+# we can keep only groups where all 6 data points are presents
+cleaned_data_melt %>%
+  group_by(name, systematic_name, nutrient) %>%
+  mutate(n = n()) %>%
+  ggplot(aes(n)) + geom_histogram(bins = 40)
+cleaned_data_melt %>%
+  group_by(name, systematic_name, nutrient) %>%
+  mutate(n = n()) %>%
+  filter(n == 6) %>%
+  do(tidy(lm(expression ~ rate, data = .))) -> cleaned_lm_clean
+```
+
+
+## 3.2 Explore models, intercept values
+
+For the gene _LEU1_, let's look again at the linear models per nutrient and add as a dashed black line for mean of all intercepts.
+
+```{r leu1_intercept, echo = FALSE, fig.cap = "LEU1 lm per nutrient and mean(intercepts)", fig.cap = "LEU1 linear models per nutrient"}
+LEU1_intercepts <- cleaned_lm %>%
+  ungroup() %>%
+  filter(name == "LEU1", term == "(Intercept)")
+cleaned_data_melt %>%
+  filter(name == "LEU1") %>%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) + 
+  geom_hline(yintercept = mean(LEU1_intercepts$estimate), linetype = "dashed") +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ name + systematic_name)
+```
+
+We can see that when **leucine** is the limiting factor, the yeast expresses massively this gene _LEU1_ to compensate.
+Remember that all experiments are performed at constant growth rates in this chemostat. 
+
+Now, compute the difference between the intercept and the mean(intercept) per systematic name, so for all nutrient per gene.
+And select the top 20 highest intercept values to their means. Save as `top_20_intercept`
+
+```{r centered_intercept, solution = TRUE}
+cleaned_lm %>%
+  filter(term == "(Intercept)") %>%
+  group_by(systematic_name) %>%
+  mutate(centered_intercept = estimate - mean(estimate)) %>%
+  ungroup() %>%
+  top_n(20, centered_intercept) -> top_20_intercept
+```
+
+- merge those 20 genes with the `cleaned_data_melt` to retreived the original data points
+- plot the data points and linear trends for those top 20 genes. Instead of the systematic name in the header, use the molecular function (`MF`)
+
+```{r top20_intercept, solution = TRUE, fig.cap = "over expressed genes in starving conditions", fig.width = 8}
+top_20_intercept %>%
+  inner_join(cleaned_data_melt, by = c("systematic_name")) %>%
+  ggplot(aes(x = rate, y = expression, colour = nutrient.y)) + 
+  geom_hline(aes(yintercept = mean(expression)), linetype = "dashed") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ name.y + MF)
+```
+
+- what can conclude?
+
+```{asis, solution = TRUE}
+It is striking to see that most of genes have a transporter role. And like most higlhy expressed genes under high starvation like *PHO* genes are under phosphate starvation.
+The yeast is producing the necessary transporter to feed itself when the necessary metabolite is missing
+```
+
+
+## 3.3 Explore models, slope estimates
+
+We can now have a look at the slope estimates.
+
+- first, filter the term for slope estimate `rate` and remove _p-value_ that are missing. Save as `rate_slopes`
+
+```{r slope_filter, solution = TRUE}
+cleaned_lm %>%
+  ungroup() %>%
+  filter(term == "rate", !is.na(p.value)) -> rate_slopes
+```
+
+- display the _p-values_ histograms per nutrient
+
+```{r slope_hist, solution = TRUE, fig.cap = "p values per nutrient", fig.width = 8}
+rate_slopes %>%
+  ggplot(aes(x = p.value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~nutrient)
+```
+
+- looking at those histograms, how do you estimate the ratio of _null_ and _alternative_ hypotheses?
+```{asis, solution = TRUE}
+close to the 0, this is where our alternative hypotheses lie. The p-values for the null follows a null distribution
+```
+- how can retrieved the genes that belong most probably to the _alternative hypothesis?
+```{asis, solution = TRUE}
+we have perform 32000 tests, we must correct for multiple testing otherwise the false positives would be too high.
+We can compute the q-values
+```
+
+```{r slope_qvalues, solution = TRUE}
+# see https://bioconductor.org/packages/release/bioc/html/qvalue.html
+# for installation instructions
+library(qvalue) 
+rate_slopes %>%
+  mutate(q.value = qvalue(p.value)$qvalues) -> rate_slopes
+```
+
+- display the histograms of both _p_ and _q_ _values_ per nutrient
+
+```{r slope_histpq, solution = TRUE, fig.cap = "p and q values per nutrient", fig.width = 8}
+rate_slopes %>%
+  gather(prob, value, ends_with("value")) %>%
+  ggplot(aes(x = value, fill = prob)) +
+  geom_histogram(bins = 30, position = "dodge") +
+  facet_wrap(~nutrient)
+```
+
+
+```{r, include = FALSE}
+## stop here for now, must solve the bad models that makes glance 
+knitr::knit_exit()
+```
+
+
+## 3.4 Explore models though their linearity
+
+Now, we would like to find out how many of the 'linear-trend' genes are overlapping to the nutrient starvations.
+
+First, we need to get the $r^2$ for all genes. With nested tibbles we could have saved the S3 object **lm** and extract the $r^2$.
+For now, we need to redo the models and get the _r square_
+
+```{r r2, solution = TRUE}
+cleaned_data_melt %>%
+  group_by(name, systematic_name, nutrient) %>%
+  mutate(n = n()) %>%
+  filter(n == 6) %>%
+  do(glance(lm(expression ~ rate, data = .))) -> cleaned_lm_glance
+```
+
+
+Venn Diagrams are an option but as we have 5 sets intersections would be difficult to see.
+The alternative is [UpSet](http://vcg.github.io/upset/) for which an `R` [implementation](https://github.com/hms-dbmi/UpSetR) exists.
+
+The required object is a `data.frame` with:
+    - row.names as `systematic_name`
+    - columns as `nutrient`, so 5
+    - values as 0/1 for absence/presence
+
+- Starting from `cleaned_lm`, filter out the models with $r^2 < 0.9$
+
+- select only the `systematic_name` and `nutrient` columns 
+- add a column `set` containing `1` in all rows.
+- convert from long to wide format (`nutrient` filled up by `set`).
+All absent genes will then be NAs.
+
+```{r, solution = TRUE}
+ cleaned_lm_glance %>%
+  filter(r.squared > 0.9) %>%
+  select(systematic_name, nutrient) %>%
+  mutate(set = 1) %>%
+  spread(nutrient, set) -> mat
+```
+
+- Move `the systematic` from the column to rownames (`tibble::column_to_rownames()`)
+Save as `mat_upset`
+- The pseudo matrix is almost done: we get an absence as `NA` and a presence as `1`.
+- Replace all `NA` by 0
+- Set the class of `mat_upset` to `data.frame` as `upset` does not handle `tbl_df`.
+- plot the upset using `upset(mat_upset)`
+
+```{r, solution = TRUE}
+library("UpSetR")
+rownames(mat) <- NULL
+mat %>%
+  column_to_rownames("systematic_name") -> mat_upset
+
+mat_upset[is.na(mat_upset)]  <- 0
+class(mat_upset) <- "data.frame"
+upset(mat_upset)
+```
+
+- plot the histogram of $r^2$ for each nutrient. What can you say?
+```{r, solution = TRUE}
+cleaned_lm_glance %>%
+  ggplot(aes(x = r.squared)) +
+  geom_histogram() +
+  facet_wrap(~ nutrient)
+```
+```{asis, solution = TRUE}
+Most genes do not respond in a linear fashion to starvation. Especially for S and U.
+```
+<!-- The solution seemed incomplete here! Cutting out "where" -->
+
+- Count how many models have a $r^2 > 0.9$ per nutrient
+```{r, solution = TRUE}
+cleaned_lm_glance %>%
+  filter(r.squared > 0.9) %>%
+  count(nutrient)
+```
