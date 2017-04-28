@@ -52,36 +52,41 @@ This workshop is composed of 30 hours:
 
 
 ### Day 1 {.box-8 .bg-green}
-- Session 1
+- [Lecture 1](lecture01_intro.html)
     + Introduction to R and RStudio (AG)
+
+- [Lecture 2](lecture02_data_structure.html)
     + Basic data types, control structures (AG)
 
-- Session 2
+- [Lecture 3](lecture03_rmarkdown.html)
     + Markdown (EK)
     + Importing data into R (`readr`) (EK)
     
-- Setup _Bring Your Own data Session_ (Day 4)
+- Setup _Bring Your Own data Session_ (for Day 4)
+
+- [Lecture 5](lecture05_tidyr.html)
+    + Introduction to tidy data (RK)
+
 
 ## Time table | (cont.)
 
 ### Day 2 {.box-8 .bg-green}
 
-- Session 1
-    + Introduction to tidy data (RK)
-- Session 2
-    + Visualization with `ggplot2` (AG)
-- Session 3
+- [Lecture 6](lecture06_dplyr.html)
     + Data wrangling with `dplyr` (RK)
+
+- [Lecture 7](lecture07_plotting.html)
+    + Visualization with `ggplot2` (AG)
 
 ## Time table | (cont.)
 
 ### Day 3 {.box-8 .bg-green}
 
-- Session 1
+- [Lecture 8](lecture08_purrr.html)
     + Functional programming with `purrr` (EK)
-- Session 2  
+- Lecture 9  
     + Handling statistical models with `broom` (AG)
-- Session 3  
+- [Lecture 10]  
     + Programming with `tidyeval` (AG)
 
 ### Day 4 {.box-8 .bg-green}
