@@ -29,7 +29,7 @@ docs/TD%_question.html : practicals/TD%.Rmd
 	cp site/_site.yml practicals/_site.yml
 	cp site/_output.yaml.TD practicals/_output.yaml
 	Rscript -e "rmarkdown::render_site(input = '$<', encoding = 'UTF-8', output_format = 'unilur::tutorial_html')"
-	rm TD/_site.yml practicals/_output.yaml practicals/index.Rmd
+	rm practicals/_site.yml practicals/_output.yaml practicals/index.Rmd
 
 docs/TD%_solution.html : practicals/TD%.Rmd
 	touch practicals/index.Rmd
@@ -44,4 +44,5 @@ docs/%.html : site/%.Rmd site/_site.yml
 
 clean :
 	rm -rf docs/*
+	rm -f TD/_site.yml practicals/_output.yaml practicals/index.Rmd
 	$(info The docs folder is now empty)
