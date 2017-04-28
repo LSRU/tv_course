@@ -26,7 +26,7 @@
         usePrettify: true,
         enableSlideAreas: true,
         enableTouch: true,
-                        favIcon: 'lecture06_plotting_files/logo.png',
+                        favIcon: 'lecture07_plotting_files/logo.png',
               },
 
       // Author information
@@ -162,7 +162,7 @@
 <slides class="layout-widescreen">
 
   <slide class="title-slide segue nobackground">
-        <aside class="gdbar"><img src="lecture06_plotting_files/logo.png"></aside>
+        <aside class="gdbar"><img src="lecture07_plotting_files/logo.png"></aside>
         <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
@@ -172,9 +172,22 @@
           </hgroup>
   </slide>
 
+<div id="unnamed-chunk-1">
+</div>
+
 <slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>ggplot2</h2></hgroup><article  id="ggplot2" class="smaller ">
 
 <img src='img/06_ggplot2_overview.jpg' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<p>By the end you should be able to:</p>
+
+<ul>
+<li>Understand the basic grammar of ggplot2 (data, geoms, aesthetics, facets).</li>
+<li>Make quick exploratory plots of your multidimensional data.</li>
+<li>Know how to find help on <code>ggplot2</code> when you run into problems.</li>
+</ul>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Before, there was <code>ggplot1</code></h2></hgroup><article  id="before-there-was-ggplot1" class="smaller ">
 
@@ -186,14 +199,14 @@
 
 <div class = 'row build'><div class = 'box col-6 bg-yellow '><h3>Original syntax</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-2" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># devtools::install_github(&quot;hadley/ggplot1&quot;)
 p &lt;- ggplot(mtcars, list(x = mpg, y = wt)) %&gt;% 
 scbrewer(ggpoint(p, list(colour = gear)))</pre></div>
 
 </div><div class = 'box col-6 bg-yellow2 '><h3>with the pipe</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-3" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># devtools::install_github(&quot;hadley/ggplot1&quot;)
 library(ggplot1)
 mtcars %&gt;% 
@@ -201,15 +214,49 @@ mtcars %&gt;%
   ggpoint(list(colour = gear)) %&gt;% 
   scbrewer()</pre></div>
 
+<div id="unnamed-chunk-4">
 <style type="text/css">
-.bg-green2 > h3:first-child > a:hover {
+.bg-green2 > h3:first-child > a:hover,
+.bg-green2 > h3:first-child > a {
   color: white !important;
 }
-</style>
+
+.bg-grgold a:hover,
+.bg-grgold a {
+  color: white !important;
+}
+
+article.maximise {
+  margin-top: -20px;
+}
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+}
+
+.col-list li {
+  float: left;
+  display: inline;
+  padding-left: 50px;
+}
+
+.col-list li:before {
+    content: "\2022";
+    font-size: 150%;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+</style></div>
 
 </div></div><div class = 'row build'><div class = 'box col-8 offset-1 bg-grgold  stretch'><h3>ggplot2</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-5" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(ggplot2)
 mtcars %&gt;% 
   ggplot(aes(x = mpg, y = wt)) + 
@@ -302,11 +349,12 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>layers</h2></hgroup><article  id="layers" class="smaller vs2">
 
-<p><img src="img/06_ggplot2_layers.jpg" width="50%" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-6">
+<p><img src="img/06_ggplot2_layers.jpg" width="50%" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>for real</h2></hgroup><article  id="for-real" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-7" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>tribble(
@@ -323,7 +371,7 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
   theme_classic(base_size = 18)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 <div class = 'row'><div class = 'box col-8 bg-yellow'><h3>Tip</h3>
 
@@ -337,9 +385,12 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
 <p><em>Data visualisation</em> is not meant just to be seen but to be read, like written text - Alberto Cairo</p>
 </blockquote>
 
+<div id="unnamed-chunk-8">
+</div>
+
 <p>Using the following dataset</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-9" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(tidyverse)
 allSeasons &lt;- read_rds(&quot;allseasons.rds&quot;)
 oneSeason &lt;- allSeasons %&gt;% filter(year == 2016)
@@ -404,7 +455,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-10" class="chunk shadow">
 <div class="row">
 <div class="col-8">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -414,7 +465,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
   theme_bw(18)</pre></div>
 
 <div class="col-4">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 <ul>
 <li><code>size = 3</code> increases the size of <em>all</em> dots. Not in <code>aes()</code></li>
@@ -430,7 +481,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-11" class="chunk shadow">
 <div class="row">
 <div class="col-5">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -440,7 +491,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
   theme_bw(18)</pre></div>
 
 <div class="col-7">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 <ul>
 <li><code>scale_x_discrete</code> is useless now, we have a continuous variable.</li>
@@ -454,7 +505,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <div class="row">
 <div class="col-5">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -465,7 +516,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
    theme_bw(18)</pre></div>
 
 <div class="col-7">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 <ul>
 <li><code>x</code> and <code>y</code> could be omitted, better to specify them though.</li>
@@ -479,7 +530,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <div class="row">
 <div class="col-8">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -493,7 +544,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
   theme_classic(18)</pre></div>
 
 <div class="col-4">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </div></div><div class = 'row build'><div class = 'box col-4 bg-yellow  stretch'><h3>Tip x-axis</h3>
 
@@ -511,7 +562,7 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <div class="row">
 <div class="col-7">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -534,44 +585,17 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
        caption = &quot;by John Burn-Murdoch&quot;)</pre></div>
 
 <div class="col-5">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </div></div><div class = 'row build'><div class = 'offset-2 box col-8 bg-grgold '><h3>Spain clubs</h3>
 
 <p>are performing better at every rank except #11</p>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>3. <em>Quality gap</em> between England and Spain in 2016? </h2><h3> dumbbell</h3></hgroup><article  id="quality-gap-between-england-and-spain-in-2016-dumbbell" class="smaller ">
-
-<div class = 'row build'><div class = 'col-12 '>
-
-<div class="chunk shadow">
-<div class="row">
-<div class="col-7">
-<pre class = 'prettyprint lang-r'>oneSeason %&gt;%
-  select(score, rank, country) %&gt;%
-  filter(country %in% c(&quot;ENG&quot;, &quot;ESP&quot;)) %&gt;%
-  spread(country, score) %&gt;%
-  rowwise() %&gt;%
-  mutate(gap = ESP - ENG,
-         min = min(ESP, ENG),
-         max = max(ESP, ENG)) %&gt;%
-  ggplot() + 
-  ggalt::geom_dumbbell(aes(y = rank, x = min, xend = max, colour = gap &gt; 0),
-                         size = 1.5, size_x = 3, size_xend = 1,
-                       colour_x = &quot;#5b8124&quot;, colour_xend = &quot;#bad744&quot;) + 
-  scale_colour_manual(values =  c(&quot;#5b8124&quot;, &quot;#bad744&quot;)) +
-  theme_classic(18)</pre></div>
-
-<div class="col-5">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /></p></div></div></div>
-
-<p><a href='https://rud.is/b/2016/04/17/ggplot2-exercising-with-ggalt-dumbbells/' title=''>Bob Rudis&#39;s post</a></p>
-
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>4.How does the <em>nth</em> best English team in 2016 compare to its predecessors?</h2></hgroup><article  id="how-does-the-nth-best-english-team-in-2016-compare-to-its-predecessors" class="smaller ">
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <div class="row">
 <div class="col-7">
 <pre class = 'prettyprint lang-r'>oneSeason %&gt;%
@@ -590,13 +614,13 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
        caption = &quot;by John Burn-Murdoch&quot;)</pre></div>
 
 <div class="col-5">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: best country</h3></hgroup><article  id="how-to-visualise-over-time-facet-best-country" class="smaller ">
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <div class="row">
 <div class="col-4">
 <pre class = 'prettyprint lang-r'>allSeasons %&gt;%
@@ -608,13 +632,13 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
   facet_wrap(~ year)</pre></div>
 
 <div class="col-8">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: gap code</h3></hgroup><article  id="how-to-visualise-over-time-facet-gap-code" class="smaller ">
 
 <div class = 'row build'><div class = 'col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>allSeasons %&gt;%
   select(score, year, rank, country) %&gt;%
   filter(country %in% c(&quot;ENG&quot;, &quot;ESP&quot;)) %&gt;%
@@ -637,13 +661,14 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>5. How to visualise over time? </h2><h3> facet: gap plot</h3></hgroup><article  id="how-to-visualise-over-time-facet-gap-plot" class="smaller ">
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-18">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>your turn</h2></hgroup><article  id="your-turn" class="smaller ">
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>iris dataset</h2></hgroup><article  id="iris-dataset" class="smaller vs1">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-19" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris &lt;- as_tibble(iris)
 iris</pre>
 
@@ -666,47 +691,53 @@ iris</pre>
 
 <p>as a <code>tibble</code> to avoid printing all 150 rows</p>
 
-</div><div class = 'box col-6 bg-yellow '><h3>global definition of the iris dataset</h3>
+</div><div class = 'box col-6 bg-yellow '><h3>change default theme</h3>
 
 <p>I set for this course the following to avoid the grey bg and bigger text</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-20" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot2::theme_set(ggplot2::theme_bw(18))</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Draw your first plot</h2></hgroup><article  id="draw-your-first-plot" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris %&gt;%
   ggplot() +
   geom_point(aes(x = Petal.Width, y = Petal.Length))</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>geometric objects </h2><h3> geoms define the type of plot which will be drawn.</h3></hgroup><article  id="geometric-objects-geoms-define-the-type-of-plot-which-will-be-drawn." class="smaller ">
 
 <div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_point()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-22">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-4 bg-cobalt '><h3><code>geom_line()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-23">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-23-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-4 bg-cobalt '><h3><code>geom_bar()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-24">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-24-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div></div><div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_boxplot()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-25">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-4 bg-cobalt '><h3><code>geom_histogram()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-26">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-4 bg-cobalt '><h3><code>geom_density()</code></h3>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-27">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /></p></div>
 
 <ul>
 <li>Have a look at the <a href='https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf' title=''>cheatsheet</a> or the ggplot2 online <a href='http://ggplot2.tidyverse.org/' title=''>documentation</a> to list more possibilities.</li>
@@ -718,10 +749,11 @@ iris</pre>
 
 <p>For example <code>geom_point()</code> requires <strong>at least</strong> the <em><strong>x</strong></em> and <em><strong>y</strong></em> coordinates for each point.</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-28" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length))</pre></div>
 
+<div id="unnamed-chunk-29">
 <table class = 'rmdtable'>
 <tr class="header">
 <th align="right">Sepal.Length</th>
@@ -751,7 +783,7 @@ iris</pre>
 <td align="right">0.2</td>
 <td align="left">setosa</td>
 </tr>
-</table>
+</table></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Unmapped paramaters</h2></hgroup><article  id="unmapped-paramaters" class="smaller ">
 
@@ -759,14 +791,14 @@ iris</pre>
 
 <div class = 'row'><div class = 'col-6'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-30" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_point(aes(x = Petal.Width,
                  y = Petal.Length),
              colour = &quot;blue&quot;, alpha = 0.6, 
              size = 3)</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-30-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-6 bg-red'><h3>Important</h3>
 
@@ -780,14 +812,14 @@ iris</pre>
 
 <div class = 'row'><div class = 'col-6'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-31" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_point(aes(x = Petal.Width,
                  y = Petal.Length,
                  colour = Species),
              alpha = 0.6, size = 3)</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /></p></div>
 
 </div><div class = 'box col-6 bg-red'><h3>Important</h3>
 
@@ -795,17 +827,17 @@ iris</pre>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics </h2><h3> shape</h3></hgroup><article  id="mapping-aesthetics-shape" class="smaller vs1">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-32" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_point(aes(x = Petal.Width, y = Petal.Length, shape = Species, colour = Species), alpha = 0.6, size = 3)</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Labels</h2></hgroup><article  id="labels" class="smaller vs2">
 
 <p>It is easy to adjust axis labels and the title</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-33" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
@@ -820,11 +852,11 @@ iris</pre>
        caption = &quot;Fisher, R. A. (1936)&quot;)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-33-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Histograms</h2></hgroup><article  id="histograms" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-34" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
@@ -835,13 +867,13 @@ iris</pre>
 <div class="col-6">
 <pre >`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-34-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Density plot</h2></hgroup><article  id="density-plot" class="smaller ">
 
 <p>The density is the count divided by the total number of occurences.</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-35" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
@@ -850,19 +882,19 @@ iris</pre>
                alpha = 0.6)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-35-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Overlaying plots </h2><h3> Density plot and histogram</h3></hgroup><article  id="overlaying-plots-density-plot-and-histogram" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-36" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_histogram(aes(x = Petal.Length, y = ..density..), fill = &quot;darkgrey&quot;, binwidth = 0.1) +
   geom_density(aes(x = Petal.Length, fill = Species, colour = Species), alpha = 0.4) +
   theme_classic()</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-36-1.png" style="display: block; margin: auto;" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>stat functions</h2></hgroup><article  id="stat-functions" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>stat functions</h2></hgroup><article  id="stat-functions" class="smaller vs1">
 
 <ul>
 <li>We used a new variable in the density plot: <code>..density..</code></li>
@@ -884,14 +916,14 @@ iris</pre>
 <li><code>geom_bar()</code> uses <code>stat_count()</code> to compute these values (creating a new <code>count</code> column)</li>
 </ul>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-37" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-37-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables-1" class="smaller ">
 
@@ -901,14 +933,14 @@ iris</pre>
 <li><code>Petal.Length</code> and not <code>..Petal.Length..</code> as it is not &quot;new&quot; and is already present in the original data frame</li>
 </ul>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-38" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_bar(aes(x = Species, y = Petal.Length), stat = &quot;identity&quot;)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-39-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-38-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 <div class = 'row build'><div class = 'box col-6 bg-grgold '><h3>Update v2.1</h3>
 
@@ -916,83 +948,102 @@ iris</pre>
 
 </div><div class = 'box col-6 bg-cobalt stretch '><h3><code>geom_col</code></h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-39" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
   geom_col(aes(x = Species, y = Petal.Length))</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-categorical-variables" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart </h2><h3> categorical variables</h3></hgroup><article  id="stacked-barchart-categorical-variables" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-40" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)))</pre>
+  geom_bar(aes(x = factor(cyl),
+               fill = factor(gear)))</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-40-1.png" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Dodged barchart (side by side) </h2><h3> Categorical variables</h3></hgroup><article  id="dodged-barchart-side-by-side-categorical-variables" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-41" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %&gt;%
+  complete(cyl, gear) %&gt;%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = &quot;dodge&quot;)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-41-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-for-proportions-categorical-variables" class="smaller ">
+<div class = 'row build'><div class = 'box col-8 bg-grgold '><h3>Complete</h3>
 
-<div class="chunk shadow">
+<p>the combination <code>gear</code> 4 / <code>cyl</code> 8 is missing. Using <code>tidyr::complete()</code> to avoid bars with different widths.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> categorical variables</h3></hgroup><article  id="stacked-barchart-for-proportions-categorical-variables" class="smaller ">
+
+<div id="unnamed-chunk-42" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %&gt;%
+  complete(cyl, gear) %&gt;%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = &quot;fill&quot;)</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-42-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> Categorical variables</h3></hgroup><article  id="stacked-barchart-for-proportions-categorical-variables-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stacked barchart for proportions </h2><h3> pie charts</h3></hgroup><article  id="stacked-barchart-for-proportions-pie-charts" class="smaller ">
 
 <p>We can easily switch to polar coordinates:</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-43" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  mutate(cyl = factor(cyl),
+         gear = factor(gear)) %&gt;%
+  complete(cyl, gear) %&gt;%
   ggplot() +
-  geom_bar(aes(x = factor(cyl), fill = factor(gear)),
+  geom_bar(aes(x = cyl, 
+               fill = gear),
            position = &quot;fill&quot;) +
   coord_polar()</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-43-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> Categorical variables</h3></hgroup><article  id="boxplot-categorical-variables" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> IQR, median</h3></hgroup><article  id="boxplot-iqr-median" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-44" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg))</pre></div>
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg))</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-44-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> Categorical variables</h3></hgroup><article  id="boxplot-categorical-variables-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Boxplot </h2><h3> dodge by default</h3></hgroup><article  id="boxplot-dodge-by-default" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-45" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
                    fill = factor(am)))</pre></div>
 
 <div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-45-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors</h2></hgroup><article  id="custom-colors" class="smaller ">
 
@@ -1001,73 +1052,165 @@ iris</pre>
 <li>Is not very handy as you <strong>must</strong> provide as much colours as groups</li>
 </ul>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-46" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
-                   fill = factor(am), color = factor(am))) +
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
+                   fill = factor(am),
+                   color = factor(am))) +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;lightblue&quot;)) +
   scale_color_manual(values = c(&quot;purple&quot;, &quot;blue&quot;))</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-46-1.png" style="display: block; margin: auto;" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors </h2><h3> Using predefined color palettes</h3></hgroup><article  id="custom-colors-using-predefined-color-palettes" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Predefined color palettes</h2></hgroup><article  id="predefined-color-palettes" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-47" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(RColorBrewer)
 display.brewer.all()</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-47-1.png" style="display: block; margin: auto;" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors </h2><h3> Using predefined color palettes</h3></hgroup><article  id="custom-colors-using-predefined-color-palettes-1" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Custom colors </h2><h3> using brewer</h3></hgroup><article  id="custom-colors-using-brewer" class="smaller ">
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-48" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
-  geom_boxplot(aes(x = factor(cyl), y = mpg,
-                   fill = factor(am), colour = factor(am))) +
+  geom_boxplot(aes(x = factor(cyl),
+                   y = mpg,
+                   fill = factor(am),
+                   colour = factor(am))) +
   scale_fill_brewer(palette = &quot;Pastel2&quot;) +
   scale_colour_brewer(palette = &quot;Set1&quot;)</pre>
 
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-48-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>colour gradient </h2><h3> ggplot2 default is ugly</h3></hgroup><article  id="colour-gradient-ggplot2-default-is-ugly" class="smaller ">
+
+<div class = 'row'><div class = 'bg-cobalt box col-6'><h3>default</h3>
+
+<div id="unnamed-chunk-49" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot(aes(x = wt,
+             y = mpg,
+             colour = hp)) +
+  geom_point(size = 3)</pre></div>
+
+<div class="col-6">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-49-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div><div class = 'bg-cobalt box col-6'><h3>viridis</h3>
+
+<div id="unnamed-chunk-50" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot(aes(x = wt,
+             y = mpg,
+             colour = hp)) +
+  geom_point(size = 3) +
+  viridis::scale_colour_viridis()</pre></div>
+
+<div class="col-6">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</div></div>
+
+<p><a href='https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html' title=''>viridis</a> is color blind friendly and nice in b&amp;w</p>
+
+<div class = 'row'><div class = 'col-8 offset-2'><h3>4 different scales</h3>
+
+<div id="unnamed-chunk-51">
+<p><img src="img/07_viridis_palette.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>aesthetic trick</h2></hgroup><article  id="aesthetic-trick" class="smaller ">
+
+<p>Actually, one can use a plain character inside <code>aes()</code>, will be used to build the legend. Useful for few layers when lazy enough to create the variable in the dataframe.</p>
+
+<div id="unnamed-chunk-52" class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>set.seed(123)
+dens &lt;- tibble(x = c(rnorm(500), 
+                     rnorm(200, 3, 3)))
+ggplot(dens) +
+  geom_line(aes(x), stat = &quot;density&quot;) +
+  geom_vline(aes(xintercept = mean(x), colour = &quot;mean&quot;),
+             size = 1.1) +
+  geom_vline(aes(xintercept = median(x), colour = &quot;median&quot;),
+             size = 1.1) -&gt; p
+p</pre></div>
+
+<div class="col-5">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>the data argument </h2><h3> each layer can get its own</h3></hgroup><article  id="the-data-argument-each-layer-can-get-its-own" class="smaller ">
+
+<div id="unnamed-chunk-53" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>dens_mode &lt;- tibble(mode = density(dens$x)$x[which.max(density(dens$x)$y)])
+p + geom_vline(data = dens_mode,
+               aes(xintercept = mode, colour = &quot;mode&quot;), size = 1.1) +
+  theme(legend.position = &quot;top&quot;) +
+  scale_colour_hue(name = NULL) # could be: labs(colour = NULL)</pre>
+
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-53-1.png" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_wrap()</h3></hgroup><article  id="facets-facet_wrap" class="smaller ">
 
 <p>the easiest way to create facet is to provide <code>facet_wrap()</code> with a column name</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-54" class="chunk shadow">
 <div class="row">
-<div class="col-6">
+<div class="col-5">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_wrap(~ cyl)</pre></div>
 
-<div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-50-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<div class="col-7">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-55" class="chunk shadow">
 <div class="row">
-<div class="col-6">
+<div class="col-5">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
   geom_point(aes(x = wt, y = mpg)) +
   facet_wrap(~ cyl, ncol = 2)</pre></div>
 
-<div class="col-6">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-51-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<div class="col-7">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-55-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_grid()</h3></hgroup><article  id="facets-facet_grid" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> free scales</h3></hgroup><article  id="facets-free-scales" class="smaller ">
 
-<p><code>facet_grid()</code> is used to lay out panels in a grid</p>
+<div id="unnamed-chunk-56" class="chunk shadow">
+<div class="row">
+<div class="col-5">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = &quot;free_x&quot;)</pre></div>
+
+<div class="col-7">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-56-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+<div id="unnamed-chunk-57" class="chunk shadow">
+<div class="row">
+<div class="col-5">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars) +
+  geom_point(aes(x = wt, y = mpg)) +
+  facet_wrap(~ cyl, scales = &quot;free&quot;)</pre></div>
+
+<div class="col-7">
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-57-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_grid() to lay out panels in a grid</h3></hgroup><article  id="facets-facet_grid-to-lay-out-panels-in-a-grid" class="smaller ">
 
 <div class = 'row'><div class = 'box col-6 bg-yellow'><h3>Specify a <strong>formula</strong></h3>
 
 <p>the rows on the left and columns on the right separated by a tilde <code>~</code> (<em>i.e</em> <strong>by</strong>)</p>
 
-</div><div class = 'box col-6 bg-yellow'><h3>Specify one row/column</h3>
-
-<p>A dot (<code>.</code>) specifies that no faceting should be performed. Mimic <code>facet_wrap()</code></p>
-
 </div></div>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-58" class="chunk shadow">
 <div class="row">
 <div class="col-4">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
@@ -1075,9 +1218,17 @@ display.brewer.all()</pre>
   facet_grid(am ~ cyl)</pre></div>
 
 <div class="col-8">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-52-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-58-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-<div class="chunk shadow">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> facet_grid() cont.</h3></hgroup><article  id="facets-facet_grid-cont." class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-yellow'><h3>Specify one row/column</h3>
+
+<p>A dot (<code>.</code>) specifies that no faceting should be performed. Mimic <code>facet_wrap()</code></p>
+
+</div></div>
+
+<div id="unnamed-chunk-59" class="chunk shadow">
 <div class="row">
 <div class="col-4">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
@@ -1085,13 +1236,13 @@ display.brewer.all()</pre>
   facet_grid(. ~ cyl)</pre></div>
 
 <div class="col-8">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-53-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-59-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>facet </h2><h3> labeller</h3></hgroup><article  id="facet-labeller" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Facets </h2><h3> labeller</h3></hgroup><article  id="facets-labeller" class="smaller ">
 
 <p>Add the column names with <code>labeller</code></p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-60" class="chunk shadow">
 <div class="row">
 <div class="col-5">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars) +
@@ -1100,26 +1251,49 @@ display.brewer.all()</pre>
              labeller = label_both)</pre></div>
 
 <div class="col-7">
-<p><img src="lecture06_plotting_files/figure-html/unnamed-chunk-54-1.png" style="display: block; margin: auto;" /></p></div></div></div>
+<p><img src="lecture07_plotting_files/figure-html/unnamed-chunk-60-1.png" style="display: block; margin: auto;" /></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exporting</h2></hgroup><article  id="exporting" class="smaller vs2">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exporting </h2><h3> interactive or passive mode</h3></hgroup><article  id="exporting-interactive-or-passive-mode" class="smaller maximise build">
 
 <div class = 'row'><div class = 'box col-6 bg-grgold'><h3>right panel</h3>
 
 <ul>
 <li>Using the Export button in the <em>Plots</em> panel</li>
-<li>Integrate them in your Rmarkdown reports
-
-<ul>
-<li>If required, adjust the chunk options: <code>fig.height</code>, <code>fig.align</code></li>
-</ul></li>
 </ul>
 
-</div><div class = 'col-6 middle'>
+</div><div class = 'col-6'>
 
-<img src='img/06_export_plot.png' title=''/>
+<img src='img/06_export_plot.png' title='fig:'/>
 
-</div>
+</div></div><div class = 'row'><div class = 'box col-6 bg-grgold'><h3>Rmarkdown reports</h3>
+
+<ul>
+<li>If needed, adjust the chunk options:</li>
+<li>size: <code>fig.height</code>, <code>fig.width</code></li>
+<li>ratio: <code>fig.asp</code>&#8230;</li>
+<li><a href='https://yihui.name/knitr/options/?version=1.1.214&amp;mode=desktop' title=''>others</a></li>
+</ul>
+
+</div><div class = 'col-6'>
+
+<img src='img/06_chunk_options.png' title='fig:'/>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-grgold'><h3>ggsave</h3>
+
+<ul>
+<li>save the <code>ggplot</code> object, 2nd argument</li>
+<li>guess the type of graphics by the extension</li>
+</ul>
+
+<div id="unnamed-chunk-61" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggsave(&quot;aes_trick.png&quot;, p,
+       width = 60, height = 30, units = &quot;mm&quot;)
+ggsave(&quot;aes_trick.pdf&quot;, p,
+       width = 50, height = 50, units = &quot;mm&quot;)</pre></div>
+
+</div><div class = 'col-6'>
+
+<img src='aes_trick.png' title='fig:'/>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extensions</h2></hgroup><article  id="extensions" class="smaller ">
 
@@ -1127,7 +1301,8 @@ display.brewer.all()</pre>
 
 <p>They are referenced on a <a href='https://www.ggplot2-exts.org/' title=''>dedicated site</a></p>
 
-<p><img src="img/06_extensions.jpg" width="85%" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-62">
+<p><img src="img/06_extensions.jpg" width="85%" style="display: block; margin: auto;" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Art </h2><h3> by Marcus Volz</h3></hgroup><article  id="art-by-marcus-volz" class="smaller ">
 
@@ -1143,6 +1318,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
 
 </blockquote>
 
+<div id="unnamed-chunk-63">
 <style type="text/css">
 .vembedr {
   border-radius: 25px; /* adjust it to your needs */
@@ -1153,13 +1329,69 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
   display: block;
   border: none;
 }
-</style>
+</style></div>
 
-<div class = "vembedr">
-
+<div id="unnamed-chunk-64">
+<div class="vembedr">
 <iframe src="https://www.youtube.com/embed/DQiKHlpy70Q" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+</div></div>
 
-<iframe src="https://www.youtube.com/embed/DQiKHlpy70Q" width="420" height="315" frameborder="0" allowfullscreen=""></iframe></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Missing features</h2></hgroup><article  id="missing-features" class="smaller maximise build">
+
+<div class = 'row'><div class = 'box col-6 bg-yellow2'><h3>geoms list <a href='http://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms' title=''>here</a></h3>
+
+<ul>
+<li><code>geom_tile()</code> heatmap</li>
+<li><code>geom_bind2()</code> 2D binning</li>
+<li><code>geom_abline()</code> slope</li>
+</ul>
+
+</div><div class = 'box col-6 bg-yellow2 stretch'><h3>stats list <a href='http://ggplot2.tidyverse.org/reference/index.html#section-layer-stats' title=''>here</a></h3>
+
+<ul>
+<li><code>stat_ellipse()</code></li>
+<li><code>stat_summary()</code> easy mean 95CI etc.</li>
+<li><code>geom_smooth()</code> linear/splines/non linear</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-grgold stretch'><h3>plot on multi-pages</h3>
+
+<ul>
+<li><code>ggforce::facet_grid_paginate()</code> facets</li>
+<li><code>gridExtra::marrangeGrob()</code> plots</li>
+</ul>
+
+</div><div class = 'box col-6 bg-grgold stretch'><h3>positions list <a href='http://ggplot2.tidyverse.org/reference/index.html#section-layer-position-adjustment' title=''>here</a></h3>
+
+<ul>
+<li><code>position_jitter()</code> random shift</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-blue stretch'><h3>coordinate / transform</h3>
+
+<ul>
+<li><code>coord_cartesian()</code> for zooming in</li>
+<li><code>coord_flip()</code> exchanges <em>x</em> &amp; <em>y</em></li>
+<li><code>scale_x_log10()</code> and <em>y</em></li>
+<li><code>scale_x_sqrt()</code> and <em>y</em></li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue stretch col-list c2'><h3>customise <a href='http://ggplot2.tidyverse.org/reference/index.html#section-themes' title=''><em>theme</em></a> elements</h3>
+
+<ul>
+<li>legend &amp; guide tweaks</li>
+<li>major/minor grids</li>
+<li>font, faces</li>
+<li>margins</li>
+<li>labels &amp; ticks</li>
+<li>strip positions</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-12 bg-yellow2'><h3>programming</h3>
+
+<ul>
+<li><code>aes_string()</code> for plotting inside <code>function</code></li>
+</ul></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
@@ -1181,7 +1413,7 @@ A compilation of some of my gifs created with <a href="https://twitter.com/hasht
     footers = document.getElementsByClassName('footer');
     //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
     [].slice.call(footers).forEach(function (footer) {
-      footer.innerHTML = "<img src=lecture06_plotting_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      footer.innerHTML = "<img src=lecture07_plotting_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
       //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
     });
   })();

@@ -58,9 +58,9 @@ This workshop is composed of 30 hours:
 - [Lecture 2](lecture02_data_structure.html)
     + Basic data types, control structures (AG)
 
-- [Lecture 3](lecture03_rmarkdown.html)
-    + Markdown (EK)
-    + Importing data into R (`readr`) (EK)
+- Importing data into R
+    + [Lecture 3 Markdown](lecture03_rmarkdown.html) (EK)
+    + [Lecture 4 readr](lecture04_readr.html) (EK)
     
 - Setup _Bring Your Own data Session_ (for Day 4)
 
@@ -84,7 +84,7 @@ This workshop is composed of 30 hours:
 
 - [Lecture 8](lecture08_purrr.html)
     + Functional programming with `purrr` (EK)
-- Lecture 9  
+- [Lecture 9](lecture08_broom.html)  
     + Handling statistical models with `broom` (AG)
 - [Lecture 10]  
     + Programming with `tidyeval` (AG)
@@ -100,7 +100,7 @@ This workshop is composed of 30 hours:
 
 **R** is shorthand for ["GNU R"](https://www.r-project.org):
 
-- An interactive programming language
+- An interactive programming language derived from **S**
 - Focus on data analysis ("stats") and plotting
 - **R** is also shorthand for the ecosystem around this language
     + Book authors

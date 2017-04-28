@@ -736,7 +736,9 @@ mtcars %>%
            position = "dodge")
 ```
 
-XX missing values ??
+### Complete {.box-8 .bg-grgold .build}
+
+the combination `gear` 4 / `cyl` 8 is missing. Using `tidyr::complete()` to avoid bars with different widths.
 
 ## Stacked barchart for proportions | categorical variables
 
@@ -1044,6 +1046,7 @@ vembedr::embed_youtube("DQiKHlpy70Q") %>% htmltools::div(class = "vembedr")
 
 - `stat_ellipse()` 
 - `stat_summary()` easy mean 95CI etc.
+- `geom_smooth()` linear/splines/non linear
 
 ### plot on multi-pages {.box-6 .bg-grgold .stretch}
 

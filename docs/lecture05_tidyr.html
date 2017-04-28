@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing with R tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data processing with R tidyverse',
+                        subtitle: 'tidyr',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture05_tidyr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture05_tidyr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>tidyr </h2><h3> Introduction: cheatsheet</h3></hgroup><article  id="tidyr-introduction-cheatsheet" class="smaller ">
+
+<div id="unnamed-chunk-1">
+<p><img src="img/05_dplyr_cheatsheet.png" width="90%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Rationale</h2></hgroup><article  id="rationale" class="smaller ">
+
+<div id="unnamed-chunk-2">
+<p><img src="img/06_tidy-dataset.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Definitions</h2></hgroup><article  id="definitions" class="smaller ">
+
+<ul>
+<li><strong>Variable</strong>: A quantity, quality, or property that you can measure.</li>
+<li><strong>Observation</strong>: A set of values that display the relationship between variables. To be an observation, values need to be measured under similar conditions, usually measured on the same observational unit at the same time.</li>
+<li><strong>Value</strong>: The state of a variable that you observe when you measure it.</li>
+</ul>
+
+<p><a href='http://garrettgman.github.io/tidying/' title=''>source: Garret Grolemund</a></p>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Rules</h2></hgroup><article  id="rules" class="smaller ">
+
+<ol>
+<li>Each variable is in its own column</li>
+<li>Each observation is in its own row</li>
+<li>Each value is in its own cell</li>
+</ol>
+
+<div id="unnamed-chunk-3">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-1_600.png" width="90%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Convert Long / wide format</h2></hgroup><article  id="convert-long-wide-format" class="smaller ">
+
+<p>The wide format is generally untidy <em>but</em> found in the majority of datasets</p>
+
+<div id="unnamed-chunk-4">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-gather_600.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+<div id="unnamed-chunk-5">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-spread_600.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Demo with the iris dataset</h2></hgroup><article  id="demo-with-the-iris-dataset" class="smaller ">
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>head(iris, 3)</pre>
+
+<pre >  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa</pre></div>
+
+<p>gather</p>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(&quot;tidyverse&quot;)
+iris_melt &lt;- iris %&gt;%
+  rownames_to_column(var = &quot;number&quot;) %&gt;%
+  as_tibble() %&gt;%
+  gather(flower, measure, contains(&quot;al&quot;))
+iris_melt</pre>
+
+<pre ># A tibble: 600 × 4
+   number Species       flower measure
+    &lt;chr&gt;  &lt;fctr&gt;        &lt;chr&gt;   &lt;dbl&gt;
+1       1  setosa Sepal.Length     5.1
+2       2  setosa Sepal.Length     4.9
+3       3  setosa Sepal.Length     4.7
+4       4  setosa Sepal.Length     4.6
+5       5  setosa Sepal.Length     5.0
+6       6  setosa Sepal.Length     5.4
+7       7  setosa Sepal.Length     4.6
+8       8  setosa Sepal.Length     5.0
+9       9  setosa Sepal.Length     4.4
+10     10  setosa Sepal.Length     4.9
+# ... with 590 more rows</pre></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section" class="smaller ">
+
+<p>spread</p>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris_melt %&gt;%
+  spread(flower, measure)</pre>
+
+<pre ># A tibble: 150 × 6
+   number    Species Petal.Length Petal.Width Sepal.Length Sepal.Width
+*   &lt;chr&gt;     &lt;fctr&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+1       1     setosa          1.4         0.2          5.1         3.5
+2      10     setosa          1.5         0.1          4.9         3.1
+3     100 versicolor          4.1         1.3          5.7         2.8
+4     101  virginica          6.0         2.5          6.3         3.3
+5     102  virginica          5.1         1.9          5.8         2.7
+6     103  virginica          5.9         2.1          7.1         3.0
+7     104  virginica          5.6         1.8          6.3         2.9
+8     105  virginica          5.8         2.2          6.5         3.0
+9     106  virginica          6.6         2.1          7.6         3.0
+10    107  virginica          4.5         1.7          4.9         2.5
+# ... with 140 more rows</pre></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Separate / Unite</h2></hgroup><article  id="separate-unite" class="smaller ">
+
+<div id="unnamed-chunk-9">
+</div>
+
+<ul>
+<li>unite</li>
+</ul>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df %&gt;%
+  unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
+
+<ul>
+<li>separate, use <strong>quotes</strong> since we are not refering to objects</li>
+</ul>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df_unite %&gt;%
+  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
+
+<pre ># A tibble: 3 × 4
+   year month   day value
+* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div>
+
+</article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Why tidy is useful?</h2></hgroup><article  id="why-tidy-is-useful" class="smaller ">
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  gather(flower, measure, 1:4) %&gt;%
+  ggplot() +
+  geom_boxplot(aes(x = Species, y = measure, fill = flower))</pre>
+
+<p><img src="lecture05_tidyr_files/figure-html/unnamed-chunk-12-1.png" width="50%" style="display: block; margin: auto;" /></p></div></article><div class = "footer"></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture05_tidyr_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

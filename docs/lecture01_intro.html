@@ -196,19 +196,28 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 1</h3>
 
 <ul>
-<li>Session 1
+<li><a href='lecture01_intro.html' title=''>Lecture 1</a>
 
 <ul>
 <li>Introduction to R and RStudio (AG)</li>
-<li>Basic data types, control structures (AG)</li>
 </ul></li>
-<li>Session 2
+<li><a href='lecture02_data_structure.html' title=''>Lecture 2</a>
 
 <ul>
-<li>Markdown (EK)</li>
-<li>Importing data into R (<code>readr</code>) (EK)</li>
+<li>Basic data types, control structures (AG)</li>
 </ul></li>
-<li>Setup <em>Bring Your Own data Session</em> (Day 4)</li>
+<li>Importing data into R
+
+<ul>
+<li><a href='lecture03_rmarkdown.html' title=''>Lecture 3 Markdown</a> (EK)</li>
+<li><a href='lecture04_readr.html' title=''>Lecture 4 readr</a> (EK)</li>
+</ul></li>
+<li><p>Setup <em>Bring Your Own data Session</em> (for Day 4)</p></li>
+<li><a href='lecture05_tidyr.html' title=''>Lecture 5</a>
+
+<ul>
+<li>Introduction to tidy data (RK)</li>
+</ul></li>
 </ul>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont." class="smaller ">
@@ -216,20 +225,15 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 2</h3>
 
 <ul>
-<li>Session 1
-
-<ul>
-<li>Introduction to tidy data (RK)</li>
-</ul></li>
-<li>Session 2
-
-<ul>
-<li>Visualization with <code>ggplot2</code> (AG)</li>
-</ul></li>
-<li>Session 3
+<li><a href='lecture06_dplyr.html' title=''>Lecture 6</a>
 
 <ul>
 <li>Data wrangling with <code>dplyr</code> (RK)</li>
+</ul></li>
+<li><a href='lecture07_plotting.html' title=''>Lecture 7</a>
+
+<ul>
+<li>Visualization with <code>ggplot2</code> (AG)</li>
 </ul></li>
 </ul>
 
@@ -238,17 +242,17 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 3</h3>
 
 <ul>
-<li>Session 1
+<li><a href='lecture08_purrr.html' title=''>Lecture 8</a>
 
 <ul>
 <li>Functional programming with <code>purrr</code> (EK)</li>
 </ul></li>
-<li>Session 2
+<li><a href='lecture08_broom.html' title=''>Lecture 9</a>
 
 <ul>
 <li>Handling statistical models with <code>broom</code> (AG)</li>
 </ul></li>
-<li>Session 3
+<li>[Lecture 10]
 
 <ul>
 <li>Programming with <code>tidyeval</code> (AG)</li>
@@ -271,7 +275,7 @@
 <p><strong>R</strong> is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
 
 <ul>
-<li>An interactive programming language</li>
+<li>An interactive programming language derived from <strong>S</strong></li>
 <li>Focus on data analysis (&quot;stats&quot;) and plotting</li>
 <li><strong>R</strong> is also shorthand for the ecosystem around this language
 
@@ -305,11 +309,13 @@
 
 <p><a href='https://twitter.com/search?q=%23rstats' title=''><code>#rstats</code></a> on twitter</p>
 
-<p><img src="img/01_r_community.jpg" width="95%" /></p>
+<div id="unnamed-chunk-1">
+<p><img src="img/01_r_community.jpg" width="95%" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Constant trend</h2></hgroup><article  id="constant-trend" class="smaller ">
 
-<p><img src="img/01_r_progression.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="unnamed-chunk-2">
+<p><img src="img/01_r_progression.png" width="70%" style="display: block; margin: auto;" /></p></div>
 
 <p>From <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></p>
 
@@ -327,7 +333,7 @@
 
 <p>typical install:</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-3" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
 biocLite(&quot;limma&quot;)</pre></div>
 
@@ -335,7 +341,7 @@ biocLite(&quot;limma&quot;)</pre></div>
 
 <p>easy install thanks to <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <a href='https://github.com/hadley/readr' title=''>status</a></p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-4" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
 devtools::install_github(&quot;tidyverse/readr&quot;)</pre></div>
 
@@ -355,7 +361,8 @@ devtools::install_github(&quot;tidyverse/readr&quot;)</pre></div>
 
 <div class = 'row'><div class = 'col-9'>
 
-<p><img src="https://i0.wp.com/rud.is/b/wp-content/uploads/2017/02/hieRarchy.png" width="70%" /></p>
+<div id="unnamed-chunk-5">
+<p><img src="https://i0.wp.com/rud.is/b/wp-content/uploads/2017/02/hieRarchy.png" width="70%" /></p></div>
 
 </div><div class = 'col-3 middle'>
 
@@ -364,11 +371,12 @@ source <a href='https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-s
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
 
+<div id="unnamed-chunk-6">
 <style type="text/css">
 .to_right > p {
   text-align: right;
 }
-</style>
+</style></div>
 
 <div class = 'row'><div class = 'col-6 middle to_right'>
 
@@ -376,7 +384,7 @@ source <a href='https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-s
 
 </div><div class = 'col-6'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-7" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>?log
 help(log)</pre></div>
 
@@ -394,7 +402,8 @@ help(log)</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
 
-<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+<div id="unnamed-chunk-8">
+<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><a href='http://tidyverse.org/' title=''>Tidyverse</a> </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator" class="smaller vs1">
 
@@ -442,7 +451,8 @@ source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>R
 
 </div><div class = 'col-4'>
 
-<p><img src="https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg" width="75%" /></p>
+<div id="unnamed-chunk-9">
+<p><img src="https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg" width="75%" /></p></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages</h3></hgroup><article  id="tidyverse-packages" class="smaller vs1">
 
@@ -450,7 +460,8 @@ source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>R
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
 
-<p><img src="img/01_tidyverse_data_science.png" width="80%" /></p>
+<div id="unnamed-chunk-10">
+<p><img src="img/01_tidyverse_data_science.png" width="80%" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> workflow</h3></hgroup><article  id="tidyverse-workflow" class="smaller ">
 
@@ -566,7 +577,8 @@ Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyve
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends" class="smaller ">
 
-<p><img src="img/01_r_documentation_trends_20170418.png" width="90%" /></p>
+<div id="unnamed-chunk-11">
+<p><img src="img/01_r_documentation_trends_20170418.png" width="90%" /></p></div>
 
 <div class = 'row'><div class = 'offset-4 col-6'>
 
@@ -575,7 +587,8 @@ source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation<
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends-1" class="smaller ">
 
-<p><img src="img/01_r_documentation_trends_20170418_tv.png" width="90%" /></p>
+<div id="unnamed-chunk-12">
+<p><img src="img/01_r_documentation_trends_20170418_tv.png" width="90%" /></p></div>
 
 <div class = 'row'><div class = 'col-6 offset-4'>
 
@@ -693,7 +706,7 @@ source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Di
 
 <div class = 'row'><div class = 'col-4'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>&gt; getwd()</pre></div>
 
 </div><div class = 'col-8 box bg-red'><h3>setwd() or relative paths</h3>
@@ -715,7 +728,7 @@ source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Di
 
 <div class = 'row'><div class = 'col-6 box bg-yellow'><h3>with only <code>base</code> loaded</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>x &lt;- 1:10
 filter(x, rep(1, 3))</pre>
 
@@ -729,16 +742,17 @@ Frequency = 1
 
 <p>with the same name, the latest loaded wins</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(dplyr)
 filter(x, rep(1, 3))</pre></div>
 
+<div id="unnamed-chunk-16">
 <style type="text/css">
 .error {
     font-family: monospace;
     color: red;
 }
-</style>
+</style></div>
 
 <p><span class="error">
 Error in UseMethod(&quot;filter_&quot;) : no applicable method for &#39;filter_&#39; applied to an object of class &quot;c(&#39;integer&#39;, &#39;numeric&#39;)</span></p>
@@ -747,7 +761,7 @@ Error in UseMethod(&quot;filter_&quot;) : no applicable method for &#39;filter_&
 
 <p>using the <code>::</code> operator to call a function from a specific package</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>stats::filter(x, rep(1, 3))</pre>
 
 <pre >Time Series:
@@ -764,7 +778,7 @@ Frequency = 1
 
 <div class = 'row'><div class = 'bg-yellow box col-6'><h3>R base</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-19" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>set.seed(12)
 round(mean(rnorm(5)), 2)</pre>
 
@@ -772,7 +786,7 @@ round(mean(rnorm(5)), 2)</pre>
 
 </div><div class = 'bg-green box col-6'><h3>magrittr</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-20" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>set.seed(12)
 rnorm(5) %&gt;%
   mean() %&gt;%
@@ -782,7 +796,7 @@ rnorm(5) %&gt;%
 
 <p>Of note, <code>magrittr</code> needs to loaded with either:</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(magrittr)
 library(dplyr)
 library(tidyverse)</pre></div>
@@ -805,7 +819,7 @@ library(tidyverse)</pre></div>
 <li><code>}</code> alone on their line except for</li>
 </ul>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-22" class="chunk shadow">
 <p><code>r   } else {</code></p></div>
 
 <ul>
@@ -818,13 +832,13 @@ library(tidyverse)</pre></div>
 
 </div><div class = 'bg-red box col-6'><h3>Bad</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-23" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># example from http://adv-r.had.co.nz/Style.html
 T &lt;- FALSE
 c &lt;- 10
 mean &lt;- function(x) sum(x)</pre></div>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-24" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># lack spaces for readibility
 average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
 

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing with R tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data processing with R tidyverse',
+                        subtitle: 'Importing data',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture04_readr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-yellow {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grayblue {
+      background-color: #BFCCD7;
+    }
+  
+    .box.bg-grayblue {
+      border: 2px solid #60666C;
+      color: #000;
+    }
+  
+    .box.bg-grayblue > h3:first-child {
+      background-color: #60666C;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture04_readr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<div id="unnamed-chunk-1">
+<style type="text/css">
+.compact-pre pre:not(.lang-r) {
+  line-height: 15px;
+}
+</style></div>
+
+<slide class=''><hgroup><h2>Importing data</h2></hgroup><article  id="importing-data" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-blue offset-1'>
+
+<ul>
+<li>Represents probably the first step of your work</li>
+<li>R can handle multiple data types
+
+<ul>
+<li>flat files (<code>.tsv</code>, <code>.csv</code> &#8230;)</li>
+<li>excel files (<code>.xls</code>, <code>.xlsx</code>)</li>
+<li>foreign statistical formats (<code>.sas</code> from SAS, <code>.sav</code> from SPSS, <code>.dta</code> from Stata)</li>
+<li>databases (SQL, SQLite &#8230;)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 bg-blue offset-1'><h3>Tidyverse implementation</h3>
+
+<ul>
+<li>R base already provides functions for text files (<em>i.e.</em> <code>read.csv()</code>, <code>read.delim()</code>)</li>
+<li>tidyverse redefines these functions with 2 main differences:
+
+<ul>
+<li>speed</li>
+<li>character are not coerced to factors by default</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>readr</h2></hgroup><article  id="readr" class="smaller ">
+
+<div id="unnamed-chunk-2">
+<style type="text/css">
+.icon > img {
+  float: right;
+  margin-left: 20px;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue icon'><h3>Tidyverse packages to import your data</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/readr/master/tools/logo.png' title='fig:'/>
+
+<p>Seven file formats are supported by the readr package:</p>
+
+<ul>
+<li><code>read_csv()</code>: comma separated (CSV) files</li>
+<li><code>read_tsv()</code>: tab separated files</li>
+<li><code>read_delim()</code>: general delimited files</li>
+<li><code>read_fwf()</code>: fixed width files</li>
+<li><code>read_table()</code>: tabular files where colums are separated by white-space.</li>
+<li><code>read_log()</code>: web log files</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-green icon'><h3>readxl</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/readxl/master/logo.png' title='fig:'/>
+
+<p>To import excel files (<code>.xls</code> and <code>.xlsx</code>):</p>
+
+<ul>
+<li><code>read_excel()</code>
+
+<ul>
+<li><code>read_xls()</code></li>
+<li><code>read_xlsx()</code></li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-red icon stretch'><h3>haven</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/haven/master/logo.png' title='fig:'/>
+
+<ul>
+<li><code>read_sas()</code> for SAS</li>
+<li><code>read_sav()</code> for SPSS</li>
+<li><code>read_dta()</code> for Stata</li>
+</ul>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Rstudio data import </h2><h3> interactive call to <code>readr</code> or <code>readxl</code></h3></hgroup><article  id="rstudio-data-import-interactive-call-to-readr-or-readxl" class="smaller ">
+
+<div id="unnamed-chunk-3">
+<style type="text/css">
+/* Center two images in boxes*/
+.center-pair p {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.center-pair p > img {
+  max-width: 45%;
+  margin: auto;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-6 bg-blue center-pair'><h3>Import button</h3>
+
+<ul>
+<li>Use the <code>Import Dataset</code> button in the upper right panel or click on the file in the lower right panel</li>
+</ul>
+
+<p><img src='img/04_rstudio_import_option_1.jpg' title=''/> <img src='img/04_rstudio_import_option_2.jpg' title=''/></p>
+
+<ul>
+<li>Will interactively select the appropriate function</li>
+<li>Copy paste the generated command to your Rmarkdown document</li>
+</ul>
+
+</div><div class = 'box col-6 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Create a new project (easier to setup the root project path)</li>
+<li>Copy the example file provided by the <code>readr</code> package to the project folder using the following command:</li>
+</ul>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>file.copy(
+  from = readr::readr_example(&quot;mtcars.csv&quot;),
+  to = &quot;mtcars.csv&quot;
+  )</pre></div>
+
+<ul>
+<li>Use the interactive <code>Import Dataset</code> button to import the data.</li>
+</ul>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Rstudio data import </h2><h3> preview window</h3></hgroup><article  id="rstudio-data-import-preview-window" class="smaller ">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/04_rstudio_import_preview.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-grayblue'><h3>Example of <code>csv</code> file: <em>mtcars.csv</em></h3>
+
+<pre >&quot;mpg&quot;,&quot;cyl&quot;,&quot;disp&quot;,&quot;hp&quot;,&quot;drat&quot;,&quot;wt&quot;,&quot;qsec&quot;,&quot;vs&quot;,&quot;am&quot;,&quot;gear&quot;,&quot;carb&quot;
+21,6,160,110,3.9,2.62,16.46,0,1,4,4
+21,6,160,110,3.9,2.875,17.02,0,1,4,4
+22.8,4,108,93,3.85,2.32,18.61,1,1,4,1
+21.4,6,258,110,3.08,3.215,19.44,1,0,3,1
+18.7,8,360,175,3.15,3.44,17.02,0,0,3,2
+...</pre>
+
+</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Using <code>read_csv()</code></h3>
+
+<ul>
+<li><code>readr</code> provides some example files</li>
+<li>use <code>readr::readr_example()</code> to access them</li>
+<li>is able to read <strong>local</strong> and <strong>remote</strong> files</li>
+<li>is able to read compressed files (<code>.zip</code>, <code>.gz</code>, &#8230;)</li>
+</ul>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-cobalt compact-pre'><h3>Using <code>read_csv()</code></h3>
+
+<div id="unnamed-chunk-5" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;% # Generates the path to the example file
+  read_csv() %&gt;%
+  head(n = 6)</pre>
+
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre>
+
+<pre ># A tibble: 6 × 11
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  21.0     6   160   110  3.90 2.620 16.46     0     1     4     4
+2  21.0     6   160   110  3.90 2.875 17.02     0     1     4     4
+3  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+4  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+5  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2
+6  18.1     6   225   105  2.76 3.460 20.22     1     0     3     1</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-7 bg-blue'><h3>Column types</h3>
+
+<ul>
+<li>are guessed from the <strong>1000</strong> first rows
+
+<ul>
+<li>adjustable <code>guess_max</code> option</li>
+</ul></li>
+<li>guessed types are displayed as a <em>message</em></li>
+<li>to hide this message:
+
+<ul>
+<li><strong>lazy method 1</strong>: set <code>message = FALSE</code> in your rmarkdown chunk option.</li>
+<li><strong>lazy method 2</strong>: set <code>col_types = cols()</code></li>
+<li>Hadley Wickham recommends to adjust the <code>col_types</code> to avoid any problem</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-5 bg-cobalt stretch'><h3>Message</h3>
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-3" class="smaller ">
+
+<div id="unnamed-chunk-7">
+<style type="text/css">
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+  border-top: 1px solid #005c99;
+  padding-top: 10px;
+}
+
+.col-list li {
+  line-height: 1.1em;
+  border-bottom: 1px solid #005c99;
+  float: left;
+  display: inline;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-5 bg-blue col-list c2 stretch'><h3>Explicit method</h3>
+
+<p>Use the following functions in <code>cols()</code>:</p>
+
+<ul>
+<li><code>col_double()</code></li>
+<li><code>col_integer()</code></li>
+<li><code>col_character()</code></li>
+<li><code>col_logical()</code></li>
+<li><code>col_factor()</code></li>
+<li><code>col_date()</code></li>
+<li><code>col_datetime()</code></li>
+<li><code>col_time()</code></li>
+<li><code>col_guess()</code></li>
+<li><code>col_skip()</code></li>
+</ul>
+
+</div><div class = 'box col-7 bg-cobalt stretch'><h3>Example 1</h3>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = cols(mpg = col_double(),
+                            cyl = col_integer(),
+                            disp = col_double(),
+                            hp = col_integer(),
+                            drat = col_double(),
+                            wt = col_double(),
+                            qsec = col_double(),
+                            vs = col_integer(),
+                            am = col_integer(),
+                            gear = col_integer(),
+                            carb = col_integer())
+  ) %&gt;%
+  head(n = 6)</pre></div>
+
+</div></div><div class = 'row'><div class = 'box col-7 bg-blue col-list c3 stretch'><h3>Compact string shortcuts</h3>
+
+<ul>
+<li>c = character</li>
+<li>i = integer</li>
+<li>n = number</li>
+<li>d = double</li>
+<li>l = logical</li>
+<li>D = date</li>
+<li>T = date time</li>
+<li>t = time</li>
+<li>? = guess</li>
+<li>_/- = skip</li>
+</ul>
+
+</div><div class = 'box col-5 bg-cobalt stretch'><h3>Example 2</h3>
+
+<div id="unnamed-chunk-9" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = &quot;dididddiiii&quot;)</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 1</h3>
+
+<p>import the <code>mtcars.csv</code> file and</p>
+
+<ul>
+<li>import the <strong>number of cylinders</strong> as characters.</li>
+<li>skip all columns except miles per gallon, cylinder and the number of gears</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 offset-1 bg-cobalt '><h3>Answer</h3>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = &quot;dc_______i_&quot;) %&gt;%
+  head(n = 6)</pre>
+
+<pre ># A tibble: 6 × 3
+    mpg   cyl  gear
+  &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
+1  21.0     6     4
+2  21.0     6     4
+3  22.8     4     4
+4  21.4     6     3
+5  18.7     8     3
+6  18.1     6     3</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself-1" class="smaller ">
+
+<div id="unnamed-chunk-11">
+<style type="text/css">
+/* we used two chunks to hide the local file access */
+#challenge_display {
+  border-bottom: none;
+  border-radius: 0;
+}
+
+#challenge_output {
+  margin-top: -10px;
+  border-top:none;
+  border-radius: 0;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 2</h3>
+
+<ul>
+<li>try to load the file <code>challenge.csv</code> (provided by <code>readr_example()</code>)</li>
+<li>store the content in an object <code>challenge</code></li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 offset-1 bg-grayblue  compact-pre'><h3>Step 1</h3>
+
+<ul>
+<li>what happened?</li>
+<li>you can use <code>problems(challenge)</code> to list the failures again</li>
+</ul>
+
+<div id="unnamed-chunk-12">
+</div>
+
+<div id="challenge_code" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv()</pre></div>
+
+<div id="challenge_output" class="chunk shadow">
+<pre >Parsed with column specification:
+cols(
+  x = col_integer(),
+  y = col_character()
+)</pre>
+
+<pre >Warning: 1000 parsing failures.
+ row col               expected             actual            file
+1001   x no trailing characters .23837975086644292 &#39;challenge.csv&#39;
+1002   x no trailing characters .41167997173033655 &#39;challenge.csv&#39;
+1003   x no trailing characters .7460716762579978  &#39;challenge.csv&#39;
+1004   x no trailing characters .723450553836301   &#39;challenge.csv&#39;
+1005   x no trailing characters .614524137461558   &#39;challenge.csv&#39;
+.... ... ...................... .................. ...............
+See problems(...) for more details.</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 2</h3>
+
+<ul>
+<li>try to load the file <code>challenge.csv</code> (provided by <code>readr_example()</code>)</li>
+<li>store the content in an object <code>challenge</code></li>
+<li>override the guessed column type to allow the import</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 offset-1 bg-grayblue '><h3>Step 2</h3>
+
+<ul>
+<li>method 1</li>
+</ul>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv(col_types = &quot;cc&quot;)</pre></div>
+
+<ul>
+<li>method 2 (not recommended)</li>
+</ul>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv(guess_max = 1500) # n &gt; 1000: look at the first row causing a failure</pre>
+
+<pre >Parsed with column specification:
+cols(
+  x = col_double(),
+  y = col_date(format = &quot;&quot;)
+)</pre></div>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>Skipping lines</h2></hgroup><article  id="skipping-lines" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-yellow'><h3><code>skip</code> argument</h3>
+
+<p>To skip the first <em>n</em> rows</p>
+
+</div><div class = 'box col-6 bg-red'><h3><code>n_max</code> argument</h3>
+
+<p>To stop reading after <em>n</em> rows</p>
+
+</div></div></article><div class = "footer"></div></slide><slide class=''><hgroup><h2>TODO</h2></hgroup><article  id="todo" class="smaller ">
+
+<ul>
+<li>readxl (without map: will be shown again with the power of purrr)</li>
+<li><code>read_delim()</code>: the general functional which you can customize</li>
+<li>deal with locales (for the french users&#8230;)</li>
+<li>exercises: datacamp? Or adapt datacamp and/or HW examples?</li>
+</ul></article><div class = "footer"></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture04_readr_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
