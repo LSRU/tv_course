@@ -1,0 +1,170 @@
+---
+title: "Non standard evaluation"
+subtitle: tidyeval
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "4 May 2017"
+output:
+  iosp::ioslides_plus:
+    box_colours:
+      orange: "darkorange"
+      slate: "slateblue2"
+      yellow: ["yellow", "gold2"]
+      yellow2: ["lightgoldenrod1", "goldenrod2"] # from Eric
+      grgold: ["springgreen4", header_text: "#FFD700"]
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+ggplot2::theme_set(ggplot2::theme_bw(18))
+```
+
+# ggplot2
+
+## The issue | ggplot2
+
+When dealing with **global** variables, fine. But **local** ones in _function_...
+
+### in global env {.box-6 .bg-cobalt .build}
+
+```{r}
+mtcars %>%
+  ggplot(aes(x = mpg)) +
+  geom_histogram(bins = 25)
+```
+
+
+### in function {.box-6 .bg-red .build}
+
+```{r, error=TRUE}
+mtcars_dens <- function(df, col) {
+  df %>%
+    ggplot(aes(x = col)) +
+    geom_histogram(bins = 25)
+}
+mtcars_dens(df = mtcars, col = "mpg")
+```
+
+## Solution: `aes_string()` | only for ggplot2 {.vs1}
+
+### {.box-12}
+
+```{r, row=TRUE, fig.height=3}
+mtcars_dens <- function(df, col) {
+  df %>%
+    ggplot(aes_string(x = col)) +
+    geom_histogram(bins = 25)
+}
+mtcars_dens(df = mtcars, col = "mpg")
+```
+
+
+### {.box-12 .build}
+
+```{r, row=TRUE, fig.height=3}
+mtcars_dens(df = mtcars, col = "hp")
+```
+
+
+# dplyr < 0.6
+
+
+## before upcoming 0.6
+
+### in global env {.box-6 .bg-cobalt .build}
+
+```{r}
+mtcars %>%
+  filter(hp > 250)
+```
+
+
+### in function {.box-6 .bg-red .build}
+
+```{r, error=TRUE}
+mtcars_filter <- function(df, col) {
+  df %>%
+    filter(col > 250)
+}
+mtcars_filter(df = mtcars, col = "hp")
+```
+
+
+## Solution: underscore versions | dplyr < 0.6 {.vs2}
+
+### {.box-12}
+
+```{r, row=c(8, 4)}
+mtcars_filter <- function(df, col) {
+  filter_call <- lazyeval::interp(~ var > 250, var = as.name(col))
+  df %>%
+    filter_(.dots = filter_call)
+}
+mtcars_filter(df = mtcars, col = "hp")
+```
+
+### Obscure {.box-6 .bg-orange .build}
+
+Ugly, complex, hard but mandatory
+
+### Proceed anyway {.box-6 .bg-orange .build .stretch}
+
+With dynamic threshold
+
+%end%
+
+### {.box-12 .build}
+
+```{r, row=c(8, 4)}
+mtcars_filter <- function(df, col, threshold) {
+  filter_call <- lazyeval::interp(~ var > thr,
+                                  var = as.name(col),
+                                  thr = quote(threshold))
+  df %>%
+    filter_(.dots = filter_call)
+}
+mtcars_filter(df = mtcars, col = "hp", threshold = 265)
+```
+
+# dplyr >= 0.6
+
+## tidyeval | dplyr 0.6, upcoming! {.vs2}
+
+described in this [vignette](http://dplyr.tidyverse.org/articles/programming.html)
+
+### classic quoting {.box-6 .bg-blue .build}
+
+variables as strings
+
+```{r}
+fun1 <- function(name) {
+  paste0("name is, ", name)
+}
+fun1("stringent")
+```
+
+
+### introducing `glue` {.box-6 .bg-yellow2 .build .stretch}
+
+```{r}
+fun2 <- function(name) {
+  glue::glue("name is {name}")
+}
+fun2("stringent")
+```
+
+
+ ## Solution with tidyeval
+ 
+ 
+```{r}
+ 
+mtcars_filter <- function(df, col, threshold) {
+
+  column <- quo(col > threshold)
+  print(enquo(column))
+  thr <- quo(threshold)
+  df %>%
+    filter(!!column)
+}
+mtcars_filter(df = mtcars, hp, threshold = 265)
+```
