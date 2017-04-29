@@ -3,8 +3,10 @@ iosp::ioslides_plus:
   fig_width: 6
   keep_md: no
   logo: img/uni_elixir.png
+  footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
   smaller: yes
   widescreen: yes
   self_contained: false
   lib_dir: libs
   fig_retina: null
+  css: css/tweaks.css
