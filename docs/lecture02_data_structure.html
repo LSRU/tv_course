@@ -316,11 +316,11 @@ $s
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data frames are special lists</h2></hgroup><article  id="data-frames-are-special-lists" class="smaller ">
 
-<div class = 'row'><div class = 'col-5 box bg-green stretch'><h3><code>data.frame</code></h3>
+<h3><code class="col-5 box bg-green stretch">data.frame</code></h3>
 
 <p>same as list <strong>but</strong> where all objects <em>must</em> have the <strong>same</strong> length</p>
 
-</div><div class = 'col-7 box bg-cobalt stretch'><h3>Example</h3>
+<div class = 'row'><div class = 'col-7 box bg-cobalt stretch'><h3>Example</h3>
 
 <div class="chunk shadow">
 <div class="row">
@@ -828,14 +828,14 @@ Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats<
 
 <p>We can extract a vector (colum) from a data frame in a few different ways:</p>
 
-<div class = 'row'><div class = 'box col-6'><h3>Using the double <code>[[]]</code></h3>
+<h3>Using the double <code class="box-6">[[]]</code></h3>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>women[[&quot;height&quot;]]</pre>
 
 <pre > [1] 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72</pre></div>
 
-</div><div class = 'box col-6'><h3>Or its alias: the <code>$</code> operator</h3>
+<div class = 'row'><div class = 'box col-6'><h3>Or its alias: the <code>$</code> operator</h3>
 
 <div class="chunk shadow">
 <pre class = 'prettyprint lang-r'>women$height</pre>
@@ -864,7 +864,7 @@ Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats<
 4     61    123
 5     62    126</pre></div>
 
-</div><div class = 'box col-6'><h3>only one cell with <code>[]</code></h3>
+<h3>only one cell with <code class="box-6">[]</code></h3>
 
 <ul>
 <li>first coordinate = <strong>row</strong>, col]</li>
@@ -894,7 +894,7 @@ Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats<
 <li><code>|</code>, <code>||</code> or</li>
 </ul>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Using <code>library()</code></h2></hgroup><article  id="using-library" class="smaller vs2">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Using <code class="vs2">library()</code></h2></hgroup><article  id="using-library" class="smaller ">
 
 <div class = 'row'><div class = 'col-6 box bg-yellow'><h3>with only <code>base</code> loaded</h3>
 
@@ -1033,7 +1033,7 @@ average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

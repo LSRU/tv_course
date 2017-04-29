@@ -1,13 +1,14 @@
 ---
-title: "Data processing with R tidyverse"
+title: "Data transformation"
 subtitle: dplyr
 author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
   iosp::ioslides_plus:
-    preview: yes
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
     box_colours:
       bg-my_colour: "slateblue2"
+      yellow2: ["lightgoldenrod1", "goldenrod2"]
 ---
 
 ```{r setup, include=FALSE}
@@ -15,11 +16,32 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 # Do not use cache = TRUE with _site.yml! They do not like each other...
 ```
 
-## dplyr | Introduction: cheatsheet
+## Data transformation | Introduction
+
+* Transforming data for use with models is where there majority of time in analysis goes 
+ 
+### `dplyr` in a nutshell {.box-8 .bg-yellow2 .build .stretch}
+ * `dplyr` is a tool box for working with data in tibbles or data frames
+     + Selection and manipulation of observation, variables and values 
+     + Summarizing
+     + Grouping
+     + Joining and intersecting tibbles
+  * In a workflow typically follows reshaping operations from `tidyr`
+
+
+## dplyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
 
 ```{r, echo=FALSE, out.width = '90%'}
-knitr::include_graphics("img/05_dplyr_cheatsheet.png")
+knitr::include_graphics("img/06_dplyr_cheatsheet.png")
 ```
+
+## dplyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/) (cont.)
+
+```{r, echo=FALSE, out.width = '90%'}
+knitr::include_graphics("img/06_dplyr_cheatsheet_p2.png")
+```
+
+
 
 ## Installation
 
@@ -28,7 +50,7 @@ library("tidyverse")
 library("nycflights13")
 ```
 
-- `dplyr` is now included in the `tidyverse` package
+- `dplyr` is included in the `tidyverse` package
 
 ```{r, eval = FALSE}
 install.packages("dplyr")
@@ -48,20 +70,13 @@ library("nycflights13")
 
 - Or use `Rstudio > Tools > Install` Packages to install the packages
 
-## Tibbles | Tibbles vs data frames
 
-- Use `as_tibble` to convert a data frame to a tibble
-### Tibbles
-    + have a refined print method that shows only the first 10 rows.
-    + show all the columns that fit on screen and list the name of remaining ones.
-    + each column reports its type.
-    + makes it much easier to work with large data.
 
 ```{r}
 flights
 ```
 
-## glimpse
+## Inspect data frames / tibbles | glimpse  
 
 Use `glimpse` to show some values and types per column. Environment tab does it too
 
@@ -70,13 +85,15 @@ glimpse(flights)
 ```
 
 
-## pipe in R | magrittr
+## Pipes in R | magrittr
 
 ```{r, echo=FALSE, out.width = '70%'}
 knitr::include_graphics("img/05_piping.png")
 ```
 
 from [Romain François](https://twitter.com/ParisRaddict/status/781267225420435461)
+
+
 
 ## filter | inspect subsets of data
 
@@ -120,11 +137,13 @@ flights %>%
 
 ## arrange | sort columns
 
-- Perform a nested sorting of all flights in NYC:
+### Perform a nested sorting of all flights in NYC: {.box-6 .bg-yellow2 .build}
     1. By which airport they departed
     2. year
     3. month
     4. day
+
+%end%
 
 ```{r}
 flights %>%
@@ -247,6 +266,12 @@ flights %>%
 ```
 
 
+## Grouping | `group_by()`
+
+ * Not a summarising transformation but frequently used in conjunction 
+ * Grouping by more than one or more variables
+ * Use `ungroup()` 
+
 ## group_by | Grouping
 
 - Let's compute the average delay per month of flights to Madison.
@@ -289,13 +314,11 @@ by_day %>%
 
 ## Exercise{.build .exercise}
 
-- In average, how many flights a single plane is doing per day?
+- In average, how many flights is a single plane doing per day?
 
-- plot the distribution, display the mean / median (`geom_vline()`)
+- Calculate the average delay per day.
 
-- plot the average delay per day. Use `tidyr::unite` and `as.Date`.
-
-- which day should be avoided?
+- Which day should be avoided?
 
 ## Solution | 1. single plane flights per day
 
@@ -314,11 +337,7 @@ by_day %>%
   summarise(flights = n(),
             avg_delay = mean(dep_delay, na.rm = TRUE),
             n_planes = n_distinct(tailnum)) %>%
-  mutate(avg_flights = flights / n_planes) %>%
-  ggplot() +
-  geom_density(aes(x = avg_flights)) +
-  geom_vline(aes(xintercept = mean(avg_flights)), colour = "red") +
-  geom_vline(aes(xintercept = median(avg_flights)), colour = "blue")
+  mutate(avg_flights = flights / n_planes)
 ```
 
 ## Solution | 3. average delay per day
@@ -518,6 +537,13 @@ flights %>%
 - column-wise conditional operations: `mutate_at`, `mutate_if`, `summarise_at`, `summarise_if`
 - `do`: arbitrary code on each chunk. To be replaced by `tidyr::nest() %>% mutate(purrr::map())`
 - different types of tabular data ([dplyr SQL backend](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html), databases, `data.tables`)
+
+## `dplyr 0.6` | Forthcoming changes
+
+## Missing features
+parallel dplyr
+dbplyr -- databases access
+
 
 
 ## Bigger data, go for `data.table`

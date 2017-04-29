@@ -5,7 +5,8 @@ author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
   iosp::ioslides_plus:
-    preview: yes
+    box_colours: 
+      this_col: "darkorange1" 
 ---
 
 ```{r setup, include=FALSE}
@@ -13,11 +14,14 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 # Do not use cache = TRUE with _site.yml! They do not like each other...
 ```
 
-## tidyr | Introduction: cheatsheet
+## Learning objectives
+### Definitions {.box-8 .offset-2 .bg-this_col}
 
-```{r, echo=FALSE, out.width = '90%'}
-knitr::include_graphics("img/05_dplyr_cheatsheet.png")
-```
++ Principles of *tidy data* to structure data
++ Find errors in existing data sets
++ Structure data
++ Clean-up data with tidyr 
+
 
 
 ## Rationale
@@ -28,8 +32,8 @@ knitr::include_graphics("img/06_tidy-dataset.png")
 ```
 
 
-## Definitions
-
+## Pre-requisites
+### Definitions {.box-8 .offset-2 .bg-this_col}
 + **Variable**: A quantity, quality, or property that you can measure.
 + **Observation**: A set of values that display the relationship between variables. To be an observation, values need to be measured under similar conditions, usually measured on the same observational unit at the same time.
 + **Value**: The state of a variable that you observe when you measure it.
@@ -38,6 +42,8 @@ knitr::include_graphics("img/06_tidy-dataset.png")
 
 ## Rules
 
+### Tidy data {.col-12 .box .bg-this_col}
+
 1. Each variable is in its own column
 2. Each observation is in its own row
 3. Each value is in its own cell
@@ -45,6 +51,65 @@ knitr::include_graphics("img/06_tidy-dataset.png")
 ```{r echo=FALSE, out.width='90%'}
 knitr::include_graphics("http://lsru.github.io/r_workshop/img/tidy-1_600.png")
 ```
+
+## Clean data
+
+### {.col-8 .box .bg-this_col}
+-	Column names are easy to use and informative
+-	Row names are easy to use and informative
+-	Obvious mistakes in the data have been removed
+-	Variable values are internally consistent
+-	Appropriate transformed variables have been added
+
+
+## Typical flow of data 
+
+## Bad data exercise
+
+### {.col-6 .box .bg-blue}
+- The following table lists missense variants in a gene in a group of patients
+- What's wrong with this Excel sheet?
+- Which problems are "tidy" issues
+
+## Bad table solution
+-  Patient names
+-  Identical column names
+-  Inconsistent variables
+-  Non-English columns names
+-  Color coding
+-  Inconsistent dates (ISO8601)
+-  “Disease”
+-  Multiple columns for one item
+-  Redundant information
+-  Repeated rows
+-  Comment field
+-  Uncoded syndromes
+-  Unnecessary information((Birthdate, comments)
+-  Name of the table
+
+## Tidy errors
+Error | Tidy violation | Comment
+------|----------------|--------
+Patient names | No | Data protection violation
+Identical column names | Yes | Variable error
+Inconsistent variables names | No | Bad practice
+Non-English columns names | No | Bad practice
+Color coding | No | The horror, the horror
+Inconsistent dates |No | useISO8601 
+Multiple columns for one item | Yes | One observation per line
+Redundant information | Yes | Each variable is in its own column
+Repeated rows | Yes | Each observation is in its own row
+Uncoded syndromes | Yes/No | Each value in its own cell
+Unnecessary information((Birthdate, comments) | No | bad practice
+Name of the table | No | You'll see this often
+
+
+## tidyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
+
+```{r, echo=FALSE, out.width = '70%'}
+knitr::include_graphics("img/05_tidyr_cheatsheet.png")
+```
+
 
 ## Convert Long / wide format
 
@@ -65,8 +130,9 @@ knitr::include_graphics("http://lsru.github.io/r_workshop/img/tidy-spread_600.pn
 head(iris, 3)
 ```
 
-gather
+## Gather
 
+"melt"
 ```{r, message=FALSE, warning=FALSE}
 library("tidyverse")
 iris_melt <- iris %>%
@@ -76,14 +142,22 @@ iris_melt <- iris %>%
 iris_melt
 ```
 
-##
-
-spread
-
+## Spread / "Cast"
 ```{r}
 iris_melt %>%
   spread(flower, measure)
 ```
+
+## Inverse operations
+
+### Gather and spread
+
+
+### Gather / "melt" {.box-6 .bg-yellow}
+Collects (gathers) all columns into key-value pairs except those noted.
+
+### Spread / "cast" {.box-6 .bg-this_col}
+
 
 ## Separate / Unite
 
@@ -109,7 +183,7 @@ df_unite %>%
 ```
 
 
-## Why tidy is useful?
+## Why tidy is useful?   {.vs2}
 
 ```{r, out.width='50%'}
 iris %>%
@@ -117,3 +191,17 @@ iris %>%
   ggplot() +
   geom_boxplot(aes(x = Species, y = measure, fill = flower))
 ```
+
+## How to clean data
+
+Nesting vs separate tables JSON
+## Missing features
+
+### {.col-6 .box .bg-blue}
+`complete()` 
+
+`nest()` 
+
+`separate_rows()`
+
+`json`

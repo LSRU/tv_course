@@ -196,19 +196,28 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 1</h3>
 
 <ul>
-<li>Session 1
+<li><a href='lecture01_intro.html' title=''>Lecture 1</a>
 
 <ul>
 <li>Introduction to R and RStudio (AG)</li>
+</ul></li>
+<li><a href='lecture02_data_structure.html' title=''>Lecture 2</a>
+
+<ul>
 <li>Basic data types, control structures (AG)</li>
 </ul></li>
-<li>Session 2
+<li><a href='lecture03_rmarkdown.html' title=''>Lecture 3</a>
 
 <ul>
 <li>Markdown (EK)</li>
 <li>Importing data into R (<code>readr</code>) (EK)</li>
 </ul></li>
-<li>Setup <em>Bring Your Own data Session</em> (Day 4)</li>
+<li><p>Setup <em>Bring Your Own data Session</em> (for Day 4)</p></li>
+<li><a href='lecture05_tidyr.html' title=''>Lecture 5</a>
+
+<ul>
+<li>Introduction to tidy data (RK)</li>
+</ul></li>
 </ul>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont." class="smaller ">
@@ -216,20 +225,15 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 2</h3>
 
 <ul>
-<li>Session 1
-
-<ul>
-<li>Introduction to tidy data (RK)</li>
-</ul></li>
-<li>Session 2
-
-<ul>
-<li>Visualization with <code>ggplot2</code> (AG)</li>
-</ul></li>
-<li>Session 3
+<li><a href='lecture06_dplyr.html' title=''>Lecture 6</a>
 
 <ul>
 <li>Data wrangling with <code>dplyr</code> (RK)</li>
+</ul></li>
+<li><a href='lecture07_plotting.html' title=''>Lecture 7</a>
+
+<ul>
+<li>Visualization with <code>ggplot2</code> (AG)</li>
 </ul></li>
 </ul>
 
@@ -238,17 +242,17 @@
 <div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 3</h3>
 
 <ul>
-<li>Session 1
+<li><a href='lecture08_purrr.html' title=''>Lecture 8</a>
 
 <ul>
 <li>Functional programming with <code>purrr</code> (EK)</li>
 </ul></li>
-<li>Session 2
+<li>Lecture 9
 
 <ul>
 <li>Handling statistical models with <code>broom</code> (AG)</li>
 </ul></li>
-<li>Session 3
+<li>[Lecture 10]
 
 <ul>
 <li>Programming with <code>tidyeval</code> (AG)</li>
@@ -420,7 +424,7 @@ source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>R
 
 </div></div>
 
-<div class = 'row build'><div class = 'col-12 '>
+<div class = 'row'><div class = 'col-12 build'>
 
 <blockquote class = 'bg-orange'>
 <p>Navigating the balance between base R and the tidyverse is a challenge to learn <cite> Robert A. Muenchen </p></cite>
@@ -590,7 +594,7 @@ source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation<
 
 <p><a href='https://www.rstudio.com/products/RStudio/' title=''>RStudio</a> is an Integrated Development Environment.<br/>It makes working with R much easier</p>
 
-<div class = 'row build'><div class = 'box col-9 bg-green '><h3>Features</h3>
+<div class = 'row'><div class = 'box col-9 bg-green build'><h3>Features</h3>
 
 <ul class = 'build'>
 <li><em>Console</em> to run <strong>R</strong>, with syntax highlighter</li>
@@ -605,7 +609,7 @@ source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation<
 <li><a href='https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/' title=''><em>Notebooks</em></a></li>
 </ul>
 
-</div><div class = 'box col-3 bg-orange '><h3>Warning</h3>
+</div><div class = 'box col-3 bg-orange build'><h3>Warning</h3>
 
 <p>Don&#39;t mix up <strong>R</strong> and <strong>RStudio</strong>.<br/><strong>R</strong> needs to be installed first.</p>
 
@@ -711,7 +715,7 @@ source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Di
 
 <img src='img/01_rstudio_project.jpg' title='fig:'/>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Using <code>library()</code></h2></hgroup><article  id="using-library" class="smaller vs2">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Using <code class="vs2">library()</code></h2></hgroup><article  id="using-library" class="smaller ">
 
 <div class = 'row'><div class = 'col-6 box bg-yellow'><h3>with only <code>base</code> loaded</h3>
 
@@ -850,7 +854,7 @@ average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
