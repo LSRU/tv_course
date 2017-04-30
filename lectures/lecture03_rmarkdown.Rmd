@@ -1,6 +1,5 @@
 ---
-title: "Data processing with R tidyverse"
-subtitle: Rmarkdown
+title: "Rmarkdown"
 author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "2 May 2017"
 output:
@@ -13,6 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 ```{css}
@@ -28,25 +28,16 @@ article .my_flex > p {
   font-size: 50px;
 }
 
-article.maximise {
-  margin-top: -20px;
-}
-
 .box li {
   line-height: 1.1em; /* should be optimized in the main iosp css... */
 }
 
-article .my_code > pre {
+article .code-transparent > pre {
   background: none;
   /*border-left: none;*/
 }
 
-.icon img {
-  float: right;
-  margin-left: 20px;
-}
-
-.my-code pre {
+.code-transparent pre {
   color: #c7254e;
   background: none;
   border-left: none;
@@ -59,6 +50,23 @@ article .my_code > pre {
   float: none;
 }
 ```
+
+## Learning objectives {.vs2}
+
+### You will learn to: {.box-10 .offset-1 .bg-red .icon}
+
+![](img/00_kt.png)
+
+- use the markdown syntax
+- create _Rmarkdown_ documents
+- define the output format you expect to render
+- use the interactive RStudio interface to
+    + create your documents
+    + insert R code
+    + build your final document
+- use some nice rmarkdown features like
+    + inserting bibliography
+    + creating parameterised reports
 
 ## RMarkdown
 
@@ -114,7 +122,7 @@ article .my_code > pre {
 This is some text in a paragraph
 ```
 
-## Markdown | Most common text formatting **tags** are defined
+## Markdown | common text formatting **tags**
 
 ### Headers{.box-6 .bg-pink2 .stretch .build}
 
@@ -130,7 +138,7 @@ This is some text in a paragraph
 - `[description](http://example.com)`
 - `![](path/to/image.jpg)`
 
-### Verbatim code{.box-6 .bg-blue .stretch .build .my-code} 
+### Verbatim code{.box-6 .bg-blue .stretch .build .code-transparent} 
 - `code` (` ` `This will be some inline coding stuff` ` `)
 - triple backticks are delimiting code blocks
 
@@ -179,19 +187,20 @@ Before writing your own Rmarkdown document, use the excellent ressource on [www.
 - R chunks are extracted, interpreted separately
 - The result is formatted (with or without the source code) and integrated into the markdown document
 - The markdown document is converted to the desired document format (Pdf, Html...)
+- Relies on the powerful [pandoc](http://pandoc.org/) converter
 - Fully integrated in Rstudio (Knit button)
 
 ```{block, type = "center"}
 ![](img/03_rstudio_knit.png)
 ```
 
-## Rmarkdown document | Create, step 1{.maximise}
+## Rmarkdown document | Create, step 1{.nvs1}
 
 ###{.col-10 .offset-1}
 
 ![](img/03_rstudio_rmd_create_1.jpg)
 
-## Rmarkdown document | Create, step 2{.maximise}
+## Rmarkdown document | Create, step 2{.nvs1}
 
 ###{.col-10 .offset-1}
 
@@ -209,7 +218,7 @@ A Rmarkdown document document contains 3 elements:
 - Text which is formatted using the **<span class = "blue">markdown"</span>** syntax
 - **<span class = "green">chunks</span>** containing the code to be interpreted by _R_ 
 
-## Rmarkdown document | Navigation{.maximise}
+## Rmarkdown document | Navigation{.nvs2}
 
 ###{.col-10 .offset-1}
 
@@ -240,7 +249,6 @@ To integrate small pieces of _R_ codes
 
 ## Rmarkdown document | generate
 
-
 ### Creating the output document {.box-6 .offset-3 .bg-blue .center .vs2}
 
 - use the integrated **Knit** button.
@@ -248,6 +256,106 @@ To integrate small pieces of _R_ codes
 
 ![](img/03_rstudio_knit.png)
 
+## Popular output formats
+
+### HTML {.box-6 .bg-green .stretch}
+
+- fast rendering
+- by default embeds binaries (pictures etc.)
+- customise styles using your own `css` files
+    + change headers
+    + fonts
+    + ...
+
+### Pdf {.box-6 .bg-red .stretch}
+
+- single file
+- preserves original aspect
+- requires $\LaTeX$
+- customise using your own
+    + $\LaTeX$ document class
+    + pandoc template (`.tex`)
+
+### Word document {.box-6 .offset-3 .bg-blue .stretch}
+
+- Widely used
+- Easily editable
+- Collaborate with people not using Rmarkdown
+- Prepare even scientific manuscripts suitable for submission
+
+## Bibliographies{ .compact-table}
+
+### Supported bibliography formats {.box-6 .bg-pink2}
+
+```{r, echo = FALSE}
+tibble::tribble(
+           ~Format, ~`File extension`,
+            "MODS",         ".mods",
+        "BibLaTeX",          ".bib",
+          "BibTeX",       ".bibtex",
+             "RIS",          ".ris",
+         "EndNote",          ".enl",
+     "EndNote XML",          ".xml",
+             "ISI",          ".wos",
+         "MEDLINE",      ".medline",
+           "Copac",        ".copac",
+   "JSON citeproc",         ".json"
+  ) %>% knitr::kable()
+```
+
+### Defined in the yaml header {.box-6 .bg-green}
+
+- defined at the root of the YAML header
+- citations are inserted:
+    + using square brackets `[]`
+    + the _database identifier_ preceded by `@`
+- output style is formatted using citation style language (`csl`) files
+    + <https://www.zotero.org/styles>
+    + <https://github.com/citation-style-language/styles>
+
+```
+---
+title: "Sample Document"
+output: html_document
+bibliography: bibliography.bib
+csl: nature.csl
+---
+
+Insert your reference [@my-reference] like I did.
+```
+## Parameterised reports
+
+### Parameterised reports {.box-6 .bg-blue}
+
+- use a single Rmarkdown file and adjust _R_ variables
+    + data filepath
+    + boolean (yes/no)
+    + numbers
+    + ...
+
+### Define your parameters {.box-6 .bg-blue}
+
+- Place them in the YAML header
+
+```
+---
+title: "My Document"
+output: html_document
+params:
+  lines: 10
+  show_table: no
+  data: 
+    label: "Input dataset:"
+    value: mtcars.csv
+    input: file
+---
+```
+
+## Parameterised reports
+
+### {.col-10 .offset-1}
+
+![](img/03_rmarkdown_parameterised.png)
 
 ## Growing variety of output formats
 
@@ -323,3 +431,23 @@ Test 1
 ### Box 3{.box-6 .bg-blue}
 
 This box has again a width of 6 col: it will be rendered in a new row.
+
+## Wrap up {.vs2}
+
+### You learned to: {.box-10 .offset-1 .bg-red .icon}
+
+![](img/00_kt.png)
+
+- create _Rmarkdown_ documents
+- format your text using the markdown syntax
+- insert your R code in chunks
+- adapt some rendering options of R code chunks
+- define the output format you expect to render
+- use the interactive RStudio interface to
+    + create your documents
+    + insert R code
+    + build your final document
+- insert bibliography
+- create parameterised reports
+
+
