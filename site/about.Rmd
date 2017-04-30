@@ -19,6 +19,12 @@ Some of the figures were taken from:
 
 - [LEGO pictures](https://github.com/jennybc/lego-rstats) by Jennifer Bryan
 
+And materials from:
+
+- [thinkR](http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/)
+- [John Burn-Murdoch](http://johnburnmurdoch.github.io/slides/r-ggplot/)
+- [David Robinson](http://varianceexplained.org/about/)
+- [Hadley & Garrett](http://r4ds.had.co.nz/)
 
 [![](logo_dc_dark.png)](https://www.datacamp.com/)
 
