@@ -18,6 +18,57 @@ library(tidyverse)
 ggplot2::theme_set(ggplot2::theme_bw(18))
 ```
 
+
+## lazy evaluation
+
+the **tidyverse** makes your life easy by evaluating columns in `df`/`tibble` context.
+
+### R base, must refers to `mtcars` {.box-6 .stretch}
+
+```{r}
+plot(mtcars$wt, mtcars$mpg)
+```
+
+### ggplot2 does the job {.box-6}
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+## non standard evaluation is hard {.vs2}
+
+### evaluation in base, problem {.box-6 .stretch .build .bg-red .compact-output}
+
+`wt` is unknow in the global environment
+
+```{r, error=TRUE}
+wt
+```
+
+### evaluation in base, solution {.box-6 .stretch .build .bg-yellow2 .compact-output}
+
+combine `substitute` and `eval` in df context
+
+```{r}
+
+eval(substitute(hp), mtcars)
+```
+
+### evaluation in tidyverse {.box-12 .build .bg-grgold .compact-output}
+
+
+```{r, row = TRUE}
+mtcars %>%
+  select(wt) %>%
+  head()
+```
+
+### Drawback {.box-12 .build .bg-yellow2 }
+
+- Make your life easy when performing **interactive** analysis 
+- Hard when doing programming, as soon as you need **iteration** and hence **function**
+
 # ggplot2
 
 ## The issue | ggplot2
@@ -156,15 +207,16 @@ fun2("stringent")
  ## Solution with tidyeval
  
  
-```{r}
+```{r, error=TRUE}
  
 mtcars_filter <- function(df, col, threshold) {
 
-  column <- quo(col > threshold)
-  print(enquo(column))
+  column <- quo(col)
+  #print(enquo(column))
   thr <- quo(threshold)
   df %>%
-    filter(!!column)
+    select(!! quote(col))
 }
 mtcars_filter(df = mtcars, hp, threshold = 265)
+
 ```
