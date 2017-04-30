@@ -93,14 +93,14 @@ University of Luxembourg
 
 Luxembourg
 
-[![salle polyvalente](img/map.png)](http://www.openstreetmap.org/export/embed.html?bbox=5.94385027885437%2C49.501322159629254%2C5.95434308052063%2C49.507488126641405&amp;layer=mapnik&amp;marker=49.504405240266465%2C5.9490966796875)
+[![map](https://cdn.rawgit.com/LSRU/tv_course/41ec0fb4b529fd1e85129d27eae333c1cea90e69/docs/img/map.png)](http://www.openstreetmap.org/export/embed.html?bbox=5.94385027885437%2C49.501322159629254%2C5.95434308052063%2C49.507488126641405&amp;layer=mapnik&amp;marker=49.504405240266465%2C5.9490966796875)
 
 [View Larger Map](https://www.openstreetmap.org/?mlat=49.50441&amp;mlon=5.94910#map=17/49.50441/5.94910)
 
 
 In the **room 4.510**, Maison du Savoir, 4th floor.
 
-![room 4.510](img/room_4510.png)
+![room 4.510](https://cdn.rawgit.com/LSRU/tv_course/41ec0fb4b529fd1e85129d27eae333c1cea90e69/docs/img/room_4510.png)
 
 ## Registration
 
