@@ -1,3 +1,20 @@
+/*
+  add more space between main title and subtitle
+  should be fixed in iosp
+*/
+.title-slide hgroup h2 {
+  margin-top: 20px;
+}
+
+/*
+  I already adjusted the z-index for a box but not for a "chunk box"
+  should be fixed in iosp but chunk boxes should anyway be rendered using the box class...
+*/
+
+.chunk pre {
+  z-index: 15; /* I used 10 for the box. */
+}
+
 /* compact table 
    add .compact-table for example to the box containing the table
 */
@@ -53,6 +70,12 @@ article.smaller.compact-table table.rmdtable td, article.smaller.compact-table t
 .icon img {
   float: right;
   margin-left: 20px;
+}
+
+.icon-small img {
+  float: right;
+  margin-left: 20px;
+  max-height: 75px !important;
 }
 
 /*
