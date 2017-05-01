@@ -211,7 +211,7 @@ fun2("stringent")
  
 mtcars_filter <- function(df, col, threshold) {
 
-  column <- quo(col)
+  column <- rlang::syms(col)
   #print(enquo(column))
   thr <- quo(threshold)
   df %>%

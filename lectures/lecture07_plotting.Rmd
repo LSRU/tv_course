@@ -212,7 +212,7 @@ by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0
 #allSeasons <- read_csv("https://raw.githubusercontent.com/johnburnmurdoch/johnburnmurdoch.github.io/master/slides/r-ggplot/changing-tides-of-football.csv")
 #write_rds(allSeasons, "allseasons.rds")
 ```
-Using the following dataset
+Using the following dataset from the [Euro Club Index](http://www.euroclubindex.com/asp/Methodology.asp)
 
 ```{r}
 library(tidyverse)

@@ -103,6 +103,25 @@ by_country <- gapminder %>%
 by_country
 ```
 
+## What happens in the DATA FRAME, stays in the data frame {.vs2}
+
+```{css}
+.vembedr {
+  border-radius: 25px; /* adjust it to your needs */
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none;
+}
+```
+
+```{r}
+vembedr::embed_youtube("4MfUCX_KpdE", query = list(start = vembedr::secs("15m43s"), end = vembedr::secs("16m01s"))) %>% htmltools::div(class = "vembedr")
+```
+
+
 
 ## Keep related things together | linear models
 
