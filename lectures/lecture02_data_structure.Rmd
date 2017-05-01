@@ -16,6 +16,12 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Learning objectives {.vs2}
+
+- (re)view some **R** base
+- get the different data types: numeric, logical, factor ...
+- understand what is a list, a vector, a data.frame ...
+
 ## Getting started
 
 Let's get ready to use **R** and **RStudio**. Do the following:
@@ -486,7 +492,7 @@ knitr::include_graphics("http://r4ds.had.co.nz/diagrams/lists-structure.png")
 ### {.col-6}
 
 <blockquote class="twitter-tweet" data-lang="fr"><p lang="en" dir="ltr">Indexing lists in <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a>. Inspired by the Residence Inn <a href="http://t.co/YQ6axb2w7t">pic.twitter.com/YQ6axb2w7t</a></p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/643381054758363136">14 septembre 2015</a></blockquote>
-<script async src="https//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ### Example {.box-6}
 
@@ -695,14 +701,3 @@ average<-mean(feet/12+inches,na.rm=TRUE)
 ```
 
 
-## Hexbins
-
-After David Robinson' laptop, see and get inspired!
-
-### Hadley Wickham {.col-6}
-
-![](img/02_hexbin_hadley.jpg)
-
-### Bob Rudis {.col-6}
-
-![](img/02_hexbin_hrbrmstr.jpg)

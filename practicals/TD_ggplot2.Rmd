@@ -455,7 +455,7 @@ cnv_auto %>%
         axis.ticks.y = element_blank(),
         legend.position = c(1, 0),
         legend.justification = c(1, 0)) +
-  geom_segment(a) +
+  geom_segment() +
   scale_colour_manual(name = "CNV", values = c("springgreen3", "steelblue2")) +
   facet_grid(chr ~ ., switch = "y") +
   labs(y = "Chromosome",
