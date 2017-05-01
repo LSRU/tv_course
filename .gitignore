@@ -4,7 +4,6 @@
 *.Rproj
 *.pdf
 *.xlsx
-*.gz
 *.tex
 .DS_Store
 lectures/*.md

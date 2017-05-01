@@ -258,7 +258,7 @@ and similar states are merged eventually.
 
 ### Reading data
 
-The file is accessible [here](https://lsru.github.io/tv_course/practicals/CNV.seg.gz). 
+The file is accessible [here](https://lsru.github.io/tv_course/data/CNV.seg.gz). 
 It is gzipped but `readr` will take care of the decompression. Actually, `readr` could also read the file from the 
 website so you don't need to download locally.
 
@@ -278,7 +278,7 @@ several issues must be fixed:
 ```
 
 ```{r, solution = TRUE}
-cnv <- read_tsv("CNV.seg.gz", skip = 2,
+cnv <- read_tsv("data/CNV.seg.gz", skip = 2,
                 col_names = c("chr", "start", "end", "state", "length_kb"),
                 col_types = cols(chr = col_character()))
 cnv
