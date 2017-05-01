@@ -67,9 +67,6 @@ mtcars %>%
   color: white !important;
 }
 
-article.maximise {
-  margin-top: -20px;
-}
 /* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
 .col-list ul {
   overflow: hidden;
@@ -969,7 +966,7 @@ ggplot(mtcars) +
 ```
 
 
-## Exporting | interactive or passive mode {.maximise .build}
+## Exporting | interactive or passive mode {.nvs1 .build}
 
 ### right panel {.box-6 .bg-grgold}
 
@@ -1043,7 +1040,7 @@ vembedr::embed_youtube("DQiKHlpy70Q") %>% htmltools::div(class = "vembedr")
 ```
 
 
-## Missing features {.maximise .build}
+## Missing features {.nvs1 .build}
 
 ### geoms list [here](http://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms) {.box-6 .bg-yellow2}
 
