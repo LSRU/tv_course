@@ -79,6 +79,15 @@ article.smaller.compact-table table.rmdtable td, article.smaller.compact-table t
 }
 
 /*
+  to render code spans more visible in box with dark headers
+  should be fixed in a future iosp release!
+*/
+.box > h3:first-child > code {
+  background-color: rgba(250, 250, 250, 0.5);
+  padding: 0 5px;
+}
+
+/*
   to reduce line-height of output chunks:
   avoids unnecessary oversized outputs
 */
