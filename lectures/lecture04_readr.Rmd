@@ -109,6 +109,7 @@ options(tibble.width = NULL)
 - similar to `base::data.frame()` but
     + does not coerce characters to factors
     + does not change column names
+    + never uses rownames
 
 ```{r}
 data.frame(`bad name` = 1:4,
