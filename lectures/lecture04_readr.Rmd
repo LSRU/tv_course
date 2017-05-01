@@ -15,13 +15,6 @@ library(tidyverse)
 library(readxl)
 ```
 
-```{css}
-.box > h3:first-child > code {
-  background-color: rgba(250, 250, 250, 0.5);
-}
-```
-
-
 ## Learning objectives {.vs2}
 
 ### You will learn to: {.box-10 .offset-1 .bg-red .icon}
@@ -647,7 +640,7 @@ readxl_example("deaths.xlsx") %>%
 
 ## Try it yourself | excel file{.nvs1}
 
-### {.box-10 .offset-1 .bg-white .bg-grayblue}
+### {.box-10 .offset-1 .bg-grayblue}
 
 ![](img/04_readxl_deaths.jpg)
 

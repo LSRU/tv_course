@@ -1,0 +1,37 @@
+---
+title: "Parameterised report"
+author: "John Doe"
+output:
+  html_document:
+    df_print: kable
+params:
+  lines: 
+    label: "Number of lines in the table:"
+    value: 10
+    input: slider
+    min: 0
+    max: 100
+  show_table: no
+  data: 
+    label: "Input dataset:"
+    value: mtcars.csv
+    input: file
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+The parameters can be accessed within R:
+
+```{r}
+params$lines
+params$show_table
+params$data
+```
+
+```{r, echo = FALSE, eval = params$show_table}
+mtcars %>%
+  head(params$lines)
+```
+
