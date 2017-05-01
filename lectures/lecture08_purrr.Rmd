@@ -1,6 +1,6 @@
 ---
-title: "Data processing with R tidyverse"
-subtitle: "_purrr_"
+title: "Functional programming"
+subtitle: "with `purrr`"
 author: "A. Ginolhac, E. Koncina, R. Krause"
 date: "4 May 2017"
 output:
@@ -8,6 +8,8 @@ output:
     box_colours:
       bg-yellow: ["lightgoldenrod1", "goldenrod2"]
       bg-grayblue: ["#bfccd7"]
+      bg-bluewhite: ["white", "#005c99"]
+      bg-greenwhite: ["white", "#1f7a1f"]
 ---
 
 ```{r setup, include=FALSE}
@@ -15,6 +17,17 @@ knitr::opts_chunk$set(fig.align = "center")
 ggplot2::theme_set(ggplot2::theme_bw(14))
 library(tidyverse)
 ```
+
+## Learning objectives {.vs2}
+
+### You will learn to: {.box-10 .offset-1 .bg-red .icon}
+
+![](img/00_kt.png)
+
+- use a functional programming approach to simplify your code
+- pass functions as arguments to higher order functions
+- use `purrr::map` to replace `for` loops
+- deal with nested lists
 
 ## Reminder | Lists and vectors
 
@@ -74,11 +87,6 @@ str(c(v_example, "seven"))
 ## Purrr | functional programming
 
 ```{css}
-.icon img {
-  float: right;
-  margin-left: 20px;
-}
-
 .center-pic img {
   display: block;
   margin: auto;
@@ -90,16 +98,8 @@ str(c(v_example, "seven"))
   text-align: center;
 }
 
-.compact-pre pre:not(.lang-r) {
-  line-height: 15px;
-}
-
 .small img {
   max-height: 64px;
-}
-
-.box > h3:first-child > code {
-  background-color: rgba(250, 250, 250, 0.5);
 }
 ```
 
@@ -124,7 +124,7 @@ purrr enhances R's **functional programming** toolkit by providing a complete an
 
 FOR EACH `x` DO `f`
 
-### Example {.box-12 .bg-green .compact-pre}
+### Example {.box-12 .bg-green .compact-output}
 
 Calculate the mean of each column of the mtcars dataset
 
@@ -152,41 +152,7 @@ means
 
 ### base R apply family
 
-```{css}
-/* Adapted from http://stackoverflow.com/a/34754719 */
-table,
-.table-condensed,
-table.rmdtable {
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
-table,
-.table-condensed,
-table.rmdtable,
-table.rmdtable .header th,
-.table > thead > tr > th {
-  border-collapse: collapse;
-  border-style: solid;
-  border-spacing: 0;
-  border-width: medium 0 medium 0;
-  border-color: inherit
-}
-table.rmdtable th,
-table.rmdtable td,
-table th,
-table.rmdtable tr > td:first-child,
-table.rmdtable .even {
-  font-size: 100%;
-  padding: 0.4em 0.5em;
-  color: inherit;
-  background: #adebad;
-  font-weight: normal;
-}
-.table > tbody > tr > td {
-  border-width: 0;
-}
-```
+
 
 ```{r}
 apply(mtcars, 2, mean) %>% str()
@@ -197,7 +163,7 @@ lapply(mtcars, mean) %>% str()
 
 ## apply vs map
 
-### The apply family of functions{.box-6 .bg-green}
+### The apply family of functions{.box-6 .bg-green .compact-table}
 
 -------------------------------  ---------  -------------------------------
  function                          input                 output
@@ -286,7 +252,7 @@ map(legos, antennate)
 str(spl_mtcars, max.level = 1)
 ```
 
-### {.box-6 .compact-pre}
+### {.box-6 .compact-output}
 
 ```{r}
 spl_mtcars %>% 
@@ -300,7 +266,7 @@ spl_mtcars %>%
 - map uses a list as an argument and **returns a list**
 - we can map a new function on the output of the previous call
 
-### {.box-10 .offset-2 .compact-pre}
+### {.box-10 .offset-2 .compact-output}
 
 ```{r}
 spl_mtcars %>% 
@@ -360,7 +326,7 @@ spl_mtcars %>%
 ```
 
 
-## The map function family
+## The map function family{.nvs1}
 
 ### Reminder {.box-6 .bg-blue}
 
@@ -376,8 +342,9 @@ spl_mtcars %>%
     + `map_int()` makes an **integer** vector.
     + `map_dbl()` makes a **double** vector.
     + `map_chr()` makes a **character** vector.
+    + `map_df()` makes a data frame (row-binding elements)
 
-### using `map()`{} {.box-6 .bg-cobalt .compact-pre}
+### using `map()`{} {.box-6 .bg-cobalt .compact-output}
 
 ```{r, eval = TRUE}
 spl_mtcars %>% 
@@ -387,7 +354,7 @@ spl_mtcars %>%
   str()
 ```
 
-### using `map_dbl()`{} {.box-6 .bg-cobalt .compact-pre}
+### using `map_dbl()`{} {.box-6 .bg-cobalt .compact-output}
 
 ```{r, eval = TRUE}
 spl_mtcars %>% 
@@ -398,11 +365,62 @@ spl_mtcars %>%
 ```
 
 
-## Importing data
+## Application example | importing data
 
-<!-- readxl example -->
+### Exercise{.box-10 .bg-green .offset-1}
 
-<!-- importing several files -->
+- go back to the `deaths` MS Excel example file
+    + store the path to the file in the object `path` using the following command: `path <- readxl_example("deaths.xls")`
+    + don't forget the **pitfalls** you already faced during the `readr` lecture!
+    + use a **functional programming approach** to load the data spread accross multiple sheets
+    
+## Application example | importing data
+
+### Solution {.box-10 .bg-cobalt .offset-1 .compact-output}
+
+```{r}
+library(readxl)
+path <- readxl_example("deaths.xls")
+
+path %>%
+  excel_sheets() %>%
+  map_df(read_excel, path = path, range = "A5:F15")
+```
+
+## Application example | importing data
+
+### `map_df()` arguments {.box-6 .bg-blue}
+
+- map_df() has an `.id` argument
+- creates a variable with the given name containing the index or name of the data frame
+
+### `set_names()`{} {.box-6 .bg-blue .compact-output}
+
+- to set names in a vector
+    ```{r}
+    set_names(1:5)
+    set_names(1:5, nm = letters[1:5])
+    ```
+- is a wrapper for `setNames` which does some checkings and is stricter
+  
+    ```{r, error = TRUE}
+    setNames(1:5, nm = letters[1:2])
+    set_names(1:5, nm = letters[1:2])
+    ```
+
+
+## Application example | importing data
+
+### Enhanced solution {.box-10 .bg-cobalt .offset-1 .compact-output}
+
+```{r}
+path %>%
+  excel_sheets() %>%
+  set_names() %>% # creates a named vector
+  map_df(read_excel, path = path, range = "A5:F15", .id = "profession_area") %>%
+  janitor::clean_names()
+```
+
 
 ## Purrr | Iterating on 2 lists
 
@@ -492,6 +510,284 @@ mtcars %>%
 - very powerful
 - next lecture will show you how `dplyr`, `tidyr`, `tibble`, `purrr` and `broom` nicely work together
 
+
+## Nested lists
+
+### Visualising lists {.box-8 .bg-gray .offset-2}
+
+```{r, eval = FALSE}
+x1 <- list(c(1, 2), c(3, 4))
+x2 <- list(list(1, 2), list(3, 4))
+x3 <- list(1, list(2, list(3)))
+```
+
+![](img/08_lists_structure.png)
+
+_from [R for Data Science](http://r4ds.had.co.nz/lists.html)_
+
+
+## Removing a level of hierarchy
+
+### `flatten()` function {.box-4 .bg-blue}
+
+- family
+    + `flatten()`
+    + `flatten_int()`
+    + `flatten_dbl()`
+    + `flatten_lgl()`
+    + `flatten_chr()`
+
+### flatten a list {.box-8 .bg-greenwhite .stretch}
+
+```{r}
+x <- list(list(a = 1, b = 2), list(c = 3, d = 4))
+
+flatten(x) %>% str()
+
+flatten(x) %>% flatten_dbl() %>% str()
+```
+
+
+![](img/08_lists_flatten.png)
+
+_from [R for Data Science](http://r4ds.had.co.nz/lists.html)_
+
+## Removing a level of hierarchy
+
+### `base::unlist()` vs `flatten()`{} {.box-10 .bg-red .compact-output .offset-1}
+
+- base _R_ provides `unlist()` but `flatten()` is more consistent
+    + `unlist()` will always succeed
+    ```{r, error = TRUE}
+    unlist(1:3)
+    flatten(1:3)
+    
+    my_list <- list("One", 2, 3)
+    unlist(my_list) %>% str()
+    flatten(my_list) %>% str()
+    flatten_dbl(my_list)
+    ```
+
+
+## Transpose a list
+
+### the `transpose()`function{.box-6 .bg-bluewhite}
+
+![](img/08_lists_transpose.png)
+
+_from [R for Data Science](http://r4ds.had.co.nz/lists.html)_
+
+### Example {.box-6 .bg-green .compact-output}
+
+```{r, row = c(7, 5)}
+x <- list(
+  x = list(a = 1,
+           b = 3,
+           c = 5),
+  y = list(a = 2,
+           b = 4,
+           c = 6)
+)
+x %>% str()
+x %>% transpose() %>%
+  str()
+```
+
+
+## Nested lists
+
+### Example {.box-12 .bg-green .compact-output}
+
+- Let's adapt an example provided by Hadley Wickham
+
+```{r, row = c(7, 5)}
+l1 <- list(
+  group1 = list(
+    individual1 = list(param1 = 1:2, param2 = 3:4),
+    individual2 = list(param1 = 5:6, param2 = 7:8)
+  ),
+  group2 = list(
+    individual1 = list(param1 = 9:10, param2 = 11:12),
+    individual2 = list(param1 = 13:14, param2 = 15:16)
+  )
+)
+
+l1 %>% str()
+```
+
+
+### Visualisation{.box-6 .offset-3 .bg-yellow .icon-small .vs1 .build}
+
+![](img/00_tip.png)
+
+- Visualise and interactively browse nested lists using `listviewer::jsonedit()`
+
+## Nested lists
+
+### The `listviewer` package {.box-8 .offset-2 .bg-cobalt}
+
+```{css}
+.chunk > .jsonedit {
+  background: white;
+  width: 100% !important;
+  height: 400px !important;
+}
+```
+
+
+```{r}
+l1 %>% listviewer::jsonedit()
+```
+
+## Nested lists | extracting elements
+
+### Example {.box-10 .offset-1 .bg-green}
+
+- try to extract all _param1_ values for _individual2_ in both groups
+
+
+```{r, class = "build"}
+# Extract individual2 using a string shortcut
+l1 %>%
+  map("individual2") %>% str()
+```
+
+
+```{r, class = "build"}
+# chain 2 map calls to get param1 out of both groups
+
+l1 %>%
+  map("individual2") %>%
+  map("param1") %>% str()
+```
+
+## Nested lists | extracting elements
+
+### Example {.box-10 .offset-1 .bg-green}
+
+
+- Do it in a single step using a character vector with `map()`!
+
+```{r}
+l1 %>%
+  map("individual2") %>%
+  map("param1") %>% str()
+
+l1 %>%
+  map(c("individual2", "param1")) %>% str()
+```
+
+## Nested lists | map a function over lower levels
+
+### Example {.box-8 .offset-2 .bg-green}
+
+- Calculate the mean of both _param_ for each individual
+- We would need to recursively use `map()`
+
+```{r, eval = T}
+l1 %>% map(~map(., ~map(., mean))) %>% str()
+```
+
+## Nested lists | map a function over lower levels
+
+### `at_depth()`{} {.box-4 .offset-1 .bg-blue .build}
+
+- is a recursive `map()`
+- map a function to a lower level of a list
+    ```{r, eval = FALSE}
+    x %>% at_depth(0, fun)
+    # is equivalent to
+    # fun(x)
+    
+    x %>% at_depth(1, fun)
+    # is equivalent to
+    # map(x, fun)
+    
+    x %>% at_depth(2, fun)
+    # is equivalent to
+    # map(x, . %>% map(fun))
+    ```
+
+### Example {.box-6 .bg-green}
+
+- Our previous call becomes much simplier
+
+```{r, eval = FALSE}
+l1 %>% map(~map(., ~map(., mean)))
+```
+
+```{r}
+l1 %>% at_depth(3, mean) %>% str()
+```
+
+## Reduce a list to a single value{.nvs1}
+
+### reduce{.box-6 .build .bg-blue .compact-pre}
+
+- combines a list from the **left**
+
+    ```{r}
+    1:4 %>% reduce(`-`)
+
+    ((1 - 2) - 3) - 4
+    ```
+
+
+### reduce_right{.box-6 .bg-blue .compact-pre}
+
+- combines a list from the **right**
+
+    ```{r}
+    1:4 %>% reduce_right(`-`)
+
+    1 - (2 - (3 - 4))
+    ```
+
+
+### working recursively {.box-12 .bg-green .build .compact-output}
+
+<div class = "row"><div class = "col-5">
+
+```{r, eval = FALSE, echo = TRUE}
+1:4 %>% reduce(`+`)
+
+c(1, 2, 3, 4)
+c(   3, 3, 4)
+c(      6, 4)
+c(        10)
+```
+
+```{r}
+my_add <- function(x, y) {
+  print(paste("x =", x, "y =", y))
+  x + y
+}
+```
+</div><div class = "col-7 middle">
+```{r, row = c(7, 5)}
+reduce(1:4, my_add)
+reduce_right(1:4, my_add)
+```
+</div></div>
+
+## accumulate recursive folds across a list{.vs2}
+
+### accumulate{.box-6 .build .bg-blue .compact-pre .stretch}
+
+- similar to `reduce()` but keeps intermediate results
+
+    ```{r}
+    1:4 %>% accumulate(`+`)
+    ```
+
+### accumulate_right{.box-6 .build .bg-blue .compact-pre .stretch}
+
+- accumulates a list from the **right**
+
+    ```{r}
+    1:4 %>% accumulate_right(`+`)
+    ```
+
 ## Purrr | Pure functions
 
 ### {.col-6}
@@ -503,13 +799,7 @@ mtcars %>%
 
 > A function is called "pure" if all its inputs are _declared_ as inputs - none of them are hidden - and likewise all its outputs are _declared_ as outputs | {.bg-blue}[Kris Jenkins](http://blog.jenkster.com/2015/12/what-is-functional-programming.html)
 
-### Ressources:
-
-- What is Functional Programming? by Kris Jenkins
-    + [Blog version](http://blog.jenkster.com/2015/12/what-is-functional-programming.html)
-    + [Talk video](https://www.youtube.com/watch?v=tQRtTSIpye4)
-
-## Purrr | Pure functions
+## _"Purify"_ functions | Pure functions
 
 ### Impure function {.box-6 .bg-green}
 
@@ -543,14 +833,14 @@ result <- pure(2, start)
 result
 ```
 
-## Use `purrr` to purify functions
+## _"Purify"_ functions
 
 ### Example{.box-12 .bg-green}
 
 - Even `log()` has side-effects
 - Use `purrr::safely()` to catch every output
 
-### Impure `log()`{} {.box-6 .bg-cobalt .build .compact-pre}
+### Impure `log()`{} {.box-6 .bg-cobalt .build .compact-output}
 
 ```{r, error = TRUE}
 (res <- log(10))
@@ -558,7 +848,7 @@ res <- log("a")
 res
 ```
 
-### Purified `log()`{} {.box-6 .bg-cobalt .compact-pre}
+### Purified `log()`{} {.box-6 .bg-cobalt .compact-output}
 
 ```{r}
 safe_log <- purrr::safely(log)
@@ -567,11 +857,11 @@ res <- safe_log("a")
 res
 ```
 
-## Useful functions
+## Useful functions | transpose
 
 Let's go further with the `safe_log()` example
 
-###{.col-12 .compact-pre .build}
+###{.col-12 .compact-output .build}
 
 ```{r, row = c(4, 8)}
 # Example from the help page
@@ -579,13 +869,65 @@ x <- list("a", 1, 2)
 y <- x %>% map(safely(log))
 y %>% str()
 ```
-###{.col-12 .compact-pre .build}
+
+###{.col-12 .compact-output .build}
 
 ```{r, row = c(4, 8)}
 y %>% transpose() %>% str()
 ```
 
-## Before we stop
+
+## Side effects are still required
+
+```{r, echo = FALSE}
+my_print <- function(x) {
+  print(x)
+  return(NULL)
+}
+```
+
+### `walk`{} {.box-6 .bg-blue}
+
+- alternative to `map()` to call functions for its side effects
+    + output on screen
+    + save files to disk
+- returns the input and can be used in a pipeline (` %>% `)
+
+
+### Example {.box-6 .bg-green}
+
+```{r}
+x <- list(1, "a", 3)
+
+x %>% 
+  walk(print)
+```
+
+### {.col-6 .build}
+
+```{r, row = TRUE}
+x %>% 
+  walk(print) %>%
+  str()
+
+x %>% 
+  map(print) %>%
+  str()
+```
+### {.col-6}
+
+```{r, row = TRUE}
+x %>% 
+  walk(my_print) %>%
+  str()
+
+x %>% 
+  map(my_print) %>%
+  str()
+```
+
+
+## Before we stop{.nvs1}
 
 ### Further reading {.box-10 .offset-1 .bg-blue .icon}
 
@@ -598,8 +940,10 @@ y %>% transpose() %>% str()
 - Robert Rudis [purrr, comparison with base](https://rud.is/b/2016/07/26/use-quick-formula-functions-in-purrrmap-base-vs-tidtyverse-idiom-comparisonsexamples/)
 - Rstudio's blog [purrr 0.1 release](https://blog.rstudio.org/2015/09/29/purrr-0-1-0/)
 - Rstudio's blog [purrr 0.2 release](https://blog.rstudio.org/2016/01/06/purrr-0-2-0/)
+- What is Functional Programming? by Kris Jenkins ([Blog version](http://blog.jenkster.com/2015/12/what-is-functional-programming.html) and [Talk video](https://www.youtube.com/watch?v=tQRtTSIpye4))
+- Bruno Rodrigues [Functional programming and unit testing for data munging with R](http://www.brodrigues.co/fput/)
 
-### Acknowledgments {.box-10 .offset-1 .vs1 .bg-yellow}
+### Acknowledgments {.box-10 .offset-1 .bg-yellow}
 
 * Hadley Wickham
 * Robert Rudis
