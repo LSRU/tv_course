@@ -138,11 +138,11 @@ list(f = factor(c("AA", "AA")),
 
 ## Data frames are special lists
 
-###  `data.frame` {.col-5 .box .bg-green .stretch}
+###  `data.frame`{} {.box-5 .bg-green .stretch}
 
 same as list **but** where all objects _must_ have the **same** length
 
-### Example {.col-7 .box .bg-cobalt .stretch}
+### Example {.box-7 .bg-cobalt .stretch}
 
 
 ```{r, include=FALSE}
