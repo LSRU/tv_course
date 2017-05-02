@@ -3,9 +3,9 @@ title: "practical ggplot2"
 author: "Aurelien Ginolhac"
 date: "3 May 2017"
 output:
-  unilur::tutorial_pdf_solution: default
-  unilur::tutorial_pdf: default
   unilur::tutorial_html_solution: default
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solution: default
 subtitle: practising the grammar of graphics
 ---
 
@@ -16,7 +16,7 @@ ggplot2::theme_set(ggplot2::theme_bw(14))
 
 > This practical aims at performing exploratory plots and how-to build layer by layer to be familiar with
 the grammar of graphics. In the last part, a supplementary exercise will focus on plotting genome-wide CNV. 
-You will also learn to use the _forcats_ package that is necessary for ordering plotting of categorical variables
+You will also learn to use the _forcats_ package which allows you to adjust the ordering of categorical variables appearing on your plot.
 
 ## Scatter plots
 
@@ -34,9 +34,9 @@ mtcars %>%
 (@) The `geom_smooth()` layer can be used to add a trend line. Try to overlay it to your scatter plot.
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-by default `geom_smooth` is using a loess regression (< 1,000 points) and add standard error intervals. 
+by default `geom_smooth` is using a loess regression (< 1,000 points) and adds standard error intervals. 
 
-- The `method` argument can be used to change the regression to linear: `method = "lm"`
+- The `method` argument can be used to change the regression to a linear one: `method = "lm"`
 - to disable the ribbon of standard errors, set `se = FALSE`
 ```
 
@@ -58,13 +58,12 @@ mtcars %>%
 
 (@) Ajust some aesthetics in order to:
     + associate the shape of the points to the number of cylinders
-    + associate a color gradient to the quarter mile time
-    + If you're feeling succesful, try to adjust the color gradient from yellow for fast accelerating cars to blue for slow accelerating cars.
+    + associate a colour gradient to the quarter mile time
+    + If you're feeling succesful, try to adjust the colour gradient from yellow for fast accelerating cars to blue for slow accelerating cars.
     + have a look at the _R_ package [viridis](https://github.com/sjmgarnier/viridis) which provides palettes color-blind friendly and suitable for grey printing
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-For the `cyl` variable, the data is set as double, so a continuous variable. To map as the shape aesthetics, 
-mind coercing the variable to a factor
+The `cyl` variable is of type _double_, thus a continuous variable. To map as the shape aesthetics, mind coercing the variable to a factor
 ```
 
 ```{r, solution = TRUE}
@@ -87,7 +86,6 @@ mtcars %>%
   theme_bw()
 ```
 
-
 (@) Find a way to produce both of the following plots:
 
 ```{r, echo = FALSE, fig.width = 4, fig.height = 4}
@@ -101,7 +99,7 @@ mtcars %>%
   theme_bw() +
   labs(y = "Miles per gallon",
        x = "Weight of car (,1000 lbs)",
-       title = "Effect of car weights on fuel consumption ",
+       title = "Effect of car weights on fuel consumption",
        subtitle = "global linear regression",
        caption = "1974 Motor Trend US magazine")
 ```
@@ -121,19 +119,16 @@ mtcars %>%
        caption = "1974 Motor Trend US magazine")
 ```
 
-
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-Remember that aesthetic define in the `ggplot(aes())` command are passed on to all following layers.
-While, `aes()` of individual geoms are specific (and overwrite the global if present).
-```
+Remember that:
 
+- all aesthetics defined in the `ggplot(aes())` command will be inherited by all following layers
+- `aes()` of individual geoms are specific (and overwrite the global definition if present).
+```
 
 ## Categorical data
 
-We now will be looking at another built-in dataset `ToothGrowth`. Contains the tooth length of 60 guinear pigs
-after they received 3 different doses of vitamin C (in mg/day), 
-provided either by orange juice (`OJ`) or ascorbic acide (`VC`) 
-
+We will now look at another built-in dataset called `ToothGrowth`. This dataset contains the teeth length of 60 guinea pigs which received 3 different doses of vitamin C (in mg/day), delivered either by orange juice (`OJ`) or ascorbic acid (`VC`).
 
 (@) Is this dataset tidy?
 
@@ -141,8 +136,7 @@ provided either by orange juice (`OJ`) or ascorbic acide (`VC`)
 yes, each row is an observation, each column a variable.
 ```
 
-
-(@) plot the distributions as boxplots  of the tooth' lengths by the dose received
+(@) plot the distributions as boxplots of the teeth lengths by the dose received
 
 ```{r, solution = TRUE, fig.width = 4, fig.height = 4}
 ToothGrowth %>%
@@ -150,7 +144,7 @@ ToothGrowth %>%
   geom_boxplot()
 ```
 
-(@) add the supplement type to the previous plot, as a filling colour
+(@) attribute a different filling colour to each delivery method
 
 ```{r, solution = TRUE, fig.width = 4, fig.height = 4}
 ToothGrowth %>%
@@ -158,14 +152,13 @@ ToothGrowth %>%
   geom_boxplot()
 ```
 
-When the dataset is tidy, we can easily perform a plot that tells the story: vitamin C does affect the tooth growth
-and the delivery methods only matter for lower concentrations.
+When the dataset is tidy, it is easy to draw a plot telling us the story: vitamin C affects the teeth growth and the delivery method is only important for lower concentrations.
 
 ---
 
-Boxplots are nice but misleading. Data size are absent, and the distibution shape could be better representated.
+Boxplots are nice but misleading. The size of the dataset is not visible and the shapes of distrubutions could be better represented.
 
-(@) plot again the tooth' lengths by the dose received using `geom_dotplot()`
+(@) plot again length of the teeth by the received dose but using `geom_dotplot()`
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
 change the following options in `geom_dotplot()`:
@@ -181,10 +174,10 @@ ToothGrowth %>%
   geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 1)
 ```
 
-(@) add the `geom_violin()` to the previous to get a better view of the distribution shape
+(@) add a `geom_violin()` to the previous plot to get a better view of the distribution shape.
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-the layer' order matters. Plotting is done respectively. 
+The order of the layers matters. Plotting is done respectively. 
 Set the option `trim = FALSE` to the violin for a better looking shape
 ```
 
@@ -195,12 +188,12 @@ ToothGrowth %>%
   geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 1)
 ```
 
-Now we are missing any summary value, like the median shown by the boxplots. We should add one.
+Now we are missing summary values like the median which is shown by the boxplots. We should add one.
 
-(@) add to the previous plot the median using `stat_summary()`
+(@) add the median using `stat_summary()` to the previous plot
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-by default stat_summary add the mean and +/- standard error via geom_pointrange().
+by default `stat_summary()` adds the mean and +/- standard error via geom_pointrange().
 specify the `fun.y = "median"` and appropriate `geom`, `colour`.
 ```
 
@@ -213,11 +206,9 @@ ToothGrowth %>%
 ```
 
 
-(@) change the `stat_summary()` in the previous plot from **median** to **mean_cl_boot** and polish labels
+(@) change the `stat_summary()` in the previous plot from **median** to **mean_cl_boot** and polish the labels.
 
-different summary statistics from the library `Hmisc` are available. Let's try the **mean_cl_boot** that compute
-the non-parametric bootstrap for obtaining 95% confidence intervals (`mean_cl_normal` assumes normality)
-
+different summary statistics from the library `Hmisc` are available. Let's try the **mean_cl_boot** that computes the non-parametric bootstrap to obtain 95% confidence intervals (`mean_cl_normal` assumes normality)
 
 ```{r, solution = TRUE, fig.width = 4, fig.height = 4}
 ToothGrowth %>%
@@ -231,7 +222,7 @@ ToothGrowth %>%
        caption = "C. I. Bliss (1952) The Statistics of Bioassay. Academic Press.")
 ```
 
-Of note, a `ggplot` extension named `ggbeeswarm` proposed a very neat dotplot that fits the distribution.
+Of note, a `ggplot` extension named `ggbeeswarm` proposes a very neat dotplot that fits the distribution.
 
 ```{r, eval = FALSE}
 ToothGrowth %>%
@@ -241,12 +232,9 @@ ToothGrowth %>%
 
 ![](img/beeswarm.png)
 
-
-
 ## Supplementary exercises: genome-wide copy number variants (CNV) detection
 
-Let's now look at a real output file for CNV detection. The tool used is called **Reference Coverage Profiles**: [RCP](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4330915/). It was developed by  
-analyzing the depth of coverage in over 6000 high quality (>40×) genomes. In the end, for every _kb_ a state is assigned 
+Let's have a look at a real output file for CNV detection. The used tool is called **Reference Coverage Profiles**: [RCP](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4330915/). It was developed by analyzing the depth of coverage in over 6000 high quality (>40×) genomes. In the end, for every _kb_ a state is assigned 
 and similar states are merged eventually.
 
 **state** means:
@@ -260,13 +248,11 @@ and similar states are merged eventually.
 ### Reading data
 
 The file is accessible [here](https://cdn.rawgit.com/LSRU/tv_course/2d5e33a6/practicals/data/CNV.seg.gz). 
-It is gzipped but `readr` will take care of the decompression. Actually, `readr` could also read the file from the 
-website so you don't need to download locally.
+It is gzipped but `readr` will take care of the decompression. Actually, `readr` can even read the file directly from the website so you don't need to download it locally.
 
-`CNV.seg.gz` has 5 columns and the first 10 lines looks like:
+`CNV.seg.gz` has 5 columns and the first 10 lines look like:
 
 ![CNV](img/CNV_seg.png)
-
 
 (@) load the file `CNV.seg.gz` in R.
 
@@ -274,7 +260,7 @@ website so you don't need to download locally.
 several issues must be fixed:
 
 - comment should be discarded.
-- chromosome will be read as integers since first 1000 lines are **1**. But, X, Y are at the file' end.
+- chromosome will be read as integers since first 1000 lines are **1**. But, X, Y are at the file's end.
 - first and last column names are unclean. `#chrom` comtains a hash and `length (kb)`. Would be neater to fix this upfront.
 ```
 
@@ -287,7 +273,7 @@ cnv
 
 ### exploratory plots
 
-(@) plot the counts of the different states. We expect a majority of diploid state.
+(@) plot the counts of the different states. We expect a majority of diploid states.
 
 ```{r, solution = TRUE}
 cnv %>%
@@ -304,12 +290,10 @@ cnv %>%
   facet_wrap(~ chr, scales = "free_y")
 ```
 
-
-(@) using the previous plot, reorder the levels of chromosome to have the karyotype order (1:22, X, Y)
+(@) using the previous plot, reorder the levels of chromosomes to let them appear in the karyotype order (1:22, X, Y)
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-we could explicity provide the full levels lists in the desired order. However, in the tibble, the chromosomes appear 
-in the wanted order. See the `fct_inorder()` function in the **forcats** package to take advantage of this.
+we could explicity provide the full levels lists in the desired order. However, in the tibble, the chromosomes appear in the wanted order. See the `fct_inorder()` function in the **forcats** package to take advantage of this.
 ```
 
 ```{r, solution = TRUE}
@@ -339,8 +323,8 @@ cnv %>%
 (@) plot the genomic segments length per state
 
 ```{asis,  boxtitle = "Tip", box = "lightblue"}
-distributions are absolutely skewed. Transfrom to log-scale to get a decent plot.
-add the summary mean and 95CI by bootstrap using the **ToothGrowth** example
+- The distributions are completely skewed: transform to log-scale to get a decent plot.
+- Add the summary mean and 95CI by bootstrap using the **ToothGrowth** example
 ```
 ```{r, solution = TRUE}
 cnv %>%
@@ -348,8 +332,6 @@ cnv %>%
   geom_violin() +
   stat_summary(fun.data = "mean_cl_boot", colour = "red")
 ```
-
-
 
 ### count gain / loss summarising events per chromosome
 
