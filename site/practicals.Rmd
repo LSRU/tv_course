@@ -3,6 +3,25 @@ title: "Practicals"
 ---
 
 
+#### data manipulation with **dplyr**
 
-### TD01, rmarkdown
+- [question]()
+- [solution]()
 
+#### plotting with **ggplot2**
+
+- [question]()
+- [solution]()
+
+#### programming with **purrr**
+
+- [question]()
+
+#### handling multiple models with **broom**
+
+- [question]()
+
+
+#### microarray **project**
+
+- [question]()

@@ -173,9 +173,6 @@
           </hgroup>
   </slide>
 
-<div id="unnamed-chunk-1">
-</div>
-
 <div id="unnamed-chunk-2">
 <style type="text/css">
 .bg-green2 > h3:first-child > a:hover,
@@ -186,10 +183,6 @@
 .bg-grgold a:hover,
 .bg-grgold a {
   color: white !important;
-}
-
-article.maximise {
-  margin-top: -20px;
 }
 /* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
 .col-list ul {
@@ -218,13 +211,17 @@ article.maximise {
 
 <slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
 
+<div class = 'row'><div class = 'box col-10 offset-1 bg-yellow2 icon'><h3>You will learn to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
 <ul>
 <li>use <code>dplyr</code> / <code>purrr</code> for efficient data manipulation</li>
 <li>tidying linear models using <code>broom</code></li>
 <li>managing workflow by keeping related things together in <strong>one</strong> <code>tibble</code>.</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Managing multiple models</h2></hgroup><article  id="managing-multiple-models" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Managing multiple models</h2></hgroup><article  id="managing-multiple-models" class="smaller ">
 
 <p>Tutorial based on the great conference by <a href='https://www.youtube.com/watch?v=rz3_FDVt9eg' title=''>Hadley Wickham</a></p>
 
@@ -235,9 +232,31 @@ article.maximise {
 <p>progress bar will be <a href='https://github.com/hadley/purrr/issues/149' title=''>added</a></p>
 
 <div id="unnamed-chunk-3">
-<p><img src="http://lsru.github.io/r_workshop/img/purrr_do.png" width="60%" style="display: block; margin: auto;" /></p></div>
+<p><img src="http://lsru.github.io/r_workshop/img/purrr_do.png" width="60%" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Gapminder </h2><h3> global vs individual trend</h3></hgroup><article  id="gapminder-global-vs-individual-trend" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Gapminder </h2><h3> <a href='http://www.gapminder.org/' title=''>gapminder</a> is a fact tank</h3></hgroup><article  id="gapminder-gapminder-is-a-fact-tank" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-7 bg-grgold stretch icon'><h3>dataset</h3>
+
+<img src='https://avatars1.githubusercontent.com/u/599454?v=3&amp;s=200' title='fig:'/>
+
+<ul>
+<li>from an independent Swedish foundation</li>
+<li><a href='https://github.com/jennybc/gapminder' title=''>R package</a> maintained by <a href='https://github.com/jennybc' title=''>Jenny Bryan!</a></li>
+<li>install from CRAN: <code>gapminder</code></li>
+</ul>
+
+</div><div class = 'box col-5 bg-yellow2 icon'><h3>Hans Rosling</h3>
+
+<img src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSEJdjTYt4u2AuFZuNmVQ3vfPB4lJdZfC3ckPrfC27BDlxNcjvL' title='fig:'/>
+
+<ul>
+<li>died last February</li>
+<li>fundamentaly optimistic</li>
+<li>great <a href='https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen' title=''>talk</a></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Gapminder </h2><h3> global vs individual trend</h3></hgroup><article  id="gapminder-global-vs-individual-trend" class="smaller ">
 
 <div id="unnamed-chunk-4" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(&quot;gapminder&quot;)
@@ -245,11 +264,11 @@ gapminder %&gt;%
   ggplot(aes(x = year, y = lifeExp, group = country)) +
   geom_line()</pre>
 
-<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src='lecture09_broom_files/figure-html/unnamed-chunk-4-1.png' title=''/><!-- --></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Keep related things together </h2><h3> nest</h3></hgroup><article  id="keep-related-things-together-nest" class="smaller ">
 
-<p>Nest <em>per</em> country</p>
+<div class = 'row'><div class = 'box col-6'><h3>Nest <em>per</em> country</h3>
 
 <div id="unnamed-chunk-5" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>by_country &lt;- gapminder %&gt;%
@@ -273,9 +292,65 @@ by_country</pre>
 10    Europe     Belgium &lt;tibble [12 × 5]&gt;
 # ... with 132 more rows</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>What happens in the DATA FRAME, stays in the data frame</h2></hgroup><article  id="what-happens-in-the-data-frame-stays-in-the-data-frame" class="smaller vs2">
+</div><div class = 'box col-6'><h3>helpers</h3>
 
-<div id="unnamed-chunk-6">
+<ul>
+<li><code>year1950</code> will help to get count oldest date</li>
+<li>add <code>continent</code> to <code>group_by()</code> to keep the info</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Germany</h2></hgroup><article  id="germany" class="smaller vs1">
+
+<div class = 'row'><div class = 'box col-6'><h3>from original tibble</h3>
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gapminder %&gt;%
+  filter(country == &quot;Germany&quot;) %&gt;%
+  select(-country, -continent)</pre>
+
+<pre ># A tibble: 12 × 4
+    year lifeExp      pop gdpPercap
+   &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+1   1952  67.500 69145952  7144.114
+2   1957  69.100 71019069 10187.827
+3   1962  70.300 73739117 12902.463
+4   1967  70.800 76368453 14745.626
+5   1972  71.000 78717088 18016.180
+6   1977  72.500 78160773 20512.921
+7   1982  73.800 78335266 22031.533
+8   1987  74.847 77718298 24639.186
+9   1992  76.070 80597764 26505.303
+10  1997  77.340 82011073 27788.884
+11  2002  78.670 82350671 30035.802
+12  2007  79.406 82400996 32170.374</pre></div>
+
+</div><div class = 'box col-6'><h3>from nested tibble</h3>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>by_country %&gt;%
+  filter(country == &quot;Germany&quot;) %&gt;%
+  pull(data) # dplyr 0.6, .$data for dplyr 0.5</pre>
+
+<pre >[[1]]
+# A tibble: 12 × 5
+    year lifeExp      pop gdpPercap year1950
+   &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1   1952  67.500 69145952  7144.114        2
+2   1957  69.100 71019069 10187.827        7
+3   1962  70.300 73739117 12902.463       12
+4   1967  70.800 76368453 14745.626       17
+5   1972  71.000 78717088 18016.180       22
+6   1977  72.500 78160773 20512.921       27
+7   1982  73.800 78335266 22031.533       32
+8   1987  74.847 77718298 24639.186       37
+9   1992  76.070 80597764 26505.303       42
+10  1997  77.340 82011073 27788.884       47
+11  2002  78.670 82350671 30035.802       52
+12  2007  79.406 82400996 32170.374       57</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>What happens in the DATA FRAME, stays in the data frame</h2></hgroup><article  id="what-happens-in-the-data-frame-stays-in-the-data-frame" class="smaller vs2">
+
+<div id="unnamed-chunk-8">
 <style type="text/css">
 .vembedr {
   border-radius: 25px; /* adjust it to your needs */
@@ -288,18 +363,16 @@ by_country</pre>
 }
 </style></div>
 
-<div id="unnamed-chunk-7" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>vembedr::embed_youtube(&quot;4MfUCX_KpdE&quot;, query = list(start = vembedr::secs(&quot;15m43s&quot;), end = vembedr::secs(&quot;16m01s&quot;))) %&gt;% htmltools::div(class = &quot;vembedr&quot;)</pre>
-
+<div id="unnamed-chunk-9">
 <div class="vembedr">
 <iframe src="https://www.youtube.com/embed/4MfUCX_KpdE?start=943&amp;end=961" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
 </div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Keep related things together </h2><h3> linear models</h3></hgroup><article  id="keep-related-things-together-linear-models" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Keep related things together </h2><h3> linear models</h3></hgroup><article  id="keep-related-things-together-linear-models" class="smaller vs2">
 
-<p>Linear model <em>per</em> country</p>
+<div class = 'row'><div class = 'box col-12'><h3>Linear model <em>per</em> country</h3>
 
-<div id="unnamed-chunk-8" class="chunk shadow">
+<div id="unnamed-chunk-10" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>by_country_lm &lt;- by_country %&gt;%
   mutate(model = map(data, ~ lm(lifeExp ~ year1950, data = .x)))
 by_country_lm</pre>
@@ -319,12 +392,12 @@ by_country_lm</pre>
 10    Europe     Belgium &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
 # ... with 132 more rows</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>broom cleanup</h2></hgroup><article  id="broom-cleanup" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>broom cleanup</h2></hgroup><article  id="broom-cleanup" class="smaller ">
 
-<div id="unnamed-chunk-9">
-<p><img src="http://lsru.github.io/r_workshop/img/broom_cleanup.png" width="90%" style="display: block; margin: auto;" /></p></div>
+<div id="unnamed-chunk-11">
+<p><img src="img/09_broom.jpg" width="90%" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidying model coefficients </h2><h3> extract from nested lists</h3></hgroup><article  id="tidying-model-coefficients-extract-from-nested-lists" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidying model coefficients </h2><h3> extract from nested lists</h3></hgroup><article  id="tidying-model-coefficients-extract-from-nested-lists" class="smaller vs2">
 
 <div class = 'row'><div class = 'box col-3 bg-green'><h3>useful info</h3>
 
@@ -341,7 +414,7 @@ by_country_lm</pre>
 
 </div><div class = 'col-9'>
 
-<div id="unnamed-chunk-10" class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(&quot;broom&quot;)
 models &lt;- by_country_lm %&gt;%
   mutate(glance  = map(model, glance),
@@ -368,31 +441,36 @@ models</pre>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Exploratory plots</h2></hgroup><article  id="exploratory-plots" class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Does linear models fit all countries?</h2></hgroup><article  id="does-linear-models-fit-all-countries" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Does linear models fit all countries? </h2><h3>snake plot</h3></hgroup><article  id="does-linear-models-fit-all-countries-snake-plot" class="smaller nvs1">
 
-<div id="unnamed-chunk-11" class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>models %&gt;%
   ggplot(aes(x = rsq, y = reorder(country, rsq))) +
   geom_point(aes(colour = continent)) +
   theme(axis.text.y = element_text(size = 6))</pre>
 
-<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-13-1.png" width="60%" /></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exploratory plots </h2><h3> focus on non-linear trends</h3></hgroup><article  id="exploratory-plots-focus-on-non-linear-trends" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exploratory plots </h2><h3> focus on non-linear trends</h3></hgroup><article  id="exploratory-plots-focus-on-non-linear-trends" class="smaller nvs1">
 
-<div id="unnamed-chunk-12" class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
+<div class="row">
+<div class="col-5">
 <pre class = 'prettyprint lang-r'>models %&gt;%
   filter(rsq &lt; 0.55) %&gt;%
   unnest(data) %&gt;%
   ggplot(aes(x = year, y = lifeExp)) +
   geom_line(aes(colour = continent)) +
-  facet_wrap(~ country)</pre>
+  facet_wrap(~ country) +
+  theme(legend.justification = c(1, 0),
+        legend.position = c(1, 0))</pre></div>
 
-<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /></p></div>
+<div class="col-7">
+<p><img src='lecture09_broom_files/figure-html/unnamed-chunk-14-1.png' title=''/><!-- --></p></div></div></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>All in all</h2></hgroup><article  id="all-in-all" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>All in all </h2><h3> by Hadley Wickham</h3></hgroup><article  id="all-in-all-by-hadley-wickham" class="smaller nvs1">
 
-<div id="unnamed-chunk-13" class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>models %&gt;%
   unnest(tidy) %&gt;%
   select(continent, country, rsq, term, estimate) %&gt;%
@@ -402,13 +480,13 @@ models</pre>
   geom_smooth(se = FALSE, method = &quot;loess&quot;) +
   scale_size_area() + labs(x = &quot;Life expectancy (1950)&quot;, y = &quot;Yearly improvement&quot;)</pre>
 
-<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /></p></div>
+<p><img src='lecture09_broom_files/figure-html/unnamed-chunk-15-1.png' title=''/><!-- --></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>animation made easy</h2></hgroup><article  id="animation-made-easy" class="smaller ">
 
 <div class = 'row'><div class = 'box col-6 bg-cobalt'><h3><a href='https://github.com/dgrtwo/gganimate' title=''>gganimate</a> by David Robinson</h3>
 
-<div id="unnamed-chunk-14" class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(gganimate)
 gapminder %&gt;%
 ggplot(aes(x = gdpPercap, 
@@ -422,8 +500,28 @@ gganimate(p, &#39;img/09_gapminder.gif&#39;)</pre></div>
 
 </div><div class = 'col-6'>
 
-<div id="unnamed-chunk-15">
-<p><img src="img/09_gapminder.gif" width="90%" style="display: block; margin: auto;" /></p></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<div id="unnamed-chunk-17">
+<p><img src="img/09_gapminder.gif" width="100%" /></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>No missing features, but biobroom</h2></hgroup><article  id="no-missing-features-but-biobroom" class="smaller vs3">
+
+<div class = 'row'><div class = 'box col-6 bg-yellow2'><h3>David Robinson</h3>
+
+<ul>
+<li>from John Storey&#39; lab</li>
+<li><a href='https://www.bioconductor.org/packages/release/bioc/html/biobroom.html' title=''>bioconductor package</a></li>
+<li>see <a href='https://www.bioconductor.org/packages/release/bioc/vignettes/biobroom/inst/doc/biobroom_vignette.html' title=''>vignette</a></li>
+</ul>
+
+</div><div class = 'box col-6 bg-grgold icon'><h3>tidy objects from</h3>
+
+<ul>
+<li>DESeq2</li>
+<li>edgeR</li>
+<li>limma</li>
+<li>ExpressionSet</li>
+<li>MSnSet</li>
+</ul></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
