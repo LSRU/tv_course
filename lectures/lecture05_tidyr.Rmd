@@ -154,13 +154,13 @@ Name of the table | No | You'll see this often
 
 ## Common tidy data violations {.vs2}
 
-###  {.col-8 .box .bg-blue .build }
+### Problem {.box-8 .bg-blue .build }
  * Column headers are values, not variable names (`gather`)
  * Multiple variables stored in one column (`separate`)
  * Variables are stored in both rows and columns (`gather`-`spread`)
  * Repeated observations (`nest` or table)
  * Multiple types in one table (`dplyr` data transformation)
- * One type in multiple tables (`dplyr`, combine into table)
+ * One type in multiple tables (`dplyr`, combine into single table)
  
  
  
@@ -189,13 +189,13 @@ knitr::include_graphics("http://lsru.github.io/r_workshop/img/tidy-spread_600.pn
 ## Demo with the iris dataset
 
 ```{r, message=FALSE, warning=FALSE}
-library("tidyverse", warn.conflicts = F, quietly=T)
-as.tibble(iris)
+library("tidyverse", warn.conflicts = FALSE, quietly = TRUE)
+as_tibble(iris)
 ```
 
 ## Gather | "melt"
 ### {.box-8 .bg-cobalt .compact-output .build}
-```{r, message=FALSE, warning=FALSE}
+```{r, message = FALSE, warning = FALSE}
 
 iris_melt <- iris %>%
   rownames_to_column(var = "number") %>%
@@ -262,6 +262,11 @@ patient
 ```
 
 
+### Key-value pairs {.box-6 .bg-blue .stretch .build}
+```{r}
+patient %>% separate(gender_age, c("sex", "age"), convert=TRUE)
+```
+
 
 
 
@@ -295,12 +300,6 @@ df_unite %>%
 ```
 
 
-## Other combinations of variables
-
-### Key-value pairs {.box-6 .bg-blue .stretch .build}
-```{r}
-patient %>% separate(gender_age, c("sex", "age"), convert=TRUE)
-```
 
 ## `complete()` | Fill all combinations
 
@@ -345,7 +344,7 @@ patient_nested %>%
 
 ## Wrap up
 
-### Covered here: {.box-10 .offset-1 .bg-blue }
+### Covered here {.box-10 .offset-1 .bg-blue }
  * `tidyr` (and `dplyr`) are replacing the `reshape` and `reshape2` packages
 - tidy data
     + <http://tidyr.tidyverse.org/>
@@ -358,4 +357,4 @@ patient_nested %>%
 * Hadley Wickham
 * Jeremy Stanley
 
-### Thank you for your attention! {.box-5  .bg-this_col .build}
+### Thank you for your attention! {.box-5  .vs1 .stretch .bg-this_col .build}
