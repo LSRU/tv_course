@@ -302,75 +302,81 @@ $(document).ready(function () {
 <ul>
 <li>slides using <a href="http://rmarkdown.rstudio.com/ioslides_presentation_format.html">ioslides</a> base enhanced with <a href="https://github.com/koncina/iosp">iosp</a> developed by <a href="http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina">Eric Koncina</a></li>
 <li>practicals using a Rmarkdown template, <a href="https://github.com/koncina/unilur">unilur</a> developed by <a href="http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina">Eric Koncina</a></li>
+<li>All code (<code>.Rmd</code>) is available in the <a href="https://github.com/LSRU/tv_course">github repository</a>. Feel free to browse, download, and even contribute by <a href="https://github.com/LSRU/tv_course#fork-destination-box">forking</a>.</li>
 </ul>
 </div>
 <div id="licence" class="section level2">
 <h2>Licence</h2>
-<p><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"> <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<p><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"> <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a> except for the borrowed and mentionned with proper <em>source:</em> statements.</p>
 </div>
 <div id="versions-of-key-packages" class="section level2">
 <h2>Versions of key packages</h2>
 <pre class="r"><code>devtools::session_info(c(&quot;tidyverse&quot;, &quot;broom&quot;))</code></pre>
-<pre><code>## Session info --------------------------------------------------------------</code></pre>
+<pre><code>## Session info -------------------------------------------------------------</code></pre>
 <pre><code>##  setting  value                       
-##  version  R version 3.4.0 (2017-04-21)
-##  system   x86_64, linux-gnu           
-##  ui       X11                         
-##  language en_GB.utf8                  
-##  collate  fr_FR.UTF-8                 
-##  tz       Europe/Paris                
+##  version  R version 3.3.3 (2017-03-06)
+##  system   x86_64, darwin16.4.0        
+##  ui       unknown                     
+##  language (EN)                        
+##  collate  en_US.UTF-8                 
+##  tz       Europe/Madrid               
 ##  date     2017-05-02</code></pre>
-<pre><code>## Packages ------------------------------------------------------------------</code></pre>
-<pre><code>##  package      * version  date       source        
-##  assertthat     0.2.0    2017-04-11 CRAN (R 3.4.0)
-##  BH             1.62.0-1 2016-11-19 CRAN (R 3.4.0)
-##  broom          0.4.2    2017-02-13 CRAN (R 3.4.0)
-##  cellranger     1.1.0    2016-07-27 CRAN (R 3.4.0)
-##  colorspace     1.3-2    2016-12-14 CRAN (R 3.4.0)
-##  curl           2.6      2017-04-27 CRAN (R 3.4.0)
-##  DBI            0.6-1    2017-04-01 CRAN (R 3.4.0)
-##  dichromat      2.0-0    2013-01-24 CRAN (R 3.4.0)
-##  digest         0.6.12   2017-01-27 CRAN (R 3.4.0)
-##  dplyr          0.5.0    2016-06-24 CRAN (R 3.4.0)
-##  forcats        0.2.0    2017-01-23 CRAN (R 3.4.0)
-##  foreign        0.8-67   2016-09-13 CRAN (R 3.3.1)
-##  ggplot2        2.2.1    2016-12-30 CRAN (R 3.4.0)
-##  gtable         0.2.0    2016-02-26 CRAN (R 3.4.0)
-##  haven          1.0.0    2016-09-23 CRAN (R 3.4.0)
-##  hms            0.3      2016-11-22 CRAN (R 3.4.0)
-##  httr           1.2.1    2016-07-03 CRAN (R 3.4.0)
-##  jsonlite       1.4      2017-04-08 CRAN (R 3.4.0)
-##  labeling       0.3      2014-08-23 CRAN (R 3.4.0)
-##  lattice        0.20-35  2017-03-25 CRAN (R 3.3.3)
-##  lazyeval       0.2.0    2016-06-12 CRAN (R 3.4.0)
-##  lubridate      1.6.0    2016-09-13 CRAN (R 3.4.0)
-##  magrittr       1.5      2014-11-22 CRAN (R 3.4.0)
-##  MASS           7.3-47   2017-04-21 CRAN (R 3.4.0)
-##  mime           0.5      2016-07-07 CRAN (R 3.4.0)
-##  mnormt         1.5-5    2016-10-15 CRAN (R 3.4.0)
-##  modelr         0.1.0    2016-08-31 CRAN (R 3.4.0)
-##  munsell        0.4.3    2016-02-13 CRAN (R 3.4.0)
-##  nlme           3.1-131  2017-02-06 CRAN (R 3.4.0)
-##  openssl        0.9.6    2016-12-31 CRAN (R 3.4.0)
-##  plyr           1.8.4    2016-06-08 CRAN (R 3.4.0)
-##  psych          1.7.3.21 2017-03-22 CRAN (R 3.4.0)
-##  purrr          0.2.2    2016-06-18 CRAN (R 3.4.0)
-##  R6             2.2.0    2016-10-05 CRAN (R 3.4.0)
-##  RColorBrewer   1.1-2    2014-12-07 CRAN (R 3.4.0)
-##  Rcpp           0.12.10  2017-03-19 CRAN (R 3.4.0)
-##  readr          1.1.0    2017-03-22 CRAN (R 3.4.0)
-##  readxl         1.0.0    2017-04-18 CRAN (R 3.4.0)
-##  rematch        1.0.1    2016-04-21 CRAN (R 3.4.0)
-##  reshape2       1.4.2    2016-10-22 CRAN (R 3.4.0)
-##  rvest          0.3.2    2016-06-17 CRAN (R 3.4.0)
-##  scales         0.4.1    2016-11-09 CRAN (R 3.4.0)
-##  selectr        0.3-1    2016-12-19 CRAN (R 3.4.0)
-##  stringi        1.1.5    2017-04-07 CRAN (R 3.4.0)
-##  stringr        1.2.0    2017-02-18 CRAN (R 3.4.0)
-##  tibble         1.3.0    2017-04-01 CRAN (R 3.4.0)
-##  tidyr          0.6.1    2017-01-10 CRAN (R 3.4.0)
-##  tidyverse      1.1.1    2017-01-27 CRAN (R 3.4.0)
-##  xml2           1.1.1    2017-01-24 CRAN (R 3.4.0)</code></pre>
+<pre><code>## Packages -----------------------------------------------------------------</code></pre>
+<pre><code>##  package      * version    date       source                           
+##  assertthat     0.2.0      2017-04-11 CRAN (R 3.3.3)                   
+##  BH             1.62.0-1   2016-11-19 CRAN (R 3.3.2)                   
+##  bindr          0.1        2016-11-13 cran (@0.1)                      
+##  bindrcpp       0.1        2016-12-11 cran (@0.1)                      
+##  broom          0.4.2      2017-02-13 CRAN (R 3.3.2)                   
+##  cellranger     1.1.0      2016-07-27 cran (@1.1.0)                    
+##  colorspace     1.3-2      2016-12-14 CRAN (R 3.3.2)                   
+##  curl           2.6        2017-04-27 CRAN (R 3.3.3)                   
+##  dichromat      2.0-0      2013-01-24 CRAN (R 3.3.0)                   
+##  digest         0.6.12     2017-01-27 CRAN (R 3.3.2)                   
+##  dplyr          0.5.0.9004 2017-04-29 Github (tidyverse/dplyr@12e7621) 
+##  forcats        0.2.0      2017-01-23 CRAN (R 3.3.2)                   
+##  foreign        0.8-68     2017-04-24 CRAN (R 3.3.3)                   
+##  ggplot2        2.2.1      2016-12-30 CRAN (R 3.3.2)                   
+##  glue           1.0.0      2017-04-27 Github (tidyverse/glue@004dd86)  
+##  gtable         0.2.0      2016-02-26 CRAN (R 3.3.0)                   
+##  haven          1.0.0      2016-09-23 CRAN (R 3.3.1)                   
+##  hms            0.3        2016-11-22 CRAN (R 3.3.2)                   
+##  httr           1.2.1.9000 2017-04-19 Github (gaborcsardi/httr@30001d4)
+##  jsonlite       1.4        2017-04-08 CRAN (R 3.3.3)                   
+##  labeling       0.3        2014-08-23 CRAN (R 3.3.0)                   
+##  lattice        0.20-35    2017-03-25 CRAN (R 3.3.3)                   
+##  lazyeval       0.2.0.9000 2016-07-06 Github (hadley/lazyeval@c155c3d) 
+##  lubridate      1.6.0      2016-09-13 CRAN (R 3.3.1)                   
+##  magrittr       1.5        2014-11-22 CRAN (R 3.3.0)                   
+##  MASS           7.3-47     2017-04-21 CRAN (R 3.3.3)                   
+##  mime           0.5        2016-07-07 CRAN (R 3.3.1)                   
+##  mnormt         1.5-5      2016-10-15 CRAN (R 3.3.1)                   
+##  modelr         0.1.0      2016-08-31 CRAN (R 3.3.1)                   
+##  munsell        0.4.3      2016-02-13 CRAN (R 3.3.0)                   
+##  nlme           3.1-131    2017-02-06 CRAN (R 3.3.3)                   
+##  openssl        0.9.6      2016-12-31 CRAN (R 3.3.2)                   
+##  pkgconfig      2.0.1      2017-03-21 cran (@2.0.1)                    
+##  plogr          0.1-1      2016-09-24 CRAN (R 3.3.2)                   
+##  plyr           1.8.4      2016-06-08 CRAN (R 3.3.0)                   
+##  psych          1.7.3.21   2017-03-22 CRAN (R 3.3.3)                   
+##  purrr          0.2.2      2016-06-18 CRAN (R 3.3.0)                   
+##  R6             2.2.0      2016-10-05 CRAN (R 3.3.1)                   
+##  RColorBrewer   1.1-2      2014-12-07 CRAN (R 3.3.0)                   
+##  Rcpp           0.12.10    2017-03-19 CRAN (R 3.3.3)                   
+##  readr          1.1.0      2017-03-22 CRAN (R 3.3.3)                   
+##  readxl         1.0.0      2017-04-18 cran (@1.0.0)                    
+##  rematch        1.0.1      2016-04-21 cran (@1.0.1)                    
+##  reshape2       1.4.2      2016-10-22 CRAN (R 3.3.1)                   
+##  rlang          0.0.0.9018 2017-04-29 Github (hadley/rlang@b22ce1c)    
+##  rvest          0.3.2      2016-06-17 CRAN (R 3.3.0)                   
+##  scales         0.4.1      2016-11-09 CRAN (R 3.3.2)                   
+##  selectr        0.3-1      2016-12-19 CRAN (R 3.3.2)                   
+##  stringi        1.1.5      2017-04-07 CRAN (R 3.3.3)                   
+##  stringr        1.2.0      2017-02-18 CRAN (R 3.3.2)                   
+##  tibble         1.3.0      2017-04-01 CRAN (R 3.3.3)                   
+##  tidyr          0.6.1      2017-01-10 CRAN (R 3.3.2)                   
+##  tidyverse      1.1.1      2017-01-27 CRAN (R 3.3.2)                   
+##  xml2           1.1.1      2017-04-19 Github (hadley/xml2@268387b)</code></pre>
 </div>
 
 

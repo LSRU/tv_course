@@ -39,13 +39,13 @@ This website was built using [rmarkdown websites](http://rmarkdown.rstudio.com/r
 
 - slides using [ioslides](http://rmarkdown.rstudio.com/ioslides_presentation_format.html) base enhanced with  [iosp](https://github.com/koncina/iosp) developed by [Eric Koncina](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina)
 - practicals using a Rmarkdown template, [unilur](https://github.com/koncina/unilur) developed by [Eric Koncina](http://wwwen.uni.lu/recherche/fstc/life_sciences_research_unit/research_areas/neuro_inflammation/people/eric_koncina)
-
+- All code (`.Rmd`) is available in the [github repository](https://github.com/LSRU/tv_course). Feel free to browse, download, and even contribute by [forking](https://github.com/LSRU/tv_course#fork-destination-box).
 
 ## Licence
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
 <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a> except for the borrowed and mentionned with proper _source:_ statements.
 
 
 ## Versions of key packages
