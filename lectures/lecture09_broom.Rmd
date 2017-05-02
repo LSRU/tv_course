@@ -14,9 +14,9 @@ output:
       grgold: ["springgreen4", header_text: "#FFD700"]
 ---
 
-```{r, echo = FALSE, warning = FALSE, message = FALSE}
+```{r, include = FALSE}
 library(tidyverse)
-knitr::opts_chunk$set(fig.align = "center")
+ggplot2::theme_set(ggplot2::theme_bw(14))
 ```
 
 
@@ -29,10 +29,6 @@ knitr::opts_chunk$set(fig.align = "center")
 .bg-grgold a:hover,
 .bg-grgold a {
   color: white !important;
-}
-
-article.maximise {
-  margin-top: -20px;
 }
 /* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
 .col-list ul {
@@ -61,6 +57,10 @@ article.maximise {
 
 ## Learning objectives {.vs2}
 
+### You will learn to: {.box-10 .offset-1 .bg-yellow2 .icon}
+
+![](img/00_kt.png)
+
 - use `dplyr` / `purrr` for efficient data manipulation
 - tidying linear models using `broom` 
 - managing workflow by keeping related things together in **one** `tibble`. 
@@ -82,6 +82,24 @@ progress bar will be [added](https://github.com/hadley/purrr/issues/149)
 knitr::include_graphics("http://lsru.github.io/r_workshop/img/purrr_do.png")
 ```
 
+## Gapminder | [gapminder](http://www.gapminder.org/) is a fact tank {.vs2}
+
+
+### dataset {.box-7 .bg-grgold .stretch .icon} 
+
+![](https://avatars1.githubusercontent.com/u/599454?v=3&s=200)
+
+- from an independent Swedish foundation
+- [R package](https://github.com/jennybc/gapminder) maintained by [Jenny Bryan!](https://github.com/jennybc)
+- install from CRAN: `gapminder`
+
+### Hans Rosling {.box-5 .bg-yellow2 .icon}
+
+![](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSEJdjTYt4u2AuFZuNmVQ3vfPB4lJdZfC3ckPrfC27BDlxNcjvL)
+
+- died last February
+- fundamentaly optimistic
+- great [talk](https://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen)
 
 
 ## Gapminder | global vs individual trend
@@ -94,13 +112,35 @@ gapminder %>%
 
 ## Keep related things together | nest
 
-Nest _per_ country
+### Nest _per_ country {.box-6}
 ```{r}
 by_country <- gapminder %>%
   mutate(year1950 = year - 1950) %>%
   group_by(continent, country) %>%
   nest()
 by_country
+```
+
+### helpers {.box-6}
+
+- `year1950` will help to get count oldest date
+- add `continent` to `group_by()` to keep the info
+
+
+## Germany {.vs1}
+
+### from original tibble {.box-6}
+```{r}
+gapminder %>%
+  filter(country == "Germany") %>%
+  select(-country, -continent)
+```
+
+### from nested tibble {.box-6}
+```{r}
+by_country %>%
+  filter(country == "Germany") %>%
+  pull(data) # dplyr 0.6, .$data for dplyr 0.5
 ```
 
 ## What happens in the DATA FRAME, stays in the data frame {.vs2}
@@ -117,28 +157,31 @@ by_country
 }
 ```
 
-```{r}
-vembedr::embed_youtube("4MfUCX_KpdE", query = list(start = vembedr::secs("15m43s"), end = vembedr::secs("16m01s"))) %>% htmltools::div(class = "vembedr")
+```{r, echo = FALSE}
+vembedr::embed_youtube("4MfUCX_KpdE", 
+                       query = list(start = vembedr::secs("15m43s"), end = vembedr::secs("16m01s"))) %>%
+  htmltools::div(class = "vembedr")
 ```
 
 
 
-## Keep related things together | linear models
+## Keep related things together | linear models {.vs2}
 
-Linear model _per_ country
+### Linear model _per_ country {.box-12}
 ```{r}
 by_country_lm <- by_country %>%
   mutate(model = map(data, ~ lm(lifeExp ~ year1950, data = .x)))
 by_country_lm
 ```
 
+
 ## broom cleanup
 
 ```{r, echo=FALSE, out.width='90%'}
-knitr::include_graphics("http://lsru.github.io/r_workshop/img/broom_cleanup.png")
+knitr::include_graphics("img/09_broom.jpg")
 ```
 
-## Tidying model coefficients | extract from nested lists
+## Tidying model coefficients | extract from nested lists {.vs2}
 
 ### useful info {.box .col-3 .bg-green}
 - coefficients estimates:
@@ -160,7 +203,7 @@ models
 
 # Exploratory plots
 
-## Does linear models fit all countries?
+## Does linear models fit all countries? |snake plot {.nvs1}
 
 ```{r, out.width='60%'}
 models %>%
@@ -169,20 +212,22 @@ models %>%
   theme(axis.text.y = element_text(size = 6))
 ```
 
-## Exploratory plots | focus on non-linear trends
+## Exploratory plots | focus on non-linear trends {.nvs1}
 
-```{r, cache=FALSE}
+```{r, row = c(5, 7), fig.height=6}
 models %>%
   filter(rsq < 0.55) %>%
   unnest(data) %>%
   ggplot(aes(x = year, y = lifeExp)) +
   geom_line(aes(colour = continent)) +
-  facet_wrap(~ country)
+  facet_wrap(~ country) +
+  theme(legend.justification = c(1, 0),
+        legend.position = c(1, 0))
 ```
 
 
 
-## All in all
+## All in all | by Hadley Wickham {.nvs1}
 
 ```{r, fig.height = 4}
 models %>%
@@ -214,10 +259,26 @@ gganimate(p, 'img/09_gapminder.gif')
 
 ### {.col-6}
 
-```{r, echo=FALSE, out.width='90%'}
+```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics("img/09_gapminder.gif")
 ```
 
 
 
+## No missing features, but biobroom {.vs3}
 
+### David Robinson {.box-6 .bg-yellow2}
+
+- from John Storey' lab
+- [bioconductor package](https://www.bioconductor.org/packages/release/bioc/html/biobroom.html)
+- see [vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/biobroom/inst/doc/biobroom_vignette.html)
+
+
+### tidy objects from {.box-6 .bg-grgold .icon}
+
+
+- DESeq2
+- edgeR
+- limma
+- ExpressionSet
+- MSnSet
