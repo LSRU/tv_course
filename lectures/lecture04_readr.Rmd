@@ -598,9 +598,9 @@ read_csv2("data/locale_1.csv") %>%
 - import **cell ranges**
 
 
-## Try it yourself | excel file
+## Try it yourself | excel file{ .nvs1}
 
-### Sample files {.box-8 .offset-2 .bg-green}
+### Sample files {.box-8 .offset-2 .bg-green .compact-output}
 
 - we will use the files shipped with the readxl package
 - list of available examples:
@@ -619,12 +619,18 @@ options(width = 80)
     + determine how many sheets are contained in the file
     + load the data contained in the `mtcars` sheet
     + you can also try Rstudio's interactive importer
+    ```{r, echo = TRUE, eval = FALSE}
+    file.copy(
+      from = readxl::readxl_example("datasets.xlsx"),
+      to = "datasets.xlsx"
+    ) # To copy it to the root of your project
+    ```
 
 ## Try it yourself | excel file
 
 ### the `deaths` dataset {.box-8 .offset-2 .bg-green}
 
-- use the `deaths.xls` file in your `data` folder in the projects root (or use the path `readxl_example("deaths.xlsx")`)
+- use the `deaths.xls` file (using `readxl_example("deaths.xlsx")` to get the path to it)
 - how many sheets does the file contain?
 - import the first sheet of the file.
 - are you happy with the result?
