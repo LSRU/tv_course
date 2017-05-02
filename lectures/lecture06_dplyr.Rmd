@@ -31,6 +31,13 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
   * Fast, in particular for in-memory data by writing key pieces in C++ (using Rcpp)
   * Standard  interface to work with data in a `data.frame`, a `data.table` or database.
 
+## Learning objectives
+
+### `dplyr` in a nutshell {.box-8 .bg-green .build .stretch}
+ * Learn the basic vocabulary of `dplyr`
+ * Exercise commands
+ 
+
 
 ## dplyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
 
@@ -55,35 +62,46 @@ library("biomaRt")
 ```
 
 - `dplyr` is included in the `tidyverse` package
+- `biomaRt` is part of bioconductor (check)
 
 ```{r, eval = FALSE}
 install.packages("dplyr")
 # OR
 install.packages("tidyverse")
 
-library("dplyr")
+source("https://bioconductor.org/biocLite.R")
+biocLite("biomaRt")
+
+
 ```
 
-- For the examples in the lecture, retrieve the genes from chromosome 21 from biomaRt
+## Retrieving sample data
 
-```{r, eval = T, cache=T}
+### Gene from chromosome 21 from biomaRt {.box-10 .offset-1 .bg-blue}
+
+```{r, eval = T}
 # Load the library
 library(biomaRt)
 gene_mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
 gene_set <- useDataset(gene_mart , dataset="hsapiens_gene_ensembl")
 
-
-gene_ids <- getBM(mart=gene_set, attributes
-                 =c( "ensembl_gene_id",
-                      "ensembl_peptide_id", 
-                     "ensembl_exon_id",
-        "chromosome_name",
-         "start_position",
-           "end_position",
-        "hgnc_symbol", "hgnc_id", 
-        "strand",
-        "gene_biotype"), 
-                 filter = "chromosome_name", value="21")
+gene_by_exon <- getBM(
+  mart = gene_set,
+  attributes = c(
+    "ensembl_gene_id",
+    "ensembl_transcript_id",
+    "ensembl_exon_id",
+    "chromosome_name",
+    "start_position",
+    "end_position",
+    "hgnc_symbol",
+    "hgnc_id",
+    "strand",
+    "gene_biotype"
+    ), 
+  filter = "chromosome_name",
+  value = "21"
+  )
 
 
 
@@ -91,20 +109,22 @@ gene_ids <- getBM(mart=gene_set, attributes
 #Biomart
 ```
 
-- Or use `Rstudio > Tools > Install` Packages to install the packages
 
+## `as_tibble()` 
 
+### Important with large tables {.box-10 .offset-1 .bg-blue}
 
 ```{r}
-as.tibble(gene_ids)
+as_tibble(gene_by_exon)
 ```
 
-## Inspect data frames / tibbles | glimpse  
+## `glimpse()` | Inspect data frames / tibbles   
 
-Use `glimpse` to show some values and types per column. Environment tab does it too
+ * Use `glimpse()` to show some values and types per column. 
+ * The *Environment* tab in RStudio tab does it too
 
 ```{r}
-glimpse(gene_ids)
+glimpse(gene_by_exon)
 ```
 
 
@@ -121,150 +141,163 @@ from [Romain François](https://twitter.com/ParisRaddict/status/7812672254204354
 ## `filter()` | inspect subsets of data
 
 - Take a look at the amyloid precursor protein gene **APP** 
+- Note the rendering of the `data.frame`, not a tibble.
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   filter(hgnc_symbol == "APP")
 ```
 
-## filter | multiple conditions, AND (`&`)
+## `filter()` | Multiple conditions, AND (`&`)
 
-
+### Genes in a particular range
 
 ```{r}
 # Comma separated conditions are combined with '&'
-gene_ids %>%
-  filter(start_position > 1000000, end_position < 10000000)
+gene_by_exon %>%
+   filter(start_position > 10000000, end_position < 12000000)
 ```
 
 
-## filter | multiple conditions, OR (`|`)
+## `filter()` | Multiple conditions, OR (`|`)
 
-Genes at the close to the end 
+### Genes at the close to the telomers {.box-10 .offset-1}
 
 ```{r, eval = FALSE}
-gene_ids %>%
-  filter(start_position < 100000 | end_position >46655124 )
+gene_by_exon %>%
+  filter(start_position < 100000 | end_position >46665124 )
 ```
 
-For more complicated checks, prefer a set operation.  
+### Set operations {.box-10 .offset-1}
+For more complicated checks.
 The following 2 are equivalent:
 
 ```{r, eval = FALSE}
-gene_ids %>%
+gene_by_exon %>%
   filter(is.element(hgnc_symbol, c("APP", "ATP50", "PRMT2")))
 ```
 
 ```{r, eval = FALSE}
-gene_ids %>%
-  filter(is.element %in% c("APP", "ATP50", "PRMT2"))
+gene_by_exon %>%
+  filter(hgnc_symbol %in% c("APP", "ATP50", "PRMT2"))
 ```
 
-## arrange | sort columns
 
-### Perform a nested sorting of all Genes: {.box-6 .bg-yellow2 .build}
+
+## `arrange()` | Sort columns
+
+### Perform a nested sorting of all Genes: {.box-10 .bg-yellow2 .build}
     1. hgnc_symbol
     2. gene_biotype
     3. end_position
 
-%end%
-
 ```{r}
-gene_ids %>%
-  arrange(hgnc_symbol, gene_biotype, end_position)
+gene_by_exon %>%
+  arrange(hgnc_symbol, gene_biotype, end_position) %>% 
+  dplyr::select(hgnc_symbol, gene_biotype, end_position, everything())
 ```
 
-## arrange | `desc` to reverse sort columns
+## `arrange()` | `desc` to reverse sort columns
 
 Find the *last* gene on chromosome 21.
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   arrange(desc(end_position)) %>%
   dplyr::select(end_position, everything()) # way to reorder arr_delay 1st column
 ```
 
-## select | selecting specific columns
+## `select()` | Selecting specific *columns*
+`select()` is part of the `biomaRt` package, need to address `dplyr`-package!
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)
 ```
 
-## select | helper functions
+## `select()` | Negative selection 
 
-`select` has many helper functions. See `?select` or have a look at the cheatsheet.
-
-```{r}
-gene_ids %>%
-  dplyr::select(hgnc_symbol, starts_with("ensembl"), contains("position"))
-```
-
-## negative selection 
-
-### {.box-10 .offset-1 .bg-blue}
+### Dropping columns {.box-10 .offset-1 .bg-blue}
 We can drop columns by "negating" their names. Since helpers give us column names, we can negate them too. Note that the 
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   dplyr::select(-strand, -starts_with("ensembl"),
          -ends_with("id"))
 ```
 
-## Recap: Verbs for inspecting data
+## `select()` helper functions
 
-* `as_tibble` (`dplyr::as_data_frame`) to convert to a tibble (different from `as.data.frame` in _R_ base)
-* `glimpse` - some of each column
-* `filter` - subsetting
-* `arrange` - sorting (`desc` to reverse the sort)
-* `select` - picking (and omiting) columns
+### `select()` has many helper functions {.box-10 .offset-1 .bg-blue}
+ * `contains()`, `starts_with()`, `ends_with()` for literal strings
+ * `matches()` for regex
+ * `one_of()` variables in a character vector
+ * `everything()` all remaining variable
+ * Can be combined
 
-## rename | renaming columns
+```{r}
+gene_by_exon %>%
+  dplyr::select(hgnc_symbol, 
+                starts_with("ensembl"),
+                contains("position"),
+                -contains("exon"))
+```
+
+
+
+## Verbs for inspecting data
+
+### Summary {.box-10 .offset-1 .bg-blue}
+* `as_tibble()` (`dplyr::as_data_frame`) to convert to a tibble (different from `as.data.frame` in _R_ base)
+* `glimpse()` - some of each column
+* `filter()` - subsetting
+* `arrange()` - sorting (`desc` to reverse the sort)
+* `select()` - picking (and omiting) columns
+
+# Value transformation | `mutate()` 
+
+## `rename()` | Renaming columns
+
 
 - Rename columns with `rename(new_name = old_name)`.
     + To keep the order correct, read/remember the renaming `=` as "was".
-    + Rename will replace column names (see `mutate(new_name = old_name)` for simple copy  )
+    + Rename will replace column names
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   rename(stop = end_position, start = start_position)
 ```
 
-## mutate | add or replace columns{.build}
+## `mutate()` | Add or replace columns{.build}
 
 
-- How long is your gene
-- Note that new variables can be used right away
+### Gene length {.box-12 .bg-blue}
+ - Note that new variables can be used right away
 
 ```{r}
-gene_ids %>%
-  filter(gene_biotype =="protein_coding") %>% 
+gene_by_exon %>%
   mutate(  length = end_position - start_position) %>% 
-  dplyr::select(hgnc_symbol, length)
+  dplyr::select(hgnc_symbol, length)  
 ```
 
 
-### Not quite right
+
+## `distinct()` | Unique rows
+
+This is not a gene set for statistics
+
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   filter(gene_biotype =="protein_coding") %>% 
   mutate(  length = end_position - start_position) %>% 
   dplyr::select(hgnc_symbol, length) %>% 
   distinct()
 ```
 
-## Grouping | `group_by()`
 
- * Not a summarising transformation but frequently used in conjunction 
- * Grouping by more than one or more variables
- * Use `ungroup()` 
-
-## group_by | Grouping
-
-- Let's compute the average number of exons 
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   group_by(gene_biotype) %>%
    mutate(  length = end_position - start_position) %>% 
     #Some values are missing, thus tell `mean` to remove them from the calculation.
@@ -272,159 +305,108 @@ gene_ids %>%
   arrange(desc(by_type_length))
 ```
 
+## `mutate_at(), mutate_all(), mutate_if()` | Changing many columns
 
-## group_by | Grouping
+### Usage{.box-12 .bg-blue}
+ * Use the `select` helpers with `mutate_at()`
+ * Use column conditions for `mutate_if()`
+ * `vars()` to wrap variables and `funs()` to wrap functions 
+ 
+### Coordinate conversion {.box-6 .bg-cobalt}
+ 
+```{r eval = FALSE}
+gene_by_exon %>% 
+  mutate_at(vars(contains("position")), funs(. +1))
 
-- Number of exons
+```
+
+### Coordinate conversion {.box-6 .bg-cobalt}
+ 
+```{r}
+gene_by_exon %>% 
+  mutate_if(is.numeric, funs(. +1))
+
+```
+
+# Grouping and summarizing
+
+## `group_by()` | Grouping
+
+ * Not a summarising transformation but frequently used in conjunction 
+ * Grouping by more than one or more variables
+ * Use `ungroup()` 
+
+### Let's compute the average number of exons {.box-12 .bg-cobalt}
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   group_by(ensembl_gene_id, hgnc_symbol) %>% 
-  summarise(nexon =n_distinct(ensembl_exon_id))
+  summarise(nexon =n_distinct(ensembl_exon_id)) %>% 
+  head(5)
 
 ```
-
-
-
-## Exercise{.build .exercise}
-
-- In average, how many gene_ids is a single plane doing per day?
-
-- Calculate the average delay per day.
-
-- Which day should be avoided?
-
-## Solution | 1. single plane gene_ids per day
-
-```{r eval=FALSE}
-by_day %>%
-  summarise(gene_ids = n(),
-            avg_delay = mean(dep_delay, na.rm = TRUE),
-            n_planes = n_distinct(tailnum)) %>%
-  mutate(avg_gene_ids = gene_ids / n_planes)
-```
-
-## Solution | 2. distribution of single plane gene_ids per day
-
-```{r, fig.height = 4, eval = FALSE}
-by_day %>%
-  summarise(gene_ids = n(),
-            avg_delay = mean(dep_delay, na.rm = TRUE),
-            n_planes = n_distinct(tailnum)) %>%
-  mutate(avg_gene_ids = gene_ids / n_planes)
-```
-
-## Solution | 3. average delay per day
-
-```{r, fig.height = 4, fig.width = 10, eval = FALSE}
-by_day %>%
-  summarise(avg_delay = mean(dep_delay, na.rm = TRUE)) %>%
-  unite(date, year, month, day, sep = "-") %>%
-  mutate(date = as.Date(date)) %>%
-  ggplot() + 
-  geom_bar(aes(x = date, y = avg_delay), stat = "identity")
-```
-
-## Solution | 4. day to avoid
-
-```{r eval=FALSE}
-by_day %>%
-  summarise(avg_delay = mean(dep_delay, na.rm = TRUE)) %>%
-  arrange(desc(avg_delay))
-```
-
-## Exercise{.exercise}
-
-- Find the destinations with the highest average arrival delay?
-  + discard gene_ids with missing data as arrival delay
-  + count the number of gene_ids per destination
-  + discard results with less than 10 gene_ids, mean not meaningful
-
-## Solution | destinations with highest average arrival delay
-
-```{r eval=FALSE}
-gene_ids %>%
-  filter(!is.na(arr_delay)) %>%
-  group_by(dest) %>%
-  summarise(mean = mean(arr_delay),
-            n = n()) %>%
-  filter(n > 10) %>%
-  arrange(desc(mean))
-  
-```
-
-## Other biomaRt data
-
-Get homologs
-```{r eval=FALSE}
-airports
-```
-
-## Join two data frames
-
-```{r eval=FALSE}
-delays <- gene_ids %>%
-  filter(!is.na(arr_delay)) %>%
-  group_by(dest) %>%
-  summarise(mean = mean(arr_delay),
-            n = n()) %>%
-  filter(n > 10) %>%
-  arrange(desc(mean)) %>%
-  inner_join(airports, by = c("dest" = "faa")) # provide the equivalence since columns have a different name
-```
-
-We could have used **left_join** but 4 rows with a 3-letters acronym have no correspondance in the `airports` data frame. **inner_join** narrows down the lines that are present in both data frames.
-
-## Join types
-
-```{r, echo = FALSE}
-knitr::include_graphics("http://www.dofactory.com/Images/sql-joins.png")
-```
-
-Of note: **anti_join** can select rows which identifiers are **absent** in the second data frame.
-
-
-## Join as data frames | **mutating** joins
-
-```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/05_joins.png")
-```
-
-credit: [Hadley Wickham, R for data science](http://r4ds.had.co.nz/relational-data.html)
-
-## Join as data frames | **filtering** joins
-
-```{r, echo=FALSE, out.width="100%"}
-knitr::include_graphics("img/05_filtering-joins.png")
-```
-
-credit: [Hadley Wickham, R for data science](http://r4ds.had.co.nz/relational-data.html)
-
-
-
 
 ## tally / count
 
 `tally` is a shortcut to counting the number of items per group.
 
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   group_by(hgnc_symbol) %>%
   tally() %>% head(3) # could sum up with multiple tally calls
 ```
 `count` does the grouping for you
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   count(hgnc_symbol) %>% head(3)
 ```
 
 
+
+# Joining data frames
+
+
+## Sample data from Clinvar
+
+```{r cache=TRUE}
+
+clinvar <- tribble(~symbol, ~gene_interest, 
+                   "ATP50", "yes",
+                   "APP",   "yes",
+                   "DIP2A", "yes")
+
+```
+
+### Join two data frames {.box-12 .bg-blue}
+
+```{r eval=FALSE}
+gene_annotation <- gene_by_exon %>% 
+  inner_join(clinvar, by = c("hgnc_symbol"="symbol")) # provide the equivalence since columns have a different name
+gene_annotation
+```
+
+
+## Relational operations | **mutating** joins
+
+### Inner join {.box-5 .offset-1 .bg-yellow2 .stretch}
+![](http://r4ds.had.co.nz/diagrams/join-inner.png)
+
+credit: [Hadley Wickham, R for data science](http://r4ds.had.co.nz/relational-data.html)
+
+### Outer join {.box-5 .bg-yellow2 .stretch}
+![](http://r4ds.had.co.nz/diagrams/join-outer.png)
+
+
+
+
+
+
 ## `lead() and lag()` | Comparing rows above and below
 
-### Calculate intergenic distance {.box-8 .offset-1, .bg-blue}
-<!~- Common issue solved by self-joins or for loops-->
+### Calculate intergenic distance {.box-8 .offset-1 .bg-blue}
+
 ```{r}
-gene_ids %>%
+gene_by_exon %>%
   dplyr::select(ensembl_gene_id, start_position, end_position) %>% 
   distinct() %>% 
   arrange(start_position) %>% 
@@ -445,23 +427,16 @@ gene_ids %>%
 - summarise
 
 ## Other 20%
-
-
 - assembly: `bind_rows`, `bind_cols`
 - windows function, `min_rank`, `dense_rank`, `cumsum`. See [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
-- column-wise operations: `mutate_each`, `transmute`, `summarise_each`
-- column-wise conditional operations: `mutate_at`, `mutate_if`, `summarise_at`, `summarise_if`
 - `do`: arbitrary code on each chunk. To be replaced by `tidyr::nest() %>% mutate(purrr::map())`
  `data.tables`)
 
-## `dplyr 0.6` | Forthcoming changes
-
-## Missing features
-parallel dplyr
-dbplyr -- databases access
 
 ## Data base access
- - `dplyr` code can be translated into SQL and query databases online
+
+### SQL mapping {.box-8 .offset-2 .bg_green}
+ - `dplyr` code can be translated into SQL and query databases online (using `dbplyr`)
  - different types of tabular data ([dplyr SQL backend](https://cran.r-project.org/web/packages/dplyr/vignettes/databases.html), databases,
 
 ## Bigger data, go for `data.table`
@@ -476,3 +451,5 @@ dbplyr -- databases access
   + `dtplyr` is a `dplyr` interface to `data.table` but slower than native `data.table`
 
 ![](https://www.stickermule.com/marketplace/embed_img/16249 )
+
+
