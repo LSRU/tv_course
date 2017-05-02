@@ -194,19 +194,25 @@
 <li>Manually collected data (EDC)</li>
 </ul>
 
-</div><div class = 'col-3 box bg-green'><h3>Intermediate➡️</h3>
+</div><div class = 'col-3 box bg-green '><h3>Intermediate➡️</h3>
 
 <p>Computation or manual clean up CPU or hands-on time <strong>&quot;Tidy&quot; data</strong> Tools: Specialized tools + shell</p>
 
-</div><div class = 'col-3 box bg-yellow icon'><h3>Analysis ➡️</h3>
+</div><div class = 'col-3 box bg-yellow icon '><h3>Analysis ➡️</h3>
 
 <p>Statistical analysis Exploratory and model building Hypothesis testing</p>
 
 <p>Tools: R</p>
 
-</div><div class = 'col-3 box bg-red'><h3>Manuscript</h3>
+</div><div class = 'box col-3 bg-red '><h3>Manuscript</h3>
 
-<p>Writing stage Can you reproduce your work? * Numbers of your paper * Summaries * Images</p>
+<p>Writing stage Can you reproduce your work?</p>
+
+<ul>
+<li>Numbers in your paper</li>
+<li>Summaries</li>
+<li>Images</li>
+</ul>
 
 <p>Tools: rmarkdown</p>
 
@@ -227,7 +233,7 @@
 
 <ul>
 <li>The following table lists missense variants in a gene in a group of patients</li>
-<li>What&#39;s wrong with <a href='%22data/badtable.xlsx%22' title=''>this Excel</a> sheet?</li>
+<li>What&#39;s wrong with <a href='https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/tidydata.xlsx' title=''>this Excel</a> sheet?</li>
 <li>Which problems are &quot;tidy&quot; issues</li>
 </ul>
 
@@ -427,55 +433,23 @@ iris_melt</pre>
 10    107  virginica          4.5         1.7          4.9         2.5
 # ... with 140 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Separate / Unite </h2><h3> Common application</h3></hgroup><article  id="separate-unite-common-application" class="smaller ">
-
-<div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Dates</h3>
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code>gather</code></h2></hgroup><article  id="other-uses-of-gather" class="smaller vs2">
 
 <div id="unnamed-chunk-11" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>df &lt;- data_frame(year = c(2015, 2014, 2014),
-                 month = c(11, 2, 4),
-                 day = c(23, 1, 30),
-                 value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))</pre></div>
-
-<h3><code class="box-6 bg-blue build">unite()</code></h3>
-
-<div id="unnamed-chunk-12" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>df %&gt;%
-  unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
-
-<h3><code class="box-6 bg-blue build">separate()</code></h3>
-
-<ul>
-<li>Use <strong>quotes</strong> since we are not refering to objects</li>
-<li>Default split on non-alphanumeric characters</li>
-</ul>
-
-<div id="unnamed-chunk-13" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>df_unite %&gt;%
-  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
-
-<pre ># A tibble: 3 × 4
-   year month   day value
-* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1  2015    11    23  high
-2  2014     2     1   low
-3  2014     4    30   low</pre></div>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code class="vs2">tidyr</code></h2></hgroup><article  id="other-uses-of-tidyr" class="smaller ">
-
-<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris %&gt;%
   gather(flower, measure, 1:4) %&gt;%
   ggplot() +
   geom_boxplot(aes(x = Species, y = measure, fill = flower))</pre>
 
-<p><img src="lecture05_tidyr_files/figure-html/unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" /></p></div>
+<p><img src="lecture05_tidyr_files/figure-html/unnamed-chunk-11-1.png" width="50%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Basic data cleaning</h2></hgroup><article  id="basic-data-cleaning" class="smaller ">
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Separate rows </h2><h3> From ugly tables</h3></hgroup><article  id="separate-rows-from-ugly-tables" class="smaller ">
 
-<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Common input</h3>
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Multiple values per cell</h3>
 
-<div id="unnamed-chunk-15" class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_df &lt;- tibble(
     subject_id = 1001:1003, 
     visit_id = c(&quot;1,2,3&quot;, &quot;1,2&quot;, &quot;1&quot;),
@@ -493,7 +467,7 @@ patient_df</pre>
 
 </div><div class = 'box col-6 bg-blue stretch '><h3>Combinations of variables</h3>
 
-<div id="unnamed-chunk-16" class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_df %&gt;% 
   separate_rows(visit_id, measured, convert=TRUE) -&gt; patient_separate
 patient_separate</pre>
@@ -516,7 +490,7 @@ patient_separate</pre>
 
 <div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Set-up</h3>
 
-<div id="unnamed-chunk-17" class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient &lt;- tibble(
 subject_id = 1001:1006,
 gender_age = paste(c(&quot;m&quot;, &quot;f&quot;), floor(runif(6, 21,65 )), sep=&quot;-&quot;))
@@ -525,14 +499,50 @@ patient</pre>
 <pre ># A tibble: 6 × 2
   subject_id gender_age
        &lt;int&gt;      &lt;chr&gt;
-1       1001       m-33
-2       1002       f-26
-3       1003       m-49
-4       1004       f-43
-5       1005       m-64
-6       1006       f-49</pre></div>
+1       1001       m-59
+2       1002       f-52
+3       1003       m-44
+4       1004       f-28
+5       1005       m-21
+6       1006       f-34</pre></div>
 
-</div><div class = 'box col-6 bg-blue stretch '><h3>Combinations of variables</h3>
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>separate()</code> and <code>unite()</code></h2></hgroup><article  id="separate-and-unite" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Dates</h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df &lt;- data_frame(year = c(2015, 2014, 2014),
+                 month = c(11, 2, 4),
+                 day = c(23, 1, 30),
+                 value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))</pre></div>
+
+</div><div class = 'box col-6 bg-yellow '><h3><code>unite()</code> {}</h3>
+
+<div id="unnamed-chunk-16" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df %&gt;%
+  unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow '><h3><code>separate()</code> {}</h3>
+
+<ul>
+<li>Use <strong>quotes</strong> since we are not refering to objects</li>
+<li>Default split on non-alphanumeric characters</li>
+</ul>
+
+<div id="unnamed-chunk-17" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df_unite %&gt;%
+  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
+
+<pre ># A tibble: 3 × 4
+   year month   day value
+* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other combinations of variables</h2></hgroup><article  id="other-combinations-of-variables" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Key-value pairs</h3>
 
 <div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient %&gt;% separate(gender_age, c(&quot;sex&quot;, &quot;age&quot;), convert=TRUE)</pre>
@@ -540,12 +550,12 @@ patient</pre>
 <pre ># A tibble: 6 × 3
   subject_id   sex   age
 *      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-1       1001     m    33
-2       1002     f    26
-3       1003     m    49
-4       1004     f    43
-5       1005     m    64
-6       1006     f    49</pre></div>
+1       1001     m    59
+2       1002     f    52
+3       1003     m    44
+4       1004     f    28
+5       1005     m    21
+6       1006     f    34</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>complete()</code> </h2><h3> Fill all combinations</h3></hgroup><article  id="complete-fill-all-combinations" class="smaller ">
 
@@ -596,7 +606,7 @@ patient_complete</pre>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nesting table </h2><h3> Structured data</h3></hgroup><article  id="nesting-table-structured-data" class="smaller ">
 
-<h3><code class="box-6 bg-blue build">nest()</code></h3>
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>nest()</code></h3>
 
 <div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_complete %&gt;% 
@@ -610,14 +620,14 @@ patient_nested</pre>
 2       1002 &lt;tibble [3 × 2]&gt;
 3       1003 &lt;tibble [3 × 2]&gt;</pre></div>
 
-<div class = 'row build'><div class = 'box col-6 bg-green '>
+</div><div class = 'box col-6 bg-green '>
 
 <ul>
 <li>Common data structures are hierarchical, e.g. patient-centric with repeat observations</li>
 <li>Nesting allows to store <em>collapsed</em> tibbles and simplifies data management</li>
 </ul>
 
-<h3><code class="box-6 bg-blue build">unnest()</code></h3>
+</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>unnest()</code> {}</h3>
 
 <div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_nested %&gt;% 
