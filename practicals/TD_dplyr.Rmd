@@ -1,0 +1,103 @@
+---
+title: "Practical data transformation"
+author: "Roland Krause"
+date: "3 May 2017"
+output:
+  unilur::tutorial_html_solution: default
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solution: default
+subtitle: dplyr
+---
+
+```{r setup, include=FALSE}
+library("tidyverse")
+```
+
+This short tutorial will allow you to explore `dplyr` functionality based on the previous lecture.
+
+(@) Get data for chromosome 22 from biomaRt. Use Rmarkdown and set the chunk option 'cache = TRUE'
+```{r cache=TRUE}
+library(biomaRt)
+gene_mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
+gene_set <- useDataset(gene_mart , dataset="hsapiens_gene_ensembl")
+
+gene_by_exon <- getBM(
+  mart = gene_set,
+  attributes = c(
+    "ensembl_gene_id",
+    "ensembl_transcript_id",
+    "ensembl_exon_id",
+    "chromosome_name",
+    "start_position",
+    "end_position",
+    "hgnc_symbol",
+    "hgnc_id",
+    "strand",
+    "gene_biotype",
+    "phenotype_description"
+    ), 
+  filter = "chromosome_name",
+  value = "21"
+  )
+
+```
+
+(@) Extract the processed pseudogenes from the `genes_by_exon` data set. Use `glimpse()` to find the correct columns.
+```{r, solution = TRUE}
+  gene_by_exon %>% 
+  filter(gene_biotype =="processed_pseudogenes")
+```
+
+(@) Count the number of pseudogenes in the set (without referring to `table()` obviously )
+
+(@) Extract a unique set of gene ids without reduncancy of transcripts and exon information. Store the results in a tibble called `genes`
+```{r, solution=TRUE}
+gene_by_exon %>% 
+  dplyr::select(-ensembl_transcript_id, -ensembl_exon_id) %>% 
+  distinct()-> genes
+
+```
+
+
+
+(@) Sort the genes by their length.
+```{r, solution=TRUE}
+gene_by_exon %>%
+  mutate(length=end_position-start_position) %>% 
+  arrange(length)
+
+```
+
+(@) Calculate the average length per gene by `gene_biotype`.
+
+```{r, solution = TRUE}
+gene_by_exon %>%
+  mutate(length=end_position-start_position) %>% 
+  group_by(gene_biotype) %>% 
+  summarize(mean_lenght = floor(mean(length)))
+```
+
+(@) Calculate the total number of genes and their average length by `gene_biotype`.
+
+```{r, solution = TRUE}
+genes %>%
+  mutate(length=end_position-start_position) %>% 
+  group_by(gene_biotype) %>% 
+  summarize(mean_length = floor(mean(length)),
+            n_gene = n_distinct(ensembl_gene_id))
+
+```
+(@) What is the most frequent single word in the phenotype description on chromosome 21? Split the column using `separate`, `gather` the columns and `count` in a single `dplyr` statement.
+```{r, solution=TRUE}
+gene_by_exon %>% 
+  dplyr::select(phenotype_description) %>% 
+  distinct() %>% 
+  filter(!is.na(phenotype_description)) %>% 
+  separate(phenotype_description , LETTERS[1:15], extra="drop", fill="right") %>% 
+  gather(everything(), key="position", value="word") %>% 
+  mutate(word=tolower(word)) %>% 
+  count(word) %>% 
+  arrange(desc(n))
+
+
+```
