@@ -79,13 +79,13 @@ knitr::include_graphics("http://lsru.github.io/r_workshop/img/tidy-1_600.png")
  * External data sets
  * Manually collected data (EDC)
 
-###  Intermediate➡️ {.col-3 .box .bg-green}
+###  Intermediate➡️ {.col-3 .box .bg-green .build}
 Computation or manual clean up
 CPU or hands-on time
 **"Tidy" data**
 Tools: Specialized tools + shell
 
-###  Analysis ➡️  {.col-3 .box .bg-yellow .icon}
+###  Analysis ➡️  {.col-3 .box .bg-yellow .icon .build}
 Statistical analysis
 Exploratory and model building
 Hypothesis testing
@@ -93,12 +93,13 @@ Hypothesis testing
 Tools: R
 
 
-###  Manuscript{.col-3 .box .bg-red}
+###  Manuscript{.box-3 .bg-red .build}
 Writing stage
 Can you reproduce your work?
-	* Numbers of your paper
-  * Summaries
-  * Images
+
+ * Numbers in your paper
+ * Summaries
+ * Images
   
 Tools: rmarkdown 
 
@@ -116,7 +117,7 @@ Word.
 
 ### {.col-8 .box .bg-green}
 - The following table lists missense variants in a gene in a group of patients
-- What's wrong with [this Excel]("data/badtable.xlsx") sheet?
+- What's wrong with [this Excel](https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/tidydata.xlsx) sheet?
 - Which problems are "tidy" issues 
 ```{r, echo=FALSE, warnings=FALSE, out.width = '10%'}
 knitr::include_graphics("img/04_excel_icon.png")
@@ -216,38 +217,7 @@ iris_melt %>%
 ```
 
 
-
-
-
-## Separate / Unite | Common application
-
-### Dates {.box-6 .bg-blue .build}
-
-```{r, out.width='50%'}
-df <- data_frame(year = c(2015, 2014, 2014),
-                 month = c(11, 2, 4),
-                 day = c(23, 1, 30),
-                 value = c("high", "low", "low"))
-```
-
-### `unite()` {.box-6 .bg-blue .build}
-
-```{r, out.width='50%'}
-df %>%
-  unite(date, year, month, day, sep = "-") -> df_unite
-```
- 
-### `separate()` {.box-6 .bg-blue .build}
- - Use **quotes** since we are not refering to objects
- - Default split on non-alphanumeric characters 
-
-```{r, out.width='50%'}
-df_unite %>%
-  separate(date, c("year", "month", "day"))
-```
-
-
-## Other uses of `tidyr`   {.vs2}
+## Other uses of `gather`   {.vs2}
 
 ```{r, out.width='50%'}
 iris %>%
@@ -256,11 +226,11 @@ iris %>%
   geom_boxplot(aes(x = Species, y = measure, fill = flower))
 ```
 
-
+# Basic data cleaning
 
 ## Separate rows | From ugly tables
 
-### Common input {.box-6 .bg-blue .stretch .build}
+### Multiple values per cell {.box-6 .bg-blue .stretch .build}
 ```{r}
 patient_df <- tibble(
     subject_id = 1001:1003, 
@@ -292,7 +262,42 @@ patient
 ```
 
 
-### Combinations of variables {.box-6 .bg-blue .stretch .build}
+
+
+
+## `separate()` and `unite()` 
+
+### Dates {.box-6 .bg-blue .build}
+
+```{r, out.width='50%'}
+df <- data_frame(year = c(2015, 2014, 2014),
+                 month = c(11, 2, 4),
+                 day = c(23, 1, 30),
+                 value = c("high", "low", "low"))
+```
+
+### `unite()` {} {.box-6 .bg-yellow .build}
+
+```{r, out.width='50%'}
+df %>%
+  unite(date, year, month, day, sep = "-") -> df_unite
+```
+
+
+
+### `separate()` {} {.box-6 .bg-yellow .build}
+ - Use **quotes** since we are not refering to objects
+ - Default split on non-alphanumeric characters 
+
+```{r, out.width='50%'}
+df_unite %>%
+  separate(date, c("year", "month", "day"))
+```
+
+
+## Other combinations of variables
+
+### Key-value pairs {.box-6 .bg-blue .stretch .build}
 ```{r}
 patient %>% separate(gender_age, c("sex", "age"), convert=TRUE)
 ```
@@ -319,7 +324,7 @@ patient_complete
 
 ## Nesting table | Structured data
 
-### `nest()` {.box-6 .bg-blue .build}
+### `nest()`{} {.box-6 .bg-blue .build}
 ```{r out.width = '50%'}
 patient_complete %>% 
   nest(visit_id, measured) ->patient_nested
@@ -330,7 +335,7 @@ patient_nested
  * Common data structures are hierarchical, e.g. patient-centric with repeat observations
  * Nesting allows to store *collapsed* tibbles and simplifies data management
 
-### `unnest()` {.box-6 .bg-blue .build}
+### `unnest()` {} {.box-6 .bg-blue .build}
 ```{r out.width = '50%'}
 patient_nested %>% 
   unnest()
