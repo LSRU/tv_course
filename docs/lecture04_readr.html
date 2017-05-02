@@ -1099,9 +1099,9 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 <li>import <strong>cell ranges</strong></li>
 </ul>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file" class="smaller nvs1">
 
-<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Sample files</h3>
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green compact-output'><h3>Sample files</h3>
 
 <ul>
 <li>we will use the files shipped with the readxl package</li>
@@ -1126,7 +1126,13 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 <li>determine how many sheets are contained in the file</li>
 <li>load the data contained in the <code>mtcars</code> sheet</li>
 <li>you can also try Rstudio&#39;s interactive importer</li>
-</ul></li>
+</ul>
+
+<div id="unnamed-chunk-30" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>file.copy(
+  from = readxl::readxl_example(&quot;datasets.xlsx&quot;),
+  to = &quot;datasets.xlsx&quot;
+) # To copy it to the root of your project</pre></div></li>
 </ul>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file-1" class="smaller ">
@@ -1134,7 +1140,7 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 <div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>the <code>deaths</code> dataset</h3>
 
 <ul>
-<li>use the <code>deaths.xls</code> file in your <code>data</code> folder in the projects root (or use the path <code>readxl_example(&quot;deaths.xlsx&quot;)</code>)</li>
+<li>use the <code>deaths.xls</code> file (using <code>readxl_example(&quot;deaths.xlsx&quot;)</code> to get the path to it)</li>
 <li>how many sheets does the file contain?</li>
 <li>import the first sheet of the file.</li>
 <li>are you happy with the result?</li>
@@ -1142,7 +1148,7 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 
 </div></div><div class = 'row build'><div class = 'box col-10  offset-1 bg-cobalt'>
 
-<div id="unnamed-chunk-30" class="chunk shadow">
+<div id="unnamed-chunk-31" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
   read_excel(sheet = 1)</pre>
 
@@ -1177,7 +1183,7 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 
 <div class = 'row'><div class = 'col-8 offset-2'>
 
-<div id="unnamed-chunk-31" class="chunk shadow">
+<div id="unnamed-chunk-32" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
   read_excel(sheet = 1, range = &quot;A5:F15&quot;)</pre>
 
@@ -1198,7 +1204,7 @@ read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
 
 </div></div><div class = 'row build'><div class = 'box col-8 offset-2 bg-cobalt bg-'><h3>Alternative calls</h3>
 
-<div id="unnamed-chunk-32" class="chunk shadow">
+<div id="unnamed-chunk-33" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
   read_excel(range = &quot;arts!A5:F15&quot;)
 
@@ -1221,13 +1227,13 @@ readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
 <li><code>col_types</code> should be adjusted to a character vector</li>
 <li><p>look at the correspondance in the <a href='https://cran.r-project.org/web/packages/readxl/vignettes/cell-and-column-types.html' title=''>readxl vignette</a></p>
 
-<div id="unnamed-chunk-33" class="chunk shadow">
+<div id="unnamed-chunk-34" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vignette(&quot;cell-and-column-types&quot;)</pre></div></li>
 </ul>
 
 </div><div class = 'box col-7 bg-blue compact-table'>
 
-<div id="unnamed-chunk-34">
+<div id="unnamed-chunk-35">
 <table class = 'rmdtable'>
 <tr class="header">
 <th align="left">How it is in Excel</th>
@@ -1279,7 +1285,7 @@ readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
 <li>try to import the <code>clippy.xls</code> example file provided by <code>readxl</code></li>
 </ul>
 
-<div id="unnamed-chunk-35" class="chunk shadow">
+<div id="unnamed-chunk-36" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
   read_excel()</pre>
 
@@ -1298,7 +1304,7 @@ readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
 
 </div><div class = 'box col-6 bg-green'><h3>override <code>col_types</code></h3>
 
-<div id="unnamed-chunk-36" class="chunk shadow">
+<div id="unnamed-chunk-37" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
   read_excel(col_types = c(&quot;text&quot;, &quot;list&quot;))</pre>
 
@@ -1310,7 +1316,7 @@ readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
 3 Approx date of death &lt;dttm [1]&gt;
 4      Weight in grams  &lt;dbl [1]&gt;</pre></div>
 
-<div id="unnamed-chunk-37" class="chunk shadow">
+<div id="unnamed-chunk-38" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
   read_excel(col_types = c(&quot;text&quot;, &quot;list&quot;)) %&gt;%
   tibble::deframe() %&gt;%
