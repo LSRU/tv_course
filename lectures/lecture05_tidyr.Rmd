@@ -117,7 +117,7 @@ Word.
 
 ### {.col-8 .box .bg-green}
 - The following table lists missense variants in a gene in a group of patients
-- What's wrong with [this Excel](https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/tidydata.xlsx) sheet?
+- What's wrong with [this Excel](https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/badtable.xlsx) sheet?
 - Which problems are "tidy" issues 
 ```{r, echo=FALSE, warnings=FALSE, out.width = '10%'}
 knitr::include_graphics("img/04_excel_icon.png")

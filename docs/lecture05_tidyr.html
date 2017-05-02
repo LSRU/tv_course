@@ -233,7 +233,7 @@
 
 <ul>
 <li>The following table lists missense variants in a gene in a group of patients</li>
-<li>What&#39;s wrong with <a href='https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/tidydata.xlsx' title=''>this Excel</a> sheet?</li>
+<li>What&#39;s wrong with <a href='https://cdn.rawgit.com/LSRU/tv_course/15c83c5e/lectures/data/badtable.xlsx' title=''>this Excel</a> sheet?</li>
 <li>Which problems are &quot;tidy&quot; issues</li>
 </ul>
 
@@ -433,7 +433,7 @@ iris_melt</pre>
 10    107  virginica          4.5         1.7          4.9         2.5
 # ... with 140 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code class="vs2">gather</code></h2></hgroup><article  id="other-uses-of-gather" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code>gather</code></h2></hgroup><article  id="other-uses-of-gather" class="smaller vs2">
 
 <div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris %&gt;%
@@ -499,11 +499,11 @@ patient</pre>
 <pre ># A tibble: 6 × 2
   subject_id gender_age
        &lt;int&gt;      &lt;chr&gt;
-1       1001       m-35
-2       1002       f-48
-3       1003       m-24
-4       1004       f-55
-5       1005       m-21
+1       1001       m-24
+2       1002       f-57
+3       1003       m-31
+4       1004       f-46
+5       1005       m-38
 6       1006       f-63</pre></div>
 
 </div><div class = 'box col-6 bg-blue stretch '><h3>Key-value pairs</h3>
@@ -514,11 +514,11 @@ patient</pre>
 <pre ># A tibble: 6 × 3
   subject_id   sex   age
 *      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-1       1001     m    35
-2       1002     f    48
-3       1003     m    24
-4       1004     f    55
-5       1005     m    21
+1       1001     m    24
+2       1002     f    57
+3       1003     m    31
+4       1004     f    46
+5       1005     m    38
 6       1006     f    63</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>separate()</code> and <code>unite()</code></h2></hgroup><article  id="separate-and-unite" class="smaller ">
@@ -531,13 +531,13 @@ patient</pre>
                  day = c(23, 1, 30),
                  value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))</pre></div>
 
-</div><div class = 'box col-6 bg-yellow '><h3><code>unite()</code></h3>
+</div><div class = 'box col-6 bg-yellow '><h3><code>unite()</code> {}</h3>
 
 <div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>df %&gt;%
   unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
 
-</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow '><h3><code>separate()</code></h3>
+</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow '><h3><code>separate()</code> {}</h3>
 
 <ul>
 <li>Use <strong>quotes</strong> since we are not refering to objects</li>
@@ -625,7 +625,7 @@ patient_nested</pre>
 <li>Nesting allows to store <em>collapsed</em> tibbles and simplifies data management</li>
 </ul>
 
-</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>unnest()</code></h3>
+</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>unnest()</code> {}</h3>
 
 <div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_nested %&gt;% 
