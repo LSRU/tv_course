@@ -164,7 +164,14 @@ This is *verbatim* code
 
 ![](img/03_md_logo.png)
 
-Before writing your own Rmarkdown document, use the excellent ressource on [www.markdowntutorial.com](http://www.markdowntutorial.com/) to learn the basics of markdown formatting.
+Before writing your own Rmarkdown document, use the excellent ressource on
+[commonmark.org](http://commonmark.org/help/tutorial/) to learn the basics of markdown formatting.
+
+
+<span class = "vs2 small">An alternative online ressource can be found on [www.markdowntutorial.com](http://www.markdowntutorial.com/)</span>
+
+
+
 
 ## Including _R_ code
 
