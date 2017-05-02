@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Functional programming</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Functional programming',
+                        subtitle: 'with <code>purrr</code>',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture08_purrr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <script src="site_libs/htmlwidgets-0.8/htmlwidgets.js"></script>
+  <link href="site_libs/jsoneditor-5.5.5/jsoneditor.min.css" rel="stylesheet" />
+  <script src="site_libs/jsoneditor-5.5.5/jsoneditor.min.js"></script>
+  <script src="site_libs/jsonedit-binding-1.4.0/jsonedit.js"></script>
+  <style type="text/css">
+  
+    .bg-yellow {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grayblue {
+      background-color: #BFCCD7;
+    }
+  
+    .box.bg-grayblue {
+      border: 2px solid #60666C;
+      color: #000;
+    }
+  
+    .box.bg-grayblue > h3:first-child {
+      background-color: #60666C;
+      color: #fff;
+    }
+  
+    .bg-bluewhite {
+      background-color: #FFFFFF;
+    }
+  
+    .box.bg-bluewhite {
+      border: 2px solid #005C99;
+      color: #000;
+    }
+  
+    .box.bg-bluewhite > h3:first-child {
+      background-color: #005C99;
+      color: #fff;
+    }
+  
+    .bg-greenwhite {
+      background-color: #FFFFFF;
+    }
+  
+    .box.bg-greenwhite {
+      border: 2px solid #1F7A1F;
+      color: #000;
+    }
+  
+    .box.bg-greenwhite > h3:first-child {
+      background-color: #1F7A1F;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture08_purrr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">4 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>You will learn to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>use a functional programming approach to simplify your code</li>
+<li>pass functions as arguments to higher order functions</li>
+<li>use <code>purrr::map</code> to replace <code>for</code> loops</li>
+<li>deal with nested lists</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reminder </h2><h3> Lists and vectors</h3></hgroup><article  id="reminder-lists-and-vectors" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Atomic vectors</h3>
+
+<p>Each <strong>atomic</strong> vector contains only a single type of data</p>
+
+<ul>
+<li>The type of each atom is the same</li>
+<li>The size of each atom is 1 (single element)</li>
+<li><p>Examples:</p>
+
+<div id="unnamed-chunk-1" class="chunk shadow">
+<pre class = 'prettyprint lang-r'># Logical
+c(TRUE, FALSE, TRUE)
+
+# double
+c(1, 5, 7)
+
+# character
+c(&quot;character&quot;, &quot;sequence&quot;)</pre></div></li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue'><h3>Coercion</h3>
+
+<p>Is the conversion between types</p>
+
+<ul>
+<li>can be <strong>explicit</strong> using <code>as.*()</code> functions</li>
+</ul>
+
+<div id="unnamed-chunk-2" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>v_example &lt;- c(1, 3, 7)
+str(as.character(v_example))</pre>
+
+<pre > chr [1:3] &quot;1&quot; &quot;3&quot; &quot;7&quot;</pre></div>
+
+<ul>
+<li>can be <strong>automatic</strong></li>
+</ul>
+
+<div id="unnamed-chunk-3" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>v_example &lt;- c(1, 3)
+str(v_example)</pre>
+
+<pre > num [1:2] 1 3</pre>
+
+<pre class = 'prettyprint lang-r'>str(c(v_example, &quot;seven&quot;))</pre>
+
+<pre > chr [1:3] &quot;1&quot; &quot;3&quot; &quot;seven&quot;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reminder </h2><h3> Lists and vectors</h3></hgroup><article  id="reminder-lists-and-vectors-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Lists</h3>
+
+<ul>
+<li>are <strong>vectors</strong> which are <strong>not atomic</strong>.</li>
+<li>Elements can be of different types</li>
+<li>The length of each element (atom) might be greater than 1.</li>
+<li><p>example</p>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>my_list &lt;- list(1, 3, &quot;seven&quot;)
+str(my_list)</pre>
+
+<pre >List of 3
+ $ : num 1
+ $ : num 3
+ $ : chr &quot;seven&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>is.vector(my_list)</pre>
+
+<pre >[1] TRUE</pre>
+
+<pre class = 'prettyprint lang-r'>is.atomic(my_list)</pre>
+
+<pre >[1] FALSE</pre></div></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> functional programming</h3></hgroup><article  id="purrr-functional-programming" class="smaller ">
+
+<div id="unnamed-chunk-5">
+<style type="text/css">
+.center-pic img {
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom:5px;
+}
+
+.center-pic .caption {
+  text-align: center;
+}
+
+.small img {
+  max-height: 64px;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-blue icon'><h3>Overview</h3>
+
+<img src='img/08_purrr.png' title='fig:'/>
+
+<p>purrr enhances R&#39;s <strong>functional programming</strong> toolkit by providing a complete and consistent set of tools for <strong>working with functions and vectors</strong> (purrr overview on github page)</p>
+
+</div></div><div class = 'row build'><div class = 'col-10 offset-1 '>
+
+<blockquote class = 'bg-red'>
+<p><strong>functional programming</strong> is a programming paradigm &#8211; a style of building the structure and elements of computer programs &#8211; that treats computation as the evaluation of mathematical functions and avoids changing-state and mutable data <cite> Wikipedia</p></cite>
+</blockquote>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> focuses on functions</h3></hgroup><article  id="purrr-focuses-on-functions" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>functional programming features</h3>
+
+<ul>
+<li>pass functions as arguments to other functions</li>
+<li>code that does not change state (a same call should yield the same result)</li>
+</ul>
+
+</div><div class = 'box col-6 bg-red icon'><h3>Iteration</h3>
+
+<p>FOR EACH <code>x</code> DO <code>f</code></p>
+
+</div></div><div class = 'row'><div class = 'box col-12 bg-green compact-output'><h3>Example</h3>
+
+<p>Calculate the mean of each column of the mtcars dataset</p>
+
+<div id="unnamed-chunk-6">
+<style type="text/css">
+.col-h250 {
+  max-height: 260px;
+  overflow: hidden;
+  padding-top: 0;
+}
+</style></div>
+
+<div class="row">
+<div class="col-6 col-h250 build">
+<h3><code>for</code> loops</h3>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>means &lt;- vector(&quot;double&quot;, ncol(mtcars))
+for (i in seq_along(mtcars)) {
+  means[i] &lt;- mean(mtcars[[i]])
+}
+means</pre>
+
+<pre > [1]  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250
+ [7]  17.848750   0.437500   0.406250   3.687500   2.812500</pre></div></div>
+
+<div class="col-6 col-h250 build">
+<h3>base R apply family</h3>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>apply(mtcars, 2, mean) %&gt;% str()</pre>
+
+<pre > Named num [1:11] 20.09 6.19 230.72 146.69 3.6 ...
+ - attr(*, &quot;names&quot;)= chr [1:11] &quot;mpg&quot; &quot;cyl&quot; &quot;disp&quot; &quot;hp&quot; ...</pre>
+
+<pre class = 'prettyprint lang-r'>lapply(mtcars, mean) %&gt;% str()</pre>
+
+<pre >List of 11
+ $ mpg : num 20.1
+ $ cyl : num 6.19
+ $ disp: num 231
+ $ hp  : num 147
+ $ drat: num 3.6
+ $ wt  : num 3.22
+ $ qsec: num 17.8
+ $ vs  : num 0.438
+ $ am  : num 0.406
+ $ gear: num 3.69
+ $ carb: num 2.81</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>apply vs map</h2></hgroup><article  id="apply-vs-map" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green compact-table'><h3>The apply family of functions</h3>
+
+<table class = 'rmdtable'>
+<col width="44%" />
+<col width="14%" />
+<col width="41%" />
+<tr class="header">
+<th align="center">function</th>
+<th align="center">input</th>
+<th align="center">output</th>
+</tr>
+<tr class="odd">
+<td align="center"><code>apply()</code></td>
+<td align="center">array</td>
+<td align="center">vector or array or list</td>
+</tr>
+<tr class="even">
+<td align="center"><code>lapply()</code></td>
+<td align="center">list</td>
+<td align="center">list</td>
+</tr>
+<tr class="odd">
+<td align="center"><code>sapply()</code></td>
+<td align="center">list</td>
+<td align="center">vector or array or list</td>
+</tr>
+<tr class="even">
+<td align="center"><code>vapply()</code></td>
+<td align="center">list</td>
+<td align="center">specified but inconsistent</td>
+</tr>
+</table>
+
+</div><div class = 'box col-6 bg-red'><h3>Warning</h3>
+
+<ul>
+<li>Most members of the <code>apply()</code> family are inconsistent.</li>
+<li>Exception: <code>vapply()</code></li>
+<li><code>apply()</code> family still usefull to avoid dependencies (package development)</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-blue'><h3>The <code>purrr::map()</code> family of functions</h3>
+
+<ul>
+<li>are designed to be consistent</li>
+<li><code>map()</code> is the general function and close to <code>base::lapply()</code></li>
+<li><code>map()</code> introduces shortcuts (absent in <code>lapply()</code>)</li>
+<li>six variants to specify the type of vectorized output (<code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code>, <code>map_chr()</code>, <code>map_df()</code>, <code>walk()</code>)</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>Purrr::map()</code></h2></hgroup><article  id="purrrmap" class="smaller ">
+
+<div class = 'row'><div class = 'box col-12 bg-blue center-pic'><h3>Illustration</h3>
+
+<ul>
+<li><code>purrr::map()</code> is <strong>type stable</strong>
+
+<ul>
+<li>applies a function to each element of a list</li>
+<li>returns a list</li>
+<li><code>map(YOUR_LIST, YOUR_FUNCTION)</code></li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-9" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>antennate &lt;- function(x) put_on(x, antenna)
+map(legos, antennate)</pre></div>
+
+<div class="row build">
+<div class="col-5">
+<img src='img/08_lego.jpg' title='fig:'/><p class='caption'>legos</p></div>
+
+<div class="col-2">
+<img src='img/08_lego_antenna.jpg' title='fig:'/><p class='caption'>antenna</p></div>
+
+<div class="col-5">
+<img src='img/08_lego_antennate.jpg' title='fig:'/><p class='caption'><code>map(legos, antennate)</code></p></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> map shortcuts</h3></hgroup><article  id="purrr-map-shortcuts" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>Example</h3>
+
+<ul>
+<li><p>Split the mtcars dataset by each value of cylinder</p>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars &lt;- mtcars %&gt;%
+  split(.$cyl)
+str(spl_mtcars, max.level = 1)</pre>
+
+<pre >List of 3
+ $ 4:&#39;data.frame&#39;:  11 obs. of  11 variables:
+ $ 6:&#39;data.frame&#39;:  7 obs. of  11 variables:
+ $ 8:&#39;data.frame&#39;:  14 obs. of  11 variables:</pre></div></li>
+<li>On each element (dataframe) of the list, we would like to:
+
+<ul>
+<li>fit a linear model (miles per gallon explained by the weight)</li>
+<li>extract the \(r^2\) value</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>purrr::map()</code> </h2><h3> example</h3></hgroup><article  id="purrrmap-example" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>1 - map the linear model</h3>
+
+<ul>
+<li><p>reminder:</p>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>map(YOUR_LIST, YOUR_FUNCTION)
+# is equivalent to:
+YOUR_LIST %&gt;% map(YOUR_FUNCTION)</pre></div></li>
+<li><code>YOUR_LIST</code> = <code>spl_mtcars</code></li>
+<li><p><code>YOUR_FUNCTION</code> can be an anonymous function (declared on the fly)</p></li>
+</ul>
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>str(spl_mtcars, max.level = 1)</pre>
+
+<pre >List of 3
+ $ 4:&#39;data.frame&#39;:  11 obs. of  11 variables:
+ $ 6:&#39;data.frame&#39;:  7 obs. of  11 variables:
+ $ 8:&#39;data.frame&#39;:  14 obs. of  11 variables:</pre></div>
+
+</div><div class = 'box col-6 compact-output'>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(function(df) lm(mpg ~ wt, data = df))</pre>
+
+<pre >$`4`
+
+Call:
+lm(formula = mpg ~ wt, data = df)
+
+Coefficients:
+(Intercept)           wt  
+     39.571       -5.647  
+
+
+$`6`
+
+Call:
+lm(formula = mpg ~ wt, data = df)
+
+Coefficients:
+(Intercept)           wt  
+      28.41        -2.78  
+
+
+$`8`
+
+Call:
+lm(formula = mpg ~ wt, data = df)
+
+Coefficients:
+(Intercept)           wt  
+     23.868       -2.192  </pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>purrr::map()</code> </h2><h3> example</h3></hgroup><article  id="purrrmap-example-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-0 bg-green'><h3>2 - extract \(r^2\)</h3>
+
+<ul>
+<li>map uses a list as an argument and <strong>returns a list</strong></li>
+<li>we can map a new function on the output of the previous call</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-10 offset-2 compact-output'>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(function(df) lm(mpg ~ wt, data = df)) %&gt;%
+  map(summary) %&gt;%
+  map(function(x) x$r.squared)</pre>
+
+<pre >$`4`
+[1] 0.5086326
+
+$`6`
+[1] 0.4645102
+
+$`8`
+[1] 0.4229655</pre></div>
+
+</div></div><div class = 'row'><div class = 'box col-6 offset-3 bg-blue vs1 icon small'><h3>Tip</h3>
+
+<img src='img/00_tip.png' title='fig:'/>
+
+<p>The code above can be simplified using shortcuts provided by <code>purrr</code></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>purrr::map()</code> </h2><h3> shortcuts</h3></hgroup><article  id="purrrmap-shortcuts" class="smaller ">
+
+<ul>
+<li><p>One sided formula to create anonymous functions (using <code>~</code> and the placeholder <code>.</code> which refers to the current list element)</p>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>map(YOUR_LIST, function(df) lm(mpg ~ wt, data = df))
+
+# is equivalent to:
+
+map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
+</ul>
+
+<p>Our previous code can be simplified:</p>
+
+<div class = 'row'><div class = 'box col-7 bg-cobalt'><h3>Initial code</h3>
+
+<div id="unnamed-chunk-16" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(function(df) lm(mpg ~ wt, data = df)) %&gt;%
+  map(summary) %&gt;%
+  map(function(x) x$r.squared)</pre></div>
+
+</div><div class = 'box col-5 bg-cobalt'><h3>Using shortcuts</h3>
+
+<div id="unnamed-chunk-17" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(~lm(mpg ~ wt, data = .)) %&gt;%
+  map(summary) %&gt;%
+  map(~.$r.squared)</pre></div>
+
+</div></div>
+
+<ul>
+<li>Use a string to extract <strong>named components</strong></li>
+</ul>
+
+<div class = 'row'><div class = 'box col-5 offset-7 bg-cobalt'><h3>Using shortcuts</h3>
+
+<div id="unnamed-chunk-18" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(~lm(mpg ~ wt, data = .)) %&gt;%
+  map(summary) %&gt;%
+  map(&quot;r.squared&quot;)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The map function family</h2></hgroup><article  id="the-map-function-family" class="smaller nvs1">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Reminder</h3>
+
+<ul>
+<li><code>purrr::map()</code> (like base <code>base::lapply()</code>)
+
+<ul>
+<li>uses a <strong>list</strong> as an input</li>
+<li>outputs a <strong>list</strong></li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-red'><h3>Choosing output type</h3>
+
+<ul>
+<li>purrr provides a family of functions to generate specific outputs
+
+<ul>
+<li><code>map()</code> makes a <strong>list</strong>.</li>
+<li><code>map_lgl()</code> makes a <strong>logical</strong> vector.</li>
+<li><code>map_int()</code> makes an <strong>integer</strong> vector.</li>
+<li><code>map_dbl()</code> makes a <strong>double</strong> vector.</li>
+<li><code>map_chr()</code> makes a <strong>character</strong> vector.</li>
+<li><code>map_df()</code> makes a data frame (row-binding elements)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-cobalt compact-output'><h3>using <code>map()</code></h3>
+
+<div id="unnamed-chunk-19" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(~lm(mpg ~ wt, data = .)) %&gt;%
+  map(summary) %&gt;%
+  map(&quot;r.squared&quot;) %&gt;% 
+  str()</pre>
+
+<pre >List of 3
+ $ 4: num 0.509
+ $ 6: num 0.465
+ $ 8: num 0.423</pre></div>
+
+</div><div class = 'box col-6 bg-cobalt compact-output'><h3>using <code>map_dbl()</code></h3>
+
+<div id="unnamed-chunk-20" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
+  map(~lm(mpg ~ wt, data = .)) %&gt;%
+  map(summary) %&gt;%
+  map_dbl(&quot;r.squared&quot;) %&gt;% 
+  str()</pre>
+
+<pre > Named num [1:3] 0.509 0.465 0.423
+ - attr(*, &quot;names&quot;)= chr [1:3] &quot;4&quot; &quot;6&quot; &quot;8&quot;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Application example </h2><h3> importing data</h3></hgroup><article  id="application-example-importing-data" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 bg-green offset-1'><h3>Exercise</h3>
+
+<ul>
+<li>go back to the <code>deaths</code> MS Excel example file
+
+<ul>
+<li>store the path to the file in the object <code>path</code> using the following command: <code>path &lt;- readxl_example(&quot;deaths.xls&quot;)</code></li>
+<li>don&#39;t forget the <strong>pitfalls</strong> you already faced during the <code>readr</code> lecture!</li>
+<li>use a <strong>functional programming approach</strong> to load the data spread accross multiple sheets</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Application example </h2><h3> importing data</h3></hgroup><article  id="application-example-importing-data-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 bg-cobalt offset-1 compact-output'><h3>Solution</h3>
+
+<div id="unnamed-chunk-21" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(readxl)
+path &lt;- readxl_example(&quot;deaths.xls&quot;)
+
+path %&gt;%
+  excel_sheets() %&gt;%
+  map_df(read_excel, path = path, range = &quot;A5:F15&quot;)</pre>
+
+<pre ># A tibble: 20 × 6
+                 Name Profession   Age `Has kids` `Date of birth`
+                &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;      &lt;lgl&gt;          &lt;dttm&gt;
+1         David Bowie   musician    69       TRUE      1947-01-08
+2       Carrie Fisher      actor    60       TRUE      1956-10-21
+3         Chuck Berry   musician    90       TRUE      1926-10-18
+4         Bill Paxton      actor    61       TRUE      1955-05-17
+5              Prince   musician    57       TRUE      1958-06-07
+6        Alan Rickman      actor    69      FALSE      1946-02-21
+7  Florence Henderson      actor    82       TRUE      1934-02-14
+8          Harper Lee     author    89      FALSE      1926-04-28
+9       Zsa Zsa Gábor      actor    99       TRUE      1917-02-06
+10     George Michael   musician    53      FALSE      1963-06-25
+11         Vera Rubin  scientist    88       TRUE      1928-07-23
+12        Mohamed Ali    athlete    74       TRUE      1942-01-17
+13       Morley Safer journalist    84       TRUE      1931-11-08
+14       Fidel Castro politician    90       TRUE      1926-08-13
+15     Antonin Scalia     lawyer    79       TRUE      1936-03-11
+16             Jo Cox politician    41       TRUE      1974-06-22
+17         Janet Reno     lawyer    78      FALSE      1938-07-21
+18         Gwen Ifill journalist    61      FALSE      1955-09-29
+19         John Glenn  astronaut    95       TRUE      1921-07-28
+20         Pat Summit      coach    64       TRUE      1952-06-14
+# ... with 1 more variables: `Date of death` &lt;dttm&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Application example </h2><h3> importing data</h3></hgroup><article  id="application-example-importing-data-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3><code>map_df()</code> arguments</h3>
+
+<ul>
+<li>map_df() has an <code>.id</code> argument</li>
+<li>creates a variable with the given name containing the index or name of the data frame</li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue compact-output'><h3><code>set_names()</code></h3>
+
+<ul>
+<li><p>to set names in a vector</p>
+
+<div id="unnamed-chunk-22" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>set_names(1:5)</pre>
+
+<pre >1 2 3 4 5 
+1 2 3 4 5 </pre>
+
+<pre class = 'prettyprint lang-r'>set_names(1:5, nm = letters[1:5])</pre>
+
+<pre >a b c d e 
+1 2 3 4 5 </pre></div></li>
+<li><p>is a wrapper for <code>setNames</code> which does some checkings and is stricter</p>
+
+<div id="unnamed-chunk-23" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>setNames(1:5, nm = letters[1:2])</pre>
+
+<pre >   a    b &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; 
+   1    2    3    4    5 </pre>
+
+<pre class = 'prettyprint lang-r'>set_names(1:5, nm = letters[1:2])</pre>
+
+<pre >Error: `x` and `nm` must be the same length</pre></div></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Application example </h2><h3> importing data</h3></hgroup><article  id="application-example-importing-data-3" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 bg-cobalt offset-1 compact-output'><h3>Enhanced solution</h3>
+
+<div id="unnamed-chunk-24" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>path %&gt;%
+  excel_sheets() %&gt;%
+  set_names() %&gt;% # creates a named vector
+  map_df(read_excel, path = path, range = &quot;A5:F15&quot;, .id = &quot;profession_area&quot;) %&gt;%
+  janitor::clean_names()</pre>
+
+<pre ># A tibble: 20 × 7
+   profession_area               name profession   age has_kids
+             &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;    &lt;lgl&gt;
+1             arts        David Bowie   musician    69     TRUE
+2             arts      Carrie Fisher      actor    60     TRUE
+3             arts        Chuck Berry   musician    90     TRUE
+4             arts        Bill Paxton      actor    61     TRUE
+5             arts             Prince   musician    57     TRUE
+6             arts       Alan Rickman      actor    69    FALSE
+7             arts Florence Henderson      actor    82     TRUE
+8             arts         Harper Lee     author    89    FALSE
+9             arts      Zsa Zsa Gábor      actor    99     TRUE
+10            arts     George Michael   musician    53    FALSE
+11           other         Vera Rubin  scientist    88     TRUE
+12           other        Mohamed Ali    athlete    74     TRUE
+13           other       Morley Safer journalist    84     TRUE
+14           other       Fidel Castro politician    90     TRUE
+15           other     Antonin Scalia     lawyer    79     TRUE
+16           other             Jo Cox politician    41     TRUE
+17           other         Janet Reno     lawyer    78    FALSE
+18           other         Gwen Ifill journalist    61    FALSE
+19           other         John Glenn  astronaut    95     TRUE
+20           other         Pat Summit      coach    64     TRUE
+# ... with 2 more variables: date_of_birth &lt;dttm&gt;, date_of_death &lt;dttm&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> Iterating on 2 lists</h3></hgroup><article  id="purrr-iterating-on-2-lists" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-red center-pic'><h3><code>map(legos, antennate)</code></h3>
+
+<p><img src='img/08_lego.jpg' title=''/> <img src='img/08_lego_antenna.jpg' title=''/> <img src='img/08_lego_antennate.jpg' title=''/></p>
+
+<div id="unnamed-chunk-25" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>map(legos, antennate)</pre></div>
+
+</div><div class = 'box col-6 bg-red center-pic stretch'><h3><code>map2()</code></h3>
+
+<p><img src='img/08_lego_hairs.jpg' title=''/> <img src='img/08_lego_enhaired.jpg' title=''/></p>
+
+<div id="unnamed-chunk-26" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>enhair &lt;- function(x, y) x %&gt;% put_on(y)
+map2(legos, hairs, enhair)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The tidyverse focuses on data frames</h2></hgroup><article  id="the-tidyverse-focuses-on-data-frames" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>pros</h3>
+
+<ul>
+<li>easy</li>
+<li>works with <code>dplyr</code></li>
+<li>nicely structured</li>
+</ul>
+
+</div><div class = 'box col-6 bg-red stretch'><h3>cons</h3>
+
+<ul>
+<li>same length requirement</li>
+<li>atomic vectors</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-yellow icon vs1'><h3>solution</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/tibble/master/man/figures/logo.png' title='fig:'/>
+
+<ul>
+<li><strong>Use lists!</strong> But inside the <em>tidyverse</em>
+
+<ul>
+<li><code>tibble</code> introduces <strong>list-columns</strong></li>
+<li>works with <code>dplyr</code></li>
+<li>groups are respected</li>
+<li>easily created with <code>tidyr::nest()</code></li>
+<li>perfect input for <code>purrr::map</code></li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Lists as a column in a tibble</h2></hgroup><article  id="lists-as-a-column-in-a-tibble" class="smaller ">
+
+<div class = 'row'><div class = 'box col-12 offset-0 bg-grayblue icon'><h3>Example</h3>
+
+<img src='img/08_lego_tibble.jpg' title='fig:'/>
+
+<div id="unnamed-chunk-27" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>tibble(numbers = 1:8,
+       my_list = list(a = c(&quot;a&quot;, &quot;b&quot;), b = 2.56, 
+                      c = c(&quot;a&quot;, &quot;b&quot;), d = rep(TRUE, 4),
+                      d = 2:3, e = 4:6, f = &quot;Z&quot;, g = 1:4))</pre>
+
+<pre ># A tibble: 8 × 2
+  numbers   my_list
+    &lt;int&gt;    &lt;list&gt;
+1       1 &lt;chr [2]&gt;
+2       2 &lt;dbl [1]&gt;
+3       3 &lt;chr [2]&gt;
+4       4 &lt;lgl [4]&gt;
+5       5 &lt;int [2]&gt;
+6       6 &lt;int [3]&gt;
+7       7 &lt;chr [1]&gt;
+8       8 &lt;int [4]&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Example</h2></hgroup><article  id="example-3" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-4 bg-cobalt  stretch'><h3>Rewriting our previous example</h3>
+
+<div id="unnamed-chunk-28" class="build shadow chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  group_by(cyl) %&gt;%
+  nest()</pre>
+
+<pre ># A tibble: 3 × 2
+    cyl               data
+  &lt;dbl&gt;             &lt;list&gt;
+1     6  &lt;tibble [7 × 10]&gt;
+2     4 &lt;tibble [11 × 10]&gt;
+3     8 &lt;tibble [14 × 10]&gt;</pre></div>
+
+</div><div class = 'box col-8 bg-cobalt  stretch'><h3>Use mutate and map</h3>
+
+<div id="unnamed-chunk-29" class="build shadow chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  group_by(cyl) %&gt;%
+  nest() %&gt;%
+  mutate(model = map(data, ~lm(mpg ~ wt, data = .)),
+         summary = map(model, summary),
+         r_squared = map_dbl(summary, &quot;r.squared&quot;))</pre>
+
+<pre ># A tibble: 3 × 5
+    cyl               data    model          summary r_squared
+  &lt;dbl&gt;             &lt;list&gt;   &lt;list&gt;           &lt;list&gt;     &lt;dbl&gt;
+1     6  &lt;tibble [7 × 10]&gt; &lt;S3: lm&gt; &lt;S3: summary.lm&gt; 0.4645102
+2     4 &lt;tibble [11 × 10]&gt; &lt;S3: lm&gt; &lt;S3: summary.lm&gt; 0.5086326
+3     8 &lt;tibble [14 × 10]&gt; &lt;S3: lm&gt; &lt;S3: summary.lm&gt; 0.4229655</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-8 offset-2 bg-red '>
+
+<ul>
+<li>very powerful</li>
+<li>next lecture will show you how <code>dplyr</code>, <code>tidyr</code>, <code>tibble</code>, <code>purrr</code> and <code>broom</code> nicely work together</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists</h2></hgroup><article  id="nested-lists" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-gray offset-2'><h3>Visualising lists</h3>
+
+<div id="unnamed-chunk-30" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x1 &lt;- list(c(1, 2), c(3, 4))
+x2 &lt;- list(list(1, 2), list(3, 4))
+x3 &lt;- list(1, list(2, list(3)))</pre></div>
+
+<img src='img/08_lists_structure.png' title='fig:'/>
+
+<p><em>from <a href='http://r4ds.had.co.nz/lists.html' title=''>R for Data Science</a></em></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Removing a level of hierarchy</h2></hgroup><article  id="removing-a-level-of-hierarchy" class="smaller ">
+
+<div class = 'row'><div class = 'box col-4 bg-blue'><h3><code>flatten()</code> function</h3>
+
+<ul>
+<li>family
+
+<ul>
+<li><code>flatten()</code></li>
+<li><code>flatten_int()</code></li>
+<li><code>flatten_dbl()</code></li>
+<li><code>flatten_lgl()</code></li>
+<li><code>flatten_chr()</code></li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-8 bg-greenwhite stretch'><h3>flatten a list</h3>
+
+<div id="unnamed-chunk-31" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x &lt;- list(list(a = 1, b = 2), list(c = 3, d = 4))
+
+flatten(x) %&gt;% str()</pre>
+
+<pre >List of 4
+ $ a: num 1
+ $ b: num 2
+ $ c: num 3
+ $ d: num 4</pre>
+
+<pre class = 'prettyprint lang-r'>flatten(x) %&gt;% flatten_dbl() %&gt;% str()</pre>
+
+<pre > num [1:4] 1 2 3 4</pre></div>
+
+<img src='img/08_lists_flatten.png' title='fig:'/>
+
+<p><em>from <a href='http://r4ds.had.co.nz/lists.html' title=''>R for Data Science</a></em></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Removing a level of hierarchy</h2></hgroup><article  id="removing-a-level-of-hierarchy-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 bg-red compact-output offset-1'><h3><code>base::unlist()</code> vs <code>flatten()</code></h3>
+
+<ul>
+<li>base <em>R</em> provides <code>unlist()</code> but <code>flatten()</code> is more consistent
+
+<ul>
+<li><code>unlist()</code> will always succeed</li>
+</ul>
+
+<div id="unnamed-chunk-32" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>unlist(1:3)</pre>
+
+<pre >[1] 1 2 3</pre>
+
+<pre class = 'prettyprint lang-r'>flatten(1:3)</pre>
+
+<pre >Error: `.x` must be a list (integer)</pre>
+
+<pre class = 'prettyprint lang-r'>my_list &lt;- list(&quot;One&quot;, 2, 3)
+unlist(my_list) %&gt;% str()</pre>
+
+<pre > chr [1:3] &quot;One&quot; &quot;2&quot; &quot;3&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>flatten(my_list) %&gt;% str()</pre>
+
+<pre >List of 3
+ $ : chr &quot;One&quot;
+ $ : num 2
+ $ : num 3</pre>
+
+<pre class = 'prettyprint lang-r'>flatten_dbl(my_list)</pre>
+
+<pre >Error: Can&#39;t coerce element 1 from a character to a double</pre></div></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Transpose a list</h2></hgroup><article  id="transpose-a-list" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-bluewhite'><h3>the <code>transpose()</code>function</h3>
+
+<img src='img/08_lists_transpose.png' title='fig:'/>
+
+<p><em>from <a href='http://r4ds.had.co.nz/lists.html' title=''>R for Data Science</a></em></p>
+
+</div><div class = 'box col-6 bg-green compact-output'><h3>Example</h3>
+
+<div id="unnamed-chunk-33" class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>x &lt;- list(
+  x = list(a = 1,
+           b = 3,
+           c = 5),
+  y = list(a = 2,
+           b = 4,
+           c = 6)
+)
+x %&gt;% str()</pre></div>
+
+<div class="col-5">
+<pre >List of 2
+ $ x:List of 3
+  ..$ a: num 1
+  ..$ b: num 3
+  ..$ c: num 5
+ $ y:List of 3
+  ..$ a: num 2
+  ..$ b: num 4
+  ..$ c: num 6</pre></div></div>
+
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>x %&gt;% transpose() %&gt;%
+  str()</pre></div>
+
+<div class="col-5">
+<pre >List of 3
+ $ a:List of 2
+  ..$ x: num 1
+  ..$ y: num 2
+ $ b:List of 2
+  ..$ x: num 3
+  ..$ y: num 4
+ $ c:List of 2
+  ..$ x: num 5
+  ..$ y: num 6</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists</h2></hgroup><article  id="nested-lists-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-12 bg-green compact-output'><h3>Example</h3>
+
+<ul>
+<li>Let&#39;s adapt an example provided by Hadley Wickham</li>
+</ul>
+
+<div id="unnamed-chunk-34" class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>l1 &lt;- list(
+  group1 = list(
+    individual1 = list(param1 = 1:2, param2 = 3:4),
+    individual2 = list(param1 = 5:6, param2 = 7:8)
+  ),
+  group2 = list(
+    individual1 = list(param1 = 9:10, param2 = 11:12),
+    individual2 = list(param1 = 13:14, param2 = 15:16)
+  )
+)
+
+l1 %&gt;% str()</pre></div>
+
+<div class="col-5">
+<pre >List of 2
+ $ group1:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: int [1:2] 1 2
+  .. ..$ param2: int [1:2] 3 4
+  ..$ individual2:List of 2
+  .. ..$ param1: int [1:2] 5 6
+  .. ..$ param2: int [1:2] 7 8
+ $ group2:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: int [1:2] 9 10
+  .. ..$ param2: int [1:2] 11 12
+  ..$ individual2:List of 2
+  .. ..$ param1: int [1:2] 13 14
+  .. ..$ param2: int [1:2] 15 16</pre></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 offset-3 bg-yellow icon-small vs1 '><h3>Visualisation</h3>
+
+<img src='img/00_tip.png' title='fig:'/>
+
+<ul>
+<li>Visualise and interactively browse nested lists using <code>listviewer::jsonedit()</code></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists</h2></hgroup><article  id="nested-lists-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-cobalt'><h3>The <code>listviewer</code> package</h3>
+
+<div id="unnamed-chunk-35">
+<style type="text/css">
+.chunk > .jsonedit {
+  background: white;
+  width: 100% !important;
+  height: 400px !important;
+}
+</style></div>
+
+<div id="unnamed-chunk-36" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l1 %&gt;% listviewer::jsonedit()</pre>
+
+<div id="htmlwidget-e16b88204126e781a240" style="width:576px;height:480px;" class="jsonedit html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e16b88204126e781a240">{"x":{"data":{"group1":{"individual1":{"param1":[1,2],"param2":[3,4]},"individual2":{"param1":[5,6],"param2":[7,8]}},"group2":{"individual1":{"param1":[9,10],"param2":[11,12]},"individual2":{"param1":[13,14],"param2":[15,16]}}},"options":{"mode":"tree","modes":["code","form","text","tree","view"]}},"evals":[],"jsHooks":[]}</script></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists </h2><h3> extracting elements</h3></hgroup><article  id="nested-lists-extracting-elements" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Example</h3>
+
+<ul>
+<li>try to extract all <em>param1</em> values for <em>individual2</em> in both groups</li>
+</ul>
+
+<div id="unnamed-chunk-37" class="build chunk shadow">
+<pre class = 'prettyprint lang-r'># Extract individual2 using a string shortcut
+l1 %&gt;%
+  map(&quot;individual2&quot;) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1:List of 2
+  ..$ param1: int [1:2] 5 6
+  ..$ param2: int [1:2] 7 8
+ $ group2:List of 2
+  ..$ param1: int [1:2] 13 14
+  ..$ param2: int [1:2] 15 16</pre></div>
+
+<div id="unnamed-chunk-38" class="build chunk shadow">
+<pre class = 'prettyprint lang-r'># chain 2 map calls to get param1 out of both groups
+
+l1 %&gt;%
+  map(&quot;individual2&quot;) %&gt;%
+  map(&quot;param1&quot;) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1: int [1:2] 5 6
+ $ group2: int [1:2] 13 14</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists </h2><h3> extracting elements</h3></hgroup><article  id="nested-lists-extracting-elements-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Do it in a single step using a character vector with <code>map()</code>!</li>
+</ul>
+
+<div id="unnamed-chunk-39" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l1 %&gt;%
+  map(&quot;individual2&quot;) %&gt;%
+  map(&quot;param1&quot;) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1: int [1:2] 5 6
+ $ group2: int [1:2] 13 14</pre>
+
+<pre class = 'prettyprint lang-r'>l1 %&gt;%
+  map(c(&quot;individual2&quot;, &quot;param1&quot;)) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1: int [1:2] 5 6
+ $ group2: int [1:2] 13 14</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists </h2><h3> map a function over lower levels</h3></hgroup><article  id="nested-lists-map-a-function-over-lower-levels" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Calculate the mean of both <em>param</em> for each individual</li>
+<li>We would need to recursively use <code>map()</code></li>
+</ul>
+
+<div id="unnamed-chunk-40" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l1 %&gt;% map(~map(., ~map(., mean))) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: num 1.5
+  .. ..$ param2: num 3.5
+  ..$ individual2:List of 2
+  .. ..$ param1: num 5.5
+  .. ..$ param2: num 7.5
+ $ group2:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: num 9.5
+  .. ..$ param2: num 11.5
+  ..$ individual2:List of 2
+  .. ..$ param1: num 13.5
+  .. ..$ param2: num 15.5</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists </h2><h3> map a function over lower levels</h3></hgroup><article  id="nested-lists-map-a-function-over-lower-levels-1" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-4 offset-1 bg-blue '><h3><code>at_depth()</code></h3>
+
+<ul>
+<li>is a recursive <code>map()</code></li>
+<li><p>map a function to a lower level of a list</p>
+
+<div id="unnamed-chunk-41" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x %&gt;% at_depth(0, fun)
+# is equivalent to
+# fun(x)
+
+x %&gt;% at_depth(1, fun)
+# is equivalent to
+# map(x, fun)
+
+x %&gt;% at_depth(2, fun)
+# is equivalent to
+# map(x, . %&gt;% map(fun))</pre></div></li>
+</ul>
+
+</div><div class = 'box col-6 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Our previous call becomes much simplier</li>
+</ul>
+
+<div id="unnamed-chunk-42" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l1 %&gt;% map(~map(., ~map(., mean)))</pre></div>
+
+<div id="unnamed-chunk-43" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>l1 %&gt;% at_depth(3, mean) %&gt;% str()</pre>
+
+<pre >List of 2
+ $ group1:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: num 1.5
+  .. ..$ param2: num 3.5
+  ..$ individual2:List of 2
+  .. ..$ param1: num 5.5
+  .. ..$ param2: num 7.5
+ $ group2:List of 2
+  ..$ individual1:List of 2
+  .. ..$ param1: num 9.5
+  .. ..$ param2: num 11.5
+  ..$ individual2:List of 2
+  .. ..$ param1: num 13.5
+  .. ..$ param2: num 15.5</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reduce a list to a single value</h2></hgroup><article  id="reduce-a-list-to-a-single-value" class="smaller nvs1">
+
+<div class = 'row build'><div class = 'box col-6  bg-blue compact-pre'><h3>reduce</h3>
+
+<ul>
+<li><p>combines a list from the <strong>left</strong></p>
+
+<div id="unnamed-chunk-44" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce(`-`)</pre>
+
+<pre >[1] -8</pre>
+
+<pre class = 'prettyprint lang-r'>((1 - 2) - 3) - 4</pre>
+
+<pre >[1] -8</pre></div></li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue compact-pre'><h3>reduce_right</h3>
+
+<ul>
+<li><p>combines a list from the <strong>right</strong></p>
+
+<div id="unnamed-chunk-45" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce_right(`-`)</pre>
+
+<pre >[1] -2</pre>
+
+<pre class = 'prettyprint lang-r'>1 - (2 - (3 - 4))</pre>
+
+<pre >[1] -2</pre></div></li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-12 bg-green  compact-output'><h3>working recursively</h3>
+
+<div class="row">
+<div class="col-5">
+<div id="unnamed-chunk-46" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce(`+`)
+
+c(1, 2, 3, 4)
+c(   3, 3, 4)
+c(      6, 4)
+c(        10)</pre></div>
+
+<div id="unnamed-chunk-47" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>my_add &lt;- function(x, y) {
+  print(paste(&quot;x =&quot;, x, &quot;y =&quot;, y))
+  x + y
+}</pre></div></div>
+
+<div class="col-7 middle">
+<div id="unnamed-chunk-48" class="chunk shadow">
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>reduce(1:4, my_add)</pre></div>
+
+<div class="col-5">
+<pre >[1] &quot;x = 1 y = 2&quot;
+[1] &quot;x = 3 y = 3&quot;
+[1] &quot;x = 6 y = 4&quot;</pre>
+
+<pre >[1] 10</pre></div></div>
+
+<div class="row">
+<div class="col-7">
+<pre class = 'prettyprint lang-r'>reduce_right(1:4, my_add)</pre></div>
+
+<div class="col-5">
+<pre >[1] &quot;x = 4 y = 3&quot;
+[1] &quot;x = 7 y = 2&quot;
+[1] &quot;x = 9 y = 1&quot;</pre>
+
+<pre >[1] 10</pre></div></div></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>accumulate recursive folds across a list</h2></hgroup><article  id="accumulate-recursive-folds-across-a-list" class="smaller vs2">
+
+<div class = 'row build'><div class = 'box col-6  bg-blue compact-pre stretch'><h3>accumulate</h3>
+
+<ul>
+<li><p>similar to <code>reduce()</code> but keeps intermediate results</p>
+
+<div id="unnamed-chunk-49" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:4 %&gt;% accumulate(`+`)</pre>
+
+<pre >[1]  1  3  6 10</pre></div></li>
+</ul>
+
+</div><div class = 'box col-6  bg-blue compact-pre stretch'><h3>accumulate_right</h3>
+
+<ul>
+<li><p>accumulates a list from the <strong>right</strong></p>
+
+<div id="unnamed-chunk-50" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>1:4 %&gt;% accumulate_right(`+`)</pre>
+
+<pre >[1] 10  9  7  4</pre></div></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> Pure functions</h3></hgroup><article  id="purrr-pure-functions" class="smaller ">
+
+<div class = 'row'><div class = 'col-6'>
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+Make your pure <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> functions purr with purrr, a new package for functional programming: <a href="http://t.co/91Efuz0txk">http://t.co/91Efuz0txk</a>
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/648959790056509440">29 septembre 2015</a>
+
+</blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</div><div class = 'col-6'>
+
+<blockquote class = 'bg-blue'>
+<p>A function is called &quot;pure&quot; if all its inputs are <em>declared</em> as inputs - none of them are hidden - and likewise all its outputs are <em>declared</em> as outputs <cite> <a href='http://blog.jenkster.com/2015/12/what-is-functional-programming.html' title=''>Kris Jenkins</a></p></cite>
+</blockquote>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><em>&quot;Purify&quot;</em> functions </h2><h3> Pure functions</h3></hgroup><article  id="purify-functions-pure-functions" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>Impure function</h3>
+
+<ul>
+<li>has hidden inputs or outputs</li>
+<li>hidden inputs or outputs are called <em><strong>side-effects</strong></em></li>
+</ul>
+
+<div id="unnamed-chunk-51" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>start &lt;- 10
+
+impure &lt;- function(x) {
+  print(start)
+  x + start
+}
+
+result &lt;- impure(2)</pre>
+
+<pre >[1] 10</pre>
+
+<pre class = 'prettyprint lang-r'>result</pre>
+
+<pre >[1] 12</pre></div>
+
+</div><div class = 'box col-6 bg-green'><h3>Pure function</h3>
+
+<ul>
+<li>no hidden inputs and/or outputs</li>
+</ul>
+
+<div id="unnamed-chunk-52" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>pure &lt;- function(x, start) {
+  x + start
+}
+
+result &lt;- pure(2, start)
+result</pre>
+
+<pre >[1] 12</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><em>&quot;Purify&quot;</em> functions</h2></hgroup><article  id="purify-functions" class="smaller ">
+
+<div class = 'row'><div class = 'box col-12 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Even <code>log()</code> has side-effects</li>
+<li>Use <code>purrr::safely()</code> to catch every output</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-cobalt  compact-output'><h3>Impure <code>log()</code></h3>
+
+<div id="unnamed-chunk-53" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>(res &lt;- log(10))</pre>
+
+<pre >[1] 2.302585</pre>
+
+<pre class = 'prettyprint lang-r'>res &lt;- log(&quot;a&quot;)</pre>
+
+<pre >Error in log(&quot;a&quot;): non-numeric argument to mathematical function</pre>
+
+<pre class = 'prettyprint lang-r'>res</pre>
+
+<pre >[1] 2.302585</pre></div>
+
+</div><div class = 'box col-6 bg-cobalt compact-output'><h3>Purified <code>log()</code></h3>
+
+<div id="unnamed-chunk-54" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>safe_log &lt;- purrr::safely(log)
+(res &lt;- safe_log(10))</pre>
+
+<pre >$result
+[1] 2.302585
+
+$error
+NULL</pre>
+
+<pre class = 'prettyprint lang-r'>res &lt;- safe_log(&quot;a&quot;)
+res</pre>
+
+<pre >$result
+NULL
+
+$error
+&lt;simpleError in .f(...): non-numeric argument to mathematical function&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Useful functions </h2><h3> transpose</h3></hgroup><article  id="useful-functions-transpose" class="smaller ">
+
+<p>Let&#39;s go further with the <code>safe_log()</code> example</p>
+
+<div class = 'row build'><div class = 'col-12 compact-output '>
+
+<div id="unnamed-chunk-55" class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'># Example from the help page
+x &lt;- list(&quot;a&quot;, 1, 2)
+y &lt;- x %&gt;% map(safely(log))
+y %&gt;% str()</pre></div>
+
+<div class="col-8">
+<pre >List of 3
+ $ :List of 2
+  ..$ result: NULL
+  ..$ error :List of 2
+  .. ..$ message: chr &quot;non-numeric argument to mathematical function&quot;
+  .. ..$ call   : language .f(...)
+  .. ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;simpleError&quot; &quot;error&quot; &quot;condition&quot;
+ $ :List of 2
+  ..$ result: num 0
+  ..$ error : NULL
+ $ :List of 2
+  ..$ result: num 0.693
+  ..$ error : NULL</pre></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'col-12 compact-output '>
+
+<div id="unnamed-chunk-56" class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>y %&gt;% transpose() %&gt;% str()</pre></div>
+
+<div class="col-8">
+<pre >List of 2
+ $ result:List of 3
+  ..$ : NULL
+  ..$ : num 0
+  ..$ : num 0.693
+ $ error :List of 3
+  ..$ :List of 2
+  .. ..$ message: chr &quot;non-numeric argument to mathematical function&quot;
+  .. ..$ call   : language .f(...)
+  .. ..- attr(*, &quot;class&quot;)= chr [1:3] &quot;simpleError&quot; &quot;error&quot; &quot;condition&quot;
+  ..$ : NULL
+  ..$ : NULL</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Side effects are still required</h2></hgroup><article  id="side-effects-are-still-required" class="smaller ">
+
+<div id="unnamed-chunk-57">
+</div>
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3><code>walk</code></h3>
+
+<ul>
+<li>alternative to <code>map()</code> to call functions for its side effects
+
+<ul>
+<li>output on screen</li>
+<li>save files to disk</li>
+</ul></li>
+<li>returns the input and can be used in a pipeline (<code>%&gt;%</code>)</li>
+</ul>
+
+</div><div class = 'box col-6 bg-green'><h3>Example</h3>
+
+<div id="unnamed-chunk-58" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x &lt;- list(1, &quot;a&quot;, 3)
+
+x %&gt;% 
+  walk(print)</pre>
+
+<pre >[1] 1
+[1] &quot;a&quot;
+[1] 3</pre></div>
+
+</div></div><div class = 'row build'><div class = 'col-6 '>
+
+<div id="unnamed-chunk-59" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>x %&gt;% 
+  walk(print) %&gt;%
+  str()</pre></div>
+
+<div class="col-6">
+<pre >[1] 1
+[1] &quot;a&quot;
+[1] 3
+List of 3
+ $ : num 1
+ $ : chr &quot;a&quot;
+ $ : num 3</pre></div></div>
+
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>x %&gt;% 
+  map(print) %&gt;%
+  str()</pre></div>
+
+<div class="col-6">
+<pre >[1] 1
+[1] &quot;a&quot;
+[1] 3
+List of 3
+ $ : num 1
+ $ : chr &quot;a&quot;
+ $ : num 3</pre></div></div></div>
+
+</div><div class = 'col-6'>
+
+<div id="unnamed-chunk-60" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>x %&gt;% 
+  walk(my_print) %&gt;%
+  str()</pre></div>
+
+<div class="col-6">
+<pre >[1] 1
+[1] &quot;a&quot;
+[1] 3
+List of 3
+ $ : num 1
+ $ : chr &quot;a&quot;
+ $ : num 3</pre></div></div>
+
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>x %&gt;% 
+  map(my_print) %&gt;%
+  str()</pre></div>
+
+<div class="col-6">
+<pre >[1] 1
+[1] &quot;a&quot;
+[1] 3
+List of 3
+ $ : NULL
+ $ : NULL
+ $ : NULL</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Before we stop</h2></hgroup><article  id="before-we-stop" class="smaller nvs1">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue icon'><h3>Further reading</h3>
+
+<img src='img/00_book.png' title='fig:'/>
+
+<ul>
+<li>Jennifer Bryan <a href='https://jennybc.github.io/purrr-tutorial/' title=''>lessons &amp; tutorial</a></li>
+<li>Hadley Wickham <a href='http://r4ds.had.co.nz/iteration.html' title=''>R for data science, iteration</a></li>
+<li>Hadley Wickham <a href='http://r4ds.had.co.nz/many-models.html' title=''>R for data science, many models</a></li>
+<li>Ian Lyttle <a href='http://ijlyttle.github.io/isugg_purrr/presentation.html#%281%29' title=''>purrr applied for engineering</a></li>
+<li>Robert Rudis <a href='https://rud.is/b/2016/07/26/use-quick-formula-functions-in-purrrmap-base-vs-tidtyverse-idiom-comparisonsexamples/' title=''>purrr, comparison with base</a></li>
+<li>Rstudio&#39;s blog <a href='https://blog.rstudio.org/2015/09/29/purrr-0-1-0/' title=''>purrr 0.1 release</a></li>
+<li>Rstudio&#39;s blog <a href='https://blog.rstudio.org/2016/01/06/purrr-0-2-0/' title=''>purrr 0.2 release</a></li>
+<li>What is Functional Programming? by Kris Jenkins (<a href='http://blog.jenkster.com/2015/12/what-is-functional-programming.html' title=''>Blog version</a> and <a href='https://www.youtube.com/watch?v=tQRtTSIpye4' title=''>Talk video</a>)</li>
+<li>Bruno Rodrigues <a href='http://www.brodrigues.co/fput/' title=''>Functional programming and unit testing for data munging with R</a></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-yellow'><h3>Acknowledgments</h3>
+
+<ul>
+<li>Hadley Wickham</li>
+<li>Robert Rudis</li>
+<li>Jennifer Bryan (<a href='https://github.com/jennybc/lego-rstats' title=''>LEGO pictures</a>, courtesy CC licence)</li>
+<li>Ian Lyttle</li>
+<li>David Robinson</li>
+</ul></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture08_purrr_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

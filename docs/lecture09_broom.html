@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data handling</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data handling',
+                        subtitle: 'broom',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture09_broom_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-orange {
+      background-color: #FF8C00;
+    }
+  
+    .box.bg-orange {
+      border: 2px solid #804600;
+      color: #000;
+    }
+  
+    .box.bg-orange > h3:first-child {
+      background-color: #804600;
+      color: #fff;
+    }
+  
+    .bg-slate {
+      background-color: #7A67EE;
+    }
+  
+    .box.bg-slate {
+      border: 2px solid #3D3477;
+      color: #fff;
+    }
+  
+    .box.bg-slate > h3:first-child {
+      background-color: #3D3477;
+      color: #fff;
+    }
+  
+    .bg-yellow {
+      background-color: #FFFF00;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEC900;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEC900;
+      color: #000;
+    }
+  
+    .bg-yellow2 {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow2 {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow2 > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grgold {
+      background-color: #008B45;
+    }
+  
+    .box.bg-grgold {
+      border: 2px solid #004622;
+      color: #fff;
+    }
+  
+    .box.bg-grgold > h3:first-child {
+      background-color: #004622;
+      color: #FFD700;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture09_broom_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">4 May 2017</p>
+          </hgroup>
+  </slide>
+
+<div id="unnamed-chunk-1">
+</div>
+
+<div id="unnamed-chunk-2">
+<style type="text/css">
+.bg-green2 > h3:first-child > a:hover,
+.bg-green2 > h3:first-child > a {
+  color: white !important;
+}
+
+.bg-grgold a:hover,
+.bg-grgold a {
+  color: white !important;
+}
+
+article.maximise {
+  margin-top: -20px;
+}
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+}
+
+.col-list li {
+  float: left;
+  display: inline;
+  padding-left: 50px;
+}
+
+.col-list li:before {
+    content: "\2022";
+    font-size: 150%;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+</style></div>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<ul>
+<li>use <code>dplyr</code> / <code>purrr</code> for efficient data manipulation</li>
+<li>tidying linear models using <code>broom</code></li>
+<li>managing workflow by keeping related things together in <strong>one</strong> <code>tibble</code>.</li>
+</ul>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Managing multiple models</h2></hgroup><article  id="managing-multiple-models" class="smaller ">
+
+<p>Tutorial based on the great conference by <a href='https://www.youtube.com/watch?v=rz3_FDVt9eg' title=''>Hadley Wickham</a></p>
+
+<img src='http://lsru.github.io/r_workshop/img/hadley_purrr.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>purrr::map / dplyr::do</h2></hgroup><article  id="purrrmap-dplyrdo" class="smaller vs2">
+
+<p>progress bar will be <a href='https://github.com/hadley/purrr/issues/149' title=''>added</a></p>
+
+<div id="unnamed-chunk-3">
+<p><img src="http://lsru.github.io/r_workshop/img/purrr_do.png" width="60%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Gapminder </h2><h3> global vs individual trend</h3></hgroup><article  id="gapminder-global-vs-individual-trend" class="smaller ">
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(&quot;gapminder&quot;)
+gapminder %&gt;%
+  ggplot(aes(x = year, y = lifeExp, group = country)) +
+  geom_line()</pre>
+
+<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Keep related things together </h2><h3> nest</h3></hgroup><article  id="keep-related-things-together-nest" class="smaller ">
+
+<p>Nest <em>per</em> country</p>
+
+<div id="unnamed-chunk-5" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>by_country &lt;- gapminder %&gt;%
+  mutate(year1950 = year - 1950) %&gt;%
+  group_by(continent, country) %&gt;%
+  nest()
+by_country</pre>
+
+<pre ># A tibble: 142 × 3
+   continent     country              data
+      &lt;fctr&gt;      &lt;fctr&gt;            &lt;list&gt;
+1       Asia Afghanistan &lt;tibble [12 × 5]&gt;
+2     Europe     Albania &lt;tibble [12 × 5]&gt;
+3     Africa     Algeria &lt;tibble [12 × 5]&gt;
+4     Africa      Angola &lt;tibble [12 × 5]&gt;
+5   Americas   Argentina &lt;tibble [12 × 5]&gt;
+6    Oceania   Australia &lt;tibble [12 × 5]&gt;
+7     Europe     Austria &lt;tibble [12 × 5]&gt;
+8       Asia     Bahrain &lt;tibble [12 × 5]&gt;
+9       Asia  Bangladesh &lt;tibble [12 × 5]&gt;
+10    Europe     Belgium &lt;tibble [12 × 5]&gt;
+# ... with 132 more rows</pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>What happens in the DATA FRAME, stays in the data frame</h2></hgroup><article  id="what-happens-in-the-data-frame-stays-in-the-data-frame" class="smaller vs2">
+
+<div id="unnamed-chunk-6">
+<style type="text/css">
+.vembedr {
+  border-radius: 25px; /* adjust it to your needs */
+  overflow: hidden;
+}
+
+.vembedr iframe {
+  display: block;
+  border: none;
+}
+</style></div>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>vembedr::embed_youtube(&quot;4MfUCX_KpdE&quot;, query = list(start = vembedr::secs(&quot;15m43s&quot;), end = vembedr::secs(&quot;16m01s&quot;))) %&gt;% htmltools::div(class = &quot;vembedr&quot;)</pre>
+
+<div class="vembedr">
+<iframe src="https://www.youtube.com/embed/4MfUCX_KpdE?start=943&amp;end=961" width="420" height="315" frameborder="0" allowfullscreen=""></iframe>
+</div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Keep related things together </h2><h3> linear models</h3></hgroup><article  id="keep-related-things-together-linear-models" class="smaller ">
+
+<p>Linear model <em>per</em> country</p>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>by_country_lm &lt;- by_country %&gt;%
+  mutate(model = map(data, ~ lm(lifeExp ~ year1950, data = .x)))
+by_country_lm</pre>
+
+<pre ># A tibble: 142 × 4
+   continent     country              data    model
+      &lt;fctr&gt;      &lt;fctr&gt;            &lt;list&gt;   &lt;list&gt;
+1       Asia Afghanistan &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+2     Europe     Albania &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+3     Africa     Algeria &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+4     Africa      Angola &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+5   Americas   Argentina &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+6    Oceania   Australia &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+7     Europe     Austria &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+8       Asia     Bahrain &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+9       Asia  Bangladesh &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+10    Europe     Belgium &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt;
+# ... with 132 more rows</pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>broom cleanup</h2></hgroup><article  id="broom-cleanup" class="smaller ">
+
+<div id="unnamed-chunk-9">
+<p><img src="http://lsru.github.io/r_workshop/img/broom_cleanup.png" width="90%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidying model coefficients </h2><h3> extract from nested lists</h3></hgroup><article  id="tidying-model-coefficients-extract-from-nested-lists" class="smaller ">
+
+<div class = 'row'><div class = 'box col-3 bg-green'><h3>useful info</h3>
+
+<ul>
+<li>coefficients estimates:
+
+<ul>
+<li><strong>slope</strong></li>
+<li><strong>intercept</strong></li>
+</ul></li>
+<li>\(r^2\)</li>
+<li>residuals</li>
+</ul>
+
+</div><div class = 'col-9'>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(&quot;broom&quot;)
+models &lt;- by_country_lm %&gt;%
+  mutate(glance  = map(model, glance),
+         rsq     = glance %&gt;% map_dbl(&quot;r.squared&quot;),
+         tidy    = map(model, tidy),
+         augment = map(model, augment))
+models</pre>
+
+<pre ># A tibble: 142 × 8
+   continent     country              data    model                glance
+      &lt;fctr&gt;      &lt;fctr&gt;            &lt;list&gt;   &lt;list&gt;                &lt;list&gt;
+1       Asia Afghanistan &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+2     Europe     Albania &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+3     Africa     Algeria &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+4     Africa      Angola &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+5   Americas   Argentina &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+6    Oceania   Australia &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+7     Europe     Austria &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+8       Asia     Bahrain &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+9       Asia  Bangladesh &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+10    Europe     Belgium &lt;tibble [12 × 5]&gt; &lt;S3: lm&gt; &lt;data.frame [1 × 11]&gt;
+# ... with 132 more rows, and 3 more variables: rsq &lt;dbl&gt;, tidy &lt;list&gt;,
+#   augment &lt;list&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Exploratory plots</h2></hgroup><article  id="exploratory-plots" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Does linear models fit all countries?</h2></hgroup><article  id="does-linear-models-fit-all-countries" class="smaller ">
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>models %&gt;%
+  ggplot(aes(x = rsq, y = reorder(country, rsq))) +
+  geom_point(aes(colour = continent)) +
+  theme(axis.text.y = element_text(size = 6))</pre>
+
+<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exploratory plots </h2><h3> focus on non-linear trends</h3></hgroup><article  id="exploratory-plots-focus-on-non-linear-trends" class="smaller ">
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>models %&gt;%
+  filter(rsq &lt; 0.55) %&gt;%
+  unnest(data) %&gt;%
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_line(aes(colour = continent)) +
+  facet_wrap(~ country)</pre>
+
+<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>All in all</h2></hgroup><article  id="all-in-all" class="smaller ">
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>models %&gt;%
+  unnest(tidy) %&gt;%
+  select(continent, country, rsq, term, estimate) %&gt;%
+  spread(term, estimate) %&gt;%
+  ggplot(aes(x = `(Intercept)`, y = year1950)) +
+  geom_point(aes(colour = continent, size = rsq)) +
+  geom_smooth(se = FALSE, method = &quot;loess&quot;) +
+  scale_size_area() + labs(x = &quot;Life expectancy (1950)&quot;, y = &quot;Yearly improvement&quot;)</pre>
+
+<p><img src="lecture09_broom_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>animation made easy</h2></hgroup><article  id="animation-made-easy" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-cobalt'><h3><a href='https://github.com/dgrtwo/gganimate' title=''>gganimate</a> by David Robinson</h3>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(gganimate)
+gapminder %&gt;%
+ggplot(aes(x = gdpPercap, 
+           y = lifeExp,
+           size = pop, 
+           color = continent,
+           frame = year)) +
+  geom_point() +
+  scale_x_log10() -&gt; p
+gganimate(p, &#39;img/09_gapminder.gif&#39;)</pre></div>
+
+</div><div class = 'col-6'>
+
+<div id="unnamed-chunk-15">
+<p><img src="img/09_gapminder.gif" width="90%" style="display: block; margin: auto;" /></p></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture09_broom_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

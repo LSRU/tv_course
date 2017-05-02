@@ -1,0 +1,115 @@
+/*
+  add more space between main title and subtitle
+  should be fixed in iosp
+*/
+.title-slide hgroup h2 {
+  margin-top: 20px;
+}
+
+/*
+  I already adjusted the z-index for a box but not for a "chunk box"
+  should be fixed in iosp but chunk boxes should anyway be rendered using the box class...
+*/
+
+.chunk pre {
+  z-index: 15; /* I used 10 for the box. */
+}
+
+/* compact table 
+   add .compact-table for example to the box containing the table
+*/
+
+.compact-table table.rmdtable {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  border-collapse: collapse;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 0.5em;
+}
+
+.compact-table table.rmdtable tr.header, .compact-table table.rmdtable tr > th {
+  background: none;
+  color: black;
+  padding: 0.5em 0.5em;
+}
+
+.compact-table table.rmdtable tr.header {
+  border-bottom: 2px solid black;
+}
+
+.compact-table table.rmdtable tr.even {
+  background: none;
+}
+
+.compact-table table.rmdtable td, .compact-table table.rmdtable tr > td:first-child {
+  font-size: 100%;
+  color: black;
+  font-weight: normal;
+  padding: 0.3em 0.5em;
+}
+
+.compact-table table.rmdtable tr:last-child > td {
+  padding-bottom: 0.5em;
+}
+
+article.smaller .compact-table table.rmdtable td, article.smaller .compact-table table.rmdtable th,
+article.smaller.compact-table table.rmdtable td, article.smaller.compact-table table.rmdtable th {
+  font-size: 16px;
+}
+
+/* end of compact table */
+
+
+/* 
+  to show a floating right icon in a box
+  add the image as the first element in the box
+*/
+
+.icon img {
+  float: right;
+  margin-left: 20px;
+}
+
+.icon-small img {
+  float: right;
+  margin-left: 20px;
+  max-height: 75px !important;
+}
+
+/*
+  to render code spans more visible in box with dark headers
+  should be fixed in a future iosp release!
+*/
+.box > h3:first-child > code {
+  background-color: rgba(250, 250, 250, 0.5);
+  padding: 0 5px;
+}
+
+/*
+  to reduce line-height of output chunks:
+  avoids unnecessary oversized outputs
+*/
+
+.compact-output pre:not(.lang-r) {
+  line-height: 15px;
+}
+
+/* 
+  to add negative vertical space (push content up)
+  should be cleaned/fixed/enhanced in iosp...
+  to be used for example to push a full slide screenshot close to the header (nvs1 or nvs2)
+*/
+
+article.nvs1 {
+  margin-top: -1em;
+}
+
+article.nvs2 {
+  margin-top: -2em;
+}
+
+article.nvs3 {
+  margin-top: -3em;
+}

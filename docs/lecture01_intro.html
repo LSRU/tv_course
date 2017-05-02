@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing with R tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data processing with R tidyverse',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture01_intro_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-orange {
+      background-color: #FF8C00;
+    }
+  
+    .box.bg-orange {
+      border: 2px solid #804600;
+      color: #000;
+    }
+  
+    .box.bg-orange > h3:first-child {
+      background-color: #804600;
+      color: #fff;
+    }
+  
+    .bg-slate {
+      background-color: #7A67EE;
+    }
+  
+    .box.bg-slate {
+      border: 2px solid #3D3477;
+      color: #fff;
+    }
+  
+    .box.bg-slate > h3:first-child {
+      background-color: #3D3477;
+      color: #fff;
+    }
+  
+    .bg-yellow {
+      background-color: #FFFF00;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEC900;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEC900;
+      color: #000;
+    }
+  
+    .bg-grgold {
+      background-color: #008B45;
+    }
+  
+    .box.bg-grgold {
+      border: 2px solid #004622;
+      color: #fff;
+    }
+  
+    .box.bg-grgold > h3:first-child {
+      background-color: #004622;
+      color: #FFD700;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture01_intro_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview" class="smaller ">
+
+<p>The four day course provides a complete introduction to data science in <img src='img/01_Rlogo_90.png' title=''/> with the <strong>tidyverse</strong>. Focusing on getting data ready, some exploratory analysis, visualization and handling models.</p>
+
+<p>Preparing data takes up to 90% of the time spent in analysis — speeding this up is the mission of this course</p>
+
+<p>This workshop is composed of 30 hours:</p>
+
+<div class = 'row'><div class = 'col-4 box bg-green'><h3>lectures</h3>
+
+<ul>
+<li>~ 8 hours</li>
+<li>available online</li>
+<li>very short exercises included</li>
+<li>convert them to pdf using chrome</li>
+</ul>
+
+</div><div class = 'box col-4 bg-yellow stretch'><h3>practical sessions</h3>
+
+<ul>
+<li>~ 15 hours</li>
+<li>using your own laptop</li>
+<li>teachers available</li>
+<li>supplementary exercises if needed</li>
+</ul>
+
+</div><div class = 'box col-4 bg-orange stretch'><h3>bring your own data</h3>
+
+<ul>
+<li>~ 7 hours (Day 4)</li>
+<li>teachers available</li>
+<li>project provided for those that don&#39;t have data yet</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table and contents</h2></hgroup><article  id="time-table-and-contents" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 1</h3>
+
+<ul>
+<li><a href='lecture01_intro.html' title=''>Lecture 1</a>
+
+<ul>
+<li>Introduction to R and RStudio (AG)</li>
+</ul></li>
+<li><a href='lecture02_data_structure.html' title=''>Lecture 2</a>
+
+<ul>
+<li>Basic data types, control structures (AG)</li>
+</ul></li>
+<li>Importing data into R
+
+<ul>
+<li><a href='lecture03_rmarkdown.html' title=''>Lecture 3 Markdown</a> (EK)</li>
+<li><a href='lecture04_readr.html' title=''>Lecture 4 readr</a> (EK)</li>
+</ul></li>
+<li><p>Setup <em>Bring Your Own data Session</em> (for Day 4)</p></li>
+<li><a href='lecture05_tidyr.html' title=''>Lecture 5</a>
+
+<ul>
+<li>Introduction to tidy data (RK)</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont." class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 2</h3>
+
+<ul>
+<li><a href='lecture06_dplyr.html' title=''>Lecture 6</a>
+
+<ul>
+<li>Data wrangling with <code>dplyr</code> (RK)</li>
+</ul></li>
+<li><a href='lecture07_plotting.html' title=''>Lecture 7</a>
+
+<ul>
+<li>Visualization with <code>ggplot2</code> (AG)</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Time table </h2><h3> (cont.)</h3></hgroup><article  id="time-table-cont.-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 3</h3>
+
+<ul>
+<li><a href='lecture08_purrr.html' title=''>Lecture 8</a>
+
+<ul>
+<li>Functional programming with <code>purrr</code> (EK)</li>
+</ul></li>
+<li><a href='lecture08_broom.html' title=''>Lecture 9</a>
+
+<ul>
+<li>Handling statistical models with <code>broom</code> (AG)</li>
+</ul></li>
+<li>[Lecture 10]
+
+<ul>
+<li>Programming with <code>tidyeval</code> (AG)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 bg-green'><h3>Day 4</h3>
+
+<ul>
+<li>Project work
+
+<ul>
+<li>Project (<em>BYOD</em>) or</li>
+<li>Microarray analysis</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>What is R?</h2></hgroup><article  id="what-is-r" class="smaller vs2">
+
+<p><strong>R</strong> is shorthand for <a href='https://www.r-project.org' title=''>&quot;GNU R&quot;</a>:</p>
+
+<ul>
+<li>An interactive programming language derived from <strong>S</strong></li>
+<li>Focus on data analysis (&quot;stats&quot;) and plotting</li>
+<li><strong>R</strong> is also shorthand for the ecosystem around this language
+
+<ul>
+<li>Book authors</li>
+<li>Package developers</li>
+<li>Ordinary useRs</li>
+</ul></li>
+</ul>
+
+<p>Learning to use <strong>R</strong> will make you <strong>more efficient</strong> and <strong>facilitate the use</strong> of advanced data analysis tools</p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Why use R?</h2></hgroup><article  id="why-use-r" class="smaller vs2">
+
+<ul>
+<li>It&#39;s <em>free!</em></li>
+<li>easy to install / maintain</li>
+<li>easy to process big files and analyse huge amounts of data</li>
+<li>integrated data visualization tools, <em>even dynamic</em></li>
+<li>fast, and even faster with <em>C++</em> integration via <a href='http://dirk.eddelbuettel.com/code/rcpp/Rcpp-attributes.pdf' title=''>Rcpp</a>.</li>
+<li>easy to get help
+
+<ul>
+<li><a href='https://support.rstudio.com/hc/en-us/articles/200552336-Getting-Help-with-R' title=''>huge R community in the web</a></li>
+<li><a href='http://stackoverflow.com/questions/tagged/r' title=''>stackoverflow</a> with a lot of tags like <strong>tidyverse</strong>, <strong>dplyr</strong>, <strong>ggplot2</strong> etc.</li>
+<li><a href='http://www.r-bloggers.com' title=''>rbloggers</a></li>
+</ul></li>
+</ul>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Twitter R community</h2></hgroup><article  id="twitter-r-community" class="smaller ">
+
+<p><a href='https://twitter.com/search?q=%23rstats' title=''><code>#rstats</code></a> on twitter</p>
+
+<div id="unnamed-chunk-1">
+<p><img src="img/01_r_community.jpg" width="95%" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Constant trend</h2></hgroup><article  id="constant-trend" class="smaller ">
+
+<div id="unnamed-chunk-2">
+<p><img src="img/01_r_progression.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+<p>From <a href='http://onlinelibrary.wiley.com/doi/10.1002/ecs2.1394/full' title=''>Touchon &amp; McCoy. <em>Ecosphere</em>. 2016</a></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Packages </h2><h3> +10,000 in Jan 2017</h3></hgroup><article  id="packages-10000-in-jan-2017" class="smaller ">
+
+<div class = 'row'><div class = 'box col-4 bg-green stretch'><h3><a href='https://cran.r-project.org/web/packages/available_packages_by_date.html' title=''>CRAN</a></h3>
+
+<p><strong>reliable</strong>: package is checked during submission process</p>
+
+<p><a href='https://mran.microsoft.com/packages/' title=''>MRAN</a> for Windows users</p>
+
+</div><div class = 'box col-4 bg-green stretch'><h3><a href='https://www.bioconductor.org/' title=''>bioconductor</a></h3>
+
+<p>dedicated to biology. <a href='https://www.bioconductor.org/packages/release/bioc/html/limma.html' title=''>status</a></p>
+
+<p>typical install:</p>
+
+<div id="unnamed-chunk-3" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>source(&quot;https://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;limma&quot;)</pre></div>
+
+</div><div class = 'box col-4 bg-yellow stretch'><h3><a href='https://github.com/' title=''>GitHub</a></h3>
+
+<p>easy install thanks to <a href='https://github.com/hadley/devtools' title=''>devtools</a>. <a href='https://github.com/hadley/readr' title=''>status</a></p>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'># install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;tidyverse/readr&quot;)</pre></div>
+
+<p>could be a security issue (see next slide)</p>
+
+</div></div><div class = 'row'><div class = 'col-6'><h3>CRAN install from Rstudio</h3>
+
+<img src='img/01_packages_install_cran.jpg' title='fig:'/>
+
+</div><div class = 'col-6'><h3>github install from Rstudio&#39; console</h3>
+
+<img src='img/01_packages_install_devtools.jpg' title='fig:'/>
+
+<p>more in the article from <a href='http://blog.revolutionanalytics.com/2017/01/cran-10000.html' title=''>David Smith</a></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Security</h2></hgroup><article  id="security" class="smaller ">
+
+<div class = 'row'><div class = 'col-9'>
+
+<div id="unnamed-chunk-5">
+<p><img src="https://i0.wp.com/rud.is/b/wp-content/uploads/2017/02/hieRarchy.png" width="70%" /></p></div>
+
+</div><div class = 'col-3 middle'>
+
+<p><span class="small">
+source <a href='https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-systems-and-data-science-community-security/' title=''>Bob Rudis&#39; blog</a></span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Help pages</h2></hgroup><article  id="help-pages" class="smaller ">
+
+<div id="unnamed-chunk-6">
+<style type="text/css">
+.to_right > p {
+  text-align: right;
+}
+</style></div>
+
+<div class = 'row'><div class = 'col-6 middle to_right'>
+
+<p>2 possibilities for manual pages.</p>
+
+</div><div class = 'col-6'>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>?log
+help(log)</pre></div>
+
+</div></div>
+
+<p>In <strong>Rstudio</strong>, the help page can be viewed in the bottom right pane</p>
+
+<div class = 'row'><div class = 'col-8'>
+
+<img src='img/01_help_RStudio.png' title='fig:'/>
+
+</div><div class = 'box col-4 bg-orange'><h3>Sadly</h3>
+
+<p>manpages are often unhelpful, now <strong>vignettes</strong> (and <a href='http://readxl.tidyverse.org/articles/sheet-geometry.html' title=''><strong>articles</strong></a> on tidyverse) are better and described workflows.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Drawback: Steep learning curve </h2><h3> Period of much suckiness</h3></hgroup><article  id="drawback-steep-learning-curve-period-of-much-suckiness" class="smaller ">
+
+<div id="unnamed-chunk-8">
+<iframe src="https://www.youtube.com/embed/8SGif63VW6E?start=252&amp;end=292" width="420" height="315" frameborder="0" allowfullscreen=""></iframe></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><a href='http://tidyverse.org/' title=''>Tidyverse</a> </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator" class="smaller vs1">
+
+<p><strong>R base</strong> is complex, has a long history and many contributors</p>
+
+<div class = 'row'><div class = 'bg-yellow box col-11'><h3>Why R is hard to learn</h3>
+
+<ul class = 'build'>
+<li>Unhelpful help <code>?print</code></li>
+<li>generic methods <code>print.data.frame</code></li>
+<li>too many commands <em>open source</em></li>
+<li>inconsistent names <code>read.csv, load, readRDS</code></li>
+<li>inconsistent syntax <em>open source</em></li>
+<li>too many ways to select variables <code>df$x, df$&quot;x&quot;, df[,&quot;x&quot;], df[[1]]</code></li>
+<li>[&#8230;] see <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>r4stats&#39; post</a> for the full list</li>
+<li>the tidyverse curse</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'col-8 offset-4'>
+
+<p><span class="small">
+source: <a href='http://r4stats.com/articles/why-r-is-hard-to-learn/' title=''>Robert A. Muenchen&#39; blog</a></span></p>
+
+</div></div>
+
+<div class = 'row build'><div class = 'col-12 '>
+
+<blockquote class = 'bg-orange'>
+<p>Navigating the balance between base R and the tidyverse is a challenge to learn <cite> Robert A. Muenchen </p></cite>
+</blockquote>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> creator</h3></hgroup><article  id="tidyverse-creator-1" class="smaller vs2">
+
+<p>We think the <a href='http://tidyverse.org/' title=''><strong>tidyverse</strong></a> is better, especially for beginners. It is</p>
+
+<ul>
+<li>recent (both an issue and an advantage)</li>
+<li>unified</li>
+<li>consistent</li>
+</ul>
+
+<div class = 'row'><div class = 'box col-8'><h3>Hadley Wickham</h3>
+
+<p><a href='http://had.co.nz' title=''>Hadley</a>, chief scientist at <strong>Rstudio</strong>, coined the <em>tidyverse</em> at <a href='https://twitter.com/drob/status/748196885307920385' title=''>userR meeting in 2016</a>. He developed and maintains most of the core <em>tidyverse</em> packages</p>
+
+</div><div class = 'col-4'>
+
+<div id="unnamed-chunk-9">
+<p><img src="https://pbs.twimg.com/profile_images/677589103710306304/m56O6Wgf_400x400.jpg" width="75%" /></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages</h3></hgroup><article  id="tidyverse-packages" class="smaller vs1">
+
+<img src='img/01_tidyverse_components.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> packages in processes</h3></hgroup><article  id="tidyverse-packages-in-processes" class="smaller ">
+
+<div id="unnamed-chunk-10">
+<p><img src="img/01_tidyverse_data_science.png" width="80%" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> workflow</h3></hgroup><article  id="tidyverse-workflow" class="smaller ">
+
+<div class = 'row'><div class = 'col-9'><h3>Pipeline</h3>
+
+<img src='img/01_drob_r_pipeline_600.png' title='fig:'/>
+
+</div><div class = 'col-3'><h3>David Robinson</h3>
+
+<p><span class="cite">@drob</span> on twitter</p>
+
+<img src='https://pbs.twimg.com/profile_images/777175344/David_Robinson.jpg' title='fig:'/>
+
+<img src='img/01_logo_broom.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> core / extended</h3></hgroup><article  id="tidyverse-criticism-core-extended" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green'><h3>Core</h3>
+
+<ul>
+<li><code>ggplot2</code>, for data visualization</li>
+<li><code>dplyr</code>, for data manipulation</li>
+<li><code>tidyr</code>, for data tidying</li>
+<li><code>readr</code>, for data import</li>
+<li><code>purrr</code>, for functional programming</li>
+<li><code>tibble</code>, for tibbles, a modern re-imagining of data frames</li>
+</ul>
+
+</div><div class = 'box col-6 bg-yellow'><h3>Extended</h3>
+
+<ul>
+<li>Working with specific types of vectors:
+
+<ul>
+<li><code>hms</code>, for times</li>
+<li><code>stringr</code>, for strings</li>
+<li><code>lubridate</code>, for date/times</li>
+<li><code>forcats</code>, for factors</li>
+</ul></li>
+<li>Importing other types of data:
+
+<ul>
+<li><code>feather</code>, for sharing with other languages</li>
+<li><code>haven</code>, for SPSS, SAS and Stata files</li>
+<li><code>httr</code>, for web apis</li>
+<li><code>jsonlite</code> for JSON</li>
+<li><code>readxl</code>, for .xls and .xlsx files</li>
+<li><code>rvest</code>, for web scraping</li>
+<li><code>xml2</code>, for XML</li>
+</ul></li>
+<li>Modelling
+
+<ul>
+<li><code>modelr</code>, for modelling within a pipeline</li>
+<li><code>broom</code>, for turning models into tidy data</li>
+</ul></li>
+</ul>
+
+<blockquote>
+<p>source: <a href='http://tidyverse.tidyverse.org/' title=''>http://tidyverse.tidyverse.org/</a> <cite> H.Wickham</p></cite>
+</blockquote>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> dialect</h3></hgroup><article  id="tidyverse-criticism-dialect" class="smaller vs2">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+<a href="https://twitter.com/ucfagls"><span class="cite">@ucfagls</span></a> yeah. I think the tidyverse is a dialect. But its accent isn’t so thick
+
+</p>
+
+— Hadley Wickham (<span class="cite">@hadleywickham</span>) <a href="https://twitter.com/hadleywickham/status/819610201946984451">12 janvier 2017</a>
+
+</blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> controversy</h3></hgroup><article  id="tidyverse-criticism-controversy" class="smaller vs2">
+
+<p><a href='http://stackoverflow.com/questions/41880796/grouped-multicolumn-gather-with-dplyr-tidyr-purrr' title=''>SO&#39;s comment</a></p>
+
+<img src='img/01_tidyverse_contreversy.png' title='fig:'/>
+
+<p>See the popularity of the <a href='http://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly' title=''>data.table versus dplyr</a> question.</p>
+
+<p>Easily summarized: <a href='https://github.com/Rdatatable/data.table/wiki' title=''><code>data.table</code></a> is faster, for less than 10 m rows, negligible.</p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse criticism </h2><h3> jobs</h3></hgroup><article  id="tidyverse-criticism-jobs" class="smaller vs2">
+
+<blockquote class="twitter-tweet" data-lang="fr">
+
+<p lang="en" dir="ltr">
+
+Realized today: <a href="https://twitter.com/hashtag/tidyverse?src=hash">#tidyverse</a> R and base <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> have little in common. Beware when looking for job which requires knowledge of R.
+
+</p>
+
+— Yeedle N. (<span class="cite">@Yeedle</span>) <a href="https://twitter.com/Yeedle/status/837448170963668992">2 mars 2017</a>
+
+</blockquote>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<p>Personal complains:</p>
+
+<ul>
+<li>still young so change quickly and drastically. Backward compatibility is not always maintained.</li>
+<li><code>tibbles</code> are nice but a lot of non-tidyverse packages require <code>matrices</code>. <code>rownames</code> still an issue.</li>
+</ul>
+
+<p>Anyway, learning the <em>tidyverse</em> does not prevent to learn <em>R base</em>, it helps to get things done early in the process</p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends" class="smaller ">
+
+<div id="unnamed-chunk-11">
+<p><img src="img/01_r_documentation_trends_20170418.png" width="90%" /></p></div>
+
+<div class = 'row'><div class = 'offset-4 col-6'>
+
+<p><span class="small">
+source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidyverse </h2><h3> trends</h3></hgroup><article  id="tidyverse-trends-1" class="smaller ">
+
+<div id="unnamed-chunk-12">
+<p><img src="img/01_r_documentation_trends_20170418_tv.png" width="90%" /></p></div>
+
+<div class = 'row'><div class = 'col-6 offset-4'>
+
+<p><span class="small">
+source: <a href='https://www.rdocumentation.org/trends' title=''>rdocumentation</a> (2017/04/18)</span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>RStudio</h2></hgroup><article  id="rstudio" class="smaller ">
+
+<img src='img/01_logo_RStudio.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> What is it?</h3></hgroup><article  id="rstudio-what-is-it" class="smaller ">
+
+<p><a href='https://www.rstudio.com/products/RStudio/' title=''>RStudio</a> is an Integrated Development Environment.<br/>It makes working with R much easier</p>
+
+<div class = 'row build'><div class = 'box col-9 bg-green '><h3>Features</h3>
+
+<ul class = 'build'>
+<li><em>Console</em> to run <strong>R</strong>, with syntax highlighter</li>
+<li><em>Editor</em> to work with scripts</li>
+<li><em>Viewer</em> for data / plots / website</li>
+<li><em>Package management</em> (including building)</li>
+<li><em>Autocompletion</em> using <kbd>TAB</kbd></li>
+<li><a href='https://www.rstudio.com/resources/cheatsheets/' title=''><em>Cheatsheets</em></a></li>
+<li><em>Git</em> integration for versioning</li>
+<li><em>Inline</em> outputs (&gt;= v1.03)</li>
+<li><em>Keyboard shortcuts</em></li>
+<li><a href='https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/' title=''><em>Notebooks</em></a></li>
+</ul>
+
+</div><div class = 'box col-3 bg-orange '><h3>Warning</h3>
+
+<p>Don&#39;t mix up <strong>R</strong> and <strong>RStudio</strong>.<br/><strong>R</strong> needs to be installed first.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> The 4 panels layout</h3></hgroup><article  id="rstudio-the-4-panels-layout" class="smaller ">
+
+<img src='img/01_rstudio_layout.jpg' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Four panels</h2></hgroup><article  id="four-panels" class="smaller vs2">
+
+<div class = 'row'><div class = 'col-6 box bg-green stretch'><h3>scripting</h3>
+
+<ul>
+<li>could be your main window</li>
+<li>should be a <strong>Rmarkdown</strong> doc</li>
+<li>tabs are great</li>
+</ul>
+
+</div><div class = 'col-6 box bg-yellow stretch'><h3>Environment</h3>
+
+<ul>
+<li>Environment, display loaded objects and their <code>str()</code></li>
+<li>History is useless IMO</li>
+<li>nice <code>git</code> integration</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'col-6 box stretch'><h3>Console</h3>
+
+<ul>
+<li>could be hidden with <strong>inline</strong> outputs</li>
+<li>in the preview, embed a nice <code>terminal</code> tab</li>
+</ul>
+
+</div><div class = 'col-6 box bg-yellow stretch'><h3>Files / Plots / Help</h3>
+
+<ul>
+<li>necessary package management tab</li>
+<li>plots becomes useless when using <strong>inline</strong> outputs</li>
+<li>very useful help tab</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>For reproducibility, options to activate / deactivate</h2></hgroup><article  id="for-reproducibility-options-to-activate-deactivate" class="smaller ">
+
+<img src='http://talklab.psy.gla.ac.uk/L1_labs/lab_1/prep/repro.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Code diagnostics, highly recommended</h2></hgroup><article  id="code-diagnostics-highly-recommended" class="smaller ">
+
+<p>using <code>Global Options -&gt; Code -&gt; Diagnostics</code> editing pane:</p>
+
+<div class = 'row'><div class = 'col-6'>
+
+<p><img src='img/01_diag_RStudio.png' title=''/> <span class="small">
+source: <a href='https://support.rstudio.com/hc/en-us/articles/205753617-Code-Diagnostics?version=1.1.133&amp;mode=desktop' title=''>Kevin Ushey&#39; article</a></span></p>
+
+</div><div class = 'col-6'>
+
+<ul>
+<li>check argument calls</li>
+</ul>
+
+<img src='https://support.rstudio.com/hc/en-us/article_attachments/201712378/Screen_Shot_2015-04-30_at_2.01.17_PM.png' title='fig:'/>
+
+<ul>
+<li>missing arguments</li>
+</ul>
+
+<img src='https://support.rstudio.com/hc/en-us/article_attachments/201712398/Screen_Shot_2015-04-30_at_2.03.06_PM.png' title='fig:'/>
+
+<ul>
+<li>variable definitions</li>
+</ul>
+
+<img src='https://support.rstudio.com/hc/en-us/article_attachments/201712428/Screen_Shot_2015-04-30_at_2.06.54_PM.png' title='fig:'/>
+
+<ul>
+<li>unused variables &amp; style recommendations</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The dream team</h2></hgroup><article  id="the-dream-team" class="smaller ">
+
+<img src='img/01_r_community_rstudio.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio </h2><h3> Working directory and projects</h3></hgroup><article  id="rstudio-working-directory-and-projects" class="smaller ">
+
+<p>It is where <strong>R</strong> is looking for files (read or write).<br/>Using the console, try:</p>
+
+<div class = 'row'><div class = 'col-4'>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>&gt; getwd()</pre></div>
+
+</div><div class = 'col-8 box bg-red'><h3>setwd() or relative paths</h3>
+
+<ul>
+<li>It is possible to change the location using <code>setwd()</code> (in the console or interactively in <em>RStudio</em>)</li>
+<li>A better way is to use projects in Rstudio</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 bg-green'><h3>Projects</h3>
+
+<p>They solve most issues with working directories: get rid of <code>setwd()</code></p>
+
+</div><div class = 'col-4'>
+
+<img src='img/01_rstudio_project.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Using <code class="vs2">library()</code></h2></hgroup><article  id="using-library" class="smaller ">
+
+<div class = 'row'><div class = 'col-6 box bg-yellow'><h3>with only <code>base</code> loaded</h3>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>x &lt;- 1:10
+filter(x, rep(1, 3))</pre>
+
+<pre >Time Series:
+Start = 1 
+End = 10 
+Frequency = 1 
+ [1] NA  6  9 12 15 18 21 24 27 NA</pre></div>
+
+</div><div class = 'box col-6 bg-red'><h3>Conflicts! when 2 packages export a function</h3>
+
+<p>with the same name, the latest loaded wins</p>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(dplyr)
+filter(x, rep(1, 3))</pre></div>
+
+<div id="unnamed-chunk-16">
+<style type="text/css">
+.error {
+    font-family: monospace;
+    color: red;
+}
+</style></div>
+
+<p><span class="error">
+Error in UseMethod(&quot;filter_&quot;) : no applicable method for &#39;filter_&#39; applied to an object of class &quot;c(&#39;integer&#39;, &#39;numeric&#39;)</span></p>
+
+</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3><strong>Solution</strong></h3>
+
+<p>using the <code>::</code> operator to call a function from a specific package</p>
+
+<div id="unnamed-chunk-17" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>stats::filter(x, rep(1, 3))</pre>
+
+<pre >Time Series:
+Start = 1 
+End = 10 
+Frequency = 1 
+ [1] NA  6  9 12 15 18 21 24 27 NA</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pipes with magrittr </h2><h3> developed by Stefan Milton Bache</h3></hgroup><article  id="pipes-with-magrittr-developed-by-stefan-milton-bache" class="smaller ">
+
+<img src='https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/3632/small/1419844831/magrittr.png' title='fig:'/>
+
+<p>compare the approaches between classic parenthesis and the <a href='https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html' title=''>magrittr</a> pipeline</p>
+
+<div class = 'row'><div class = 'bg-yellow box col-6'><h3>R base</h3>
+
+<div id="unnamed-chunk-19" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>set.seed(12)
+round(mean(rnorm(5)), 2)</pre>
+
+<pre >[1] -0.76</pre></div>
+
+</div><div class = 'bg-green box col-6'><h3>magrittr</h3>
+
+<div id="unnamed-chunk-20" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>set.seed(12)
+rnorm(5) %&gt;%
+  mean() %&gt;%
+  round(2)</pre>
+
+<pre >[1] -0.76</pre></div>
+
+<p>Of note, <code>magrittr</code> needs to loaded with either:</p>
+
+<div id="unnamed-chunk-21" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(magrittr)
+library(dplyr)
+library(tidyverse)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Coding&#39;s style</h2></hgroup><article  id="codings-style" class="smaller ">
+
+<p><code>R</code> is rather flexible and permissive with its syntax. However, being more strict tends to ease the debugging process.</p>
+
+<p>See <a href='http://style.tidyverse.org/' title=''>tidyverse style&#39;s recommendations</a></p>
+
+<p>In summary:</p>
+
+<div class = 'row'><div class = 'bg-green box col-6'><h3>Good</h3>
+
+<ul>
+<li>use <strong>spaces</strong></li>
+<li>use more <strong>lines</strong>
+
+<ul>
+<li><code>}</code> alone on their line except for</li>
+</ul>
+
+<div id="unnamed-chunk-22" class="chunk shadow">
+<p><code>r   } else {</code></p></div>
+
+<ul>
+<li>using the pipe <code>%&gt;%</code> to display a single instruction per line</li>
+<li>break list definitions, function arguments &#8230;</li>
+</ul></li>
+<li>avoid using names of existing functions and variables</li>
+<li>use <strong><code>snake_case</code></strong> more than <code>CamelCases</code></li>
+</ul>
+
+</div><div class = 'bg-red box col-6'><h3>Bad</h3>
+
+<div id="unnamed-chunk-23" class="chunk shadow">
+<pre class = 'prettyprint lang-r'># example from http://adv-r.had.co.nz/Style.html
+T &lt;- FALSE
+c &lt;- 10
+mean &lt;- function(x) sum(x)</pre></div>
+
+<div id="unnamed-chunk-24" class="chunk shadow">
+<pre class = 'prettyprint lang-r'># lack spaces for readibility
+average&lt;-mean(feet/12+inches,na.rm=TRUE)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Hexbins</h2></hgroup><article  id="hexbins" class="smaller ">
+
+<p>After David Robinson&#39; laptop, see and get inspired!</p>
+
+<div class = 'row'><div class = 'col-6'><h3>Hadley Wickham</h3>
+
+<img src='img/01_hexbin_hadley.jpg' title='fig:'/>
+
+</div><div class = 'col-6'><h3>Bob Rudis</h3>
+
+<img src='img/01_hexbin_hrbrmstr.jpg' title='fig:'/></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture01_intro_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

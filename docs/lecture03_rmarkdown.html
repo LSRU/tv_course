@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rmarkdown</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Rmarkdown',
+                        useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture03_rmarkdown_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-yellow {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-pink2 {
+      background-color: #EEA9B8;
+    }
+  
+    .box.bg-pink2 {
+      border: 2px solid #77545C;
+      color: #000;
+    }
+  
+    .box.bg-pink2 > h3:first-child {
+      background-color: #77545C;
+      color: #fff;
+    }
+  
+    .bg-aquamarine2 {
+      background-color: #76EEC6;
+    }
+  
+    .box.bg-aquamarine2 {
+      border: 2px solid #3B7763;
+      color: #000;
+    }
+  
+    .box.bg-aquamarine2 > h3:first-child {
+      background-color: #3B7763;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture03_rmarkdown_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<div id="unnamed-chunk-1">
+<style type="text/css">
+/* my css codes. Some might get integrated in a future iosp version...*/
+
+article .my_flex > p {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: space-around;
+  -webkit-justify-content: space-around;
+  font-size: 50px;
+}
+
+.box li {
+  line-height: 1.1em; /* should be optimized in the main iosp css... */
+}
+
+article .code-transparent > pre {
+  background: none;
+  /*border-left: none;*/
+}
+
+.code-transparent pre {
+  color: #c7254e;
+  background: none;
+  border-left: none;
+  padding-left: 50px;
+}
+
+.center img {
+  display: block;
+  margin: auto;
+  float: none;
+}
+</style></div>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>You will learn to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>use the markdown syntax</li>
+<li>create <em>Rmarkdown</em> documents</li>
+<li>define the output format you expect to render</li>
+<li>use the interactive RStudio interface to
+
+<ul>
+<li>create your documents</li>
+<li>insert R code</li>
+<li>build your final document</li>
+</ul></li>
+<li>use some nice rmarkdown features like
+
+<ul>
+<li>inserting bibliography</li>
+<li>creating parameterised reports</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>RMarkdown</h2></hgroup><article  id="rmarkdown" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue icon'><h3>Why using <code>rmarkdown</code>?</h3>
+
+<img src='img/03_rmarkdown_output.png' title='fig:'/>
+
+<ul>
+<li>write detailed reports</li>
+<li>ensure reproducibility</li>
+<li>keep track of your analyses</li>
+<li>comment/describe each step of your analysis</li>
+<li>export a single (Rmd) document to various formats (Pdf, Html&#8230;)</li>
+<li>text file that can be managed by a version control system (like <a href='https://git-scm.com/' title=''>git</a>)</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-red my_flex vs1'><h3>Rmarkdown</h3>
+
+<p><img src='img/01_Rlogo_90.png' title=''/> + <img src='img/03_knit_logo.png' title=''/> + <img src='img/03_md_logo.png' title=''/></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Markdown</h2></hgroup><article  id="markdown" class="smaller ">
+
+<p><strong>Markdown</strong> is used to <strong>format the text</strong></p>
+
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Markup language</h3>
+
+<ul>
+<li>Such as Xml, HTML</li>
+<li>A coding system used to structure text</li>
+<li>Uses markup tags (<em>e.g.</em> <code>&lt;h1&gt;&lt;/h1&gt;</code> in HTML)</li>
+</ul>
+
+</div><div class = 'box col-6 bg-green my_code stretch '><h3>HTML</h3>
+
+<pre >&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;h1&gt;This is a heading&lt;/h1&gt;
+
+&lt;p&gt;This is some text in a paragraph.&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><strong>Lightweight</strong> markup language</h3>
+
+<ul>
+<li>Easy to read and write as it uses simple tags (<em>e.g.</em> <code>#</code>)</li>
+</ul>
+
+</div><div class = 'box col-6 bg-green my_code stretch '><h3>MD</h3>
+
+<pre ># This is a heading
+
+This is some text in a paragraph</pre>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Markdown </h2><h3> common text formatting <strong>tags</strong></h3></hgroup><article  id="markdown-common-text-formatting-tags" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-pink2 stretch '><h3>Headers</h3>
+
+<ul>
+<li>Levels are defined using <code>#</code>, <code>##</code>, <code>###</code> &#8230;</li>
+</ul>
+
+</div><div class = 'box col-6 bg-aquamarine2 stretch '><h3>Text style</h3>
+
+<ul>
+<li><strong>bold</strong> (<code>**</code>This will be bold<code>**</code>)</li>
+<li><em>italic</em> (<code>*</code>This will be italic<code>*</code>)</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow stretch '><h3>Links and images</h3>
+
+<ul>
+<li><code>[description](http://example.com)</code></li>
+<li><code>![](path/to/image.jpg)</code></li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue stretch  code-transparent'><h3>Verbatim code</h3>
+
+<ul>
+<li><code>code</code> (<code>`</code>This will be some inline coding stuff<code>`</code>)</li>
+<li>triple backticks are delimiting code blocks</li>
+</ul>
+
+<pre >```
+This is *verbatim* code
+# Even headers are not interpreted
+```</pre>
+
+</div></div><div class = 'row build'><div class = 'box col-12 bg-green icon stretch '><h3>Rmarkdown cheatsheet</h3>
+
+<img src='img/03_rmarkdown_cheatsheet.png' title='fig:'/>
+
+<ul>
+<li>Have a look at the online documents on the <a href='http://rmarkdown.rstudio.com/lesson-8.html' title=''>Rmarkdown website</a></li>
+<li>Download the <a href='https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf' title=''>cheatsheet as Pdf</a>
+
+<ul>
+<li>from the Rstudio <code>Help &gt; Cheatsheets</code> menu</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Exercise </h2><h3> Markdown</h3></hgroup><article  id="exercise-markdown" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green icon'><h3>Learn to use the markdown syntax</h3>
+
+<img src='img/03_md_logo.png' title='fig:'/>
+
+<p>Before writing your own Rmarkdown document, use the excellent ressource on <a href='http://www.markdowntutorial.com/' title=''>www.markdowntutorial.com</a> to learn the basics of markdown formatting.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Including <em>R</em> code</h2></hgroup><article  id="including-r-code" class="smaller ">
+
+<div class = 'row'><div class = 'box col-5 bg-red icon'><h3>Rmarkdown</h3>
+
+<img src='img/03_rmarkdown.png' title='fig:'/>
+
+<ul>
+<li>extends markdown</li>
+<li>allows to integrate code chunks that will be interpreted
+
+<ul>
+<li><strong>R code</strong></li>
+<li>bash</li>
+<li>python</li>
+<li>css</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-7 bg-red icon'><h3>Knitr</h3>
+
+<img src='img/03_knitr.png' title='fig:'/>
+
+<ul>
+<li>R chunks are extracted, interpreted separately</li>
+<li>The result is formatted (with or without the source code) and integrated into the markdown document</li>
+<li>The markdown document is converted to the desired document format (Pdf, Html&#8230;)</li>
+<li>Relies on the powerful <a href='http://pandoc.org/' title=''>pandoc</a> converter</li>
+<li>Fully integrated in Rstudio (Knit button)</li>
+</ul>
+
+<div id="unnamed-chunk-2">
+<div class="center">
+<div class="figure">
+<p><img src="img/03_rstudio_knit.png" /></p></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> Create, step 1</h3></hgroup><article  id="rmarkdown-document-create-step-1" class="smaller nvs1">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/03_rstudio_rmd_create_1.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> Create, step 2</h3></hgroup><article  id="rmarkdown-document-create-step-2" class="smaller nvs1">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/03_rstudio_rmd_create_2.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> Structure</h3></hgroup><article  id="rmarkdown-document-structure" class="smaller ">
+
+<p>A Rmarkdown document document contains 3 elements:</p>
+
+<div id="unnamed-chunk-3">
+<div class="float-r">
+<div class="figure">
+<p><img src="img/03_rmd_example.png" /></p></div></div></div>
+
+<ul>
+<li>A <strong><span class="red">
+YAML header</span></strong> to define document wide options</li>
+<li>Text which is formatted using the <strong><span class="blue">
+markdown&quot;</span></strong> syntax</li>
+<li><strong><span class="green">
+chunks</span></strong> containing the code to be interpreted by <em>R</em></li>
+</ul>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> Navigation</h3></hgroup><article  id="rmarkdown-document-navigation" class="smaller nvs2">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/03_rstudio_index.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> Insert a chunk</h3></hgroup><article  id="rmarkdown-document-insert-a-chunk" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-5 bg-blue '><h3>Inserting a code chunk</h3>
+
+<img src='img/03_rstudio_chunk_add.png' title='fig:'/>
+
+</div><div class = 'box col-7 bg-blue'><h3>R code chunks</h3>
+
+<img src='img/03_chunk_example.png' title='fig:'/>
+
+<ul>
+<li>chunks are defined between two lines starting with a 3 backticks tag (<code>```</code>)</li>
+<li>curly brackets define how to interprete the content (<em>R</em> code but other languages such as Python are also supported)</li>
+<li><code>```{r}</code> is the minimum to define a starting <em>R</em> chunk</li>
+<li>can contain more options (name of chunk, whether to show it or not, evaluate it or not)</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 bg-blue offset-1 '><h3>Inline code</h3>
+
+<p>To integrate small pieces of <em>R</em> codes</p>
+
+<ul>
+<li>Use backticks (<code>`</code>) combined to the keyword r (<code>`r &lt;your R code&gt;`</code>)</li>
+<li>Example: type in <code>1 + 1 = `r 1+1`</code> to render 1 + 1 = 2.</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rmarkdown document </h2><h3> generate</h3></hgroup><article  id="rmarkdown-document-generate" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 offset-3 bg-blue center vs2'><h3>Creating the output document</h3>
+
+<ul>
+<li>use the integrated <strong>Knit</strong> button.</li>
+<li>call <code>rmarkdown::render()</code></li>
+</ul>
+
+<img src='img/03_rstudio_knit.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Popular output formats</h2></hgroup><article  id="popular-output-formats" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green stretch'><h3>HTML</h3>
+
+<ul>
+<li>fast rendering</li>
+<li>by default embeds binaries (pictures etc.)</li>
+<li>customise styles using your own <code>css</code> files
+
+<ul>
+<li>change headers</li>
+<li>fonts</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-red stretch'><h3>Pdf</h3>
+
+<ul>
+<li>single file</li>
+<li>preserves original aspect</li>
+<li>requires \(\LaTeX\)</li>
+<li>customise using your own
+
+<ul>
+<li>\(\LaTeX\) document class</li>
+<li>pandoc template (<code>.tex</code>)</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 offset-3 bg-blue stretch'><h3>Word document</h3>
+
+<ul>
+<li>Widely used</li>
+<li>Easily editable</li>
+<li>Collaborate with people not using Rmarkdown</li>
+<li>Prepare even scientific manuscripts suitable for submission</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Bibliographies</h2></hgroup><article  id="bibliographies" class="smaller compact-table">
+
+<div class = 'row'><div class = 'box col-6 bg-pink2'><h3>Supported bibliography formats</h3>
+
+<div id="unnamed-chunk-4">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Format</th>
+<th align="left">File extension</th>
+</tr>
+<tr class="odd">
+<td align="left">MODS</td>
+<td align="left">.mods</td>
+</tr>
+<tr class="even">
+<td align="left">BibLaTeX</td>
+<td align="left">.bib</td>
+</tr>
+<tr class="odd">
+<td align="left">BibTeX</td>
+<td align="left">.bibtex</td>
+</tr>
+<tr class="even">
+<td align="left">RIS</td>
+<td align="left">.ris</td>
+</tr>
+<tr class="odd">
+<td align="left">EndNote</td>
+<td align="left">.enl</td>
+</tr>
+<tr class="even">
+<td align="left">EndNote XML</td>
+<td align="left">.xml</td>
+</tr>
+<tr class="odd">
+<td align="left">ISI</td>
+<td align="left">.wos</td>
+</tr>
+<tr class="even">
+<td align="left">MEDLINE</td>
+<td align="left">.medline</td>
+</tr>
+<tr class="odd">
+<td align="left">Copac</td>
+<td align="left">.copac</td>
+</tr>
+<tr class="even">
+<td align="left">JSON citeproc</td>
+<td align="left">.json</td>
+</tr>
+</table></div>
+
+</div><div class = 'box col-6 bg-green'><h3>Defined in the yaml header</h3>
+
+<ul>
+<li>defined at the root of the YAML header</li>
+<li>citations are inserted:
+
+<ul>
+<li>using square brackets <code>[]</code></li>
+<li>the <em>database identifier</em> preceded by <code>@</code></li>
+</ul></li>
+<li>output style is formatted using citation style language (<code>csl</code>) files
+
+<ul>
+<li><a href='https://www.zotero.org/styles' title=''>https://www.zotero.org/styles</a></li>
+<li><a href='https://github.com/citation-style-language/styles' title=''>https://github.com/citation-style-language/styles</a></li>
+</ul></li>
+</ul>
+
+<pre >---
+title: &quot;Sample Document&quot;
+output: html_document
+bibliography: bibliography.bib
+csl: nature.csl
+---
+
+Insert your reference [@my-reference] like I did.</pre>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Parameterised reports</h2></hgroup><article  id="parameterised-reports" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Parameterised reports</h3>
+
+<ul>
+<li>use a single Rmarkdown file and adjust <em>R</em> variables
+
+<ul>
+<li>data filepath</li>
+<li>boolean (yes/no)</li>
+<li>numbers</li>
+<li>&#8230;</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-blue'><h3>Define your parameters</h3>
+
+<ul>
+<li>Place them in the YAML header</li>
+</ul>
+
+<pre >---
+title: &quot;My Document&quot;
+output: html_document
+params:
+  lines: 10
+  show_table: no
+  data: 
+    label: &quot;Input dataset:&quot;
+    value: mtcars.csv
+    input: file
+---</pre>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Parameterised reports</h2></hgroup><article  id="parameterised-reports-2" class="smaller ">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/03_rmarkdown_parameterised.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Growing variety of output formats</h2></hgroup><article  id="growing-variety-of-output-formats" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue icon'><h3>Output documents</h3>
+
+<img src='img/03_rmarkdown_output.png' title='fig:'/>
+
+<ul>
+<li>Look on the <a href='http://rmarkdown.rstudio.com/gallery.html' title=''>rmarkdown website</a></li>
+<li>Documents (HTML, PDF, MS Word&#8230;)</li>
+<li><strong>interactive</strong> documents (<code>shiny</code> package)</li>
+<li>websites (like the sites of this workshop or <a href='http://rmarkdown.rstudio.com' title=''>rmarkdown</a>)</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-green icon'><h3>Books</h3>
+
+<img src='img/00_book.png' title='fig:'/>
+
+<ul>
+<li>Bookdown package. Go on the <a href='https://bookdown.org/yihui/bookdown/' title=''>website</a> to learn more about it.</li>
+<li>Generate books as PDF, EPUB or MOBI files.</li>
+<li>Have a look at the <a href='http://r4ds.had.co.nz/' title=''>R for Data Science</a> website. It is also freely available in the bookdown format (but you might prefer the paid version to support the authors!)</li>
+</ul>
+
+</div><div class = 'box col-6 bg-yellow'><h3>Slideshow presentations</h3>
+
+<ul>
+<li><strong>ioslides_presentation</strong> (HTML)</li>
+<li>slidy_presentation (HTML)</li>
+<li>beamer_presentation (pdf, \(\LaTeX\))</li>
+<li>&#8230;</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Slideshow presentations</h2></hgroup><article  id="slideshow-presentations-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>IOSlides Plus (<code>iosp</code>)</h3>
+
+<ul>
+<li>extends <strong>ioslides_presentation</strong></li>
+<li>used for this presentation</li>
+<li>customised css</li>
+<li>shortcuts to create columns and/or boxes (<code>###</code> level 3 headers with attributes (<code>{}</code>))</li>
+<li>have a look on <a href='https://github.com/koncina/iosp' title=''>github</a></li>
+</ul>
+
+</div><div class = 'box col-6 bg-cobalt'><h3>Source</h3>
+
+<pre >## Slide with columns and boxes
+
+IOSlides Plus extends `ioslides_presentation` and allows to easily create boxes:
+
+### Box 1{.box-4 .bg-red}
+
+Test 1
+
+### Box 2{.box-6 .bg-green}
+
+- line 1
+- line 2
+
+### Box 3{.box-6 .bg-blue}
+
+This box has again a width of 6 col: it will be rendered in a new row.
+</pre>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Slide with columns and boxes</h2></hgroup><article  id="slide-with-columns-and-boxes" class="smaller ">
+
+<p>IOSlides Plus extends <code>ioslides_presentation</code> and allows to easily create boxes:</p>
+
+<div class = 'row'><div class = 'box col-4 bg-red'><h3>Box 1</h3>
+
+<p>Test 1</p>
+
+</div><div class = 'box col-6 bg-green'><h3>Box 2</h3>
+
+<ul>
+<li>line 1</li>
+<li>line 2</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-blue'><h3>Box 3</h3>
+
+<p>This box has again a width of 6 col: it will be rendered in a new row.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>You learned to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>create <em>Rmarkdown</em> documents</li>
+<li>format your text using the markdown syntax</li>
+<li>insert your R code in chunks</li>
+<li>adapt some rendering options of R code chunks</li>
+<li>define the output format you expect to render</li>
+<li>use the interactive RStudio interface to
+
+<ul>
+<li>create your documents</li>
+<li>insert R code</li>
+<li>build your final document</li>
+</ul></li>
+<li>insert bibliography</li>
+<li>create parameterised reports</li>
+</ul></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture03_rmarkdown_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Non standard evaluation</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Non standard evaluation',
+                        subtitle: 'tidyeval',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture10_tidyeval_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-orange {
+      background-color: #FF8C00;
+    }
+  
+    .box.bg-orange {
+      border: 2px solid #804600;
+      color: #000;
+    }
+  
+    .box.bg-orange > h3:first-child {
+      background-color: #804600;
+      color: #fff;
+    }
+  
+    .bg-slate {
+      background-color: #7A67EE;
+    }
+  
+    .box.bg-slate {
+      border: 2px solid #3D3477;
+      color: #fff;
+    }
+  
+    .box.bg-slate > h3:first-child {
+      background-color: #3D3477;
+      color: #fff;
+    }
+  
+    .bg-yellow {
+      background-color: #FFFF00;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEC900;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEC900;
+      color: #000;
+    }
+  
+    .bg-yellow2 {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow2 {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow2 > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grgold {
+      background-color: #008B45;
+    }
+  
+    .box.bg-grgold {
+      border: 2px solid #004622;
+      color: #fff;
+    }
+  
+    .box.bg-grgold > h3:first-child {
+      background-color: #004622;
+      color: #FFD700;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture10_tidyeval_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">4 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>lazy evaluation</h2></hgroup><article  id="lazy-evaluation" class="smaller ">
+
+<p>the <strong>tidyverse</strong> makes your life easy by evaluating columns in <code>df</code>/<code>tibble</code> context.</p>
+
+<h3>R base, must refers to <code class="box-6 stretch">mtcars</code></h3>
+
+<div id="unnamed-chunk-1" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>plot(mtcars$wt, mtcars$mpg)</pre>
+
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-1-1.png' title=''/><!-- --></p></div>
+
+<div class = 'row'><div class = 'box col-6'><h3>ggplot2 does the job</h3>
+
+<div id="unnamed-chunk-2" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()</pre>
+
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-2-1.png' title=''/><!-- --></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>non standard evaluation is hard</h2></hgroup><article  id="non-standard-evaluation-is-hard" class="smaller vs2">
+
+<div class = 'row build'><div class = 'box col-6 stretch  bg-red compact-output'><h3>evaluation in base, problem</h3>
+
+<p><code>wt</code> is unknow in the global environment</p>
+
+<div id="unnamed-chunk-3" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>wt</pre>
+
+<pre >Error in eval(expr, envir, enclos): object &#39;wt&#39; not found</pre></div>
+
+</div><div class = 'box col-6 stretch  bg-yellow2 compact-output'><h3>evaluation in base, solution</h3>
+
+<p>combine <code>substitute</code> and <code>eval</code> in df context</p>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>eval(substitute(hp), mtcars)</pre>
+
+<pre > [1] 110 110  93 110 175 105 245  62  95 123 123 180 180 180 205 215 230
+[18]  66  52  65  97 150 150 245 175  66  91 113 264 175 335 109</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-12  bg-grgold compact-output'><h3>evaluation in tidyverse</h3>
+
+<div id="unnamed-chunk-5" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  select(wt) %&gt;%
+  head()</pre></div>
+
+<div class="col-6">
+<pre >                     wt
+Mazda RX4         2.620
+Mazda RX4 Wag     2.875
+Datsun 710        2.320
+Hornet 4 Drive    3.215
+Hornet Sportabout 3.440
+Valiant           3.460</pre></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'box col-12  bg-yellow2'><h3>Drawback</h3>
+
+<ul>
+<li>Make your life easy when performing <strong>interactive</strong> analysis</li>
+<li>Hard when doing programming, as soon as you need <strong>iteration</strong> and hence <strong>function</strong></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>ggplot2</h2></hgroup><article  id="ggplot2" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The issue </h2><h3> ggplot2</h3></hgroup><article  id="the-issue-ggplot2" class="smaller ">
+
+<p>When dealing with <strong>global</strong> variables, fine. But <strong>local</strong> ones in <em>function</em>&#8230;</p>
+
+<div class = 'row build'><div class = 'box col-6 bg-cobalt '><h3>in global env</h3>
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  ggplot(aes(x = mpg)) +
+  geom_histogram(bins = 25)</pre>
+
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-6-1.png' title=''/><!-- --></p></div>
+
+</div><div class = 'box col-6 bg-red '><h3>in function</h3>
+
+<div id="unnamed-chunk-7" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars_dens &lt;- function(df, col) {
+  df %&gt;%
+    ggplot(aes(x = col)) +
+    geom_histogram(bins = 25)
+}
+mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre>
+
+<pre >Error: StatBin requires a continuous x variable the x variable is discrete. Perhaps you want stat=&quot;count&quot;?</pre>
+
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-7-1.png' title=''/><!-- --></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: <code>aes_string()</code> </h2><h3> only for ggplot2</h3></hgroup><article  id="solution-aes_string-only-for-ggplot2" class="smaller vs1">
+
+<div class = 'row'><div class = 'box col-12'>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars_dens &lt;- function(df, col) {
+  df %&gt;%
+    ggplot(aes_string(x = col)) +
+    geom_histogram(bins = 25)
+}
+mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-8-1.png' title=''/><!-- --></p></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'box col-12 '>
+
+<div id="unnamed-chunk-9" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>mtcars_dens(df = mtcars, col = &quot;hp&quot;)</pre></div>
+
+<div class="col-6">
+<p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-9-1.png' title=''/><!-- --></p></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &lt; 0.6</h2></hgroup><article  id="dplyr-0.6" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>before upcoming 0.6</h2></hgroup><article  id="before-upcoming-0.6" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-cobalt '><h3>in global env</h3>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars %&gt;%
+  filter(hp &gt; 250)</pre>
+
+<pre >   mpg cyl disp  hp drat   wt qsec vs am gear carb
+1 15.8   8  351 264 4.22 3.17 14.5  0  1    5    4
+2 15.0   8  301 335 3.54 3.57 14.6  0  1    5    8</pre></div>
+
+</div><div class = 'box col-6 bg-red '><h3>in function</h3>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col) {
+  df %&gt;%
+    filter(col &gt; 250)
+}
+mtcars_filter(df = mtcars, col = &quot;hp&quot;)</pre>
+
+<pre >                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: underscore versions </h2><h3> dplyr &lt; 0.6</h3></hgroup><article  id="solution-underscore-versions-dplyr-0.6" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-12'>
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col) {
+  filter_call &lt;- lazyeval::interp(~ var &gt; 250, var = as.name(col))
+  df %&gt;%
+    filter_(.dots = filter_call)
+}
+mtcars_filter(df = mtcars, col = &quot;hp&quot;)</pre></div>
+
+<div class="col-4">
+<pre >   mpg cyl disp  hp drat   wt qsec vs am gear carb
+1 15.8   8  351 264 4.22 3.17 14.5  0  1    5    4
+2 15.0   8  301 335 3.54 3.57 14.6  0  1    5    8</pre></div></div></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-orange '><h3>Obscure</h3>
+
+<p>Ugly, complex, hard but mandatory</p>
+
+</div><div class = 'box col-6 bg-orange  stretch'><h3>Proceed anyway</h3>
+
+<p>With dynamic threshold</p>
+
+</div></div>
+
+<div class = 'row build'><div class = 'box col-12 '>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col, threshold) {
+  filter_call &lt;- lazyeval::interp(~ var &gt; thr,
+                                  var = as.name(col),
+                                  thr = quote(threshold))
+  df %&gt;%
+    filter_(.dots = filter_call)
+}
+mtcars_filter(df = mtcars, col = &quot;hp&quot;, threshold = 265)</pre></div>
+
+<div class="col-4">
+<pre >  mpg cyl disp  hp drat   wt qsec vs am gear carb
+1  15   8  301 335 3.54 3.57 14.6  0  1    5    8</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &gt;= 0.6</h2></hgroup><article  id="dplyr-0.6-1" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>tidyeval </h2><h3> dplyr 0.6, upcoming!</h3></hgroup><article  id="tidyeval-dplyr-0.6-upcoming" class="smaller vs2">
+
+<p>described in this <a href='http://dplyr.tidyverse.org/articles/programming.html' title=''>vignette</a></p>
+
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3>classic quoting</h3>
+
+<p>variables as strings</p>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>fun1 &lt;- function(name) {
+  paste0(&quot;name is, &quot;, name)
+}
+fun1(&quot;stringent&quot;)</pre>
+
+<pre >[1] &quot;name is, stringent&quot;</pre></div>
+
+<h3>introducing <code class="box-6 bg-yellow2 build stretch">glue</code></h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>fun2 &lt;- function(name) {
+  glue::glue(&quot;name is {name}&quot;)
+}
+fun2(&quot;stringent&quot;)</pre>
+
+<pre >name is stringent</pre></div>
+
+<p>## Solution with tidyeval</p>
+
+<div id="unnamed-chunk-16" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col, threshold) {
+
+  column &lt;- rlang::syms(col)
+  #print(enquo(column))
+  thr &lt;- quo(threshold)
+  df %&gt;%
+    select(!! quote(col))
+}
+mtcars_filter(df = mtcars, hp, threshold = 265)</pre>
+
+<pre >Error in loadNamespace(name): there is no package called &#39;rlang&#39;</pre></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture10_tidyeval_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

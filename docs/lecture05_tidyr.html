@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Principles of tidy data</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Principles of tidy data',
+                        subtitle: 'tidyr',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture05_tidyr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-this_col {
+      background-color: #FF7F00;
+    }
+  
+    .box.bg-this_col {
+      border: 2px solid #804000;
+      color: #000;
+    }
+  
+    .box.bg-this_col > h3:first-child {
+      background-color: #804000;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture05_tidyr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Definitions</h3>
+
+<ul>
+<li>Principles of <em>tidy data</em> to structure data</li>
+<li>Find errors in existing data sets</li>
+<li>Structure data</li>
+<li>Reshaping data with tidyr</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-8 offset-2 bg-blue '><h3>Comments</h3>
+
+<ul>
+<li>Cleaning data also requires <code>dplyr</code></li>
+<li><code>tidyr</code> and <code>dplyr</code> are intertwined</li>
+<li>Focus on &quot;tidy data&quot;</li>
+<li>Introduction of <code>tidyr</code> ways</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rationale</h2></hgroup><article  id="rationale" class="smaller ">
+
+<div id="unnamed-chunk-1">
+<p><img src="img/06_tidy-dataset.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Semantics</h2></hgroup><article  id="semantics" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-blue'><h3>Definitions</h3>
+
+<ul>
+<li><strong>Variable</strong>: A quantity, quality, or property that you can measure.</li>
+<li><strong>Observation</strong>: A set of values that display the relationship between variables. To be an observation, values need to be measured under similar conditions, usually measured on the same observational unit at the same time.</li>
+<li><strong>Value</strong>: The state of a variable that you observe when you measure it.</li>
+</ul>
+
+<p><a href='http://garrettgman.github.io/tidying/' title=''>source: Garret Grolemund</a> and <code>vignette(&quot;tidy-data&quot;)</code></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Definition</h2></hgroup><article  id="definition" class="smaller ">
+
+<div class = 'row'><div class = 'col-8 offset-2 box bg-this_col'><h3>Tidy data</h3>
+
+<ol>
+<li>Each variable is in its own column</li>
+<li>Each observation is in its own row</li>
+<li>Each value is in its own cell</li>
+</ol>
+
+<div id="unnamed-chunk-2">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-1_600.png" width="90%" style="display: block; margin: auto;" /></p></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidying messy data</h2></hgroup><article  id="tidying-messy-data" class="smaller ">
+
+<div class = 'row build'><div class = 'col-8 box offset-2  bg-this_col'><h3>For clean data ensure that</h3>
+
+<ul>
+<li>Column names are easy to use and informative</li>
+<li>Row names are easy to use and informative</li>
+<li>Obvious mistakes in the data have been removed</li>
+<li>Variable values are internally consistent</li>
+<li>Appropriate transformed variables have been added</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Typical flow of data</h2></hgroup><article  id="typical-flow-of-data" class="smaller ">
+
+<div class = 'row'><div class = 'col-3 box bg-blue'><h3>Source data ➡️</h3>
+
+<ul>
+<li>Large scale data sets
+
+<ul>
+<li>MRI, NGS, omics data</li>
+</ul></li>
+<li>Single researcher experimental data</li>
+<li>External data sets</li>
+<li>Manually collected data (EDC)</li>
+</ul>
+
+</div><div class = 'col-3 box bg-green'><h3>Intermediate➡️</h3>
+
+<p>Computation or manual clean up CPU or hands-on time <strong>&quot;Tidy&quot; data</strong> Tools: Specialized tools + shell</p>
+
+</div><div class = 'col-3 box bg-yellow icon'><h3>Analysis ➡️</h3>
+
+<p>Statistical analysis Exploratory and model building Hypothesis testing</p>
+
+<p>Tools: R</p>
+
+</div><div class = 'col-3 box bg-red'><h3>Manuscript</h3>
+
+<p>Writing stage Can you reproduce your work? * Numbers of your paper * Summaries * Images</p>
+
+<p>Tools: rmarkdown</p>
+
+</div></div><div class = 'row build'><div class = 'col-9 box bg-green  icon'><h3>Currently</h3>
+
+<p>Excel.</p>
+
+<div id="unnamed-chunk-3">
+<p><img src="img/04_excel_icon.png" width="8%" style="display: block; margin: auto;" /></p></div>
+
+</div><div class = 'col-3 box bg-blue '><h3>Currently</h3>
+
+<p>Word.</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Bad data exercise </h2><h3> online</h3></hgroup><article  id="bad-data-exercise-online" class="smaller ">
+
+<div class = 'row'><div class = 'col-8 box bg-green'>
+
+<ul>
+<li>The following table lists missense variants in a gene in a group of patients</li>
+<li>What&#39;s wrong with <a href='%22data/badtable.xlsx%22' title=''>this Excel</a> sheet?</li>
+<li>Which problems are &quot;tidy&quot; issues</li>
+</ul>
+
+<div id="unnamed-chunk-4">
+<p><img src="img/04_excel_icon.png" width="10%" style="display: block; margin: auto;" /></p></div>
+
+<img src='img/05_tidyr_excelbad.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tidy errors</h2></hgroup><article  id="tidy-errors" class="smaller ">
+
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">Error</th>
+<th align="left">Tidy violation</th>
+<th align="left">Comment</th>
+</tr>
+<tr class="odd">
+<td align="left">Patient names</td>
+<td align="left">No</td>
+<td align="left">Data protection violation</td>
+</tr>
+<tr class="even">
+<td align="left">Identical column names</td>
+<td align="left">Yes</td>
+<td align="left">Variable error</td>
+</tr>
+<tr class="odd">
+<td align="left">Inconsistent variables names</td>
+<td align="left">No</td>
+<td align="left">Bad practice</td>
+</tr>
+<tr class="even">
+<td align="left">Non-English columns names</td>
+<td align="left">No</td>
+<td align="left">Bad practice</td>
+</tr>
+<tr class="odd">
+<td align="left">Color coding</td>
+<td align="left">No</td>
+<td align="left">The horror, the horror</td>
+</tr>
+<tr class="even">
+<td align="left">Inconsistent dates</td>
+<td align="left">No</td>
+<td align="left">Use ISO8601</td>
+</tr>
+<tr class="odd">
+<td align="left">Multiple columns for one item</td>
+<td align="left">Yes</td>
+<td align="left">One observation per line</td>
+</tr>
+<tr class="even">
+<td align="left">Redundant information</td>
+<td align="left">Yes</td>
+<td align="left">Each variable is in its own column</td>
+</tr>
+<tr class="odd">
+<td align="left">Repeated rows</td>
+<td align="left">Yes</td>
+<td align="left">Each observation is in its own row</td>
+</tr>
+<tr class="even">
+<td align="left">Uncoded syndromes</td>
+<td align="left">Yes/No</td>
+<td align="left">Each value in its own cell</td>
+</tr>
+<tr class="odd">
+<td align="left">Unnecessary information (Birthdate, comments)</td>
+<td align="left">No</td>
+<td align="left">bad practice</td>
+</tr>
+<tr class="even">
+<td align="left">Name of the table</td>
+<td align="left">No</td>
+<td align="left">You&#39;ll see this often</td>
+</tr>
+</table>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data cleaning exercise </h2><h3> offline</h3></hgroup><article  id="data-cleaning-exercise-offline" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 offset-2 bg-this_col icon'><h3>Clean the &quot;bad table&quot;</h3>
+
+<ul>
+<li>Bring data into shape such that it conforms to tidy data requirements</li>
+<li>Pay attention to details of format, less to actual data</li>
+<li>Do not use R for doing the manipulations</li>
+</ul>
+
+</div></div>
+
+<p>10 min, discuss</p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Common tidy data violations</h2></hgroup><article  id="common-tidy-data-violations" class="smaller vs2">
+
+<div class = 'row build'><div class = 'col-8 box bg-blue '>
+
+<ul>
+<li>Column headers are values, not variable names (<code>gather</code>)</li>
+<li>Multiple variables stored in one column (<code>separate</code>)</li>
+<li>Variables are stored in both rows and columns (<code>gather</code>-<code>spread</code>)</li>
+<li>Repeated observations (<code>nest</code> or table)</li>
+<li>Multiple types in one table (<code>dplyr</code> data transformation)</li>
+<li>One type in multiple tables (<code>dplyr</code>, combine into table)</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2><code>tidyr</code> functionality</h2></hgroup><article  id="tidyr-functionality" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>tidyr </h2><h3> Introduction: <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>Cheat sheets</a></h3></hgroup><article  id="tidyr-introduction-cheat-sheets" class="smaller ">
+
+<div id="unnamed-chunk-5">
+<p><img src="img/05_tidyr_cheatsheet.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Convert Long / wide format</h2></hgroup><article  id="convert-long-wide-format" class="smaller ">
+
+<p>The wide format is generally untidy <em>but</em> found in the majority of datasets</p>
+
+<div id="unnamed-chunk-6">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-gather_600.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+<div id="unnamed-chunk-7">
+<p><img src="http://lsru.github.io/r_workshop/img/tidy-spread_600.png" width="70%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Demo with the iris dataset</h2></hgroup><article  id="demo-with-the-iris-dataset" class="smaller ">
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>library(&quot;tidyverse&quot;, warn.conflicts = F, quietly=T)
+as.tibble(iris)</pre>
+
+<pre ># A tibble: 150 × 5
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+1           5.1         3.5          1.4         0.2  setosa
+2           4.9         3.0          1.4         0.2  setosa
+3           4.7         3.2          1.3         0.2  setosa
+4           4.6         3.1          1.5         0.2  setosa
+5           5.0         3.6          1.4         0.2  setosa
+6           5.4         3.9          1.7         0.4  setosa
+7           4.6         3.4          1.4         0.3  setosa
+8           5.0         3.4          1.5         0.2  setosa
+9           4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+# ... with 140 more rows</pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Gather </h2><h3> &quot;melt&quot;</h3></hgroup><article  id="gather-melt" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-8 bg-cobalt compact-output '>
+
+<div id="unnamed-chunk-9" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris_melt &lt;- iris %&gt;%
+  rownames_to_column(var = &quot;number&quot;) %&gt;%
+  as_tibble() %&gt;%
+  gather(flower, measure, contains(&quot;al&quot;))
+iris_melt</pre>
+
+<pre ># A tibble: 600 × 4
+   number Species       flower measure
+    &lt;chr&gt;  &lt;fctr&gt;        &lt;chr&gt;   &lt;dbl&gt;
+1       1  setosa Sepal.Length     5.1
+2       2  setosa Sepal.Length     4.9
+3       3  setosa Sepal.Length     4.7
+4       4  setosa Sepal.Length     4.6
+5       5  setosa Sepal.Length     5.0
+6       6  setosa Sepal.Length     5.4
+7       7  setosa Sepal.Length     4.6
+8       8  setosa Sepal.Length     5.0
+9       9  setosa Sepal.Length     4.4
+10     10  setosa Sepal.Length     4.9
+# ... with 590 more rows</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Comments</h3>
+
+<ul>
+<li><code>contains()</code> selection, see <code>dplyr</code></li>
+<li>tibbles don&#39;t have rownames</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Spread </h2><h3> &quot;cast&quot;</h3></hgroup><article  id="spread-cast" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-8 bg-blue compact-output '>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris_melt %&gt;%
+  spread(flower, measure)</pre>
+
+<pre ># A tibble: 150 × 6
+   number    Species Petal.Length Petal.Width Sepal.Length Sepal.Width
+*   &lt;chr&gt;     &lt;fctr&gt;        &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
+1       1     setosa          1.4         0.2          5.1         3.5
+2      10     setosa          1.5         0.1          4.9         3.1
+3     100 versicolor          4.1         1.3          5.7         2.8
+4     101  virginica          6.0         2.5          6.3         3.3
+5     102  virginica          5.1         1.9          5.8         2.7
+6     103  virginica          5.9         2.1          7.1         3.0
+7     104  virginica          5.6         1.8          6.3         2.9
+8     105  virginica          5.8         2.2          6.5         3.0
+9     106  virginica          6.6         2.1          7.6         3.0
+10    107  virginica          4.5         1.7          4.9         2.5
+# ... with 140 more rows</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Separate / Unite </h2><h3> Common application</h3></hgroup><article  id="separate-unite-common-application" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Dates</h3>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df &lt;- data_frame(year = c(2015, 2014, 2014),
+                 month = c(11, 2, 4),
+                 day = c(23, 1, 30),
+                 value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))</pre></div>
+
+<h3><code class="box-6 bg-blue build">unite()</code></h3>
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df %&gt;%
+  unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
+
+<h3><code class="box-6 bg-blue build">separate()</code></h3>
+
+<ul>
+<li>Use <strong>quotes</strong> since we are not refering to objects</li>
+<li>Default split on non-alphanumeric characters</li>
+</ul>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>df_unite %&gt;%
+  separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
+
+<pre ># A tibble: 3 × 4
+   year month   day value
+* &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1  2015    11    23  high
+2  2014     2     1   low
+3  2014     4    30   low</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code class="vs2">tidyr</code></h2></hgroup><article  id="other-uses-of-tidyr" class="smaller ">
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  gather(flower, measure, 1:4) %&gt;%
+  ggplot() +
+  geom_boxplot(aes(x = Species, y = measure, fill = flower))</pre>
+
+<p><img src="lecture05_tidyr_files/figure-html/unnamed-chunk-14-1.png" width="50%" style="display: block; margin: auto;" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Separate rows </h2><h3> From ugly tables</h3></hgroup><article  id="separate-rows-from-ugly-tables" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Common input</h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_df &lt;- tibble(
+    subject_id = 1001:1003, 
+    visit_id = c(&quot;1,2,3&quot;, &quot;1,2&quot;, &quot;1&quot;),
+    measured = c(&quot;9,0, 11&quot;, &quot;11, 3&quot; , &quot;12&quot;)  )
+patient_df</pre>
+
+<pre ># A tibble: 3 × 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;chr&gt;    &lt;chr&gt;
+1       1001    1,2,3  9,0, 11
+2       1002      1,2    11, 3
+3       1003        1       12</pre></div>
+
+<p>Note the incoherent white space</p>
+
+</div><div class = 'box col-6 bg-blue stretch '><h3>Combinations of variables</h3>
+
+<div id="unnamed-chunk-16" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_df %&gt;% 
+  separate_rows(visit_id, measured, convert=TRUE) -&gt; patient_separate
+patient_separate</pre>
+
+<pre ># A tibble: 6 × 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1003        1       12</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 bg-green stretch '><h3>Comment</h3>
+
+<p>To split single variables use <code>dplyr::separate</code></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>dplyr::separate()</code> </h2><h3> Splitting values</h3></hgroup><article  id="dplyrseparate-splitting-values" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Set-up</h3>
+
+<div id="unnamed-chunk-17" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient &lt;- tibble(
+subject_id = 1001:1006,
+gender_age = paste(c(&quot;m&quot;, &quot;f&quot;), floor(runif(6, 21,65 )), sep=&quot;-&quot;))
+patient</pre>
+
+<pre ># A tibble: 6 × 2
+  subject_id gender_age
+       &lt;int&gt;      &lt;chr&gt;
+1       1001       m-33
+2       1002       f-26
+3       1003       m-49
+4       1004       f-43
+5       1005       m-64
+6       1006       f-49</pre></div>
+
+</div><div class = 'box col-6 bg-blue stretch '><h3>Combinations of variables</h3>
+
+<div id="unnamed-chunk-18" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient %&gt;% separate(gender_age, c(&quot;sex&quot;, &quot;age&quot;), convert=TRUE)</pre>
+
+<pre ># A tibble: 6 × 3
+  subject_id   sex   age
+*      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+1       1001     m    33
+2       1002     f    26
+3       1003     m    49
+4       1004     f    43
+5       1005     m    64
+6       1006     f    49</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>complete()</code> </h2><h3> Fill all combinations</h3></hgroup><article  id="complete-fill-all-combinations" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Combinations of variables</h3>
+
+<div id="unnamed-chunk-19" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_separate %&gt;% 
+  complete(subject_id, 
+           nesting(visit_id), fill=list(measured=0))</pre>
+
+<pre ># A tibble: 9 × 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;dbl&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1002        3        0
+7       1003        1       12
+8       1003        2        0
+9       1003        3        0</pre></div>
+
+</div><div class = 'box col-6 bg-red '><h3>Warning</h3>
+
+<ul>
+<li>Use <code>&lt;NA&gt;</code>, not 0 for missing data in real life application</li>
+</ul>
+
+<div id="unnamed-chunk-20" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_separate %&gt;% 
+  complete(subject_id, 
+           nesting(visit_id)) -&gt; patient_complete
+patient_complete</pre>
+
+<pre ># A tibble: 9 × 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1002        3       NA
+7       1003        1       12
+8       1003        2       NA
+9       1003        3       NA</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nesting table </h2><h3> Structured data</h3></hgroup><article  id="nesting-table-structured-data" class="smaller ">
+
+<h3><code class="box-6 bg-blue build">nest()</code></h3>
+
+<div id="unnamed-chunk-21" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_complete %&gt;% 
+  nest(visit_id, measured) -&gt;patient_nested
+patient_nested</pre>
+
+<pre ># A tibble: 3 × 2
+  subject_id             data
+       &lt;int&gt;           &lt;list&gt;
+1       1001 &lt;tibble [3 × 2]&gt;
+2       1002 &lt;tibble [3 × 2]&gt;
+3       1003 &lt;tibble [3 × 2]&gt;</pre></div>
+
+<div class = 'row build'><div class = 'box col-6 bg-green '>
+
+<ul>
+<li>Common data structures are hierarchical, e.g. patient-centric with repeat observations</li>
+<li>Nesting allows to store <em>collapsed</em> tibbles and simplifies data management</li>
+</ul>
+
+<h3><code class="box-6 bg-blue build">unnest()</code></h3>
+
+<div id="unnamed-chunk-22" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient_nested %&gt;% 
+  unnest()</pre>
+
+<pre ># A tibble: 9 × 3
+  subject_id visit_id measured
+       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1       1001        1        9
+2       1001        2        0
+3       1001        3       11
+4       1002        1       11
+5       1002        2        3
+6       1002        3       NA
+7       1003        1       12
+8       1003        2       NA
+9       1003        3       NA</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Covered here:</h3>
+
+<ul>
+<li><code>tidyr</code> (and <code>dplyr</code>) are replacing the <code>reshape</code> and <code>reshape2</code> packages</li>
+<li>tidy data
+
+<ul>
+<li><a href='http://tidyr.tidyverse.org/' title=''>http://tidyr.tidyverse.org/</a></li>
+<li><code>vignette(&quot;tidy-data&quot;)</code></li>
+</ul></li>
+<li>Further reading
+
+<ul>
+<li><code>tidyjson</code> - Retrieve json data as nested tibbles</li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-5 offset-1 vs1 bg-yellow '><h3>Acknowledgments</h3>
+
+<ul>
+<li>Hadley Wickham</li>
+<li>Jeremy Stanley</li>
+</ul>
+
+</div><div class = 'box col-5 bg-this_col '><h3>Thank you for your attention!</h3></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture05_tidyr_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Importing data</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Importing data',
+                        subtitle: 'with <code>readr</code> and <code>readxl</code>',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture04_readr_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-yellow {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grayblue {
+      background-color: #BFCCD7;
+    }
+  
+    .box.bg-grayblue {
+      border: 2px solid #60666C;
+      color: #000;
+    }
+  
+    .box.bg-grayblue > h3:first-child {
+      background-color: #60666C;
+      color: #fff;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture04_readr_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">2 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>You will learn to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>use <code>readr</code> and/or <code>readxl</code> to import your data into <em>R</em></li>
+<li>use the interactive RStudio interface to visualise your data</li>
+<li>appreciate tibbles</li>
+<li>adjust the type of the data you would like to import</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Importing data</h2></hgroup><article  id="importing-data" class="smaller vs3">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue offset-0  stretch'>
+
+<ul>
+<li>Represents probably the first step of your work</li>
+<li>R can handle multiple data types
+
+<ul>
+<li>flat files (<code>.csv</code>, <code>.tsv</code>, &#8230;)</li>
+<li>excel files (<code>.xls</code>, <code>.xlsx</code>)</li>
+<li>foreign statistical formats (<code>.sas</code> from SAS, <code>.sav</code> from SPSS, <code>.dta</code> from Stata)</li>
+<li>databases (SQL, SQLite &#8230;)</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-yellow offset-0 icon'><h3>Tidyverse implementation</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/tidyverse/master/man/figures/logo.png' title='fig:'/>
+
+<ul>
+<li>R base already provides functions for text files (<em>i.e.</em> <code>read.csv()</code>, <code>read.delim()</code>)</li>
+<li>tidyverse redefines these functions:
+
+<ul>
+<li><strong>speed</strong></li>
+<li><strong>characters are not coerced to factors by default</strong></li>
+<li>generates tibbles</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tibbles</h2></hgroup><article  id="tibbles" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 bg-blue offset-2 icon'><h3>Tibbles</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/tibble/master/man/figures/logo.png' title='fig:'/>
+
+<ul>
+<li>have a refined print method that shows only the first 10 rows.</li>
+<li>show all the columns that fit on screen and list the name of remaining ones.</li>
+<li>each column reports its type.</li>
+<li>makes it much easier to work with large data.</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-6 offset-3 bg-yellow icon-small vs1 '><h3>Hint</h3>
+
+<img src='img/00_tip.png' title='fig:'/>
+
+<p>Use <code>as_tibble()</code> to convert a <code>data.frame</code> to a tibble</p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tibbles </h2><h3> <code>tibble</code> vs <code>data.frame</code></h3></hgroup><article  id="tibbles-tibble-vs-data.frame" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-cobalt compact-output'><h3><code>data.frame</code></h3>
+
+<div id="unnamed-chunk-1" class="build chunk shadow">
+<pre class = 'prettyprint lang-r'>iris</pre>
+
+<pre >    Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+1            5.1         3.5          1.4         0.2     setosa
+2            4.9         3.0          1.4         0.2     setosa
+3            4.7         3.2          1.3         0.2     setosa
+4            4.6         3.1          1.5         0.2     setosa
+5            5.0         3.6          1.4         0.2     setosa
+6            5.4         3.9          1.7         0.4     setosa
+7            4.6         3.4          1.4         0.3     setosa
+8            5.0         3.4          1.5         0.2     setosa
+9            4.4         2.9          1.4         0.2     setosa
+10           4.9         3.1          1.5         0.1     setosa
+11           5.4         3.7          1.5         0.2     setosa
+12           4.8         3.4          1.6         0.2     setosa
+13           4.8         3.0          1.4         0.1     setosa
+14           4.3         3.0          1.1         0.1     setosa
+15           5.8         4.0          1.2         0.2     setosa
+16           5.7         4.4          1.5         0.4     setosa
+17           5.4         3.9          1.3         0.4     setosa
+18           5.1         3.5          1.4         0.3     setosa
+19           5.7         3.8          1.7         0.3     setosa
+20           5.1         3.8          1.5         0.3     setosa
+21           5.4         3.4          1.7         0.2     setosa
+22           5.1         3.7          1.5         0.4     setosa
+23           4.6         3.6          1.0         0.2     setosa
+24           5.1         3.3          1.7         0.5     setosa
+25           4.8         3.4          1.9         0.2     setosa
+26           5.0         3.0          1.6         0.2     setosa
+27           5.0         3.4          1.6         0.4     setosa
+28           5.2         3.5          1.5         0.2     setosa
+29           5.2         3.4          1.4         0.2     setosa
+30           4.7         3.2          1.6         0.2     setosa
+31           4.8         3.1          1.6         0.2     setosa
+32           5.4         3.4          1.5         0.4     setosa
+33           5.2         4.1          1.5         0.1     setosa
+34           5.5         4.2          1.4         0.2     setosa
+35           4.9         3.1          1.5         0.2     setosa
+36           5.0         3.2          1.2         0.2     setosa
+37           5.5         3.5          1.3         0.2     setosa
+38           4.9         3.6          1.4         0.1     setosa
+39           4.4         3.0          1.3         0.2     setosa
+40           5.1         3.4          1.5         0.2     setosa
+41           5.0         3.5          1.3         0.3     setosa
+42           4.5         2.3          1.3         0.3     setosa
+43           4.4         3.2          1.3         0.2     setosa
+44           5.0         3.5          1.6         0.6     setosa
+45           5.1         3.8          1.9         0.4     setosa
+46           4.8         3.0          1.4         0.3     setosa
+47           5.1         3.8          1.6         0.2     setosa
+48           4.6         3.2          1.4         0.2     setosa
+49           5.3         3.7          1.5         0.2     setosa
+50           5.0         3.3          1.4         0.2     setosa
+51           7.0         3.2          4.7         1.4 versicolor
+52           6.4         3.2          4.5         1.5 versicolor
+53           6.9         3.1          4.9         1.5 versicolor
+54           5.5         2.3          4.0         1.3 versicolor
+55           6.5         2.8          4.6         1.5 versicolor
+56           5.7         2.8          4.5         1.3 versicolor
+57           6.3         3.3          4.7         1.6 versicolor
+58           4.9         2.4          3.3         1.0 versicolor
+59           6.6         2.9          4.6         1.3 versicolor
+60           5.2         2.7          3.9         1.4 versicolor
+61           5.0         2.0          3.5         1.0 versicolor
+62           5.9         3.0          4.2         1.5 versicolor
+63           6.0         2.2          4.0         1.0 versicolor
+64           6.1         2.9          4.7         1.4 versicolor
+65           5.6         2.9          3.6         1.3 versicolor
+66           6.7         3.1          4.4         1.4 versicolor
+67           5.6         3.0          4.5         1.5 versicolor
+68           5.8         2.7          4.1         1.0 versicolor
+69           6.2         2.2          4.5         1.5 versicolor
+70           5.6         2.5          3.9         1.1 versicolor
+71           5.9         3.2          4.8         1.8 versicolor
+72           6.1         2.8          4.0         1.3 versicolor
+73           6.3         2.5          4.9         1.5 versicolor
+74           6.1         2.8          4.7         1.2 versicolor
+75           6.4         2.9          4.3         1.3 versicolor
+76           6.6         3.0          4.4         1.4 versicolor
+77           6.8         2.8          4.8         1.4 versicolor
+78           6.7         3.0          5.0         1.7 versicolor
+79           6.0         2.9          4.5         1.5 versicolor
+80           5.7         2.6          3.5         1.0 versicolor
+81           5.5         2.4          3.8         1.1 versicolor
+82           5.5         2.4          3.7         1.0 versicolor
+83           5.8         2.7          3.9         1.2 versicolor
+84           6.0         2.7          5.1         1.6 versicolor
+85           5.4         3.0          4.5         1.5 versicolor
+86           6.0         3.4          4.5         1.6 versicolor
+87           6.7         3.1          4.7         1.5 versicolor
+88           6.3         2.3          4.4         1.3 versicolor
+89           5.6         3.0          4.1         1.3 versicolor
+90           5.5         2.5          4.0         1.3 versicolor
+91           5.5         2.6          4.4         1.2 versicolor
+92           6.1         3.0          4.6         1.4 versicolor
+93           5.8         2.6          4.0         1.2 versicolor
+94           5.0         2.3          3.3         1.0 versicolor
+95           5.6         2.7          4.2         1.3 versicolor
+96           5.7         3.0          4.2         1.2 versicolor
+97           5.7         2.9          4.2         1.3 versicolor
+98           6.2         2.9          4.3         1.3 versicolor
+99           5.1         2.5          3.0         1.1 versicolor
+100          5.7         2.8          4.1         1.3 versicolor
+101          6.3         3.3          6.0         2.5  virginica
+102          5.8         2.7          5.1         1.9  virginica
+103          7.1         3.0          5.9         2.1  virginica
+104          6.3         2.9          5.6         1.8  virginica
+105          6.5         3.0          5.8         2.2  virginica
+106          7.6         3.0          6.6         2.1  virginica
+107          4.9         2.5          4.5         1.7  virginica
+108          7.3         2.9          6.3         1.8  virginica
+109          6.7         2.5          5.8         1.8  virginica
+110          7.2         3.6          6.1         2.5  virginica
+111          6.5         3.2          5.1         2.0  virginica
+112          6.4         2.7          5.3         1.9  virginica
+113          6.8         3.0          5.5         2.1  virginica
+114          5.7         2.5          5.0         2.0  virginica
+115          5.8         2.8          5.1         2.4  virginica
+116          6.4         3.2          5.3         2.3  virginica
+117          6.5         3.0          5.5         1.8  virginica
+118          7.7         3.8          6.7         2.2  virginica
+119          7.7         2.6          6.9         2.3  virginica
+120          6.0         2.2          5.0         1.5  virginica
+121          6.9         3.2          5.7         2.3  virginica
+122          5.6         2.8          4.9         2.0  virginica
+123          7.7         2.8          6.7         2.0  virginica
+124          6.3         2.7          4.9         1.8  virginica
+125          6.7         3.3          5.7         2.1  virginica
+126          7.2         3.2          6.0         1.8  virginica
+127          6.2         2.8          4.8         1.8  virginica
+128          6.1         3.0          4.9         1.8  virginica
+129          6.4         2.8          5.6         2.1  virginica
+130          7.2         3.0          5.8         1.6  virginica
+131          7.4         2.8          6.1         1.9  virginica
+132          7.9         3.8          6.4         2.0  virginica
+133          6.4         2.8          5.6         2.2  virginica
+134          6.3         2.8          5.1         1.5  virginica
+135          6.1         2.6          5.6         1.4  virginica
+136          7.7         3.0          6.1         2.3  virginica
+137          6.3         3.4          5.6         2.4  virginica
+138          6.4         3.1          5.5         1.8  virginica
+139          6.0         3.0          4.8         1.8  virginica
+140          6.9         3.1          5.4         2.1  virginica
+141          6.7         3.1          5.6         2.4  virginica
+142          6.9         3.1          5.1         2.3  virginica
+143          5.8         2.7          5.1         1.9  virginica
+144          6.8         3.2          5.9         2.3  virginica
+145          6.7         3.3          5.7         2.5  virginica
+146          6.7         3.0          5.2         2.3  virginica
+147          6.3         2.5          5.0         1.9  virginica
+148          6.5         3.0          5.2         2.0  virginica
+149          6.2         3.4          5.4         2.3  virginica
+150          5.9         3.0          5.1         1.8  virginica</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Tibbles </h2><h3> <code>tibble</code> vs <code>data.frame</code></h3></hgroup><article  id="tibbles-tibble-vs-data.frame-1" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-8 bg-cobalt compact-output '><h3><code>tibble</code></h3>
+
+<div id="unnamed-chunk-2" class="build chunk shadow">
+<pre class = 'prettyprint lang-r'>iris %&gt;% as_tibble()</pre>
+
+<pre ># A tibble: 150 × 5
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;  &lt;fctr&gt;
+1           5.1         3.5          1.4         0.2  setosa
+2           4.9         3.0          1.4         0.2  setosa
+3           4.7         3.2          1.3         0.2  setosa
+4           4.6         3.1          1.5         0.2  setosa
+5           5.0         3.6          1.4         0.2  setosa
+6           5.4         3.9          1.7         0.4  setosa
+7           4.6         3.4          1.4         0.3  setosa
+8           5.0         3.4          1.5         0.2  setosa
+9           4.4         2.9          1.4         0.2  setosa
+10          4.9         3.1          1.5         0.1  setosa
+# ... with 140 more rows</pre></div>
+
+</div><div class = 'box col-4 bg-cobalt compact-output'><h3><code>tibble</code> adjusts to width</h3>
+
+<div id="unnamed-chunk-3" class="build chunk shadow">
+<pre class = 'prettyprint lang-r'>iris %&gt;% as_tibble()</pre>
+
+<pre ># A tibble: 150 × 5
+   Sepal.Length Sepal.Width
+          &lt;dbl&gt;       &lt;dbl&gt;
+1           5.1         3.5
+2           4.9         3.0
+3           4.7         3.2
+4           4.6         3.1
+5           5.0         3.6
+6           5.4         3.9
+7           4.6         3.4
+8           5.0         3.4
+9           4.4         2.9
+10          4.9         3.1
+# ... with 140 more rows, and
+#   3 more variables:
+#   Petal.Length &lt;dbl&gt;,
+#   Petal.Width &lt;dbl&gt;,
+#   Species &lt;fctr&gt;</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-6 offset-3 bg-yellow '><h3>tibble printing enhancements</h3>
+
+<ul>
+<li>column type is visible</li>
+<li>shows only the first 10 rows</li>
+<li>shows only the columns that fit on the screen</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Create tibbles</h2></hgroup><article  id="create-tibbles" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>tibble()</code></h3>
+
+<ul>
+<li>similar to <code>base::data.frame()</code> but
+
+<ul>
+<li>does not coerce characters to factors</li>
+<li>does not change column names</li>
+<li>never uses rownames</li>
+</ul></li>
+</ul>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>data.frame(`bad name` = 1:4,
+           x = rep(letters[1:2], 2)) %&gt;%
+  str()</pre>
+
+<pre >&#39;data.frame&#39;:   4 obs. of  2 variables:
+ $ bad.name: int  1 2 3 4
+ $ x       : Factor w/ 2 levels &quot;a&quot;,&quot;b&quot;: 1 2 1 2</pre></div>
+
+<div id="unnamed-chunk-5" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>tibble(`bad name` = 1:4,
+       x = rep(letters[1:2], 2)) %&gt;%
+  str()</pre>
+
+<pre >Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:   4 obs. of  2 variables:
+ $ bad name: int  1 2 3 4
+ $ x       : chr  &quot;a&quot; &quot;b&quot; &quot;a&quot; &quot;b&quot;</pre></div>
+
+</div><div class = 'box col-6 bg-blue'><h3><code>tribble()</code></h3>
+
+<ul>
+<li><strong>transposed tibble</strong></li>
+<li>row-by-row layout</li>
+<li>columns are defined by formula (<code>~</code>)</li>
+</ul>
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>tribble(
+  ~x, ~y,  ~z,
+  &quot;a&quot;, 2,  3.6,
+  &quot;b&quot;, 1,  8.5
+)</pre>
+
+<pre ># A tibble: 2 × 3
+      x     y     z
+  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     a     2   3.6
+2     b     1   8.5</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Create tibbles</h2></hgroup><article  id="create-tibbles-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 offset-3 bg-yellow icon vs3'><h3>Create tibbles by copy paste</h3>
+
+<img src='img/00_tip.png' title='fig:'/>
+
+<ul>
+<li><code>datapasta</code> package</li>
+<li>can be useful to copy paste small datasets</li>
+<li><strong>Rstudio addin</strong></li>
+<li>have a look at the <a href='https://cran.r-project.org/web/packages/datapasta/vignettes/how-to-datapasta.html' title=''>vignette</a></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The tidyverse packages to import your data</h2></hgroup><article  id="the-tidyverse-packages-to-import-your-data" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue icon'><h3>Tidyverse packages to import your data</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/readr/master/tools/logo.png' title='fig:'/>
+
+<p>Seven file formats are supported by the readr package:</p>
+
+<ul>
+<li><code>read_csv()</code>: comma separated (CSV) files</li>
+<li><code>read_tsv()</code>: tab separated files</li>
+<li><code>read_delim()</code>: general delimited files</li>
+<li><code>read_fwf()</code>: fixed width files</li>
+<li><code>read_table()</code>: tabular files where colums are separated by white-space.</li>
+<li><code>read_log()</code>: web log files</li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-6 bg-green icon'><h3>readxl</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/readxl/master/logo.png' title='fig:'/>
+
+<p>To import excel files (<code>.xls</code> and <code>.xlsx</code>):</p>
+
+<ul>
+<li><code>read_excel()</code>
+
+<ul>
+<li><code>read_xls()</code></li>
+<li><code>read_xlsx()</code></li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-6 bg-red icon stretch'><h3>haven</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/haven/master/logo.png' title='fig:'/>
+
+<ul>
+<li><code>read_sas()</code> for SAS</li>
+<li><code>read_sav()</code> for SPSS</li>
+<li><code>read_dta()</code> for Stata</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio data import </h2><h3> interactive call to <code>readr</code> or <code>readxl</code></h3></hgroup><article  id="rstudio-data-import-interactive-call-to-readr-or-readxl" class="smaller ">
+
+<div id="unnamed-chunk-7">
+<style type="text/css">
+/* Center two images in boxes*/
+.center-pair p {
+  display: flex;
+  display: -webkit-flex;
+}
+
+.center-pair p > img {
+  max-width: 45%;
+  margin: auto;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-6 bg-blue center-pair'><h3>Import button</h3>
+
+<ul>
+<li>Use the <code>Import Dataset</code> button in the upper right panel or click on the file in the lower right panel</li>
+</ul>
+
+<p><img src='img/04_rstudio_import_option_1.jpg' title=''/> <img src='img/04_rstudio_import_option_2.jpg' title=''/></p>
+
+<ul>
+<li>Will interactively select the appropriate function</li>
+<li>Copy paste the generated command to your Rmarkdown document</li>
+</ul>
+
+</div><div class = 'box col-6 bg-green'><h3>Example</h3>
+
+<ul>
+<li>Create a new project (easier to setup the root project path)</li>
+<li>Run the following command to copy the <code>mtcars.csv</code> file shipped with <code>readr</code> to your project folder:</li>
+</ul>
+
+<div id="unnamed-chunk-8" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>file.copy(
+  from = readr::readr_example(&quot;mtcars.csv&quot;),
+  to = &quot;mtcars.csv&quot;
+  )</pre></div>
+
+<div id="unnamed-chunk-9">
+</div>
+
+<ul>
+<li>Use the interactive <code>Import Dataset</code> button to import the <code>mtcars.csv</code> file.</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Rstudio data import </h2><h3> preview window</h3></hgroup><article  id="rstudio-data-import-preview-window" class="smaller ">
+
+<div class = 'row'><div class = 'col-10 offset-1'>
+
+<img src='img/04_rstudio_import_preview.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Importing flat files</h2></hgroup><article  id="importing-flat-files" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>readr</code> functions</h2></hgroup><article  id="readr-functions" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-4 bg-gray '><h3><code>read_csv()</code></h3>
+
+<ul>
+<li><strong>Comma</strong> delimited files</li>
+</ul>
+
+<img src='img/04_readr_read_csv.png' title='fig:'/>
+
+</div><div class = 'box col-4 bg-gray'><h3><code>read_csv2()</code></h3>
+
+<ul>
+<li><strong>Semi-colon</strong> delimited files</li>
+</ul>
+
+<img src='img/04_readr_read_csv2.png' title='fig:'/>
+
+</div><div class = 'box col-4 bg-gray'><h3><code>read_tsf()</code></h3>
+
+<ul>
+<li><strong>tab</strong> delimited files</li>
+</ul>
+
+<img src='img/04_readr_read_fwf_tsv.png' title='fig:'/>
+
+</div></div><div class = 'row build'><div class = 'box col-6 offset-1 bg-gray vs2 '><h3><code>read_delim()</code></h3>
+
+<ul>
+<li><strong>any delimiter</strong>:</li>
+</ul>
+
+<img src='img/04_readr_read_delim.png' title='fig:'/>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>read_delim(file, delim = &quot;|&quot;, ...)</pre></div>
+
+</div><div class = 'box col-4 bg-gray vs2 stretch'><h3><code>read_fwf()</code></h3>
+
+<ul>
+<li><strong>fixed width</strong> files</li>
+</ul>
+
+<img src='img/04_readr_read_fwf_tsv.png' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-grayblue'><h3>Example of <code>csv</code> file: <em>mtcars.csv</em></h3>
+
+<pre >&quot;mpg&quot;,&quot;cyl&quot;,&quot;disp&quot;,&quot;hp&quot;,&quot;drat&quot;,&quot;wt&quot;,&quot;qsec&quot;,&quot;vs&quot;,&quot;am&quot;,&quot;gear&quot;,&quot;carb&quot;
+21,6,160,110,3.9,2.62,16.46,0,1,4,4
+21,6,160,110,3.9,2.875,17.02,0,1,4,4
+22.8,4,108,93,3.85,2.32,18.61,1,1,4,1
+21.4,6,258,110,3.08,3.215,19.44,1,0,3,1
+18.7,8,360,175,3.15,3.44,17.02,0,0,3,2
+...</pre>
+
+</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Using <code>read_csv()</code></h3>
+
+<ul>
+<li><code>readr</code> provides some example files</li>
+<li>use <code>readr::readr_example()</code> to access them</li>
+<li>is able to read <strong>local</strong> and <strong>remote</strong> files</li>
+<li>is able to read compressed files (<code>.zip</code>, <code>.gz</code>, &#8230;)</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-cobalt compact-output'><h3>Using <code>read_csv()</code></h3>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;% # Generates the path to the example file
+  read_csv()</pre>
+
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre>
+
+<pre ># A tibble: 32 × 11
+     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1   21.0     6 160.0   110  3.90 2.620 16.46     0     1     4     4
+2   21.0     6 160.0   110  3.90 2.875 17.02     0     1     4     4
+3   22.8     4 108.0    93  3.85 2.320 18.61     1     1     4     1
+4   21.4     6 258.0   110  3.08 3.215 19.44     1     0     3     1
+5   18.7     8 360.0   175  3.15 3.440 17.02     0     0     3     2
+6   18.1     6 225.0   105  2.76 3.460 20.22     1     0     3     1
+7   14.3     8 360.0   245  3.21 3.570 15.84     0     0     3     4
+8   24.4     4 146.7    62  3.69 3.190 20.00     1     0     4     2
+9   22.8     4 140.8    95  3.92 3.150 22.90     1     0     4     2
+10  19.2     6 167.6   123  3.92 3.440 18.30     1     0     4     4
+# ... with 22 more rows</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-7 bg-blue'><h3>Column types</h3>
+
+<ul>
+<li>are guessed from the <strong>1000</strong> first rows
+
+<ul>
+<li>adjustable <code>guess_max</code> option</li>
+</ul></li>
+<li>guessed types are displayed as a <em>message</em></li>
+<li>to hide this message:
+
+<ul>
+<li><strong>lazy method 1</strong>: set <code>message = FALSE</code> in your rmarkdown chunk option.</li>
+<li><strong>lazy method 2</strong>: set <code>col_types = cols()</code></li>
+<li>Hadley Wickham recommends to adjust the <code>col_types</code> to avoid any problem</li>
+</ul></li>
+</ul>
+
+</div><div class = 'box col-5 bg-cobalt stretch'><h3>Message</h3>
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre >Parsed with column specification:
+cols(
+  mpg = col_double(),
+  cyl = col_integer(),
+  disp = col_double(),
+  hp = col_integer(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_integer(),
+  am = col_integer(),
+  gear = col_integer(),
+  carb = col_integer()
+)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading flat files </h2><h3> csv file</h3></hgroup><article  id="reading-flat-files-csv-file-3" class="smaller ">
+
+<div id="unnamed-chunk-13">
+<style type="text/css">
+/* from https://csswizardry.com/2010/02/mutiple-column-lists-using-one-ul/ */
+.col-list ul {
+  overflow: hidden;
+  border-top: 1px solid #005c99;
+  padding-top: 10px;
+}
+
+.col-list li {
+  line-height: 1.1em;
+  border-bottom: 1px solid #005c99;
+  float: left;
+  display: inline;
+}
+
+.c2 li {
+  width: 50%;
+}
+
+.c3 li {
+  width: 33.333%;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-5 bg-blue col-list c2 stretch'><h3>Explicit method</h3>
+
+<p>Use the following functions in <code>cols()</code>:</p>
+
+<ul>
+<li><code>col_double()</code></li>
+<li><code>col_integer()</code></li>
+<li><code>col_character()</code></li>
+<li><code>col_logical()</code></li>
+<li><code>col_factor()</code></li>
+<li><code>col_date()</code></li>
+<li><code>col_datetime()</code></li>
+<li><code>col_time()</code></li>
+<li><code>col_guess()</code></li>
+<li><code>col_skip()</code></li>
+</ul>
+
+</div><div class = 'box col-7 bg-cobalt stretch'><h3>Example 1</h3>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = cols(mpg = col_double(),
+                            cyl = col_integer(),
+                            disp = col_double(),
+                            hp = col_integer(),
+                            drat = col_double(),
+                            wt = col_double(),
+                            qsec = col_double(),
+                            vs = col_integer(),
+                            am = col_integer(),
+                            gear = col_integer(),
+                            carb = col_integer())
+  )</pre></div>
+
+</div></div><div class = 'row'><div class = 'box col-7 bg-blue col-list c3 stretch'><h3>Compact string shortcuts</h3>
+
+<ul>
+<li>c = character</li>
+<li>i = integer</li>
+<li>n = number</li>
+<li>d = double</li>
+<li>l = logical</li>
+<li>D = date</li>
+<li>T = date time</li>
+<li>t = time</li>
+<li>? = guess</li>
+<li>_/- = skip</li>
+</ul>
+
+</div><div class = 'box col-5 bg-cobalt stretch'><h3>Example 2</h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = cols(
+    mpg = &quot;d&quot;, cyl = &quot;i&quot;, disp = &quot;d&quot;,
+    hp = &quot;i&quot;, drat = &quot;d&quot;, wt = &quot;d&quot;,
+    qsec = &quot;d&quot;, vs = &quot;i&quot;, am = &quot;i&quot;,
+    gear = &quot;i&quot;, carb = &quot;i&quot;))
+
+readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = &quot;dididddiiii&quot;)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself" class="smaller ">
+
+<div id="unnamed-chunk-16">
+</div>
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 1</h3>
+
+<ul>
+<li>import the <code>mtcars.csv</code> file again <strong>but</strong>
+
+<ul>
+<li>read in the <em>number of cylinders</em> as <strong>characters</strong>.</li>
+<li>skip all columns except <em>miles per gallon</em>, <em>cylinder</em> and the <em>number of gears</em></li>
+</ul></li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-12 bg-cobalt '><h3>Answer</h3>
+
+<div id="unnamed-chunk-17" class="build chunk shadow">
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = cols_only(cyl = col_character(),
+                                 mpg = col_double(),
+                                 gear = col_integer()))</pre></div>
+
+<div class="col-4">
+<pre ># A tibble: 32 × 3
+    mpg   cyl  gear
+  &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
+1  21.0     6     4
+2  21.0     6     4
+3  22.8     4     4
+4  21.4     6     3
+# ... with 28 more rows</pre></div></div>
+
+<div class="row">
+<div class="col-8">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(col_types = &quot;dc_______i_&quot;) </pre></div>
+
+<div class="col-4">
+<pre ># A tibble: 32 × 3
+    mpg   cyl  gear
+  &lt;dbl&gt; &lt;chr&gt; &lt;int&gt;
+1  21.0     6     4
+2  21.0     6     4
+3  22.8     4     4
+4  21.4     6     3
+# ... with 28 more rows</pre></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself-1" class="smaller ">
+
+<div id="unnamed-chunk-18">
+<style type="text/css">
+/* we used two chunks to hide the local file access */
+#challenge_display {
+  border-bottom: none;
+  border-radius: 0;
+}
+
+#challenge_output {
+  margin-top: -10px;
+  border-top:none;
+  border-radius: 0;
+}
+</style></div>
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 2</h3>
+
+<ul>
+<li>try to load the file <code>challenge.csv</code> (provided by <code>readr_example()</code>)</li>
+<li>store the content in an object <code>challenge</code></li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 offset-1 bg-grayblue  compact-output'><h3>Step 1</h3>
+
+<ul>
+<li>what happened?</li>
+<li>you can use <code>problems(challenge)</code> to list the failures again</li>
+</ul>
+
+<div id="unnamed-chunk-19">
+</div>
+
+<div id="challenge_code" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv()</pre></div>
+
+<div id="challenge_output" class="chunk shadow">
+<pre >Parsed with column specification:
+cols(
+  x = col_integer(),
+  y = col_character()
+)</pre>
+
+<pre >Warning: 1000 parsing failures.
+ row col               expected             actual            file
+1001   x no trailing characters .23837975086644292 &#39;challenge.csv&#39;
+1002   x no trailing characters .41167997173033655 &#39;challenge.csv&#39;
+1003   x no trailing characters .7460716762579978  &#39;challenge.csv&#39;
+1004   x no trailing characters .723450553836301   &#39;challenge.csv&#39;
+1005   x no trailing characters .614524137461558   &#39;challenge.csv&#39;
+.... ... ...................... .................. ...............
+See problems(...) for more details.</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself</h2></hgroup><article  id="try-it-yourself-2" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-green'><h3>Exercise 2</h3>
+
+<ul>
+<li>try to load the file <code>challenge.csv</code> (provided by <code>readr_example()</code>)</li>
+<li>store the content in an object <code>challenge</code></li>
+<li>override the guessed column type to allow the import</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10 offset-1 bg-grayblue '><h3>Step 2</h3>
+
+<ul>
+<li>method 1</li>
+</ul>
+
+<div id="unnamed-chunk-20" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv(col_types = &quot;dD&quot;)</pre></div>
+
+<ul>
+<li>method 2 (not recommended)</li>
+</ul>
+
+<div id="unnamed-chunk-21" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>challenge &lt;- readr_example(&quot;challenge.csv&quot;) %&gt;% 
+  read_csv(guess_max = 1500) # n &gt; 1000: look at the first row causing a failure</pre>
+
+<pre >Parsed with column specification:
+cols(
+  x = col_double(),
+  y = col_date(format = &quot;&quot;)
+)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Skipping lines</h2></hgroup><article  id="skipping-lines" class="smaller ">
+
+<div class = 'row'><div class = 'box col-4 bg-yellow'><h3><code>skip</code> argument</h3>
+
+<p>To skip the first <em>n</em> rows</p>
+
+</div><div class = 'box col-4 bg-red'><h3><code>n_max</code> argument</h3>
+
+<p>To stop reading after <em>n</em> rows</p>
+
+</div><div class = 'box col-4 bg-blue'><h3><code>col_names</code> argument</h3>
+
+<p>override column names</p>
+
+</div></div>
+
+<div id="unnamed-chunk-22" class="chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv()</pre></div>
+
+<div class="col-8">
+<pre ># A tibble: 32 × 11
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  21.0     6   160   110  3.90 2.620 16.46     0     1     4     4
+2  21.0     6   160   110  3.90 2.875 17.02     0     1     4     4
+3  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+4  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+# ... with 28 more rows</pre></div></div></div>
+
+<div id="unnamed-chunk-23" class="build chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(skip = 3,
+           n_max = 3,
+           col_names = FALSE)</pre></div>
+
+<div class="col-8">
+<pre ># A tibble: 3 × 11
+     X1    X2    X3    X4    X5    X6    X7    X8    X9   X10   X11
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+2  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+3  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2</pre></div></div></div>
+
+<div id="unnamed-chunk-24" class="build chunk shadow">
+<div class="row">
+<div class="col-4">
+<pre class = 'prettyprint lang-r'>readr_example(&quot;mtcars.csv&quot;) %&gt;%
+  read_csv(skip = 3, n_max = 3,
+           col_names = c(&quot;mpg&quot;, &quot;cyl&quot;, &quot;disp&quot;, &quot;hp&quot;, &quot;drat&quot;, &quot;wt&quot;, &quot;qsec&quot;, &quot;vs&quot;, &quot;am&quot;, &quot;gear&quot;, &quot;carb&quot;))</pre></div>
+
+<div class="col-8">
+<pre ># A tibble: 3 × 11
+    mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+1  22.8     4   108    93  3.85 2.320 18.61     1     1     4     1
+2  21.4     6   258   110  3.08 3.215 19.44     1     0     3     1
+3  18.7     8   360   175  3.15 3.440 17.02     0     0     3     2</pre></div></div></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Internationalisation </h2><h3> locales</h3></hgroup><article  id="internationalisation-locales" class="smaller ">
+
+<div id="unnamed-chunk-25">
+<style type="text/css">
+.more-space h3 + pre {
+  margin-bottom: 10px;
+}
+</style></div>
+
+<div class = 'row build'><div class = 'box col-5 bg-green  stretch more-space'><h3>Example</h3>
+
+<pre >&quot;name&quot;;&quot;first_name&quot;;&quot;born&quot;;&quot;value&quot;
+&quot;Dupont&quot;;&quot;Michel&quot;;03/10/71;1,2
+&quot;Doe&quot;;&quot;John&quot;;27/02/74;1,7
+&quot;Mustermann&quot;;&quot;Max&quot;;14/08/69;1,6</pre>
+
+<ul>
+<li>Link to the file: <a href='https://git.io/v9Wmf' title=''>https://git.io/v9Wmf</a></li>
+<li>Trying to import using <code>read_delim()</code></li>
+</ul>
+
+<div id="unnamed-chunk-26" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>read_delim(&quot;data/locale_1.csv&quot;,
+           delim = &quot;;&quot;)</pre>
+
+<pre ># A tibble: 3 × 4
+        name first_name     born value
+       &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt;
+1     Dupont     Michel 03/10/71    12
+2        Doe       John 27/02/74    17
+3 Mustermann        Max 14/08/69    16</pre></div>
+
+<ul>
+<li>dates are detected as <strong>characters</strong> (<em>minor issue</em>)</li>
+<li>decimal numbers are not detected as they should (<strong><em>major issue</em></strong>)</li>
+</ul>
+
+</div><div class = 'box col-7 bg-green'><h3>Adjusting the <code>locale</code> argument</h3>
+
+<div id="unnamed-chunk-27" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>read_delim(&quot;data/locale_1.csv&quot;,
+           delim = &quot;;&quot;,
+           locale = locale(decimal_mark = &quot;,&quot;,
+                           date_format = &quot;%d/%m/%y&quot;))</pre>
+
+<pre ># A tibble: 3 × 4
+        name first_name       born value
+       &lt;chr&gt;      &lt;chr&gt;     &lt;date&gt; &lt;dbl&gt;
+1     Dupont     Michel 1971-10-03   1.2
+2        Doe       John 1974-02-27   1.7
+3 Mustermann        Max 1969-08-14   1.6</pre></div>
+
+<ul>
+<li>have a look at <code>?parse_datetime</code> to list the datetime format specifications</li>
+<li><code>read_csv2()</code> is a shortcut to <code>read_delim()</code> using <code>;</code> as a delimiter and <code>,</code> as the decimal mark</li>
+<li>you still need to adjust the date parsing</li>
+</ul>
+
+<div id="unnamed-chunk-28" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>read_csv2(&quot;data/locale_1.csv&quot;,
+          locale = locale(date_format = &quot;%d/%m/%y&quot;))
+
+read_csv2(&quot;data/locale_1.csv&quot;) %&gt;%
+  mutate_at(c(&quot;born&quot;), parse_date, format = &quot;%d/%m/%y&quot;)</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Importing MS Excel files</h2></hgroup><article  id="importing-ms-excel-files" class="smaller ">
+
+<img src='img/04_excel_icon.png' title='fig:'/>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>readxl</code> </h2><h3> reading MS Excel files</h3></hgroup><article  id="readxl-reading-ms-excel-files" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-green icon'><h3>readxl</h3>
+
+<img src='https://raw.githubusercontent.com/tidyverse/readxl/master/logo.png' title='fig:'/>
+
+<ul>
+<li>able to import <code>.xls</code> and <code>.xlsx</code> files</li>
+<li><code>read_excel()</code>
+
+<ul>
+<li><code>read_xls()</code></li>
+<li><code>read_xlsx()</code></li>
+</ul></li>
+<li><code>excel_sheets()</code> to list all sheets in the Excel file</li>
+</ul>
+
+</div><div class = 'box col-6 bg-red'><h3>new feature</h3>
+
+<ul>
+<li>Version <strong>1.0.0</strong> is out</li>
+<li>import <strong>cell ranges</strong></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Sample files</h3>
+
+<ul>
+<li>we will use the files shipped with the readxl package</li>
+<li>list of available examples:</li>
+</ul>
+
+<div id="unnamed-chunk-29" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl::readxl_example()</pre>
+
+<pre > [1] &quot;clippy.xls&quot;    &quot;clippy.xlsx&quot;   &quot;datasets.xls&quot; 
+ [4] &quot;datasets.xlsx&quot; &quot;deaths.xls&quot;    &quot;deaths.xlsx&quot;  
+ [7] &quot;geometry.xls&quot;  &quot;geometry.xlsx&quot; &quot;type-me.xls&quot;  
+[10] &quot;type-me.xlsx&quot; </pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-8 offset-2 bg-green '><h3>Sample files</h3>
+
+<ul>
+<li>to get used to <code>readxl</code> and the import of excel files
+
+<ul>
+<li>use the <code>datasets.xlsx</code> example file</li>
+<li>determine how many sheets are contained in the file</li>
+<li>load the data contained in the <code>mtcars</code> sheet</li>
+<li>you can also try Rstudio&#39;s interactive importer</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>the <code>deaths</code> dataset</h3>
+
+<ul>
+<li>use the <code>deaths.xls</code> file in your <code>data</code> folder in the projects root (or use the path <code>readxl_example(&quot;deaths.xlsx&quot;)</code>)</li>
+<li>how many sheets does the file contain?</li>
+<li>import the first sheet of the file.</li>
+<li>are you happy with the result?</li>
+</ul>
+
+</div></div><div class = 'row build'><div class = 'box col-10  offset-1 bg-cobalt'>
+
+<div id="unnamed-chunk-30" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
+  read_excel(sheet = 1)</pre>
+
+<pre ># A tibble: 18 × 6
+              `Lots of people`       X__1  X__2     X__3          X__4
+                         &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;
+1 simply cannot resist writing       &lt;NA&gt;  &lt;NA&gt;     &lt;NA&gt;          &lt;NA&gt;
+2                           at        the   top     &lt;NA&gt;            of
+3                           or    merging  &lt;NA&gt;     &lt;NA&gt;          &lt;NA&gt;
+4                         Name Profession   Age Has kids Date of birth
+5                  David Bowie   musician    69     TRUE         17175
+6                Carrie Fisher      actor    60     TRUE         20749
+7                  Chuck Berry   musician    90     TRUE          9788
+8                  Bill Paxton      actor    61     TRUE         20226
+# ... with 10 more rows, and 1 more variables: X__5 &lt;chr&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file-2" class="smaller nvs1">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-grayblue'>
+
+<img src='img/04_readxl_deaths.jpg' title='fig:'/>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-yellow icon-small'>
+
+<img src='img/00_tip.png' title='fig:'/>
+
+<ul>
+<li>Use the new possibilities of <code>readxl 1.0.0</code> to read in your data frame of interest (have a look at <code>?readxl::read_excel</code>)</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Try it yourself </h2><h3> excel file</h3></hgroup><article  id="try-it-yourself-excel-file-3" class="smaller ">
+
+<div class = 'row'><div class = 'col-8 offset-2'>
+
+<div id="unnamed-chunk-31" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
+  read_excel(sheet = 1, range = &quot;A5:F15&quot;)</pre>
+
+<pre ># A tibble: 10 × 6
+                 Name Profession   Age `Has kids` `Date of birth`
+                &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;      &lt;lgl&gt;          &lt;dttm&gt;
+1         David Bowie   musician    69       TRUE      1947-01-08
+2       Carrie Fisher      actor    60       TRUE      1956-10-21
+3         Chuck Berry   musician    90       TRUE      1926-10-18
+4         Bill Paxton      actor    61       TRUE      1955-05-17
+5              Prince   musician    57       TRUE      1958-06-07
+6        Alan Rickman      actor    69      FALSE      1946-02-21
+7  Florence Henderson      actor    82       TRUE      1934-02-14
+8          Harper Lee     author    89      FALSE      1926-04-28
+9       Zsa Zsa Gábor      actor    99       TRUE      1917-02-06
+10     George Michael   musician    53      FALSE      1963-06-25
+# ... with 1 more variables: `Date of death` &lt;dttm&gt;</pre></div>
+
+</div></div><div class = 'row build'><div class = 'box col-8 offset-2 bg-cobalt bg-'><h3>Alternative calls</h3>
+
+<div id="unnamed-chunk-32" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
+  read_excel(range = &quot;arts!A5:F15&quot;)
+
+readxl_example(&quot;deaths.xlsx&quot;) %&gt;%
+  read_excel(range = cell_limits(c(5, 1), c(15, 6), &quot;arts&quot;))
+  # have a look at ?cellranger::cell_limits</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading Excel files </h2><h3> column types</h3></hgroup><article  id="reading-excel-files-column-types" class="smaller ">
+
+<div class = 'row'><div class = 'box col-5 bg-blue compact-table'><h3>Column types</h3>
+
+<ul>
+<li>similar to <code>readr</code> using the <code>col_types</code> argument</li>
+<li>but the <strong><code>cols()</code> function won&#39;t work here!</strong>
+
+<ul>
+<li><code>readr</code> guesses column type based on the data.</li>
+<li><code>readxl</code> guesses column type based on Excel cell types</li>
+</ul></li>
+<li><code>col_types</code> should be adjusted to a character vector</li>
+<li><p>look at the correspondance in the <a href='https://cran.r-project.org/web/packages/readxl/vignettes/cell-and-column-types.html' title=''>readxl vignette</a></p>
+
+<div id="unnamed-chunk-33" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>vignette(&quot;cell-and-column-types&quot;)</pre></div></li>
+</ul>
+
+</div><div class = 'box col-7 bg-blue compact-table'>
+
+<div id="unnamed-chunk-34">
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">How it is in Excel</th>
+<th align="left">How it will be in R</th>
+<th align="left">How to request in col_types</th>
+</tr>
+<tr class="odd">
+<td align="left">anything</td>
+<td align="left">non-existent</td>
+<td align="left">&quot;skip&quot;</td>
+</tr>
+<tr class="even">
+<td align="left">empty</td>
+<td align="left">logical, but all NA</td>
+<td align="left">you cannot request this</td>
+</tr>
+<tr class="odd">
+<td align="left">boolean</td>
+<td align="left">logical</td>
+<td align="left">&quot;logical&quot;</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">numeric</td>
+<td align="left">&quot;numeric&quot;</td>
+</tr>
+<tr class="odd">
+<td align="left">datetime</td>
+<td align="left">POSIXct</td>
+<td align="left">&quot;date&quot;</td>
+</tr>
+<tr class="even">
+<td align="left">text</td>
+<td align="left">character</td>
+<td align="left">&quot;text&quot;</td>
+</tr>
+<tr class="odd">
+<td align="left">anything</td>
+<td align="left">list</td>
+<td align="left">&quot;list&quot;</td>
+</tr>
+</table></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reading Excel files </h2><h3> column types</h3></hgroup><article  id="reading-excel-files-column-types-1" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-green '><h3>mixed column types</h3>
+
+<ul>
+<li>try to import the <code>clippy.xls</code> example file provided by <code>readxl</code></li>
+</ul>
+
+<div id="unnamed-chunk-35" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
+  read_excel()</pre>
+
+<pre ># A tibble: 4 × 2
+                  name     value
+                 &lt;chr&gt;     &lt;chr&gt;
+1                 Name    Clippy
+2              Species paperclip
+3 Approx date of death     39083
+4      Weight in grams       0.9</pre></div>
+
+<ul>
+<li>date of death is coerced to a character</li>
+<li>you can override the column type and select one that can handle <strong>different types</strong></li>
+</ul>
+
+</div><div class = 'box col-6 bg-green'><h3>override <code>col_types</code></h3>
+
+<div id="unnamed-chunk-36" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
+  read_excel(col_types = c(&quot;text&quot;, &quot;list&quot;))</pre>
+
+<pre ># A tibble: 4 × 2
+                  name      value
+                 &lt;chr&gt;     &lt;list&gt;
+1                 Name  &lt;chr [1]&gt;
+2              Species  &lt;chr [1]&gt;
+3 Approx date of death &lt;dttm [1]&gt;
+4      Weight in grams  &lt;dbl [1]&gt;</pre></div>
+
+<div id="unnamed-chunk-37" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>readxl_example(&quot;clippy.xls&quot;) %&gt;% 
+  read_excel(col_types = c(&quot;text&quot;, &quot;list&quot;)) %&gt;%
+  tibble::deframe() %&gt;%
+  str()</pre>
+
+<pre >List of 4
+ $ Name                : chr &quot;Clippy&quot;
+ $ Species             : chr &quot;paperclip&quot;
+ $ Approx date of death: POSIXct[1:1], format: &quot;2007-01-01&quot;
+ $ Weight in grams     : num 0.9</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>You learned to:</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>appreciate the tibble printing features
+
+<ul>
+<li><strong>column types</strong> are displayed</li>
+</ul></li>
+<li>use <code>readr</code> and/or <code>readxl</code> to import your data into <em>R</em>
+
+<ul>
+<li>using the command line</li>
+<li>using the interactive RStudio interface</li>
+</ul></li>
+<li>avoid some common pitfalls during data import
+
+<ul>
+<li>wrong types</li>
+<li>wrong formats (<strong>decimal marks</strong>)</li>
+</ul></li>
+<li>adjust the imported data types</li>
+<li>select your data of interest in excel files which are <strong>often not tidy</strong> at all!</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Before we stop</h2></hgroup><article  id="before-we-stop" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-blue icon'><h3>Further reading</h3>
+
+<img src='img/00_book.png' title='fig:'/>
+
+<ul>
+<li><a href='http://r4ds.had.co.nz/data-import.html' title=''>R for Data Science</a></li>
+<li><a href='http://readr.tidyverse.org/' title=''>http://readr.tidyverse.org/</a>
+
+<ul>
+<li><code>vignette(&quot;readr&quot;)</code></li>
+<li><code>vignette(&quot;locales&quot;)</code></li>
+</ul></li>
+<li><a href='http://readxl.tidyverse.org/' title=''>http://readxl.tidyverse.org/</a>
+
+<ul>
+<li><code>vignette(&quot;sheet-geometry&quot;)</code></li>
+<li><code>vignette(&quot;cell-and-column-types&quot;)</code></li>
+</ul></li>
+<li><a href='https://www.datacamp.com/courses/importing-data-in-r-part-1' title=''>Datacamp course</a></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 vs1 bg-yellow'><h3>Acknowledgments</h3>
+
+<ul>
+<li>Hadley Wickham</li>
+<li>Jennifer Bryan</li>
+</ul></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture04_readr_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
