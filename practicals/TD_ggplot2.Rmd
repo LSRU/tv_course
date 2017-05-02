@@ -3,8 +3,9 @@ title: "practical ggplot2"
 author: "Aurelien Ginolhac"
 date: "3 May 2017"
 output:
-  unilur::tutorial_html_solution: default
+  unilur::tutorial_pdf_solution: default
   unilur::tutorial_pdf: default
+  unilur::tutorial_html_solution: default
 subtitle: practising the grammar of graphics
 ---
 
@@ -15,7 +16,7 @@ ggplot2::theme_set(ggplot2::theme_bw(14))
 
 > This practical aims at performing exploratory plots and how-to build layer by layer to be familiar with
 the grammar of graphics. In the last part, a supplementary exercise will focus on plotting genome-wide CNV. 
-You will also learn to use the _forcats_ package that is necessary for ordering plotting of categorical variable
+You will also learn to use the _forcats_ package that is necessary for ordering plotting of categorical variables
 
 ## Scatter plots
 
