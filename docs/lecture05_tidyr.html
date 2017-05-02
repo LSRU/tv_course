@@ -328,7 +328,7 @@
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Common tidy data violations</h2></hgroup><article  id="common-tidy-data-violations" class="smaller vs2">
 
-<div class = 'row build'><div class = 'col-8 box bg-blue '>
+<div class = 'row build'><div class = 'box col-8 bg-blue '><h3>Problem</h3>
 
 <ul>
 <li>Column headers are values, not variable names (<code>gather</code>)</li>
@@ -336,7 +336,7 @@
 <li>Variables are stored in both rows and columns (<code>gather</code>-<code>spread</code>)</li>
 <li>Repeated observations (<code>nest</code> or table)</li>
 <li>Multiple types in one table (<code>dplyr</code> data transformation)</li>
-<li>One type in multiple tables (<code>dplyr</code>, combine into table)</li>
+<li>One type in multiple tables (<code>dplyr</code>, combine into single table)</li>
 </ul>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2><code>tidyr</code> functionality</h2></hgroup><article  id="tidyr-functionality" class="smaller ">
@@ -359,8 +359,8 @@
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Demo with the iris dataset</h2></hgroup><article  id="demo-with-the-iris-dataset" class="smaller ">
 
 <div id="unnamed-chunk-8" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>library(&quot;tidyverse&quot;, warn.conflicts = F, quietly=T)
-as.tibble(iris)</pre>
+<pre class = 'prettyprint lang-r'>library(&quot;tidyverse&quot;, warn.conflicts = FALSE, quietly = TRUE)
+as_tibble(iris)</pre>
 
 <pre ># A tibble: 150 × 5
    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -433,7 +433,7 @@ iris_melt</pre>
 10    107  virginica          4.5         1.7          4.9         2.5
 # ... with 140 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code>gather</code></h2></hgroup><article  id="other-uses-of-gather" class="smaller vs2">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other uses of <code class="vs2">gather</code></h2></hgroup><article  id="other-uses-of-gather" class="smaller ">
 
 <div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris %&gt;%
@@ -499,37 +499,52 @@ patient</pre>
 <pre ># A tibble: 6 × 2
   subject_id gender_age
        &lt;int&gt;      &lt;chr&gt;
-1       1001       m-59
-2       1002       f-52
-3       1003       m-44
-4       1004       f-28
+1       1001       m-35
+2       1002       f-48
+3       1003       m-24
+4       1004       f-55
 5       1005       m-21
-6       1006       f-34</pre></div>
+6       1006       f-63</pre></div>
+
+</div><div class = 'box col-6 bg-blue stretch '><h3>Key-value pairs</h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>patient %&gt;% separate(gender_age, c(&quot;sex&quot;, &quot;age&quot;), convert=TRUE)</pre>
+
+<pre ># A tibble: 6 × 3
+  subject_id   sex   age
+*      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
+1       1001     m    35
+2       1002     f    48
+3       1003     m    24
+4       1004     f    55
+5       1005     m    21
+6       1006     f    63</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>separate()</code> and <code>unite()</code></h2></hgroup><article  id="separate-and-unite" class="smaller ">
 
 <div class = 'row build'><div class = 'box col-6 bg-blue '><h3>Dates</h3>
 
-<div id="unnamed-chunk-15" class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>df &lt;- data_frame(year = c(2015, 2014, 2014),
                  month = c(11, 2, 4),
                  day = c(23, 1, 30),
                  value = c(&quot;high&quot;, &quot;low&quot;, &quot;low&quot;))</pre></div>
 
-</div><div class = 'box col-6 bg-yellow '><h3><code>unite()</code> {}</h3>
+</div><div class = 'box col-6 bg-yellow '><h3><code>unite()</code></h3>
 
-<div id="unnamed-chunk-16" class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>df %&gt;%
   unite(date, year, month, day, sep = &quot;-&quot;) -&gt; df_unite</pre></div>
 
-</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow '><h3><code>separate()</code> {}</h3>
+</div></div><div class = 'row build'><div class = 'box col-6 bg-yellow '><h3><code>separate()</code></h3>
 
 <ul>
 <li>Use <strong>quotes</strong> since we are not refering to objects</li>
 <li>Default split on non-alphanumeric characters</li>
 </ul>
 
-<div id="unnamed-chunk-17" class="chunk shadow">
+<div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>df_unite %&gt;%
   separate(date, c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;))</pre>
 
@@ -539,23 +554,6 @@ patient</pre>
 1  2015    11    23  high
 2  2014     2     1   low
 3  2014     4    30   low</pre></div>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other combinations of variables</h2></hgroup><article  id="other-combinations-of-variables" class="smaller ">
-
-<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Key-value pairs</h3>
-
-<div id="unnamed-chunk-18" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>patient %&gt;% separate(gender_age, c(&quot;sex&quot;, &quot;age&quot;), convert=TRUE)</pre>
-
-<pre ># A tibble: 6 × 3
-  subject_id   sex   age
-*      &lt;int&gt; &lt;chr&gt; &lt;int&gt;
-1       1001     m    59
-2       1002     f    52
-3       1003     m    44
-4       1004     f    28
-5       1005     m    21
-6       1006     f    34</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>complete()</code> </h2><h3> Fill all combinations</h3></hgroup><article  id="complete-fill-all-combinations" class="smaller ">
 
@@ -627,7 +625,7 @@ patient_nested</pre>
 <li>Nesting allows to store <em>collapsed</em> tibbles and simplifies data management</li>
 </ul>
 
-</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>unnest()</code> {}</h3>
+</div></div><div class = 'row build'><div class = 'box col-6 bg-blue '><h3><code>unnest()</code></h3>
 
 <div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>patient_nested %&gt;% 
@@ -648,7 +646,7 @@ patient_nested</pre>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Wrap up</h2></hgroup><article  id="wrap-up" class="smaller ">
 
-<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Covered here:</h3>
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Covered here</h3>
 
 <ul>
 <li><code>tidyr</code> (and <code>dplyr</code>) are replacing the <code>reshape</code> and <code>reshape2</code> packages</li>
@@ -672,7 +670,7 @@ patient_nested</pre>
 <li>Jeremy Stanley</li>
 </ul>
 
-</div><div class = 'box col-5 bg-this_col '><h3>Thank you for your attention!</h3></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+</div><div class = 'box col-5 vs1 stretch bg-this_col '><h3>Thank you for your attention!</h3></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
