@@ -12,12 +12,22 @@ navbar:
           href: lecture01_intro.html
         - text: "Lecture 02 - data types & structures"
           href: lecture02_data_structure.html
+        - text: "Lecture 03 - Rmarkdown"
+          href: lecture03_rmarkdown.html
+        - text: "Lecture 04 - importing data"
+          href: lecture04_readr.html
         - text: "Lecture 05 - tidy data"
           href: lecture05_tidyr.html
         - text: "Lecture 06 - manipulation with dplyr"
           href: lecture06_dplyr.html
         - text: "Lecture 07 - data plotting"
           href: lecture07_plotting.html
+        - text: "Lecture 08 - functional programming with purrr"
+          href: lecture08_purrr.html
+        - text: "Lecture 09 - data handling with broom"
+          href: lecture08_broom.html
+        - text: "Lecture 10 - non standard evaluation with tidyeval"
+          href: lecture10_tidyeval.html          
         - text: "---------"        
         - text: "slides, keyboard shortcuts:"
         - text: "o: outline"
