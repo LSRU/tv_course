@@ -720,32 +720,32 @@ iris</pre>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>geometric objects </h2><h3> geoms define the type of plot which will be drawn.</h3></hgroup><article  id="geometric-objects-geoms-define-the-type-of-plot-which-will-be-drawn." class="smaller ">
 
-<h3><code class="box-4 bg-cobalt build">geom_point()</code></h3>
+<div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_point()</code></h3>
 
 <div id="unnamed-chunk-21">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-21-1.png' title=''/><!-- --></p></div>
 
-<h3><code class="box-4 bg-cobalt build">geom_line()</code></h3>
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_line()</code></h3>
 
 <div id="unnamed-chunk-22">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-22-1.png' title=''/><!-- --></p></div>
 
-<h3><code class="box-4 bg-cobalt build">geom_bar()</code></h3>
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_bar()</code></h3>
 
 <div id="unnamed-chunk-23">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-23-1.png' title=''/><!-- --></p></div>
 
-<h3><code class="box-4 bg-cobalt build">geom_boxplot()</code></h3>
+</div></div><div class = 'row build'><div class = 'box col-4 bg-cobalt '><h3><code>geom_boxplot()</code></h3>
 
 <div id="unnamed-chunk-24">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-24-1.png' title=''/><!-- --></p></div>
 
-<h3><code class="box-4 bg-cobalt build">geom_histogram()</code></h3>
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_histogram()</code></h3>
 
 <div id="unnamed-chunk-25">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-25-1.png' title=''/><!-- --></p></div>
 
-<h3><code class="box-4 bg-cobalt build">geom_density()</code></h3>
+</div><div class = 'box col-4 bg-cobalt '><h3><code>geom_density()</code></h3>
 
 <div id="unnamed-chunk-26">
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-26-1.png' title=''/><!-- --></p></div>
@@ -754,7 +754,7 @@ iris</pre>
 <li>Have a look at the <a href='https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf' title=''>cheatsheet</a> or the ggplot2 online <a href='http://ggplot2.tidyverse.org/' title=''>documentation</a> to list more possibilities.</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics</h2></hgroup><article  id="mapping-aesthetics" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mapping aesthetics</h2></hgroup><article  id="mapping-aesthetics" class="smaller ">
 
 <p><strong>aesthetics</strong> map the columns of a <code>data.frame</code>/<code>tibble</code> to the variable each ggplot2 <code>geom</code> is expecting.</p>
 
@@ -958,7 +958,7 @@ iris</pre>
 
 <p>since version 2.1, thanks to Bob Rudis, <code>geom_col</code> does require a <strong>y</strong> variable</p>
 
-<h3><code class="box-6 bg-cobalt stretch build">geom_col</code></h3>
+</div><div class = 'box col-6 bg-cobalt stretch '><h3><code>geom_col</code></h3>
 
 <div id="unnamed-chunk-38" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
@@ -1317,6 +1317,17 @@ ggsave(&quot;aes_trick.pdf&quot;, p,
 
 <div id="unnamed-chunk-61">
 <p><img src="img/07_extensions.jpg" width="85%" /></p></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>plot your data! </h2><h3> <a href='https://d2f99xq7vri1nk.cloudfront.net/Anscombe_1_0_0.png' title=''>Anscombe</a> ** 10</h3></hgroup><article  id="plot-your-data-anscombe-10" class="smaller vs2">
+
+<blockquote>
+<p>never trust summary statistics alone; always visualize your data <cite> Alberto Cairo</p></cite>
+</blockquote>
+
+<img src='https://d2f99xq7vri1nk.cloudfront.net/DinoSequentialSmaller.gif' title='fig:'/>
+
+<p><span class="small">
+source: Justin Matejka, George Fitzmaurice <a href='https://www.autodeskresearch.com/publications/samestats' title=''>Same Stats, Different Graphs&#8230;</a></span></p>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Art </h2><h3> by Marcus Volz</h3></hgroup><article  id="art-by-marcus-volz" class="smaller ">
 

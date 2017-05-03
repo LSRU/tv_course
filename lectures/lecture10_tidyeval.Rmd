@@ -207,16 +207,17 @@ fun2("stringent")
  ## Solution with tidyeval
  
  
+currently [discussed](https://github.com/tidyverse/dplyr/issues/2726)
+
 ```{r, error=TRUE}
  
-mtcars_filter <- function(df, col, threshold) {
+mtcars_filter <- function(df, column) {
 
-  column <- rlang::syms(col)
-  #print(enquo(column))
-  thr <- quo(threshold)
+  col <- enquo(column)
+  message(col)
   df %>%
-    select(!! quote(col))
+    select(!! col)
 }
-mtcars_filter(df = mtcars, hp, threshold = 265)
+mtcars_filter(df = mtcars, hp)
 
 ```

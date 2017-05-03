@@ -5,12 +5,12 @@ title: "Practicals"
 
 #### data manipulation with **dplyr**
 
-- [question]()
-- [solution]()
+- [question](TD_dplyr_question.html)
+- [solution](TD_dplyr_solution.html)
 
 #### plotting with **ggplot2**
 
-- [question]()
+- [question](TD_ggplot2_question.html)
 - [solution]()
 
 #### programming with **purrr**

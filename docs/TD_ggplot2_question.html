@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Aurelien Ginolhac" />
+
+
+<title>practical ggplot2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R tidyverse</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecture01_intro.html">Lecture 01 - intro</a>
+    </li>
+    <li>
+      <a href="lecture02_data_structure.html">Lecture 02 - data types &amp; structures</a>
+    </li>
+    <li>
+      <a href="lecture03_rmarkdown.html">Lecture 03 - Rmarkdown</a>
+    </li>
+    <li>
+      <a href="lecture04_readr.html">Lecture 04 - importing data</a>
+    </li>
+    <li>
+      <a href="lecture05_tidyr.html">Lecture 05 - tidy data</a>
+    </li>
+    <li>
+      <a href="lecture06_dplyr.html">Lecture 06 - manipulation with dplyr</a>
+    </li>
+    <li>
+      <a href="lecture07_plotting.html">Lecture 07 - data plotting</a>
+    </li>
+    <li>
+      <a href="lecture08_purrr.html">Lecture 08 - functional programming with purrr</a>
+    </li>
+    <li>
+      <a href="lecture09_broom.html">Lecture 09 - data handling with broom</a>
+    </li>
+    <li>
+      <a href="lecture10_tidyeval.html">Lecture 10 - non standard evaluation with tidyeval</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">slides, keyboard shortcuts:</li>
+    <li class="dropdown-header">o: outline</li>
+    <li class="dropdown-header">w: widescreen on/off</li>
+    <li class="dropdown-header">f: fullscreen on/off</li>
+    <li class="dropdown-header">ctrl +/ ctrl -: zoom in/out</li>
+  </ul>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Misc
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">practical ggplot2</h1>
+<h3 class="subtitle"><em>practising the grammar of graphics</em></h3>
+<h4 class="author"><em>Aurelien Ginolhac</em></h4>
+<h4 class="date"><em>3 May 2017</em></h4>
+
+</div>
+
+
+<blockquote>
+<p>This practical aims at performing exploratory plots and how-to build layer by layer to be familiar with the grammar of graphics. In the last part, a supplementary exercise will focus on plotting genome-wide CNV. You will also learn to use the <em>forcats</em> package which allows you to adjust the ordering of categorical variables appearing on your plot.</p>
+</blockquote>
+<div id="scatter-plots" class="section level2">
+<h2>Scatter plots</h2>
+<p>The <code>mtcars</code> dataset is provided by the <code>ggplot2</code> library (have a look above at the first lines printed using the <code>head()</code> function). As for every (or near to every) function, most datasets shipped with a library contain also a useful help page (<code>?</code>).</p>
+<ol class="example" style="list-style-type: decimal">
+<li><p>Plot the fuel consumption on the <em>y</em> axis and the cars weight on the <em>x</em> axis.</p></li>
+<li><p>The <code>geom_smooth()</code> layer can be used to add a trend line. Try to overlay it to your scatter plot.</p></li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>by default <code>geom_smooth</code> is using a loess regression (&lt; 1,000 points) and adds standard error intervals.</p>
+<ul>
+<li>The <code>method</code> argument can be used to change the regression to a linear one: <code>method = &quot;lm&quot;</code></li>
+<li>to disable the ribbon of standard errors, set <code>se = FALSE</code></li>
+</ul>
+</div>
+</div>
+<ol start="3" class="example" style="list-style-type: decimal">
+<li><p>It would be more useful to draw a regression line on the scatter plot and without the standard error. Using the help (<code>?</code>), adjust the relevant setting in <code>geom_smooth()</code>.</p></li>
+<li>Ajust some aesthetics in order to:
+<ul>
+<li>associate the shape of the points to the number of cylinders</li>
+<li>associate a colour gradient to the quarter mile time</li>
+<li>If you’re feeling succesful, try to adjust the colour gradient from yellow for fast accelerating cars to blue for slow accelerating cars.</li>
+<li>have a look at the <em>R</em> package <a href="https://github.com/sjmgarnier/viridis">viridis</a> which provides palettes color-blind friendly and suitable for grey printing</li>
+</ul></li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>The <code>cyl</code> variable is of type <em>double</em>, thus a continuous variable. To map as the shape aesthetics, mind coercing the variable to a factor</p>
+</div>
+</div>
+<ol start="5" class="example" style="list-style-type: decimal">
+<li>Find a way to produce both of the following plots:</li>
+</ol>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="384" /></p>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-9-1.png" width="384" /></p>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>Remember that:</p>
+<ul>
+<li>all aesthetics defined in the <code>ggplot(aes())</code> command will be inherited by all following layers</li>
+<li><code>aes()</code> of individual geoms are specific (and overwrite the global definition if present).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="categorical-data" class="section level2">
+<h2>Categorical data</h2>
+<p>We will now look at another built-in dataset called <code>ToothGrowth</code>. This dataset contains the teeth length of 60 guinea pigs which received 3 different doses of vitamin C (in mg/day), delivered either by orange juice (<code>OJ</code>) or ascorbic acid (<code>VC</code>).</p>
+<ol start="6" class="example" style="list-style-type: decimal">
+<li><p>Is this dataset tidy?</p></li>
+<li><p>plot the distributions as boxplots of the teeth lengths by the dose received</p></li>
+<li><p>attribute a different filling colour to each delivery method</p></li>
+</ol>
+<p>When the dataset is tidy, it is easy to draw a plot telling us the story: vitamin C affects the teeth growth and the delivery method is only important for lower concentrations.</p>
+<hr />
+<p>Boxplots are nice but misleading. The size of the dataset is not visible and the shapes of distrubutions could be better represented.</p>
+<ol start="9" class="example" style="list-style-type: decimal">
+<li>plot again length of the teeth by the received dose but using <code>geom_dotplot()</code></li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>change the following options in <code>geom_dotplot()</code>:</p>
+<ul>
+<li><code>binaxis = &quot;y&quot;</code> for the y-axis</li>
+<li><code>stackdir = &quot;center&quot;</code></li>
+<li><code>binwidth = 1</code> for no binning, display all dots</li>
+</ul>
+</div>
+</div>
+<ol start="10" class="example" style="list-style-type: decimal">
+<li>add a <code>geom_violin()</code> to the previous plot to get a better view of the distribution shape.</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>The order of the layers matters. Plotting is done respectively. Set the option <code>trim = FALSE</code> to the violin for a better looking shape</p>
+</div>
+</div>
+<p>Now we are missing summary values like the median which is shown by the boxplots. We should add one.</p>
+<ol start="11" class="example" style="list-style-type: decimal">
+<li>add the median using <code>stat_summary()</code> to the previous plot</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>by default <code>stat_summary()</code> adds the mean and +/- standard error via geom_pointrange(). specify the <code>fun.y = &quot;median&quot;</code> and appropriate <code>geom</code>, <code>colour</code>.</p>
+</div>
+</div>
+<ol start="12" class="example" style="list-style-type: decimal">
+<li>change the <code>stat_summary()</code> in the previous plot from <strong>median</strong> to <strong>mean_cl_boot</strong> and polish the labels.</li>
+</ol>
+<p>different summary statistics from the library <code>Hmisc</code> are available. Let’s try the <strong>mean_cl_boot</strong> that computes the non-parametric bootstrap to obtain 95% confidence intervals (<code>mean_cl_normal</code> assumes normality)</p>
+<p>Of note, a <code>ggplot</code> extension named <code>ggbeeswarm</code> proposes a very neat dotplot that fits the distribution.</p>
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  ggbeeswarm::geom_quasirandom()</code></pre>
+<div class="figure">
+<img src="img/beeswarm.png" />
+
+</div>
+</div>
+<div id="supplementary-exercises-genome-wide-copy-number-variants-cnv-detection" class="section level2">
+<h2>Supplementary exercises: genome-wide copy number variants (CNV) detection</h2>
+<p>Let’s have a look at a real output file for CNV detection. The used tool is called <strong>Reference Coverage Profiles</strong>: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4330915/">RCP</a>. It was developed by analyzing the depth of coverage in over 6000 high quality (&gt;40×) genomes. In the end, for every <em>kb</em> a state is assigned and similar states are merged eventually.</p>
+<p><strong>state</strong> means:</p>
+<ul>
+<li>0, no coverage</li>
+<li>1, deletion</li>
+<li>2, expected diploidy</li>
+<li>3, duplication</li>
+<li>4, &gt; 3 copies</li>
+</ul>
+<div id="reading-data" class="section level3">
+<h3>Reading data</h3>
+<p>The file is accessible <a href="https://cdn.rawgit.com/LSRU/tv_course/2d5e33a6/practicals/data/CNV.seg.gz">here</a>. It is gzipped but <code>readr</code> will take care of the decompression. Actually, <code>readr</code> can even read the file directly from the website so you don’t need to download it locally.</p>
+<p><code>CNV.seg.gz</code> has 5 columns and the first 10 lines look like:</p>
+<div class="figure">
+<img src="img/CNV_seg.png" alt="CNV" />
+<p class="caption">CNV</p>
+</div>
+<ol start="13" class="example" style="list-style-type: decimal">
+<li>load the file <code>CNV.seg.gz</code> in R.</li>
+</ol>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>several issues must be fixed:</p>
+<ul>
+<li>comment should be discarded.</li>
+<li>chromosome will be read as integers since first 1000 lines are <strong>1</strong>. But, X, Y are at the file’s end.</li>
+<li>first and last column names are unclean. <code>#chrom</code> comtains a hash and <code>length (kb)</code>. Would be neater to fix this upfront.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="exploratory-plots" class="section level3">
+<h3>exploratory plots</h3>
+<ol start="14" class="example" style="list-style-type: decimal">
+<li><p>plot the counts of the different states. We expect a majority of diploid states.</p></li>
+<li><p>plot the counts of the different states per chromosome. Might be worth freeing the <strong>count</strong> scale.</p></li>
+<li><p>using the previous plot, reorder the levels of chromosomes to let them appear in the karyotype order (1:22, X, Y)</p></li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>we could explicity provide the full levels lists in the desired order. However, in the tibble, the chromosomes appear in the wanted order. See the <code>fct_inorder()</code> function in the <strong>forcats</strong> package to take advantage of this.</p>
+</div>
+</div>
+<ol start="17" class="example" style="list-style-type: decimal">
+<li>sexual chromosomes are not informative, collapse them into a <strong>gonosomes</strong> level</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>See the <code>fct_collapse()</code> function in the <strong>forcats</strong></p>
+</div>
+</div>
+<ol start="18" class="example" style="list-style-type: decimal">
+<li>plot the genomic segments length per state</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<ul>
+<li>The distributions are completely skewed: transform to log-scale to get a decent plot.</li>
+<li>Add the summary mean and 95CI by bootstrap using the <strong>ToothGrowth</strong> example</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="count-gain-loss-summarising-events-per-chromosome" class="section level3">
+<h3>count gain / loss summarising events per chromosome</h3>
+<ol start="19" class="example" style="list-style-type: decimal">
+<li><p>filter the tibble only for <em>autosomes</em> and remove segments with no coverage and diploid (<em>i.e</em> states 0 and 2 respectively). Save as <code>cnv_auto</code>.</p></li>
+<li>We are left with state 1 and 3 and 4. Rename <strong>1</strong> as <em>loss</em> and the others as <em>gain</em></li>
+<li>count the events per chromosome and per state</li>
+<li><p>for <em>loss</em> counts, set them to negative so the barplot will be display up / down. Save as <code>cnv_auto_chr</code></p></li>
+<li><p>plot <code>cnv_auto_chr</code> using the count as the <code>y</code> variable.</p></li>
+</ol>
+<p>this is the final plot, where the following changes were made:</p>
+<ul>
+<li>labels of the <code>y</code> axis in absolute numbers</li>
+<li>set <code>expand = c(0, 0)</code> on the <code>x</code> axis. see <a href="http://stackoverflow.com/a/22945857/1395352">stackoverflow’s answer</a></li>
+<li>use <code>theme_classic()</code></li>
+<li>set the legend on the top right corner. Use a mix of <code>legend.position</code> and <code>legend.justification</code> in a <code>theme()</code> call.</li>
+<li>remove the label of the <code>x</code> axis, you could use <em>chromosomes</em> if you prefer</li>
+<li>change the color of the fill argument with <code>c(&quot;springgreen3&quot;, &quot;steelblue2&quot;)</code></li>
+</ul>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>It is now obvious that we have mainly huge deletions on chromosome 10 and amplifications on chromosome 11.</p>
+<p>In order to plot the genomic localisations of these events, we want to focus on the main chromosomes that were affected by amplifications/deletions.</p>
+<ol start="24" class="example" style="list-style-type: decimal">
+<li>lump the chromsomes by the number of CNV events (states 1, 3 or 4) keeping the 5 top ones and plot the counts</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>the function <code>fct_lump</code> from <em>forcats</em> ease lumping. Just pick <code>n = 5</code> to get the top 5 chromosomes</p>
+</div>
+</div>
+</div>
+<div id="genomic-plot-of-top-5-chromosomes" class="section level3">
+<h3>genomic plot of top 5 chromosomes</h3>
+<ol start="25" class="example" style="list-style-type: decimal">
+<li>plot the genomic localisations of CNV on the 5 main chromosomes</li>
+</ol>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
