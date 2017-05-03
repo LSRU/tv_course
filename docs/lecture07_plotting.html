@@ -679,6 +679,8 @@ source <a href='http://johnburnmurdoch.github.io/slides/r-ggplot/' title=''>John
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>iris dataset</h2></hgroup><article  id="iris-dataset" class="smaller vs1">
 
+<p>rstudio <a href='https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf' title=''>cheatsheet</a></p>
+
 <div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>iris &lt;- as_tibble(iris)
 iris</pre>
@@ -906,22 +908,50 @@ iris</pre>
 
 <p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-35-1.png' title=''/><!-- --></p></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>stat functions</h2></hgroup><article  id="stat-functions" class="smaller vs1">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Stat functions</h2></hgroup><article  id="stat-functions" class="smaller nvs1">
+
+<div class = 'row'><div class = 'bg-yellow2 box col-12 icon'><h3>transform data</h3>
+
+<img src='img/07_stats.png' title='fig:'/>
 
 <ul>
-<li>We used a new variable in the density plot: <code>..density..</code></li>
-<li><p>In <code>ggplot2</code>, variables surrounded by two pair of dots (<code>..&lt;variable&gt;..</code>) are intermediate values calculated by <code>ggplot2</code> using stat functions</p></li>
-<li>Every <code>geom</code> uses a <code>stat</code> function to transform the data:
+<li>variables surrounded by two pair of dots (<code>..variable..</code>) are intermediate values calculated by <code>ggplot2</code> using stat functions</li>
+<li><code>geom</code> uses a <code>stat</code> function to transform the data:
 
 <ul>
-<li>For example <code>geom_histogram()</code> and <code>geom_density()</code> need to perform calculations in order to display the histogram or the density curve (Not as simple as plotting <em>x</em> and <em>y</em> values from two columns)</li>
-<li><code>geom_histogram()</code> uses <code>stat_bin()</code> to divide the distributions into <em>bins</em> and count the number of observations in each <em>bin</em>.</li>
-<li><code>stat_bin()</code> computes for example: <code>count</code>, <code>density</code>, <code>ncount</code> and <code>ndensity</code> (see <code>?stat_bin()</code>)</li>
-<li>Here <code>..density..</code> specifies that we would like to use such a computed <code>density</code> column.</li>
+<li><code>geom_histogram()</code> uses <code>stat_bin()</code> to divide the data into <em>bins</em> and count the number of observations in each <em>bin</em>.</li>
+<li><code>stat_bin()</code> computes for example: <code>..count..</code>, <code>..density..</code>, <code>..ncount..</code> and <code>..ndensity..</code> (see <code>?stat_bin()</code>)</li>
+<li>stat variable for density plot: <code>..density..</code></li>
+<li><code>stat_identity</code> is used for scatter plots or <code>geom_col()</code>, no transformation</li>
 </ul></li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables" class="smaller ">
+</div></div><div class = 'row build'><div class = 'box col-4 bg-yellow2 '><h3>1D</h3>
+
+<ul>
+<li><code>stat_count</code></li>
+<li><code>stat_bin</code></li>
+</ul>
+
+</div><div class = 'box col-4 bg-yellow2 '><h3>2D</h3>
+
+<ul>
+<li><code>stat_density_2d</code></li>
+<li><code>stat_bin_2d</code></li>
+<li><code>stat_ellipse</code></li>
+</ul>
+
+</div><div class = 'box col-4 bg-yellow2 '><h3>3D</h3>
+
+<ul>
+<li><code>stat_contour</code></li>
+<li><code>stat_summary_hex</code></li>
+</ul>
+
+<p><span class="small">
+source: <a href='https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf' title=''>ggplot2 cheatsheet</a> by Rstudio</span></p>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables" class="smaller ">
 
 <ul>
 <li>By default, <code>geom_bar()</code> counts the number of occurences for each values of a categorical variable.</li>
@@ -932,10 +962,12 @@ iris</pre>
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>ggplot(iris) +
-  geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))</pre></div>
+  geom_bar(aes(x = Species))</pre></div>
 
 <div class="col-6">
-<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-36-1.png' title=''/><!-- --></p></div></div></div>
+<p><img src='lecture07_plotting_files/figure-html/unnamed-chunk-36-1.png' title=''/><!-- --></p>
+
+<pre class = 'prettyprint lang-r'># or: geom_bar(aes(x = Species, y = ..count..))</pre></div></div></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Barcharts </h2><h3> Categorical variables</h3></hgroup><article  id="barcharts-categorical-variables-1" class="smaller vs2">
 
