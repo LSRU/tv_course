@@ -12,16 +12,17 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center", eval=FALSE)
 # Do not use cache = TRUE with _site.yml! They do not like each other...
 ```
 
 ## Data transformation | Introduction
 
- * Preparing data is the most time consuming part of of data analysis  
+### Preparing data is the most time consuming part of of data analysis {.box-10 .offset-1 .bg-red}
+%end%
  
-### `dplyr` in a nutshell {.box-8 .bg-yellow2 .build .stretch}
- * `dplyr` is a tool box for working with data in tibbles/data frames
+### `dplyr` in a nutshell {.box-10 .offset-1 .bg-yellow2 .build .stretch .icon}
+ * `dplyr` is a tool box for working with data in tibbles/data frames   ![](https://www.stickermule.com/marketplace/embed_img/9295)
  * The most import data manipulation operations are covered
      + Selection and manipulation of observation, variables and values 
      + Summarizing
@@ -31,23 +32,25 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
   * Fast, in particular for in-memory data by writing key pieces in C++ (using Rcpp)
   * Standard  interface to work with data in a `data.frame`, a `data.table` or database.
 
-## Learning objectives
 
-### `dplyr` in a nutshell {.box-8 .bg-green .build .stretch}
+## Learning objectives {.vs2}
+
+### `dplyr` in a nutshell {.box-8 .offset-2 .bg-green .build .stretch}
  * Learn the basic vocabulary of `dplyr`
  * Exercise commands
+ * Translating questions into data manipulation statements
  
 
 
 ## dplyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/)
 
-```{r, echo=FALSE, out.width = '90%'}
+```{r, echo=FALSE, out.width = '80%', eval = TRUE}
 knitr::include_graphics("img/06_dplyr_cheatsheet.png")
 ```
 
 ## dplyr | Introduction: [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/) (cont.)
 
-```{r, echo=FALSE, out.width = '90%'}
+```{r, echo=FALSE, out.width = '80%' , eval = TRUE}
 knitr::include_graphics("img/06_dplyr_cheatsheet_p2.png")
 ```
 
@@ -79,7 +82,7 @@ biocLite("biomaRt")
 
 ### Gene from chromosome 21 from biomaRt {.box-10 .offset-1 .bg-blue}
 
-```{r, eval = T}
+```{r}
 # Load the library
 library(biomaRt)
 gene_mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
@@ -161,14 +164,14 @@ gene_by_exon %>%
 
 ## `filter()` | Multiple conditions, OR (`|`)
 
-### Genes at the close to the telomers {.box-10 .offset-1}
+### Genes close to the telomers {.box-10 .offset-1 .bg-blue}
 
 ```{r, eval = FALSE}
 gene_by_exon %>%
   filter(start_position < 100000 | end_position >46665124 )
 ```
 
-### Set operations {.box-10 .offset-1}
+### Set operations {.box-10 .offset-1 .bg-yellow2}
 For more complicated checks.
 The following 2 are equivalent:
 
@@ -228,12 +231,17 @@ gene_by_exon %>%
 
 ## `select()` helper functions
 
-### `select()` has many helper functions {.box-10 .offset-1 .bg-blue}
+### `select()` has many helper functions {.box-8 .offset-2 .bg-yellow2}
  * `contains()`, `starts_with()`, `ends_with()` for literal strings
  * `matches()` for regex
  * `one_of()` variables in a character vector
  * `everything()` all remaining variable
  * Can be combined
+
+
+
+
+
 
 ```{r}
 gene_by_exon %>%
@@ -362,29 +370,70 @@ gene_by_exon %>%
 ```
 
 
+## Non-standard evaluation 
+
+### Basics {.box-6 .bg-blue .stretch .build}
+ * `filter(), mutate(), summarise(), arrange(), select()` and `group_by()` take unquoted variable names. 
+ * *Non-standard evaluation* is standard in many tidyverse functions
+ * Reduces typing
+ * Enhances speed on back-end
+ * Use of `lazyeval` package
+ * Verbs have alternative version with trailing underscore (`select_`) for standard evaluation
+ * The system is to be "soft deprectated" in `dplyr` 0.6.0, set to be released soon.
+ * Vignette "Non-standard evaluation" 
+
+### Examples {.box-6 .bg-yellow2 .stretch .build}
+ 
+```{r}
+#NSE 
+gene_by_exon %>% 
+  summarize(mean(start_position))
+# SE
+gene_by_exon %>% 
+  summarize_("mean(start_position)") #!
+
+gene_by_exon %>% 
+  summarize_(quote(mean(start_position))) #!
+
+gene_by_exon %>% 
+  summarize_(~mean(start_position)) #!
+
+```
+
+
 
 # Joining data frames
 
 
-## Sample data from Clinvar
+## Sample data  | Common manual input 
 
-```{r cache=TRUE}
+```{r}
 
-clinvar <- tribble(~symbol, ~gene_interest, 
+gene_interest <- tribble(~symbol, ~gene_interest, 
                    "ATP50", "yes",
                    "APP",   "yes",
-                   "DIP2A", "yes")
+                   "DIP2A", "yes",
+                   "TP53",  "yes")
 
 ```
 
-### Join two data frames {.box-12 .bg-blue}
+### Inner join {.box-6 .bg-blue}
 
-```{r eval=FALSE}
-gene_annotation <- gene_by_exon %>% 
-  inner_join(clinvar, by = c("hgnc_symbol"="symbol")) # provide the equivalence since columns have a different name
-gene_annotation
+```{r}
+gene_by_exon %>% 
+  inner_join(gene_interest, 
+             by = c("hgnc_symbol"="symbol")) 
+  # provide the equivalence since columns have a different name
 ```
 
+### Outer join {.box-6 .bg-blue .build .stretch}
+
+```{r}
+gene_by_exon %>% 
+  outer_join(gene_interest, 
+             by = c("hgnc_symbol"="symbol")) 
+
+```
 
 ## Relational operations | **mutating** joins
 
@@ -401,7 +450,7 @@ credit: [Hadley Wickham, R for data science](http://r4ds.had.co.nz/relational-da
 
 
 
-## `lead() and lag()` | Comparing rows above and below
+## `lead()` and `lag()` | Comparing rows above and below
 
 ### Calculate intergenic distance {.box-8 .offset-1 .bg-blue}
 
@@ -414,21 +463,26 @@ gene_by_exon %>%
 ```
 
 
-## That covers 80% of dplyr
+## Summary 
 
+### Most commonly used - 80% {.box-8 .offset-2 .bg-green}
 
-- select
-- filter
-- arrange
-- glimpse
-- rename
-- mutate
-- group_by, ungroup
-- summarise
+ - `select()` - columns
+ - `filter()` - rows meeting condition
+ - `arrange()` - sort
+ - `glimpse()` - inspect
+ - `rename()` - change column name 
+ - `mutate()` - copy manipulated values
+ - `group_by()`, `ungroup()`
+ - `summarise()` - group-wise, table-wise summaries
+ - `lead()` and `lag()` - Values in other rows
+ - `inner_join` and friends - Merging tables
 
 ## Other 20%
-- assembly: `bind_rows`, `bind_cols`
-- windows function, `min_rank`, `dense_rank`, `cumsum`. See [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
+
+### Occasionally handy {.box-8 .offset-2 .bg-yellow2}
+- Assembly: `bind_rows`, `bind_cols`
+- Windows function, `min_rank`, `dense_rank`, `cumsum`. See [vignette](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html)
 - `do`: arbitrary code on each chunk. To be replaced by `tidyr::nest() %>% mutate(purrr::map())`
  `data.tables`)
 
