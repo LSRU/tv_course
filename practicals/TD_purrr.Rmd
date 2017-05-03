@@ -178,7 +178,7 @@ excel_sheets(xls_file) %>%
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 knitr::knit_exit()
 ```
 
