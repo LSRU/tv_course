@@ -14,6 +14,17 @@ library("tidyverse")
 
 This short tutorial will allow you to explore `dplyr` functionality based on the previous lecture.
 
+
+```{asis,  boxtitle = "Tip", box = "lightblue"}
+If you are missing `biomaRt, install with
+
+~~~
+source("https://bioconductor.org/biocLite.R")
+biocLite("biomaRt")
+~~~
+```
+
+
 (@) Get data for chromosome 22 from biomaRt. Use Rmarkdown and set the chunk option 'cache = TRUE'
 ```{r cache=TRUE}
 library(biomaRt)
@@ -41,10 +52,18 @@ gene_by_exon <- getBM(
 
 ```
 
+(@) Convert `genes_by_exon` data set to a `tibble`
+
+```{r, solution = TRUE}
+gene_by_exon <- gene_by_exon %>% 
+  as_tibble()
+```
+
+
 (@) Extract the processed pseudogenes from the `genes_by_exon` data set. Use `glimpse()` to find the correct columns.
 ```{r, solution = TRUE}
   gene_by_exon %>% 
-  filter(gene_biotype =="processed_pseudogenes")
+  filter(gene_biotype == "processed_pseudogenes")
 ```
 
 (@) Count the number of pseudogenes in the set (without referring to `table()` obviously )
