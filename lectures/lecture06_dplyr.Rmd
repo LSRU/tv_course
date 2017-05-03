@@ -292,7 +292,7 @@ This is not a gene set for statistics
 
 ```{r}
 gene_by_exon %>%
-  filter(gene_biotype =="protein_coding") %>% 
+  filter(gene_biotype == "protein_coding") %>% 
   mutate(  length = end_position - start_position) %>% 
   dplyr::select(hgnc_symbol, length) %>% 
   distinct()
@@ -300,16 +300,8 @@ gene_by_exon %>%
 
 
 
-```{r}
-gene_by_exon %>%
-  group_by(gene_biotype) %>%
-   mutate(  length = end_position - start_position) %>% 
-    #Some values are missing, thus tell `mean` to remove them from the calculation.
-  summarise(by_type_length = floor(mean(length, na.rm = TRUE))) %>% 
-  arrange(desc(by_type_length))
-```
+## `mutate_at(), mutate_all(), mutate_if()` | Changing many columns
 
-  ## `mutate_at(), mutate_all(), mutate_if()` | Changing many columns
 
 ### Usage{.box-12 .bg-blue}
  * Use the `select` helpers with `mutate_at()`

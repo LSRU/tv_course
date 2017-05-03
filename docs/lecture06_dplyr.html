@@ -548,7 +548,7 @@ gene_by_exon %&gt;%
 
 <div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  filter(gene_biotype ==&quot;protein_coding&quot;) %&gt;% 
+  filter(gene_biotype == &quot;protein_coding&quot;) %&gt;% 
   mutate(  length = end_position - start_position) %&gt;% 
   dplyr::select(hgnc_symbol, length) %&gt;% 
   distinct()</pre>
@@ -568,38 +568,7 @@ gene_by_exon %&gt;%
 10   KRTAP10-2   1148
 # ... with 222 more rows</pre></div>
 
-<div id="unnamed-chunk-22" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  group_by(gene_biotype) %&gt;%
-   mutate(  length = end_position - start_position) %&gt;% 
-    #Some values are missing, thus tell `mean` to remove them from the calculation.
-  summarise(by_type_length = floor(mean(length, na.rm = TRUE))) %&gt;% 
-  arrange(desc(by_type_length))</pre>
-
-<pre ># A tibble: 19 × 2
-                         gene_biotype by_type_length
-                                &lt;chr&gt;          &lt;dbl&gt;
-1                      protein_coding         109532
-2                             lincRNA         105951
-3    transcribed_processed_pseudogene          97124
-4  transcribed_unprocessed_pseudogene          84268
-5                processed_transcript          72905
-6                   sense_overlapping          40989
-7                           antisense          34382
-8              unprocessed_pseudogene          12495
-9                      sense_intronic          12055
-10           3prime_overlapping_ncRNA           3643
-11                                TEC           2413
-12               processed_pseudogene           1006
-13                          IG_V_gene            435
-14                           misc_RNA            145
-15                               rRNA            132
-16                             snoRNA            118
-17                              snRNA            116
-18                         pseudogene            103
-19                              miRNA             86</pre></div>
-
-<p>## <code>mutate_at(), mutate_all(), mutate_if()</code> | Changing many columns</p>
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>mutate_at(), mutate_all(), mutate_if()</code> </h2><h3> Changing many columns</h3></hgroup><article  id="mutate_at-mutate_all-mutate_if-changing-many-columns" class="smaller ">
 
 <div class = 'row'><div class = 'box col-12 bg-blue'><h3>Usage</h3>
 
@@ -611,13 +580,13 @@ gene_by_exon %&gt;%
 
 </div></div><div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Coordinate conversion</h3>
 
-<div id="unnamed-chunk-23" class="chunk shadow">
+<div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   mutate_at(vars(contains(&quot;position&quot;)), funs(. + 1))</pre></div>
 
 </div></div><div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Coordinate conversion</h3>
 
-<div id="unnamed-chunk-24" class="chunk shadow">
+<div id="unnamed-chunk-23" class="chunk shadow">
 <div class="row">
 <div class="col-5">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
@@ -653,7 +622,7 @@ gene_by_exon %&gt;%
 
 <div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Let&#39;s compute the average number of exons</h3>
 
-<div id="unnamed-chunk-25" class="chunk shadow">
+<div id="unnamed-chunk-24" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
   summarise(nexon =n_distinct(ensembl_exon_id)) %&gt;% 
@@ -674,7 +643,7 @@ Groups: ensembl_gene_id [5]
 
 <p><code>tally</code> is a shortcut to counting the number of items per group.</p>
 
-<div id="unnamed-chunk-26" class="chunk shadow">
+<div id="unnamed-chunk-25" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   group_by(hgnc_symbol) %&gt;%
   tally() %&gt;% head(3) # could sum up with multiple tally calls</pre>
@@ -688,7 +657,7 @@ Groups: ensembl_gene_id [5]
 
 <p><code>count</code> does the grouping for you</p>
 
-<div id="unnamed-chunk-27" class="chunk shadow">
+<div id="unnamed-chunk-26" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   count(hgnc_symbol) %&gt;% head(3)</pre>
 
@@ -716,7 +685,7 @@ Groups: ensembl_gene_id [5]
 
 </div><div class = 'box col-6 bg-yellow2 stretch '><h3>Examples</h3>
 
-<div id="unnamed-chunk-28" class="chunk shadow">
+<div id="unnamed-chunk-27" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>#NSE 
 gene_by_exon %&gt;% 
   summarize(mean(start_position))</pre>
@@ -755,7 +724,7 @@ gene_by_exon %&gt;%
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Sample data </h2><h3> Common manual input</h3></hgroup><article  id="sample-data-common-manual-input" class="smaller ">
 
-<div id="unnamed-chunk-29" class="chunk shadow">
+<div id="unnamed-chunk-28" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_interest &lt;- tribble(~symbol, ~gene_interest, 
                    &quot;ATP50&quot;, &quot;yes&quot;,
                    &quot;APP&quot;,   &quot;yes&quot;,
@@ -764,7 +733,7 @@ gene_by_exon %&gt;%
 
 <div class = 'row'><div class = 'box col-6 bg-blue'><h3>Inner join</h3>
 
-<div id="unnamed-chunk-30" class="chunk shadow">
+<div id="unnamed-chunk-29" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   inner_join(gene_interest, 
              by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
@@ -790,7 +759,7 @@ gene_by_exon %&gt;%
 
 </div><div class = 'box col-6 bg-blue  stretch'><h3>Outer join</h3>
 
-<div id="unnamed-chunk-31" class="chunk shadow">
+<div id="unnamed-chunk-30" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   full_join(gene_interest, 
              by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
@@ -828,7 +797,7 @@ gene_by_exon %&gt;%
 
 <div class = 'row'><div class = 'box col-8 offset-1 bg-blue'><h3>Calculate intergenic distance</h3>
 
-<div id="unnamed-chunk-32" class="chunk shadow">
+<div id="unnamed-chunk-31" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   dplyr::select(ensembl_gene_id, start_position, end_position) %&gt;% 
   distinct() %&gt;% 
