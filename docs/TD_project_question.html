@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R tidyverse</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecture01_intro.html">Lecture 01 - intro</a>
+    </li>
+    <li>
+      <a href="lecture02_data_structure.html">Lecture 02 - data types &amp; structures</a>
+    </li>
+    <li>
+      <a href="lecture05_tidyr.html">Lecture 05 - tidy data</a>
+    </li>
+    <li>
+      <a href="lecture06_dplyr.html">Lecture 06 - manipulation with dplyr</a>
+    </li>
+    <li>
+      <a href="lecture07_plotting.html">Lecture 07 - data plotting</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">slides, keyboard shortcuts:</li>
+    <li class="dropdown-header">o: outline</li>
+    <li class="dropdown-header">w: widescreen on/off</li>
+    <li class="dropdown-header">f: fullscreen on/off</li>
+    <li class="dropdown-header">ctrl +/ ctrl -: zoom in/out</li>
+  </ul>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Misc
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Project</h1>
+
+</div>
+
+
+<blockquote>
+<p>Objective: practice a wrap-up project that encompasses most of the workshop</p>
+</blockquote>
+<div id="project---set-up" class="section level2">
+<h2>Project - set-up</h2>
+<ul>
+<li><p>On your computer, in a folder with a meaningful name, create a new project using the project manager utility on the upper-right part of the rstudio window.</p></li>
+<li><p>Check if you have all those libraries installed</p></li>
+</ul>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;broom&quot;)
+library(&quot;GEOquery&quot;)
+theme_set(theme_bw(14)) # if you wish to get this theme by default</code></pre>
+</div>
+<div id="aim" class="section level2">
+<h2>Aim</h2>
+<p>As you already experienced, working with GEO datasets can be a hassle. But it provides also a nice exercise as it requires to manipulate of a lot of tables (<code>data.frame</code> and/or <code>matrix</code>). Here, we will investigate the relationship between the expression of <em>ENTPD5</em> and <em>mir-182</em> as it was described by <a href="https://www.ncbi.nlm.nih.gov/pubmed/23987127">Pizzini et al.</a>. Even if the data are already normalised and should be ready to use, you will see that reproducing the claimed results still requires an extensive amount of work.</p>
+</div>
+<div id="retrieve-the-geo-study" class="section level2">
+<h2>Retrieve the GEO study</h2>
+<p>The GEO dataset of interest is <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE35834">GSE35834</a></p>
+<ul>
+<li>load the study using the <code>getGEO</code> function</li>
+</ul>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>after NCBI moved its pages from http to https make sure that to have GEOquery version &gt; 2.39</p>
+</div>
+</div>
+<ul>
+<li>what kind of object is <code>gse35834</code>?</li>
+</ul>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>To help figuring out the ExpressionSet object, see the figure below. Mind that for this project, the list GSE contains <strong>2</strong> ExpressionSets!</p>
+</div>
+</div>
+<div class="figure">
+<img src="img/04_GEO_S4.png" />
+
+</div>
+<ul>
+<li><p>Two platforms were used in this study, which ones?</p></li>
+<li><p>How can you assign the mRNA or mir data to each element of <code>gse35834</code>?</p></li>
+</ul>
+</div>
+<div id="explore-the-mrna-expression-meta-data" class="section level2">
+<h2>Explore the mRNA expression meta-data</h2>
+<p>You can use <code>phenoData()</code> to get informations on samples or <code>pData()</code> to retrieve them directly as a <code>data.frame</code>.</p>
+<ul>
+<li>Extract the mRNA meta-data as a <code>tibble</code> which you will name <code>rna_meta</code>
+<ul>
+<li>rename <code>geo_accession</code> to <code>sample</code></li>
+<li>retain only the columns <code>source_name_ch1</code> and starting with <code>&quot;charact&quot;</code></li>
+</ul></li>
+</ul>
+</div>
+<div id="explore-the-mir-expression-meta-data" class="section level2">
+<h2>Explore the mir expression meta-data</h2>
+<ul>
+<li>Extract the mir meta-data as a <code>tibble</code> which you will name <code>mir_meta</code>
+<ul>
+<li>rename <code>geo_accession</code> to <code>sample</code></li>
+<li>retain only the columns <code>source_name_ch1</code> and all starting with “charact”</li>
+</ul></li>
+</ul>
+</div>
+<div id="join-the-meta-data" class="section level2">
+<h2>Join the meta-data</h2>
+<ul>
+<li>Explore the two data frames with <code>View(rna_meta)</code> and <code>View(mir_meta)</code>. Are the samples <code>GSM*</code> identical?</li>
+</ul>
+<p>We would like to somehow join both informations.<br />
+Knowing that both data frames have different <code>sample</code> columns, merge them to get the correspondence between RNA <code>GSM*</code> and mir <code>GSM*</code>. Save the result as <code>rna_mir</code>.</p>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Note
+</h2>
+<div class="box-content">
+<p>If 2 data.frames that are joined (by specific columns) have identical names in their remaining columns, the default suffixes ‘.x’ and ‘.y’ are appended to the concerned column names from the first and second data frames respectively. However, you can make more friendly suffixes that match your actual data using the <code>suffix = c(&quot;.x&quot;, &quot;.y&quot;)</code> option.</p>
+</div>
+</div>
+</div>
+<div id="get-rna-expression-data-for-the-entpd5-gene" class="section level2">
+<h2>Get RNA expression data for the <em>ENTPD5</em> gene</h2>
+<p>Expression data can be accessed using <code>exprs()</code> which returns a matrix.</p>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>If you do not pipe the command to <code>head</code>, <code>R</code> would print <strong>ALL</strong> rows (or until it reaches <code>max.print</code>).</p>
+</div>
+</div>
+<pre class="r"><code>exprs(gse35834[[1]]) %&gt;% head()</code></pre>
+<ul>
+<li>rows are probes and columns are sample ids in the form of <code>GSM*</code>.</li>
+<li>Probe ids by themselves are not meaningful, but <code>fData()</code> provides features.</li>
+</ul>
+<pre class="r"><code>fData(gse35834[[1]]) %&gt;% head()</code></pre>
+<p>Again, we need to merge both informations to assign the expression data to the gene of interest.</p>
+<ol style="list-style-type: decimal">
+<li><p>Find the common values that that allow us to join both data frames.</p></li>
+<li><p>The <code>rownames</code> contain the necessary informations. But as a <code>matrix</code> contains, by definition, only a single data type (here numerical values), you will need to transform it to a <code>data.frame</code> and convert the <code>rownames</code> to a column using <code>rownames_to_column(var = &quot;ID&quot;)</code>.<br />
+Save the result as <code>rna_expression</code></p></li>
+<li><p>merge the expression data to the platform annotations (<code>fData(gse35834[[1]])</code>). Save the result as <code>rna_expression</code> (Don’t worry: <code>R</code> is always working on temporary objects and you won’t erase the object you are working on).</p></li>
+</ol>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Note
+</h2>
+<div class="box-content">
+<p>Warnings about <em>factors being coerced to characters</em> can be ignored.</p>
+</div>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Find the <a href="http://www.ncbi.nlm.nih.gov/gene">Entrez</a> gene id for <em>ENTPD5</em>. Usually, the gene symbol is given in the annotation, but each GEO submission is a new discovery.</p></li>
+<li><p>Filter <code>rna_expression</code> for the gene of interest (<em>ENTPD5</em>) and tidy the samples:<br />
+A column <code>sample</code> for all <code>GSM*</code> and a column <code>rna_expression</code> containing the expression values. Save the result as <code>rna_expression_melt</code>. At this point you should get a <code>tibble</code> of 80 values.</p></li>
+<li><p>Add the meta-data and discard the columns <code>ID</code>, <code>SPOT_ID</code> and <code>sample_mir</code>. Save the result as <code>rna_expression_melt</code>.</p></li>
+</ol>
+</div>
+<div id="get-mir-expression-data-for-mir-182" class="section level2">
+<h2>Get mir expression data for <em>miR-182</em></h2>
+<ol style="list-style-type: decimal">
+<li><p>Repeat the previous step but using <code>exprs(gse35834[[2]])</code> for the <code>mir_expression</code>. This time, the mir names are nicely provided by <code>fData(gse35834[[2]])</code> in the column <code>miRNA_ID_LIST</code>.</p></li>
+<li><p>How many rows do you obtain? How many are expected?</p></li>
+<li><p>Find out what happened, and plot the boxplot distribution of <code>expression</code> by <code>ID</code></p></li>
+<li><p>Filter out the irrelevant IDs using <code>grepl</code> in the <code>filter</code> function.</p></li>
+</ol>
+<div class="box" style="background-color:rgba(0, 255, 0, 0.3);border:2px solid rgba(0, 255, 0, 1);">
+<h2 style="background-color:rgba(0, 255, 0, 1);">
+Hint
+</h2>
+<div class="box-content">
+<p>adding <code>!</code> to a condition means <code>NOT</code>. Example <code>filter(iris, !grepl(&quot;a&quot;, Species))</code>: remove all Species containing the letter “a”.</p>
+</div>
+</div>
+<ol start="5" style="list-style-type: decimal">
+<li>Add the meta-data, count the number of rows. Discard the column <code>sample_rna</code> after joining.</li>
+</ol>
+</div>
+<div id="join-both-expression" class="section level2">
+<h2>join both expression</h2>
+<p>Join <code>rna_expression_melt</code> and <code>mir_expression_melt</code> by their common columns EXCEPT <code>sample</code>. Save the result as <code>expression</code>.</p>
+</div>
+<div id="examine-gene-expression-according-to-meta-data" class="section level2">
+<h2>Examine gene expression according to meta data</h2>
+<ol style="list-style-type: decimal">
+<li><p>Plot the gene expression distribution by Gender. Is there any obvious difference?</p></li>
+<li><p>Plot gene AND mir expression distribution by Gender. Is there any obvious difference?</p></li>
+</ol>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Hint
+</h2>
+<div class="box-content">
+<p>You will need to tidy by gathering rna and mir expression</p>
+</div>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Plot gene AND mir expression distributions by source (control / cancer). To make it easier, a quick hack is <code>separate(expression, source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12)</code> to get <code>source</code> as control / cancer. Is there any difference?</p></li>
+<li><p>Do the same plot as in 3. but reorder the levels so that normal colon appears first. Display <em>normal</em> in “lightgreen” and <em>cancer</em> in “red” using <code>scale_fill_manual()</code>.</p></li>
+</ol>
+</div>
+<div id="plot-relation-entpd5-mir-182-as-scatter-plot-for-all-patients" class="section level2">
+<h2>plot relation ENTPD5 ~ mir-182 as scatter-plot for all patients</h2>
+<ul>
+<li><p>add a linear trend using <code>geom_smooth()</code> for all data + per source</p></li>
+<li><p>does it support the claim of the study?</p></li>
+</ul>
+</div>
+<div id="linear-models" class="section level2">
+<h2>linear models</h2>
+<ul>
+<li>get the estimate from the linear trend for each source. linear models are outputted by <code>lm()</code> as lists. Since <code>data.frame</code> are much easier to work with, <a href="http://varianceexplained.org/">David Robinson</a> developed <a href="https://cran.r-project.org/web/packages/broom/index.html"><code>broom</code></a>.</li>
+</ul>
+<p>The estimate of the intercept is not meaningful thus it is filtered out. One can easily see that the slope is not significant when data are slipped by source.</p>
+<ul>
+<li><p>Perform the linear regression and tidy the results for all data, is it significant?</p></li>
+<li><p>replace <code>tidy</code> by <code>glance</code> to extract the <span class="math inline">\(r^2\)</span>. Is this value satisfactory?</p></li>
+</ul>
+</div>
+<div id="perform-a-linear-model-for-the-expression-of-entpd5-and-all-mirs" class="section level2">
+<h2>Perform a linear model for the expression of <em>ENTPD5</em> and ALL mirs</h2>
+<ul>
+<li><p>Count how many <code>hsa-mir</code>, which are not star, are present on the array GPL8786</p></li>
+<li><p>Retrieve the expression values for the 677 human mir like you did before. Same procedure, except that you don’t filter for mir-182. Save as <code>all_mir_rna_expression</code></p></li>
+<li><p>Perform the 677 linear models, tidy the results and arrange by the <code>adj.r.squared</code></p></li>
+<li><p>Get the top 12 mir and plot the scatter plot</p></li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
