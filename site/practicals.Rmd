@@ -11,7 +11,7 @@ title: "Practicals"
 #### plotting with **ggplot2**
 
 - [question](TD_ggplot2_question.html)
-- [solution]()
+- [solution](TD_ggplot2_question.html)
 
 #### programming with **purrr**
 
@@ -19,7 +19,7 @@ title: "Practicals"
 
 #### handling multiple models with **broom**
 
-- [question]()
+- [question](TD_broom_question.html)
 
 
 #### microarray **project**
