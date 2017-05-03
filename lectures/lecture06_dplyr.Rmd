@@ -12,7 +12,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+knitr::opts_chunk$set(echo = TRUE)
+options(max.print = 500)
 # Do not use cache = TRUE with _site.yml! They do not like each other...
 ```
 
@@ -53,7 +54,7 @@ knitr::include_graphics("img/06_dplyr_cheatsheet_p2.png")
 
 
 
-## Installation
+## Installation {.vs2}
 
 ```{r, include=FALSE}
 library("tidyverse")
@@ -102,11 +103,6 @@ gene_by_exon <- getBM(
   filter = "chromosome_name",
   value = "21"
   )
-
-
-
-
-#Biomart
 ```
 
 
@@ -128,10 +124,10 @@ glimpse(gene_by_exon)
 ```
 
 
-## Pipes in R | magrittr
+## Pipes in R | magrittr {.vs1}
 
-```{r, echo=FALSE, out.width = '70%'}
-knitr::include_graphics("img/05_piping.png")
+```{r, echo=FALSE, out.width = '60%'}
+knitr::include_graphics("img/06_piping.png")
 ```
 
 from [Romain François](https://twitter.com/ParisRaddict/status/781267225420435461)
@@ -312,20 +308,19 @@ gene_by_exon %>%
  * Use column conditions for `mutate_if()`
  * `vars()` to wrap variables and `funs()` to wrap functions 
  
-### Coordinate conversion {.box-6 .bg-cobalt}
+### Coordinate conversion {.box-12 .bg-cobalt}
  
 ```{r eval = FALSE}
 gene_by_exon %>% 
-  mutate_at(vars(contains("position")), funs(. +1))
+  mutate_at(vars(contains("position")), funs(. + 1))
 
 ```
 
-### Coordinate conversion {.box-6 .bg-cobalt}
+### Coordinate conversion {.box-12 .bg-cobalt}
  
-```{r}
+```{r, row = c(5, 7)}
 gene_by_exon %>% 
-  mutate_if(is.numeric, funs(. +1))
-
+  mutate_if(is.numeric, funs(. + 1))
 ```
 
 # Grouping and summarizing
