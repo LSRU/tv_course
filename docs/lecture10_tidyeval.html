@@ -177,14 +177,14 @@
 
 <p>the <strong>tidyverse</strong> makes your life easy by evaluating columns in <code>df</code>/<code>tibble</code> context.</p>
 
-<h3>R base, must refers to <code class="box-6 stretch">mtcars</code></h3>
+<div class = 'row'><div class = 'box col-6 stretch'><h3>R base, must refers to <code>mtcars</code></h3>
 
 <div id="unnamed-chunk-1" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>plot(mtcars$wt, mtcars$mpg)</pre>
 
 <p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-1-1.png' title=''/><!-- --></p></div>
 
-<div class = 'row'><div class = 'box col-6'><h3>ggplot2 does the job</h3>
+</div><div class = 'box col-6'><h3>ggplot2 does the job</h3>
 
 <div id="unnamed-chunk-2" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars, aes(x = wt, y = mpg)) +
@@ -416,7 +416,7 @@ fun1(&quot;stringent&quot;)</pre>
 
 <pre >[1] &quot;name is, stringent&quot;</pre></div>
 
-<h3>introducing <code class="box-6 bg-yellow2 build stretch">glue</code></h3>
+</div><div class = 'box col-6 bg-yellow2  stretch'><h3>introducing <code>glue</code></h3>
 
 <div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>fun2 &lt;- function(name) {
@@ -428,18 +428,53 @@ fun2(&quot;stringent&quot;)</pre>
 
 <p>## Solution with tidyeval</p>
 
+<p>currently <a href='https://github.com/tidyverse/dplyr/issues/2726' title=''>discussed</a></p>
+
 <div id="unnamed-chunk-16" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col, threshold) {
+<pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, column) {
 
-  column &lt;- rlang::syms(col)
-  #print(enquo(column))
-  thr &lt;- quo(threshold)
+  col &lt;- enquo(column)
+  message(col)
   df %&gt;%
-    select(!! quote(col))
+    select(!! col)
 }
-mtcars_filter(df = mtcars, hp, threshold = 265)</pre>
+mtcars_filter(df = mtcars, hp)</pre>
 
-<pre >Error in loadNamespace(name): there is no package called &#39;rlang&#39;</pre></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<pre >~hp</pre>
+
+<pre >                     hp
+Mazda RX4           110
+Mazda RX4 Wag       110
+Datsun 710           93
+Hornet 4 Drive      110
+Hornet Sportabout   175
+Valiant             105
+Duster 360          245
+Merc 240D            62
+Merc 230             95
+Merc 280            123
+Merc 280C           123
+Merc 450SE          180
+Merc 450SL          180
+Merc 450SLC         180
+Cadillac Fleetwood  205
+Lincoln Continental 215
+Chrysler Imperial   230
+Fiat 128             66
+Honda Civic          52
+Toyota Corolla       65
+Toyota Corona        97
+Dodge Challenger    150
+AMC Javelin         150
+Camaro Z28          245
+Pontiac Firebird    175
+Fiat X1-9            66
+Porsche 914-2        91
+Lotus Europa        113
+Ford Pantera L      264
+Ferrari Dino        175
+Maserati Bora       335
+Volvo 142E          109</pre></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>

@@ -1018,6 +1018,14 @@ knitr::include_graphics("img/07_extensions.jpg")
 ```
 
 
+## plot your data! | [Anscombe](https://d2f99xq7vri1nk.cloudfront.net/Anscombe_1_0_0.png) ** 10 {.vs2}
+
+> never trust summary statistics alone; always visualize your data | Alberto Cairo
+
+![](https://d2f99xq7vri1nk.cloudfront.net/DinoSequentialSmaller.gif)
+
+<span class = "small">source: Justin Matejka, George Fitzmaurice [Same Stats, Different Graphs...](https://www.autodeskresearch.com/publications/samestats)</span>
+
 ## Art | by Marcus Volz
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">A compilation of some of my gifs created with <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a> <a href="https://twitter.com/hashtag/ggplot2?src=hash">#ggplot2</a> <a href="https://twitter.com/hashtag/gganimate?src=hash">#gganimate</a> <a href="https://twitter.com/hashtag/tweenr?src=hash">#tweenr</a> <a href="https://t.co/nCppSOZv4W">https://t.co/nCppSOZv4W</a></p>&mdash; Marcus Volz (@mgvolz) <a href="https://twitter.com/mgvolz/status/849375922297991168">4 avril 2017</a></blockquote>
