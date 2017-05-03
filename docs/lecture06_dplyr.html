@@ -578,21 +578,35 @@ gene_by_exon %&gt;%
 <li><code>vars()</code> to wrap variables and <code>funs()</code> to wrap functions</li>
 </ul>
 
-</div></div><div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Coordinate conversion</h3>
+</div></div><div class = 'row'><div class = 'box col-6 bg-cobalt'><h3>Coordinate conversion</h3>
 
 <div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
-  mutate_at(vars(contains(&quot;position&quot;)), funs(. + 1))</pre></div>
+  mutate_at(vars(contains(&quot;position&quot;)), funs(. + 1))</pre>
 
-</div></div><div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Coordinate conversion</h3>
+<pre ># A tibble: 13,978 × 10
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
+2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
+3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
+4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
+5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
+6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
+7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
+8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
+9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
+10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
+# ... with 13,968 more rows, and 6 more variables: start_position &lt;dbl&gt;,
+#   end_position &lt;dbl&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div>
+
+</div><div class = 'box col-6 bg-cobalt'><h3>Coordinate conversion</h3>
 
 <div id="unnamed-chunk-23" class="chunk shadow">
-<div class="row">
-<div class="col-5">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
-  mutate_if(is.numeric, funs(. + 1))</pre></div>
+  mutate_if(is.numeric, funs(. + 1))</pre>
 
-<div class="col-7">
 <pre ># A tibble: 13,978 × 10
    ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
              &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;
@@ -608,7 +622,7 @@ gene_by_exon %&gt;%
 10 ENSG00000160255       ENST00000302347 ENSE00003569344              22
 # ... with 13,968 more rows, and 6 more variables: start_position &lt;dbl&gt;,
 #   end_position &lt;dbl&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;dbl&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div></div></div>
+#   gene_biotype &lt;chr&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Grouping and summarizing</h2></hgroup><article  id="grouping-and-summarizing" class="smaller ">
 
