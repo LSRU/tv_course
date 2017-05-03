@@ -12,7 +12,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, fig.align = "center", eval=FALSE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 # Do not use cache = TRUE with _site.yml! They do not like each other...
 ```
 
@@ -118,7 +118,7 @@ gene_by_exon <- getBM(
 ### Important with large tables {.box-10 .offset-1 .bg-blue}
 
 ```{r}
-as_tibble(gene_by_exon)
+gene_by_exon <- as_tibble(gene_by_exon)
 ```
 
 ## `glimpse()` | Inspect data frames / tibbles   
@@ -231,7 +231,7 @@ gene_by_exon %>%
 
 ## `select()` helper functions
 
-### `select()` has many helper functions {.box-8 .offset-2 .bg-yellow2}
+### `select()` has many helper functions {.box-12 .bg-yellow2}
  * `contains()`, `starts_with()`, `ends_with()` for literal strings
  * `matches()` for regex
  * `one_of()` variables in a character vector
@@ -313,7 +313,7 @@ gene_by_exon %>%
   arrange(desc(by_type_length))
 ```
 
-## `mutate_at(), mutate_all(), mutate_if()` | Changing many columns
+  ## `mutate_at(), mutate_all(), mutate_if()` | Changing many columns
 
 ### Usage{.box-12 .bg-blue}
  * Use the `select` helpers with `mutate_at()`
@@ -430,7 +430,7 @@ gene_by_exon %>%
 
 ```{r}
 gene_by_exon %>% 
-  outer_join(gene_interest, 
+  full_join(gene_interest, 
              by = c("hgnc_symbol"="symbol")) 
 
 ```
