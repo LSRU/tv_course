@@ -23,6 +23,10 @@ h2 {
 h3 {
   font-size: 18px;
 }
+.bonus {
+  color: red;
+  text-decoration: underline;
+}
 ```
 
 # 1. Loading data
@@ -75,7 +79,17 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
   map(read_delim, delim = " ") %>% 
   names()
 ```
-6. Getting a single `tibble` out of all files would be much handier. Instead of further transforming this output we will use another member of the `map()` family of functions that will immediately create the desired output. Change your previous code to get a data frame directly.
+- <span class = "bonus">(Supplementary question)</span> remove the path and extension from the filename using `basename()` and `tools::file_path_sans_ext()`.
+
+```{r, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
+  map(read_delim, delim = " ") %>% 
+  names()
+```
+
+
+6. Getting a single `tibble` out of all files would be much handier. Instead of further transforming this output we will use another member of the `map()` family of functions that will immediately create the desired output. Replace your call to `map()` in your previous code by the alternative member of the family to get a data frame directly.
 ```{r, message = FALSE, solution = TRUE}
 list.files(file.path("data", "pcr"), full.names = TRUE) %>%
   set_names() %>% 
@@ -100,8 +114,9 @@ Now that we were able to read in our data into a single data frame we would like
 ```{r, boxtitle = "Tip", box = "lightblue"}
 # First we create a new folder inside the data folder to store the output files
 # You can create such a folder relative to your project or Rmarkdown folder using the following command:
-dir.create(file.path("data", "by_gene"))
-# Construct the Use paste0 with this path
+dir.create(file.path("data", "by_gene"), showWarnings = FALSE) 
+# You can set `showWarnings = FALSE` to avoid a warning each time you knit
+# or execute the chunk telling that the folder already exists 
 ```
 
 ```{asis, boxtitle = "Tip", box = "lightblue"}
@@ -204,7 +219,7 @@ list.files("data/pcr", full.names = TRUE) %>%
     + first build-up the path to the output file (original filename but with the `.pdf` extension)
     
 ```{r, echo = FALSE}
-dir.create(file.path("data", "plots"))
+dir.create(file.path("data", "plots"), showWarnings = FALSE)
 ```
 
 ```{r, solution = TRUE}
@@ -213,7 +228,7 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
   map_df(read_delim, delim = " ", .id = "filename") %>%
   group_by(filename) %>%
   nest() %>%
-  mutate(plot_file = basename(filename) %>% stringr::str_replace(".csv", ".pdf"),
+  mutate(plot_file = paste0(filename, ".pdf"),
          plot_file_path = file.path("data", "plots", plot_file),
          plot = map(data, ~ggplot(data = ., aes(x = type, y = Ct)) + geom_boxplot()),
          walk2(plot_file_path, plot, ggsave, device = "pdf"))
