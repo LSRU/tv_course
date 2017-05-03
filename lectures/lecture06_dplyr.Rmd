@@ -83,7 +83,7 @@ biocLite("biomaRt")
 
 ### Gene from chromosome 21 from biomaRt {.box-10 .offset-1 .bg-blue}
 
-```{r}
+```{r cache=TRUE}
 # Load the library
 library(biomaRt)
 gene_mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
@@ -94,7 +94,6 @@ gene_by_exon <- getBM(
   attributes = c(
     "ensembl_gene_id",
     "ensembl_transcript_id",
-    "ensembl_exon_id",
     "chromosome_name",
     "start_position",
     "end_position",
@@ -115,6 +114,7 @@ gene_by_exon <- getBM(
 
 ```{r}
 gene_by_exon <- as_tibble(gene_by_exon)
+gene_by_exon
 ```
 
 ## `glimpse()` | Inspect data frames / tibbles   
@@ -135,6 +135,34 @@ knitr::include_graphics("img/06_piping.png")
 
 from [Romain François](https://twitter.com/ParisRaddict/status/781267225420435461)
 
+## `select()` | Selecting specific *columns*
+`select()` is part of the `biomaRt` package, need to address `dplyr`-package!
+
+```{r}
+gene_by_exon %>%
+  dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)
+```
+
+## `select()` helper functions
+
+### `select()` has many helper functions {.box-12 .bg-yellow2}
+ * `contains()`, `starts_with()`, `ends_with()` for literal strings
+ * `matches()` for regex
+ * `one_of()` variables in a character vector
+ * `everything()` all remaining variable
+ * Can be combined
+
+## `select()` | Negative selection 
+
+### Dropping columns {.box-10 .offset-1 .bg-blue}
+We can drop columns by "negating" their names. Since helpers give us column names, we can negate them too. Note that the 
+
+```{r}
+gene_by_exon %>%
+  dplyr::select(-strand, -starts_with("ensembl"),
+         -ends_with("id"))
+```
+
 
 
 ## `filter()` | inspect subsets of data
@@ -144,7 +172,8 @@ from [Romain François](https://twitter.com/ParisRaddict/status/7812672254204354
 
 ```{r}
 gene_by_exon %>%
-  filter(hgnc_symbol == "APP")
+  filter(hgnc_symbol == "APP") %>% 
+  dplyr::select(hgnc_symbol, everything())
 ```
 
 ## `filter()` | Multiple conditions, AND (`&`)
@@ -154,7 +183,8 @@ gene_by_exon %>%
 ```{r}
 # Comma separated conditions are combined with '&'
 gene_by_exon %>%
-   filter(start_position > 10000000, end_position < 12000000)
+  filter(start_position > 10000000, end_position < 12000000) %>% 
+  dplyr::select(hgnc_symbol, start_position, end_position)
 ```
 
 
@@ -162,21 +192,26 @@ gene_by_exon %>%
 
 ### Genes close to the telomers {.box-10 .offset-1 .bg-blue}
 
-```{r, eval = FALSE}
+```{r}
 gene_by_exon %>%
-  filter(start_position < 100000 | end_position >46665124 )
+  filter(start_position < 7000000 | end_position >46665124 )
 ```
 
-### Set operations {.box-10 .offset-1 .bg-yellow2}
-For more complicated checks.
-The following 2 are equivalent:
+## `filter()` | Set operations
 
-```{r, eval = FALSE}
+ * The two below are equivalent
+ * For larger operations use `inner_join()` 
+
+### Set operations {.box-6  .bg-cobalt .build .stretch }
+
+```{r}
 gene_by_exon %>%
   filter(is.element(hgnc_symbol, c("APP", "ATP50", "PRMT2")))
 ```
+### Set operations {.box-6  .bg-cobalt}
 
-```{r, eval = FALSE}
+
+```{r}
 gene_by_exon %>%
   filter(hgnc_symbol %in% c("APP", "ATP50", "PRMT2"))
 ```
@@ -206,36 +241,6 @@ gene_by_exon %>%
   dplyr::select(end_position, everything()) # way to reorder arr_delay 1st column
 ```
 
-## `select()` | Selecting specific *columns*
-`select()` is part of the `biomaRt` package, need to address `dplyr`-package!
-
-```{r}
-gene_by_exon %>%
-  dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)
-```
-
-## `select()` | Negative selection 
-
-### Dropping columns {.box-10 .offset-1 .bg-blue}
-We can drop columns by "negating" their names. Since helpers give us column names, we can negate them too. Note that the 
-
-```{r}
-gene_by_exon %>%
-  dplyr::select(-strand, -starts_with("ensembl"),
-         -ends_with("id"))
-```
-
-## `select()` helper functions
-
-### `select()` has many helper functions {.box-12 .bg-yellow2}
- * `contains()`, `starts_with()`, `ends_with()` for literal strings
- * `matches()` for regex
- * `one_of()` variables in a character vector
- * `everything()` all remaining variable
- * Can be combined
-
-
-
 
 
 
@@ -244,7 +249,7 @@ gene_by_exon %>%
   dplyr::select(hgnc_symbol, 
                 starts_with("ensembl"),
                 contains("position"),
-                -contains("exon"))
+                -contains("transcript"))
 ```
 
 
@@ -310,7 +315,7 @@ gene_by_exon %>%
  
 ### Coordinate conversion {.box-12 .bg-cobalt}
  
-```{r eval = FALSE}
+```{r}
 gene_by_exon %>% 
   mutate_at(vars(contains("position")), funs(. + 1))
 
@@ -331,29 +336,27 @@ gene_by_exon %>%
  * Grouping by more than one or more variables
  * Use `ungroup()` 
 
-### Let's compute the average number of exons {.box-12 .bg-cobalt}
+### Let's compute the average number of transcripts {.box-12 .bg-cobalt}
 
 ```{r}
 gene_by_exon %>%
   group_by(ensembl_gene_id, hgnc_symbol) %>% 
-  summarise(nexon =n_distinct(ensembl_exon_id)) %>% 
-  head(5)
+  summarise(nexon =n_distinct(ensembl_transcript_id))
 
 ```
 
-## tally / count
+## `count()`
 
-`tally` is a shortcut to counting the number of items per group.
-
+### Replacing calls to `table()` {.box-8 .offset-2 .bg-blue}
 ```{r}
-gene_by_exon %>%
-  group_by(hgnc_symbol) %>%
-  tally() %>% head(3) # could sum up with multiple tally calls
+head(as.data.frame(table(gene_by_exon$hgnc_symbol) ))
 ```
-`count` does the grouping for you
+
+
+ * `count()` does the grouping for you
 ```{r}
 gene_by_exon %>%
-  count(hgnc_symbol) %>% head(3)
+  count(hgnc_symbol)
 ```
 
 
@@ -435,8 +438,6 @@ credit: [Hadley Wickham, R for data science](http://r4ds.had.co.nz/relational-da
 
 
 
-
-
 ## `lead()` and `lag()` | Comparing rows above and below
 
 ### Calculate intergenic distance {.box-8 .offset-1 .bg-blue}
@@ -493,4 +494,4 @@ gene_by_exon %>%
 
 ![](https://www.stickermule.com/marketplace/embed_img/16249 )
 
-
+# Thank you for your attention
