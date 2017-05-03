@@ -133,14 +133,14 @@
 
 <slide class=''><hgroup><h2>Data transformation </h2><h3> Introduction</h3></hgroup><article  id="data-transformation-introduction" class="smaller ">
 
-<ul>
-<li>Preparing data is the most time consuming part of of data analysis</li>
-</ul>
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red'><h3>Preparing data is the most time consuming part of of data analysis</h3>
 
-<div class = 'row build'><div class = 'box col-8 bg-yellow2  stretch'><h3><code>dplyr</code> in a nutshell</h3>
+</div></div>
+
+<div class = 'row build'><div class = 'box col-10 offset-1 bg-yellow2  stretch icon'><h3><code>dplyr</code> in a nutshell</h3>
 
 <ul>
-<li><code>dplyr</code> is a tool box for working with data in tibbles/data frames</li>
+<li><code>dplyr</code> is a tool box for working with data in tibbles/data frames <img src='https://www.stickermule.com/marketplace/embed_img/9295' title=''/></li>
 <li>The most import data manipulation operations are covered
 
 <ul>
@@ -154,24 +154,25 @@
 <li>Standard interface to work with data in a <code>data.frame</code>, a <code>data.table</code> or database.</li>
 </ul>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs2">
 
-<div class = 'row build'><div class = 'box col-8 bg-green  stretch'><h3><code>dplyr</code> in a nutshell</h3>
+<div class = 'row build'><div class = 'box col-8 offset-2 bg-green  stretch'><h3><code>dplyr</code> in a nutshell</h3>
 
 <ul>
 <li>Learn the basic vocabulary of <code>dplyr</code></li>
 <li>Exercise commands</li>
+<li>Translating questions into data manipulation statements</li>
 </ul>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>dplyr </h2><h3> Introduction: <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>Cheat sheets</a></h3></hgroup><article  id="dplyr-introduction-cheat-sheets" class="smaller ">
 
 <div id="unnamed-chunk-1">
-<p><img src="img/06_dplyr_cheatsheet.png" width="90%" /></p></div>
+<p><img src="img/06_dplyr_cheatsheet.png" width="80%" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>dplyr </h2><h3> Introduction: <a href='https://www.rstudio.com/resources/cheatsheets/' title=''>Cheat sheets</a> (cont.)</h3></hgroup><article  id="dplyr-introduction-cheat-sheets-cont." class="smaller ">
 
 <div id="unnamed-chunk-2">
-<p><img src="img/06_dplyr_cheatsheet_p2.png" width="90%" /></p></div>
+<p><img src="img/06_dplyr_cheatsheet_p2.png" width="80%" /></p></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Installation</h2></hgroup><article  id="installation" class="smaller vs2">
 
@@ -221,24 +222,7 @@ gene_by_exon &lt;- getBM(
 <div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Important with large tables</h3>
 
 <div id="unnamed-chunk-6" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>as_tibble(gene_by_exon)</pre>
-
-<pre ># A tibble: 13,978 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
-2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
-3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
-4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
-5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
-6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
-7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
-8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
-9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
-10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
-# ... with 13,968 more rows, and 6 more variables: start_position &lt;int&gt;,
-#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
+<pre class = 'prettyprint lang-r'>gene_by_exon &lt;- as_tibble(gene_by_exon)</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>glimpse()</code> </h2><h3> Inspect data frames / tibbles</h3></hgroup><article  id="glimpse-inspect-data-frames-tibbles" class="smaller ">
 
@@ -281,109 +265,22 @@ $ gene_biotype          &lt;chr&gt; &quot;snoRNA&quot;, &quot;misc_RNA&quot;, &q
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   filter(hgnc_symbol == &quot;APP&quot;)</pre>
 
-<pre >    ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-1   ENSG00000142192       ENST00000346798 ENSE00001909719              21
-2   ENSG00000142192       ENST00000346798 ENSE00003537029              21
-3   ENSG00000142192       ENST00000346798 ENSE00003491735              21
-4   ENSG00000142192       ENST00000346798 ENSE00003586713              21
-5   ENSG00000142192       ENST00000346798 ENSE00003595661              21
-6   ENSG00000142192       ENST00000346798 ENSE00003527715              21
-7   ENSG00000142192       ENST00000346798 ENSE00003691723              21
-8   ENSG00000142192       ENST00000346798 ENSE00001309322              21
-9   ENSG00000142192       ENST00000346798 ENSE00001017338              21
-10  ENSG00000142192       ENST00000346798 ENSE00001608815              21
-11  ENSG00000142192       ENST00000346798 ENSE00001017350              21
-12  ENSG00000142192       ENST00000346798 ENSE00001299537              21
-13  ENSG00000142192       ENST00000346798 ENSE00001299406              21
-14  ENSG00000142192       ENST00000346798 ENSE00001299617              21
-15  ENSG00000142192       ENST00000346798 ENSE00001324614              21
-16  ENSG00000142192       ENST00000346798 ENSE00001318724              21
-17  ENSG00000142192       ENST00000346798 ENSE00003548276              21
-18  ENSG00000142192       ENST00000346798 ENSE00001725664              21
-19  ENSG00000142192       ENST00000354192 ENSE00003491735              21
-20  ENSG00000142192       ENST00000354192 ENSE00003586713              21
-21  ENSG00000142192       ENST00000354192 ENSE00003595661              21
-22  ENSG00000142192       ENST00000354192 ENSE00003527715              21
-23  ENSG00000142192       ENST00000354192 ENSE00001017338              21
-24  ENSG00000142192       ENST00000354192 ENSE00001608815              21
-25  ENSG00000142192       ENST00000354192 ENSE00001017350              21
-26  ENSG00000142192       ENST00000354192 ENSE00001299537              21
-27  ENSG00000142192       ENST00000354192 ENSE00001299406              21
-28  ENSG00000142192       ENST00000354192 ENSE00001299617              21
-29  ENSG00000142192       ENST00000354192 ENSE00001324614              21
-30  ENSG00000142192       ENST00000354192 ENSE00001318724              21
-31  ENSG00000142192       ENST00000354192 ENSE00003548276              21
-32  ENSG00000142192       ENST00000354192 ENSE00001725664              21
-33  ENSG00000142192       ENST00000354192 ENSE00001704412              21
-34  ENSG00000142192       ENST00000348990 ENSE00003537029              21
-35  ENSG00000142192       ENST00000348990 ENSE00003491735              21
-36  ENSG00000142192       ENST00000348990 ENSE00003586713              21
-37  ENSG00000142192       ENST00000348990 ENSE00003595661              21
-38  ENSG00000142192       ENST00000348990 ENSE00003527715              21
-39  ENSG00000142192       ENST00000348990 ENSE00001017338              21
-40  ENSG00000142192       ENST00000348990 ENSE00001608815              21
-41  ENSG00000142192       ENST00000348990 ENSE00001017350              21
-42  ENSG00000142192       ENST00000348990 ENSE00001299537              21
-43  ENSG00000142192       ENST00000348990 ENSE00001299406              21
-44  ENSG00000142192       ENST00000348990 ENSE00001299617              21
-45  ENSG00000142192       ENST00000348990 ENSE00001324614              21
-46  ENSG00000142192       ENST00000348990 ENSE00001318724              21
-47  ENSG00000142192       ENST00000348990 ENSE00003548276              21
-48  ENSG00000142192       ENST00000348990 ENSE00001725664              21
-49  ENSG00000142192       ENST00000348990 ENSE00001901307              21
-50  ENSG00000142192       ENST00000357903 ENSE00003537029              21
-    start_position end_position hgnc_symbol  hgnc_id strand   gene_biotype
-1         25880550     26171128         APP HGNC:620     -1 protein_coding
-2         25880550     26171128         APP HGNC:620     -1 protein_coding
-3         25880550     26171128         APP HGNC:620     -1 protein_coding
-4         25880550     26171128         APP HGNC:620     -1 protein_coding
-5         25880550     26171128         APP HGNC:620     -1 protein_coding
-6         25880550     26171128         APP HGNC:620     -1 protein_coding
-7         25880550     26171128         APP HGNC:620     -1 protein_coding
-8         25880550     26171128         APP HGNC:620     -1 protein_coding
-9         25880550     26171128         APP HGNC:620     -1 protein_coding
-10        25880550     26171128         APP HGNC:620     -1 protein_coding
-11        25880550     26171128         APP HGNC:620     -1 protein_coding
-12        25880550     26171128         APP HGNC:620     -1 protein_coding
-13        25880550     26171128         APP HGNC:620     -1 protein_coding
-14        25880550     26171128         APP HGNC:620     -1 protein_coding
-15        25880550     26171128         APP HGNC:620     -1 protein_coding
-16        25880550     26171128         APP HGNC:620     -1 protein_coding
-17        25880550     26171128         APP HGNC:620     -1 protein_coding
-18        25880550     26171128         APP HGNC:620     -1 protein_coding
-19        25880550     26171128         APP HGNC:620     -1 protein_coding
-20        25880550     26171128         APP HGNC:620     -1 protein_coding
-21        25880550     26171128         APP HGNC:620     -1 protein_coding
-22        25880550     26171128         APP HGNC:620     -1 protein_coding
-23        25880550     26171128         APP HGNC:620     -1 protein_coding
-24        25880550     26171128         APP HGNC:620     -1 protein_coding
-25        25880550     26171128         APP HGNC:620     -1 protein_coding
-26        25880550     26171128         APP HGNC:620     -1 protein_coding
-27        25880550     26171128         APP HGNC:620     -1 protein_coding
-28        25880550     26171128         APP HGNC:620     -1 protein_coding
-29        25880550     26171128         APP HGNC:620     -1 protein_coding
-30        25880550     26171128         APP HGNC:620     -1 protein_coding
-31        25880550     26171128         APP HGNC:620     -1 protein_coding
-32        25880550     26171128         APP HGNC:620     -1 protein_coding
-33        25880550     26171128         APP HGNC:620     -1 protein_coding
-34        25880550     26171128         APP HGNC:620     -1 protein_coding
-35        25880550     26171128         APP HGNC:620     -1 protein_coding
-36        25880550     26171128         APP HGNC:620     -1 protein_coding
-37        25880550     26171128         APP HGNC:620     -1 protein_coding
-38        25880550     26171128         APP HGNC:620     -1 protein_coding
-39        25880550     26171128         APP HGNC:620     -1 protein_coding
-40        25880550     26171128         APP HGNC:620     -1 protein_coding
-41        25880550     26171128         APP HGNC:620     -1 protein_coding
-42        25880550     26171128         APP HGNC:620     -1 protein_coding
-43        25880550     26171128         APP HGNC:620     -1 protein_coding
-44        25880550     26171128         APP HGNC:620     -1 protein_coding
-45        25880550     26171128         APP HGNC:620     -1 protein_coding
-46        25880550     26171128         APP HGNC:620     -1 protein_coding
-47        25880550     26171128         APP HGNC:620     -1 protein_coding
-48        25880550     26171128         APP HGNC:620     -1 protein_coding
-49        25880550     26171128         APP HGNC:620     -1 protein_coding
-50        25880550     26171128         APP HGNC:620     -1 protein_coding
- [ reached getOption(&quot;max.print&quot;) -- omitted 124 rows ]</pre></div>
+<pre ># A tibble: 174 × 10
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000142192       ENST00000346798 ENSE00001909719              21
+2  ENSG00000142192       ENST00000346798 ENSE00003537029              21
+3  ENSG00000142192       ENST00000346798 ENSE00003491735              21
+4  ENSG00000142192       ENST00000346798 ENSE00003586713              21
+5  ENSG00000142192       ENST00000346798 ENSE00003595661              21
+6  ENSG00000142192       ENST00000346798 ENSE00003527715              21
+7  ENSG00000142192       ENST00000346798 ENSE00003691723              21
+8  ENSG00000142192       ENST00000346798 ENSE00001309322              21
+9  ENSG00000142192       ENST00000346798 ENSE00001017338              21
+10 ENSG00000142192       ENST00000346798 ENSE00001608815              21
+# ... with 164 more rows, and 6 more variables: start_position &lt;int&gt;,
+#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, AND (<code>&amp;</code>)</h3></hgroup><article  id="filter-multiple-conditions-and" class="smaller ">
 
@@ -394,170 +291,32 @@ $ gene_biotype          &lt;chr&gt; &quot;snoRNA&quot;, &quot;misc_RNA&quot;, &q
 gene_by_exon %&gt;%
    filter(start_position &gt; 10000000, end_position &lt; 12000000)</pre>
 
-<pre >    ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-1   ENSG00000277282       ENST00000622028 ENSE00003742120              21
-2   ENSG00000277282       ENST00000622028 ENSE00003753345              21
-3   ENSG00000187172       ENST00000474011 ENSE00001825894              21
-4   ENSG00000187172       ENST00000474011 ENSE00002021537              21
-5   ENSG00000187172       ENST00000474011 ENSE00001887197              21
-6   ENSG00000187172       ENST00000470054 ENSE00002021537              21
-7   ENSG00000187172       ENST00000470054 ENSE00001647801              21
-8   ENSG00000187172       ENST00000470054 ENSE00001849458              21
-9   ENSG00000187172       ENST00000470054 ENSE00001810225              21
-10  ENSG00000187172       ENST00000470054 ENSE00001755570              21
-11  ENSG00000187172       ENST00000470054 ENSE00001543692              21
-12  ENSG00000187172       ENST00000470054 ENSE00001603325              21
-13  ENSG00000187172       ENST00000470054 ENSE00003487684              21
-14  ENSG00000187172       ENST00000470054 ENSE00003517925              21
-15  ENSG00000187172       ENST00000470054 ENSE00001624265              21
-16  ENSG00000187172       ENST00000496773 ENSE00001849458              21
-17  ENSG00000187172       ENST00000496773 ENSE00001810225              21
-18  ENSG00000187172       ENST00000496773 ENSE00001755570              21
-19  ENSG00000187172       ENST00000496773 ENSE00001603325              21
-20  ENSG00000187172       ENST00000496773 ENSE00003487684              21
-21  ENSG00000187172       ENST00000496773 ENSE00003517925              21
-22  ENSG00000187172       ENST00000496773 ENSE00001915801              21
-23  ENSG00000187172       ENST00000496773 ENSE00003606441              21
-24  ENSG00000187172       ENST00000496773 ENSE00001949088              21
-25  ENSG00000187172       ENST00000496773 ENSE00003570996              21
-26  ENSG00000187172       ENST00000496773 ENSE00001888942              21
-27  ENSG00000187172       ENST00000496773 ENSE00003578317              21
-28  ENSG00000187172       ENST00000496773 ENSE00003576287              21
-29  ENSG00000187172       ENST00000496773 ENSE00003603249              21
-30  ENSG00000187172       ENST00000496773 ENSE00001862587              21
-31  ENSG00000273840       ENST00000612267 ENSE00003727672              21
-32  ENSG00000273840       ENST00000612267 ENSE00003753642              21
-33  ENSG00000273840       ENST00000612267 ENSE00003723237              21
-34  ENSG00000273840       ENST00000612267 ENSE00003716806              21
-35  ENSG00000273840       ENST00000612267 ENSE00003713734              21
-36  ENSG00000273840       ENST00000612267 ENSE00003734889              21
-37  ENSG00000273840       ENST00000612267 ENSE00003730485              21
-38  ENSG00000273840       ENST00000612267 ENSE00003751106              21
-39  ENSG00000273840       ENST00000612267 ENSE00003749042              21
-40  ENSG00000273840       ENST00000612267 ENSE00003728386              21
-41  ENSG00000273840       ENST00000612267 ENSE00003727587              21
-42  ENSG00000273840       ENST00000612267 ENSE00003713188              21
-43  ENSG00000273840       ENST00000612267 ENSE00003731375              21
-44  ENSG00000273840       ENST00000612267 ENSE00003739126              21
-45  ENSG00000273840       ENST00000612267 ENSE00003746433              21
-46  ENSG00000273840       ENST00000612267 ENSE00003748108              21
-47  ENSG00000273840       ENST00000612267 ENSE00003742886              21
-48  ENSG00000273840       ENST00000612267 ENSE00003748985              21
-49  ENSG00000273840       ENST00000612267 ENSE00003736211              21
-50  ENSG00000273840       ENST00000612267 ENSE00003741368              21
-    start_position end_position hgnc_symbol    hgnc_id strand
-1         10649400     10649835 IGHV1OR21-1 HGNC:38040     -1
-2         10649400     10649835 IGHV1OR21-1 HGNC:38040     -1
-3         10413477     10516431       BAGE2 HGNC:15723      1
-4         10413477     10516431       BAGE2 HGNC:15723      1
-5         10413477     10516431       BAGE2 HGNC:15723      1
-6         10413477     10516431       BAGE2 HGNC:15723      1
-7         10413477     10516431       BAGE2 HGNC:15723      1
-8         10413477     10516431       BAGE2 HGNC:15723      1
-9         10413477     10516431       BAGE2 HGNC:15723      1
-10        10413477     10516431       BAGE2 HGNC:15723      1
-11        10413477     10516431       BAGE2 HGNC:15723      1
-12        10413477     10516431       BAGE2 HGNC:15723      1
-13        10413477     10516431       BAGE2 HGNC:15723      1
-14        10413477     10516431       BAGE2 HGNC:15723      1
-15        10413477     10516431       BAGE2 HGNC:15723      1
-16        10413477     10516431       BAGE2 HGNC:15723      1
-17        10413477     10516431       BAGE2 HGNC:15723      1
-18        10413477     10516431       BAGE2 HGNC:15723      1
-19        10413477     10516431       BAGE2 HGNC:15723      1
-20        10413477     10516431       BAGE2 HGNC:15723      1
-21        10413477     10516431       BAGE2 HGNC:15723      1
-22        10413477     10516431       BAGE2 HGNC:15723      1
-23        10413477     10516431       BAGE2 HGNC:15723      1
-24        10413477     10516431       BAGE2 HGNC:15723      1
-25        10413477     10516431       BAGE2 HGNC:15723      1
-26        10413477     10516431       BAGE2 HGNC:15723      1
-27        10413477     10516431       BAGE2 HGNC:15723      1
-28        10413477     10516431       BAGE2 HGNC:15723      1
-29        10413477     10516431       BAGE2 HGNC:15723      1
-30        10413477     10516431       BAGE2 HGNC:15723      1
-31        10482738     10605716                             1
-32        10482738     10605716                             1
-33        10482738     10605716                             1
-34        10482738     10605716                             1
-35        10482738     10605716                             1
-36        10482738     10605716                             1
-37        10482738     10605716                             1
-38        10482738     10605716                             1
-39        10482738     10605716                             1
-40        10482738     10605716                             1
-41        10482738     10605716                             1
-42        10482738     10605716                             1
-43        10482738     10605716                             1
-44        10482738     10605716                             1
-45        10482738     10605716                             1
-46        10482738     10605716                             1
-47        10482738     10605716                             1
-48        10482738     10605716                             1
-49        10482738     10605716                             1
-50        10482738     10605716                             1
-                          gene_biotype
-1                            IG_V_gene
-2                            IG_V_gene
-3   transcribed_unprocessed_pseudogene
-4   transcribed_unprocessed_pseudogene
-5   transcribed_unprocessed_pseudogene
-6   transcribed_unprocessed_pseudogene
-7   transcribed_unprocessed_pseudogene
-8   transcribed_unprocessed_pseudogene
-9   transcribed_unprocessed_pseudogene
-10  transcribed_unprocessed_pseudogene
-11  transcribed_unprocessed_pseudogene
-12  transcribed_unprocessed_pseudogene
-13  transcribed_unprocessed_pseudogene
-14  transcribed_unprocessed_pseudogene
-15  transcribed_unprocessed_pseudogene
-16  transcribed_unprocessed_pseudogene
-17  transcribed_unprocessed_pseudogene
-18  transcribed_unprocessed_pseudogene
-19  transcribed_unprocessed_pseudogene
-20  transcribed_unprocessed_pseudogene
-21  transcribed_unprocessed_pseudogene
-22  transcribed_unprocessed_pseudogene
-23  transcribed_unprocessed_pseudogene
-24  transcribed_unprocessed_pseudogene
-25  transcribed_unprocessed_pseudogene
-26  transcribed_unprocessed_pseudogene
-27  transcribed_unprocessed_pseudogene
-28  transcribed_unprocessed_pseudogene
-29  transcribed_unprocessed_pseudogene
-30  transcribed_unprocessed_pseudogene
-31                processed_transcript
-32                processed_transcript
-33                processed_transcript
-34                processed_transcript
-35                processed_transcript
-36                processed_transcript
-37                processed_transcript
-38                processed_transcript
-39                processed_transcript
-40                processed_transcript
-41                processed_transcript
-42                processed_transcript
-43                processed_transcript
-44                processed_transcript
-45                processed_transcript
-46                processed_transcript
-47                processed_transcript
-48                processed_transcript
-49                processed_transcript
-50                processed_transcript
- [ reached getOption(&quot;max.print&quot;) -- omitted 128 rows ]</pre></div>
+<pre ># A tibble: 178 × 10
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000277282       ENST00000622028 ENSE00003742120              21
+2  ENSG00000277282       ENST00000622028 ENSE00003753345              21
+3  ENSG00000187172       ENST00000474011 ENSE00001825894              21
+4  ENSG00000187172       ENST00000474011 ENSE00002021537              21
+5  ENSG00000187172       ENST00000474011 ENSE00001887197              21
+6  ENSG00000187172       ENST00000470054 ENSE00002021537              21
+7  ENSG00000187172       ENST00000470054 ENSE00001647801              21
+8  ENSG00000187172       ENST00000470054 ENSE00001849458              21
+9  ENSG00000187172       ENST00000470054 ENSE00001810225              21
+10 ENSG00000187172       ENST00000470054 ENSE00001755570              21
+# ... with 168 more rows, and 6 more variables: start_position &lt;int&gt;,
+#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, OR (<code>|</code>)</h3></hgroup><article  id="filter-multiple-conditions-or" class="smaller ">
 
-<div class = 'row'><div class = 'box col-10 offset-1'><h3>Genes at the close to the telomers</h3>
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Genes close to the telomers</h3>
 
 <div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   filter(start_position &lt; 100000 | end_position &gt;46665124 )</pre></div>
 
-</div></div><div class = 'row'><div class = 'box col-10 offset-1'><h3>Set operations</h3>
+</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-yellow2'><h3>Set operations</h3>
 
 <p>For more complicated checks. The following 2 are equivalent:</p>
 
@@ -582,160 +341,23 @@ gene_by_exon %&gt;%
   arrange(hgnc_symbol, gene_biotype, end_position) %&gt;% 
   dplyr::select(hgnc_symbol, gene_biotype, end_position, everything())</pre>
 
-<pre >       hgnc_symbol                       gene_biotype end_position
-1                                           antisense      5087867
-2                                           antisense      5087867
-3                                           antisense     14144468
-4                                           antisense     14144468
-5                                           antisense     14144468
-6                                           antisense     14144468
-7                                           antisense     14144468
-8                                           antisense     14144468
-9                                           antisense     14144468
-10                                          antisense     14144468
-11                                          antisense     14144468
-12                                          antisense     14947096
-13                                          antisense     14947096
-14                                          antisense     14964233
-15                                          antisense     14964233
-16                                          antisense     14992854
-17                                          antisense     14992854
-18                                          antisense     14992854
-19                                          antisense     17810845
-20                                          antisense     17810845
-21                                          antisense     17810845
-22                                          antisense     17810845
-23                                          antisense     21226829
-24                                          antisense     21226829
-25                                          antisense     25583326
-26                                          antisense     26175824
-27                                          antisense     26175824
-28                                          antisense     26471698
-29                                          antisense     26471698
-30                                          antisense     26471698
-31                                          antisense     26471698
-32                                          antisense     26471698
-33                                          antisense     26471698
-34                                          antisense     26471698
-35                                          antisense     26471698
-36                                          antisense     26471698
-37                                          antisense     26471698
-38                                          antisense     26471698
-39                                          antisense     26471698
-40                                          antisense     26471698
-41                                          antisense     26471698
-42                                          antisense     26939742
-43                                          antisense     26939742
-44                                          antisense     26939742
-45                                          antisense     29024890
-46                                          antisense     29187795
-47                                          antisense     29187795
-48                                          antisense     29657831
-49                                          antisense     31560487
-50                                          antisense     31560487
-      ensembl_gene_id ensembl_transcript_id ensembl_exon_id
-1     ENSG00000279687       ENST00000623188 ENSE00003759048
-2     ENSG00000279687       ENST00000623188 ENSE00003759260
-3     ENSG00000224905       ENST00000428809 ENSE00001608016
-4     ENSG00000224905       ENST00000428809 ENSE00001648320
-5     ENSG00000224905       ENST00000428809 ENSE00001645386
-6     ENSG00000224905       ENST00000432621 ENSE00001608016
-7     ENSG00000224905       ENST00000432621 ENSE00001648320
-8     ENSG00000224905       ENST00000432621 ENSE00001657041
-9     ENSG00000224905       ENST00000448463 ENSE00001648320
-10    ENSG00000224905       ENST00000448463 ENSE00001742871
-11    ENSG00000224905       ENST00000448463 ENSE00001805372
-12    ENSG00000235277       ENST00000430391 ENSE00001786136
-13    ENSG00000235277       ENST00000430391 ENSE00001726405
-14    ENSG00000229047       ENST00000446301 ENSE00001721303
-15    ENSG00000229047       ENST00000446301 ENSE00001679975
-16    ENSG00000231201       ENST00000436429 ENSE00001771426
-17    ENSG00000231201       ENST00000436429 ENSE00001693515
-18    ENSG00000231201       ENST00000436429 ENSE00001607020
-19    ENSG00000244676       ENST00000428689 ENSE00001782668
-20    ENSG00000244676       ENST00000428689 ENSE00001713116
-21    ENSG00000244676       ENST00000454737 ENSE00001713116
-22    ENSG00000244676       ENST00000454737 ENSE00001689198
-23    ENSG00000226771       ENST00000425058 ENSE00001728521
-24    ENSG00000226771       ENST00000425058 ENSE00001700237
-25    ENSG00000260583       ENST00000567517 ENSE00002629631
-26    ENSG00000224541       ENST00000455275 ENSE00001727831
-27    ENSG00000224541       ENST00000455275 ENSE00001777123
-28    ENSG00000232692       ENST00000429340 ENSE00001732848
-29    ENSG00000232692       ENST00000429340 ENSE00001790439
-30    ENSG00000232692       ENST00000429340 ENSE00001596262
-31    ENSG00000232692       ENST00000429340 ENSE00001635399
-32    ENSG00000232692       ENST00000429340 ENSE00001693292
-33    ENSG00000232692       ENST00000429340 ENSE00001737734
-34    ENSG00000232692       ENST00000452460 ENSE00001597055
-35    ENSG00000232692       ENST00000452460 ENSE00001675911
-36    ENSG00000232692       ENST00000452460 ENSE00001782152
-37    ENSG00000232692       ENST00000452460 ENSE00001773943
-38    ENSG00000232692       ENST00000421771 ENSE00001750896
-39    ENSG00000232692       ENST00000421771 ENSE00001729877
-40    ENSG00000232692       ENST00000444306 ENSE00001791544
-41    ENSG00000232692       ENST00000444306 ENSE00001721258
-42    ENSG00000223563       ENST00000426771 ENSE00001802622
-43    ENSG00000223563       ENST00000426771 ENSE00001663517
-44    ENSG00000223563       ENST00000426771 ENSE00001629263
-45    ENSG00000273254       ENST00000608809 ENSE00003703315
-46    ENSG00000224649       ENST00000430001 ENSE00001612552
-47    ENSG00000224649       ENST00000430001 ENSE00001626475
-48    ENSG00000273464       ENST00000608759 ENSE00003708634
-49    ENSG00000237594       ENST00000433071 ENSE00001780130
-50    ENSG00000237594       ENST00000433071 ENSE00001760430
-      chromosome_name start_position    hgnc_id strand
-1                  21        5073458                 1
-2                  21        5073458                 1
-3                  21       14027421                 1
-4                  21       14027421                 1
-5                  21       14027421                 1
-6                  21       14027421                 1
-7                  21       14027421                 1
-8                  21       14027421                 1
-9                  21       14027421                 1
-10                 21       14027421                 1
-11                 21       14027421                 1
-12                 21       14918534                 1
-13                 21       14918534                 1
-14                 21       14961309                 1
-15                 21       14961309                 1
-16                 21       14971470                 1
-17                 21       14971470                 1
-18                 21       14971470                 1
-19                 21       17793488                 1
-20                 21       17793488                 1
-21                 21       17793488                 1
-22                 21       17793488                 1
-23                 21       21223295                -1
-24                 21       21223295                -1
-25                 21       25582770                -1
-26                 21       26158091                 1
-27                 21       26158091                 1
-28                 21       26378552                 1
-29                 21       26378552                 1
-30                 21       26378552                 1
-31                 21       26378552                 1
-32                 21       26378552                 1
-33                 21       26378552                 1
-34                 21       26378552                 1
-35                 21       26378552                 1
-36                 21       26378552                 1
-37                 21       26378552                 1
-38                 21       26378552                 1
-39                 21       26378552                 1
-40                 21       26378552                 1
-41                 21       26378552                 1
-42                 21       26889376                 1
-43                 21       26889376                 1
-44                 21       26889376                 1
-45                 21       29024255                -1
-46                 21       29182027                -1
-47                 21       29182027                -1
-48                 21       29657406                 1
-49                 21       31559245                 1
-50                 21       31559245                 1
- [ reached getOption(&quot;max.print&quot;) -- omitted 13928 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 10
+   hgnc_symbol gene_biotype end_position ensembl_gene_id
+         &lt;chr&gt;        &lt;chr&gt;        &lt;int&gt;           &lt;chr&gt;
+1                 antisense      5087867 ENSG00000279687
+2                 antisense      5087867 ENSG00000279687
+3                 antisense     14144468 ENSG00000224905
+4                 antisense     14144468 ENSG00000224905
+5                 antisense     14144468 ENSG00000224905
+6                 antisense     14144468 ENSG00000224905
+7                 antisense     14144468 ENSG00000224905
+8                 antisense     14144468 ENSG00000224905
+9                 antisense     14144468 ENSG00000224905
+10                antisense     14144468 ENSG00000224905
+# ... with 13,968 more rows, and 6 more variables:
+#   ensembl_transcript_id &lt;chr&gt;, ensembl_exon_id &lt;chr&gt;,
+#   chromosome_name &lt;int&gt;, start_position &lt;int&gt;, hgnc_id &lt;chr&gt;,
+#   strand &lt;int&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>arrange()</code> </h2><h3> <code>desc</code> to reverse sort columns</h3></hgroup><article  id="arrange-desc-to-reverse-sort-columns" class="smaller ">
 
@@ -746,160 +368,22 @@ gene_by_exon %&gt;%
   arrange(desc(end_position)) %&gt;%
   dplyr::select(end_position, everything()) # way to reorder arr_delay 1st column</pre>
 
-<pre >      end_position ensembl_gene_id ensembl_transcript_id ensembl_exon_id
-1         46691226 ENSG00000212932       ENST00000427757 ENSE00001697032
-2         46665124 ENSG00000160310       ENST00000355680 ENSE00001828011
-3         46665124 ENSG00000160310       ENST00000355680 ENSE00001414070
-4         46665124 ENSG00000160310       ENST00000355680 ENSE00001336411
-5         46665124 ENSG00000160310       ENST00000355680 ENSE00003542955
-6         46665124 ENSG00000160310       ENST00000355680 ENSE00003472918
-7         46665124 ENSG00000160310       ENST00000355680 ENSE00003595101
-8         46665124 ENSG00000160310       ENST00000355680 ENSE00003480025
-9         46665124 ENSG00000160310       ENST00000355680 ENSE00003541221
-10        46665124 ENSG00000160310       ENST00000355680 ENSE00001051359
-11        46665124 ENSG00000160310       ENST00000355680 ENSE00001299450
-12        46665124 ENSG00000160310       ENST00000355680 ENSE00003636111
-13        46665124 ENSG00000160310       ENST00000355680 ENSE00003692544
-14        46665124 ENSG00000160310       ENST00000397638 ENSE00001336411
-15        46665124 ENSG00000160310       ENST00000397638 ENSE00003542955
-16        46665124 ENSG00000160310       ENST00000397638 ENSE00003472918
-17        46665124 ENSG00000160310       ENST00000397638 ENSE00003595101
-18        46665124 ENSG00000160310       ENST00000397638 ENSE00003480025
-19        46665124 ENSG00000160310       ENST00000397638 ENSE00003541221
-20        46665124 ENSG00000160310       ENST00000397638 ENSE00001051359
-21        46665124 ENSG00000160310       ENST00000397638 ENSE00001299450
-22        46665124 ENSG00000160310       ENST00000397638 ENSE00003636111
-23        46665124 ENSG00000160310       ENST00000397638 ENSE00003692544
-24        46665124 ENSG00000160310       ENST00000397638 ENSE00001529496
-25        46665124 ENSG00000160310       ENST00000291705 ENSE00001336411
-26        46665124 ENSG00000160310       ENST00000291705 ENSE00003542955
-27        46665124 ENSG00000160310       ENST00000291705 ENSE00003472918
-28        46665124 ENSG00000160310       ENST00000291705 ENSE00003595101
-29        46665124 ENSG00000160310       ENST00000291705 ENSE00003480025
-30        46665124 ENSG00000160310       ENST00000291705 ENSE00003806566
-31        46665124 ENSG00000160310       ENST00000291705 ENSE00003601901
-32        46665124 ENSG00000160310       ENST00000397637 ENSE00001336411
-33        46665124 ENSG00000160310       ENST00000397637 ENSE00003542955
-34        46665124 ENSG00000160310       ENST00000397637 ENSE00003472918
-35        46665124 ENSG00000160310       ENST00000397637 ENSE00003595101
-36        46665124 ENSG00000160310       ENST00000397637 ENSE00003480025
-37        46665124 ENSG00000160310       ENST00000397637 ENSE00003541221
-38        46665124 ENSG00000160310       ENST00000397637 ENSE00001051359
-39        46665124 ENSG00000160310       ENST00000397637 ENSE00001299450
-40        46665124 ENSG00000160310       ENST00000397637 ENSE00003636111
-41        46665124 ENSG00000160310       ENST00000397637 ENSE00003692544
-42        46665124 ENSG00000160310       ENST00000397637 ENSE00001529485
-43        46665124 ENSG00000160310       ENST00000334494 ENSE00001336411
-44        46665124 ENSG00000160310       ENST00000334494 ENSE00003542955
-45        46665124 ENSG00000160310       ENST00000334494 ENSE00003472918
-46        46665124 ENSG00000160310       ENST00000334494 ENSE00003595101
-47        46665124 ENSG00000160310       ENST00000334494 ENSE00003480025
-48        46665124 ENSG00000160310       ENST00000334494 ENSE00001416958
-49        46665124 ENSG00000160310       ENST00000334494 ENSE00001336312
-50        46665124 ENSG00000160310       ENST00000397628 ENSE00001336411
-      chromosome_name start_position  hgnc_symbol    hgnc_id strand
-1                  21       46690764     RPL23AP4 HGNC:10321      1
-2                  21       46635167        PRMT2  HGNC:5186      1
-3                  21       46635167        PRMT2  HGNC:5186      1
-4                  21       46635167        PRMT2  HGNC:5186      1
-5                  21       46635167        PRMT2  HGNC:5186      1
-6                  21       46635167        PRMT2  HGNC:5186      1
-7                  21       46635167        PRMT2  HGNC:5186      1
-8                  21       46635167        PRMT2  HGNC:5186      1
-9                  21       46635167        PRMT2  HGNC:5186      1
-10                 21       46635167        PRMT2  HGNC:5186      1
-11                 21       46635167        PRMT2  HGNC:5186      1
-12                 21       46635167        PRMT2  HGNC:5186      1
-13                 21       46635167        PRMT2  HGNC:5186      1
-14                 21       46635167        PRMT2  HGNC:5186      1
-15                 21       46635167        PRMT2  HGNC:5186      1
-16                 21       46635167        PRMT2  HGNC:5186      1
-17                 21       46635167        PRMT2  HGNC:5186      1
-18                 21       46635167        PRMT2  HGNC:5186      1
-19                 21       46635167        PRMT2  HGNC:5186      1
-20                 21       46635167        PRMT2  HGNC:5186      1
-21                 21       46635167        PRMT2  HGNC:5186      1
-22                 21       46635167        PRMT2  HGNC:5186      1
-23                 21       46635167        PRMT2  HGNC:5186      1
-24                 21       46635167        PRMT2  HGNC:5186      1
-25                 21       46635167        PRMT2  HGNC:5186      1
-26                 21       46635167        PRMT2  HGNC:5186      1
-27                 21       46635167        PRMT2  HGNC:5186      1
-28                 21       46635167        PRMT2  HGNC:5186      1
-29                 21       46635167        PRMT2  HGNC:5186      1
-30                 21       46635167        PRMT2  HGNC:5186      1
-31                 21       46635167        PRMT2  HGNC:5186      1
-32                 21       46635167        PRMT2  HGNC:5186      1
-33                 21       46635167        PRMT2  HGNC:5186      1
-34                 21       46635167        PRMT2  HGNC:5186      1
-35                 21       46635167        PRMT2  HGNC:5186      1
-36                 21       46635167        PRMT2  HGNC:5186      1
-37                 21       46635167        PRMT2  HGNC:5186      1
-38                 21       46635167        PRMT2  HGNC:5186      1
-39                 21       46635167        PRMT2  HGNC:5186      1
-40                 21       46635167        PRMT2  HGNC:5186      1
-41                 21       46635167        PRMT2  HGNC:5186      1
-42                 21       46635167        PRMT2  HGNC:5186      1
-43                 21       46635167        PRMT2  HGNC:5186      1
-44                 21       46635167        PRMT2  HGNC:5186      1
-45                 21       46635167        PRMT2  HGNC:5186      1
-46                 21       46635167        PRMT2  HGNC:5186      1
-47                 21       46635167        PRMT2  HGNC:5186      1
-48                 21       46635167        PRMT2  HGNC:5186      1
-49                 21       46635167        PRMT2  HGNC:5186      1
-50                 21       46635167        PRMT2  HGNC:5186      1
-                            gene_biotype
-1                   processed_pseudogene
-2                         protein_coding
-3                         protein_coding
-4                         protein_coding
-5                         protein_coding
-6                         protein_coding
-7                         protein_coding
-8                         protein_coding
-9                         protein_coding
-10                        protein_coding
-11                        protein_coding
-12                        protein_coding
-13                        protein_coding
-14                        protein_coding
-15                        protein_coding
-16                        protein_coding
-17                        protein_coding
-18                        protein_coding
-19                        protein_coding
-20                        protein_coding
-21                        protein_coding
-22                        protein_coding
-23                        protein_coding
-24                        protein_coding
-25                        protein_coding
-26                        protein_coding
-27                        protein_coding
-28                        protein_coding
-29                        protein_coding
-30                        protein_coding
-31                        protein_coding
-32                        protein_coding
-33                        protein_coding
-34                        protein_coding
-35                        protein_coding
-36                        protein_coding
-37                        protein_coding
-38                        protein_coding
-39                        protein_coding
-40                        protein_coding
-41                        protein_coding
-42                        protein_coding
-43                        protein_coding
-44                        protein_coding
-45                        protein_coding
-46                        protein_coding
-47                        protein_coding
-48                        protein_coding
-49                        protein_coding
-50                        protein_coding
- [ reached getOption(&quot;max.print&quot;) -- omitted 13928 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 10
+   end_position ensembl_gene_id ensembl_transcript_id ensembl_exon_id
+          &lt;int&gt;           &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;
+1      46691226 ENSG00000212932       ENST00000427757 ENSE00001697032
+2      46665124 ENSG00000160310       ENST00000355680 ENSE00001828011
+3      46665124 ENSG00000160310       ENST00000355680 ENSE00001414070
+4      46665124 ENSG00000160310       ENST00000355680 ENSE00001336411
+5      46665124 ENSG00000160310       ENST00000355680 ENSE00003542955
+6      46665124 ENSG00000160310       ENST00000355680 ENSE00003472918
+7      46665124 ENSG00000160310       ENST00000355680 ENSE00003595101
+8      46665124 ENSG00000160310       ENST00000355680 ENSE00003480025
+9      46665124 ENSG00000160310       ENST00000355680 ENSE00003541221
+10     46665124 ENSG00000160310       ENST00000355680 ENSE00001051359
+# ... with 13,968 more rows, and 6 more variables: chromosome_name &lt;int&gt;,
+#   start_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> </h2><h3> Selecting specific <em>columns</em></h3></hgroup><article  id="select-selecting-specific-columns" class="smaller ">
 
@@ -909,133 +393,20 @@ gene_by_exon %&gt;%
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)</pre>
 
-<pre >       hgnc_symbol chromosome_name start_position end_position
-1                               21       44439035     44439110
-2                               21        7092616      7092716
-3                               21        8433085      8433174
-4                               21       39171462     39171560
-5                               21       41870633     41872054
-6                               21       41870633     41872054
-7            ITGB2              21       44885953     44931989
-8            ITGB2              21       44885953     44931989
-9            ITGB2              21       44885953     44931989
-10           ITGB2              21       44885953     44931989
-11           ITGB2              21       44885953     44931989
-12           ITGB2              21       44885953     44931989
-13           ITGB2              21       44885953     44931989
-14           ITGB2              21       44885953     44931989
-15           ITGB2              21       44885953     44931989
-16           ITGB2              21       44885953     44931989
-17           ITGB2              21       44885953     44931989
-18           ITGB2              21       44885953     44931989
-19           ITGB2              21       44885953     44931989
-20           ITGB2              21       44885953     44931989
-21           ITGB2              21       44885953     44931989
-22           ITGB2              21       44885953     44931989
-23           ITGB2              21       44885953     44931989
-24           ITGB2              21       44885953     44931989
-25           ITGB2              21       44885953     44931989
-26           ITGB2              21       44885953     44931989
-27           ITGB2              21       44885953     44931989
-28           ITGB2              21       44885953     44931989
-29           ITGB2              21       44885953     44931989
-30           ITGB2              21       44885953     44931989
-31           ITGB2              21       44885953     44931989
-32           ITGB2              21       44885953     44931989
-33           ITGB2              21       44885953     44931989
-34           ITGB2              21       44885953     44931989
-35           ITGB2              21       44885953     44931989
-36           ITGB2              21       44885953     44931989
-37           ITGB2              21       44885953     44931989
-38           ITGB2              21       44885953     44931989
-39           ITGB2              21       44885953     44931989
-40           ITGB2              21       44885953     44931989
-41           ITGB2              21       44885953     44931989
-42           ITGB2              21       44885953     44931989
-43           ITGB2              21       44885953     44931989
-44           ITGB2              21       44885953     44931989
-45           ITGB2              21       44885953     44931989
-46           ITGB2              21       44885953     44931989
-47           ITGB2              21       44885953     44931989
-48           ITGB2              21       44885953     44931989
-49           ITGB2              21       44885953     44931989
-50           ITGB2              21       44885953     44931989
-51           ITGB2              21       44885953     44931989
-52           ITGB2              21       44885953     44931989
-53           ITGB2              21       44885953     44931989
-54           ITGB2              21       44885953     44931989
-55           ITGB2              21       44885953     44931989
-56           ITGB2              21       44885953     44931989
-57           ITGB2              21       44885953     44931989
-58           ITGB2              21       44885953     44931989
-59           ITGB2              21       44885953     44931989
-60           ITGB2              21       44885953     44931989
-61           ITGB2              21       44885953     44931989
-62           ITGB2              21       44885953     44931989
-63           ITGB2              21       44885953     44931989
-64           ITGB2              21       44885953     44931989
-65           ITGB2              21       44885953     44931989
-66           ITGB2              21       44885953     44931989
-67           ITGB2              21       44885953     44931989
-68           ITGB2              21       44885953     44931989
-69           ITGB2              21       44885953     44931989
-70           ITGB2              21       44885953     44931989
-71           ITGB2              21       44885953     44931989
-72           ITGB2              21       44885953     44931989
-73           ITGB2              21       44885953     44931989
-74           ITGB2              21       44885953     44931989
-75           ITGB2              21       44885953     44931989
-76           ITGB2              21       44885953     44931989
-77           ITGB2              21       44885953     44931989
-78           ITGB2              21       44885953     44931989
-79           ITGB2              21       44885953     44931989
-80           ITGB2              21       44885953     44931989
-81           ITGB2              21       44885953     44931989
-82           ITGB2              21       44885953     44931989
-83           ITGB2              21       44885953     44931989
-84           ITGB2              21       44885953     44931989
-85           ITGB2              21       44885953     44931989
-86           ITGB2              21       44885953     44931989
-87           ITGB2              21       44885953     44931989
-88           ITGB2              21       44885953     44931989
-89           ITGB2              21       44885953     44931989
-90           ITGB2              21       44885953     44931989
-91           ITGB2              21       44885953     44931989
-92           ITGB2              21       44885953     44931989
-93           ITGB2              21       44885953     44931989
-94           ITGB2              21       44885953     44931989
-95           ITGB2              21       44885953     44931989
-96           ITGB2              21       44885953     44931989
-97           ITGB2              21       44885953     44931989
-98           ITGB2              21       44885953     44931989
-99           ITGB2              21       44885953     44931989
-100          ITGB2              21       44885953     44931989
-101          ITGB2              21       44885953     44931989
-102          ITGB2              21       44885953     44931989
-103          ITGB2              21       44885953     44931989
-104          ITGB2              21       44885953     44931989
-105          ITGB2              21       44885953     44931989
-106          ITGB2              21       44885953     44931989
-107          ITGB2              21       44885953     44931989
-108          ITGB2              21       44885953     44931989
-109          ITGB2              21       44885953     44931989
-110          ITGB2              21       44885953     44931989
-111          ITGB2              21       44885953     44931989
-112          ITGB2              21       44885953     44931989
-113          ITGB2              21       44885953     44931989
-114          ITGB2              21       44885953     44931989
-115          ITGB2              21       44885953     44931989
-116          ITGB2              21       44885953     44931989
-117          ITGB2              21       44885953     44931989
-118          ITGB2              21       44885953     44931989
-119          ITGB2              21       44885953     44931989
-120          ITGB2              21       44885953     44931989
-121          ITGB2              21       44885953     44931989
-122          ITGB2              21       44885953     44931989
-123          ITGB2              21       44885953     44931989
-124          ITGB2              21       44885953     44931989
-125          ITGB2              21       44885953     44931989
- [ reached getOption(&quot;max.print&quot;) -- omitted 13853 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 4
+   hgnc_symbol chromosome_name start_position end_position
+         &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
+1                           21       44439035     44439110
+2                           21        7092616      7092716
+3                           21        8433085      8433174
+4                           21       39171462     39171560
+5                           21       41870633     41872054
+6                           21       41870633     41872054
+7        ITGB2              21       44885953     44931989
+8        ITGB2              21       44885953     44931989
+9        ITGB2              21       44885953     44931989
+10       ITGB2              21       44885953     44931989
+# ... with 13,968 more rows</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> </h2><h3> Negative selection</h3></hgroup><article  id="select-negative-selection" class="smaller ">
 
@@ -1048,213 +419,24 @@ gene_by_exon %&gt;%
   dplyr::select(-strand, -starts_with(&quot;ensembl&quot;),
          -ends_with(&quot;id&quot;))</pre>
 
-<pre >      chromosome_name start_position end_position  hgnc_symbol
-1                  21       44439035     44439110             
-2                  21        7092616      7092716             
-3                  21        8433085      8433174             
-4                  21       39171462     39171560             
-5                  21       41870633     41872054             
-6                  21       41870633     41872054             
-7                  21       44885953     44931989        ITGB2
-8                  21       44885953     44931989        ITGB2
-9                  21       44885953     44931989        ITGB2
-10                 21       44885953     44931989        ITGB2
-11                 21       44885953     44931989        ITGB2
-12                 21       44885953     44931989        ITGB2
-13                 21       44885953     44931989        ITGB2
-14                 21       44885953     44931989        ITGB2
-15                 21       44885953     44931989        ITGB2
-16                 21       44885953     44931989        ITGB2
-17                 21       44885953     44931989        ITGB2
-18                 21       44885953     44931989        ITGB2
-19                 21       44885953     44931989        ITGB2
-20                 21       44885953     44931989        ITGB2
-21                 21       44885953     44931989        ITGB2
-22                 21       44885953     44931989        ITGB2
-23                 21       44885953     44931989        ITGB2
-24                 21       44885953     44931989        ITGB2
-25                 21       44885953     44931989        ITGB2
-26                 21       44885953     44931989        ITGB2
-27                 21       44885953     44931989        ITGB2
-28                 21       44885953     44931989        ITGB2
-29                 21       44885953     44931989        ITGB2
-30                 21       44885953     44931989        ITGB2
-31                 21       44885953     44931989        ITGB2
-32                 21       44885953     44931989        ITGB2
-33                 21       44885953     44931989        ITGB2
-34                 21       44885953     44931989        ITGB2
-35                 21       44885953     44931989        ITGB2
-36                 21       44885953     44931989        ITGB2
-37                 21       44885953     44931989        ITGB2
-38                 21       44885953     44931989        ITGB2
-39                 21       44885953     44931989        ITGB2
-40                 21       44885953     44931989        ITGB2
-41                 21       44885953     44931989        ITGB2
-42                 21       44885953     44931989        ITGB2
-43                 21       44885953     44931989        ITGB2
-44                 21       44885953     44931989        ITGB2
-45                 21       44885953     44931989        ITGB2
-46                 21       44885953     44931989        ITGB2
-47                 21       44885953     44931989        ITGB2
-48                 21       44885953     44931989        ITGB2
-49                 21       44885953     44931989        ITGB2
-50                 21       44885953     44931989        ITGB2
-51                 21       44885953     44931989        ITGB2
-52                 21       44885953     44931989        ITGB2
-53                 21       44885953     44931989        ITGB2
-54                 21       44885953     44931989        ITGB2
-55                 21       44885953     44931989        ITGB2
-56                 21       44885953     44931989        ITGB2
-57                 21       44885953     44931989        ITGB2
-58                 21       44885953     44931989        ITGB2
-59                 21       44885953     44931989        ITGB2
-60                 21       44885953     44931989        ITGB2
-61                 21       44885953     44931989        ITGB2
-62                 21       44885953     44931989        ITGB2
-63                 21       44885953     44931989        ITGB2
-64                 21       44885953     44931989        ITGB2
-65                 21       44885953     44931989        ITGB2
-66                 21       44885953     44931989        ITGB2
-67                 21       44885953     44931989        ITGB2
-68                 21       44885953     44931989        ITGB2
-69                 21       44885953     44931989        ITGB2
-70                 21       44885953     44931989        ITGB2
-71                 21       44885953     44931989        ITGB2
-72                 21       44885953     44931989        ITGB2
-73                 21       44885953     44931989        ITGB2
-74                 21       44885953     44931989        ITGB2
-75                 21       44885953     44931989        ITGB2
-76                 21       44885953     44931989        ITGB2
-77                 21       44885953     44931989        ITGB2
-78                 21       44885953     44931989        ITGB2
-79                 21       44885953     44931989        ITGB2
-80                 21       44885953     44931989        ITGB2
-81                 21       44885953     44931989        ITGB2
-82                 21       44885953     44931989        ITGB2
-83                 21       44885953     44931989        ITGB2
-84                 21       44885953     44931989        ITGB2
-85                 21       44885953     44931989        ITGB2
-86                 21       44885953     44931989        ITGB2
-87                 21       44885953     44931989        ITGB2
-88                 21       44885953     44931989        ITGB2
-89                 21       44885953     44931989        ITGB2
-90                 21       44885953     44931989        ITGB2
-91                 21       44885953     44931989        ITGB2
-92                 21       44885953     44931989        ITGB2
-93                 21       44885953     44931989        ITGB2
-94                 21       44885953     44931989        ITGB2
-95                 21       44885953     44931989        ITGB2
-96                 21       44885953     44931989        ITGB2
-97                 21       44885953     44931989        ITGB2
-98                 21       44885953     44931989        ITGB2
-99                 21       44885953     44931989        ITGB2
-100                21       44885953     44931989        ITGB2
-                            gene_biotype
-1                                 snoRNA
-2                               misc_RNA
-3                               misc_RNA
-4                               misc_RNA
-5                              antisense
-6                              antisense
-7                         protein_coding
-8                         protein_coding
-9                         protein_coding
-10                        protein_coding
-11                        protein_coding
-12                        protein_coding
-13                        protein_coding
-14                        protein_coding
-15                        protein_coding
-16                        protein_coding
-17                        protein_coding
-18                        protein_coding
-19                        protein_coding
-20                        protein_coding
-21                        protein_coding
-22                        protein_coding
-23                        protein_coding
-24                        protein_coding
-25                        protein_coding
-26                        protein_coding
-27                        protein_coding
-28                        protein_coding
-29                        protein_coding
-30                        protein_coding
-31                        protein_coding
-32                        protein_coding
-33                        protein_coding
-34                        protein_coding
-35                        protein_coding
-36                        protein_coding
-37                        protein_coding
-38                        protein_coding
-39                        protein_coding
-40                        protein_coding
-41                        protein_coding
-42                        protein_coding
-43                        protein_coding
-44                        protein_coding
-45                        protein_coding
-46                        protein_coding
-47                        protein_coding
-48                        protein_coding
-49                        protein_coding
-50                        protein_coding
-51                        protein_coding
-52                        protein_coding
-53                        protein_coding
-54                        protein_coding
-55                        protein_coding
-56                        protein_coding
-57                        protein_coding
-58                        protein_coding
-59                        protein_coding
-60                        protein_coding
-61                        protein_coding
-62                        protein_coding
-63                        protein_coding
-64                        protein_coding
-65                        protein_coding
-66                        protein_coding
-67                        protein_coding
-68                        protein_coding
-69                        protein_coding
-70                        protein_coding
-71                        protein_coding
-72                        protein_coding
-73                        protein_coding
-74                        protein_coding
-75                        protein_coding
-76                        protein_coding
-77                        protein_coding
-78                        protein_coding
-79                        protein_coding
-80                        protein_coding
-81                        protein_coding
-82                        protein_coding
-83                        protein_coding
-84                        protein_coding
-85                        protein_coding
-86                        protein_coding
-87                        protein_coding
-88                        protein_coding
-89                        protein_coding
-90                        protein_coding
-91                        protein_coding
-92                        protein_coding
-93                        protein_coding
-94                        protein_coding
-95                        protein_coding
-96                        protein_coding
-97                        protein_coding
-98                        protein_coding
-99                        protein_coding
-100                       protein_coding
- [ reached getOption(&quot;max.print&quot;) -- omitted 13878 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 5
+   chromosome_name start_position end_position hgnc_symbol   gene_biotype
+             &lt;int&gt;          &lt;int&gt;        &lt;int&gt;       &lt;chr&gt;          &lt;chr&gt;
+1               21       44439035     44439110                     snoRNA
+2               21        7092616      7092716                   misc_RNA
+3               21        8433085      8433174                   misc_RNA
+4               21       39171462     39171560                   misc_RNA
+5               21       41870633     41872054                  antisense
+6               21       41870633     41872054                  antisense
+7               21       44885953     44931989       ITGB2 protein_coding
+8               21       44885953     44931989       ITGB2 protein_coding
+9               21       44885953     44931989       ITGB2 protein_coding
+10              21       44885953     44931989       ITGB2 protein_coding
+# ... with 13,968 more rows</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> helper functions</h2></hgroup><article  id="select-helper-functions" class="smaller ">
 
-<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3><code>select()</code> has many helper functions</h3>
+<div class = 'row'><div class = 'box col-12 bg-yellow2'><h3><code>select()</code> has many helper functions</h3>
 
 <ul>
 <li><code>contains()</code>, <code>starts_with()</code>, <code>ends_with()</code> for literal strings</li>
@@ -1271,209 +453,20 @@ gene_by_exon %&gt;%
                 contains(&quot;position&quot;),
                 -contains(&quot;exon&quot;))</pre>
 
-<pre >       hgnc_symbol ensembl_gene_id ensembl_transcript_id start_position
-1                  ENSG00000264452       ENST00000583496       44439035
-2                  ENSG00000274046       ENST00000617336        7092616
-3                  ENSG00000278775       ENST00000619112        8433085
-4                  ENSG00000276873       ENST00000616808       39171462
-5                  ENSG00000236545       ENST00000458654       41870633
-6                  ENSG00000236545       ENST00000458654       41870633
-7            ITGB2 ENSG00000160255       ENST00000302347       44885953
-8            ITGB2 ENSG00000160255       ENST00000302347       44885953
-9            ITGB2 ENSG00000160255       ENST00000302347       44885953
-10           ITGB2 ENSG00000160255       ENST00000302347       44885953
-11           ITGB2 ENSG00000160255       ENST00000302347       44885953
-12           ITGB2 ENSG00000160255       ENST00000302347       44885953
-13           ITGB2 ENSG00000160255       ENST00000302347       44885953
-14           ITGB2 ENSG00000160255       ENST00000302347       44885953
-15           ITGB2 ENSG00000160255       ENST00000302347       44885953
-16           ITGB2 ENSG00000160255       ENST00000302347       44885953
-17           ITGB2 ENSG00000160255       ENST00000302347       44885953
-18           ITGB2 ENSG00000160255       ENST00000302347       44885953
-19           ITGB2 ENSG00000160255       ENST00000302347       44885953
-20           ITGB2 ENSG00000160255       ENST00000302347       44885953
-21           ITGB2 ENSG00000160255       ENST00000302347       44885953
-22           ITGB2 ENSG00000160255       ENST00000302347       44885953
-23           ITGB2 ENSG00000160255       ENST00000518033       44885953
-24           ITGB2 ENSG00000160255       ENST00000518033       44885953
-25           ITGB2 ENSG00000160255       ENST00000523126       44885953
-26           ITGB2 ENSG00000160255       ENST00000523126       44885953
-27           ITGB2 ENSG00000160255       ENST00000521995       44885953
-28           ITGB2 ENSG00000160255       ENST00000521995       44885953
-29           ITGB2 ENSG00000160255       ENST00000521995       44885953
-30           ITGB2 ENSG00000160255       ENST00000521995       44885953
-31           ITGB2 ENSG00000160255       ENST00000397846       44885953
-32           ITGB2 ENSG00000160255       ENST00000397846       44885953
-33           ITGB2 ENSG00000160255       ENST00000397846       44885953
-34           ITGB2 ENSG00000160255       ENST00000397846       44885953
-35           ITGB2 ENSG00000160255       ENST00000479849       44885953
-36           ITGB2 ENSG00000160255       ENST00000479849       44885953
-37           ITGB2 ENSG00000160255       ENST00000479849       44885953
-38           ITGB2 ENSG00000160255       ENST00000517819       44885953
-39           ITGB2 ENSG00000160255       ENST00000517819       44885953
-40           ITGB2 ENSG00000160255       ENST00000517819       44885953
-41           ITGB2 ENSG00000160255       ENST00000517819       44885953
-42           ITGB2 ENSG00000160255       ENST00000524251       44885953
-43           ITGB2 ENSG00000160255       ENST00000524251       44885953
-44           ITGB2 ENSG00000160255       ENST00000524251       44885953
-45           ITGB2 ENSG00000160255       ENST00000524251       44885953
-46           ITGB2 ENSG00000160255       ENST00000520389       44885953
-47           ITGB2 ENSG00000160255       ENST00000520389       44885953
-48           ITGB2 ENSG00000160255       ENST00000520389       44885953
-49           ITGB2 ENSG00000160255       ENST00000520389       44885953
-50           ITGB2 ENSG00000160255       ENST00000520389       44885953
-51           ITGB2 ENSG00000160255       ENST00000520389       44885953
-52           ITGB2 ENSG00000160255       ENST00000522688       44885953
-53           ITGB2 ENSG00000160255       ENST00000522688       44885953
-54           ITGB2 ENSG00000160255       ENST00000522688       44885953
-55           ITGB2 ENSG00000160255       ENST00000522688       44885953
-56           ITGB2 ENSG00000160255       ENST00000522688       44885953
-57           ITGB2 ENSG00000160255       ENST00000517563       44885953
-58           ITGB2 ENSG00000160255       ENST00000517563       44885953
-59           ITGB2 ENSG00000160255       ENST00000517563       44885953
-60           ITGB2 ENSG00000160255       ENST00000517563       44885953
-61           ITGB2 ENSG00000160255       ENST00000517563       44885953
-62           ITGB2 ENSG00000160255       ENST00000517563       44885953
-63           ITGB2 ENSG00000160255       ENST00000320216       44885953
-64           ITGB2 ENSG00000160255       ENST00000320216       44885953
-65           ITGB2 ENSG00000160255       ENST00000320216       44885953
-66           ITGB2 ENSG00000160255       ENST00000320216       44885953
-67           ITGB2 ENSG00000160255       ENST00000320216       44885953
-68           ITGB2 ENSG00000160255       ENST00000320216       44885953
-69           ITGB2 ENSG00000160255       ENST00000320216       44885953
-70           ITGB2 ENSG00000160255       ENST00000521987       44885953
-71           ITGB2 ENSG00000160255       ENST00000521987       44885953
-72           ITGB2 ENSG00000160255       ENST00000521987       44885953
-73           ITGB2 ENSG00000160255       ENST00000523663       44885953
-74           ITGB2 ENSG00000160255       ENST00000523663       44885953
-75           ITGB2 ENSG00000160255       ENST00000523663       44885953
-76           ITGB2 ENSG00000160255       ENST00000523663       44885953
-77           ITGB2 ENSG00000160255       ENST00000523663       44885953
-78           ITGB2 ENSG00000160255       ENST00000522931       44885953
-79           ITGB2 ENSG00000160255       ENST00000522931       44885953
-80           ITGB2 ENSG00000160255       ENST00000522931       44885953
-81           ITGB2 ENSG00000160255       ENST00000522931       44885953
-82           ITGB2 ENSG00000160255       ENST00000522931       44885953
-83           ITGB2 ENSG00000160255       ENST00000479202       44885953
-84           ITGB2 ENSG00000160255       ENST00000479202       44885953
-85           ITGB2 ENSG00000160255       ENST00000479202       44885953
-86           ITGB2 ENSG00000160255       ENST00000523323       44885953
-87           ITGB2 ENSG00000160255       ENST00000523323       44885953
-88           ITGB2 ENSG00000160255       ENST00000523323       44885953
-89           ITGB2 ENSG00000160255       ENST00000523323       44885953
-90           ITGB2 ENSG00000160255       ENST00000523323       44885953
-91           ITGB2 ENSG00000160255       ENST00000523323       44885953
-92           ITGB2 ENSG00000160255       ENST00000523323       44885953
-93           ITGB2 ENSG00000160255       ENST00000523323       44885953
-94           ITGB2 ENSG00000160255       ENST00000523323       44885953
-95           ITGB2 ENSG00000160255       ENST00000523323       44885953
-96           ITGB2 ENSG00000160255       ENST00000523323       44885953
-97           ITGB2 ENSG00000160255       ENST00000523323       44885953
-98           ITGB2 ENSG00000160255       ENST00000523323       44885953
-99           ITGB2 ENSG00000160255       ENST00000523323       44885953
-100          ITGB2 ENSG00000160255       ENST00000523323       44885953
-      end_position
-1         44439110
-2          7092716
-3          8433174
-4         39171560
-5         41872054
-6         41872054
-7         44931989
-8         44931989
-9         44931989
-10        44931989
-11        44931989
-12        44931989
-13        44931989
-14        44931989
-15        44931989
-16        44931989
-17        44931989
-18        44931989
-19        44931989
-20        44931989
-21        44931989
-22        44931989
-23        44931989
-24        44931989
-25        44931989
-26        44931989
-27        44931989
-28        44931989
-29        44931989
-30        44931989
-31        44931989
-32        44931989
-33        44931989
-34        44931989
-35        44931989
-36        44931989
-37        44931989
-38        44931989
-39        44931989
-40        44931989
-41        44931989
-42        44931989
-43        44931989
-44        44931989
-45        44931989
-46        44931989
-47        44931989
-48        44931989
-49        44931989
-50        44931989
-51        44931989
-52        44931989
-53        44931989
-54        44931989
-55        44931989
-56        44931989
-57        44931989
-58        44931989
-59        44931989
-60        44931989
-61        44931989
-62        44931989
-63        44931989
-64        44931989
-65        44931989
-66        44931989
-67        44931989
-68        44931989
-69        44931989
-70        44931989
-71        44931989
-72        44931989
-73        44931989
-74        44931989
-75        44931989
-76        44931989
-77        44931989
-78        44931989
-79        44931989
-80        44931989
-81        44931989
-82        44931989
-83        44931989
-84        44931989
-85        44931989
-86        44931989
-87        44931989
-88        44931989
-89        44931989
-90        44931989
-91        44931989
-92        44931989
-93        44931989
-94        44931989
-95        44931989
-96        44931989
-97        44931989
-98        44931989
-99        44931989
-100       44931989
- [ reached getOption(&quot;max.print&quot;) -- omitted 13878 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 5
+   hgnc_symbol ensembl_gene_id ensembl_transcript_id start_position
+         &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;          &lt;int&gt;
+1              ENSG00000264452       ENST00000583496       44439035
+2              ENSG00000274046       ENST00000617336        7092616
+3              ENSG00000278775       ENST00000619112        8433085
+4              ENSG00000276873       ENST00000616808       39171462
+5              ENSG00000236545       ENST00000458654       41870633
+6              ENSG00000236545       ENST00000458654       41870633
+7        ITGB2 ENSG00000160255       ENST00000302347       44885953
+8        ITGB2 ENSG00000160255       ENST00000302347       44885953
+9        ITGB2 ENSG00000160255       ENST00000302347       44885953
+10       ITGB2 ENSG00000160255       ENST00000302347       44885953
+# ... with 13,968 more rows, and 1 more variables: end_position &lt;int&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Verbs for inspecting data</h2></hgroup><article  id="verbs-for-inspecting-data" class="smaller ">
 
@@ -1504,160 +497,22 @@ gene_by_exon %&gt;%
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   rename(stop = end_position, start = start_position)</pre>
 
-<pre >      ensembl_gene_id ensembl_transcript_id ensembl_exon_id
-1     ENSG00000264452       ENST00000583496 ENSE00002709519
-2     ENSG00000274046       ENST00000617336 ENSE00003722332
-3     ENSG00000278775       ENST00000619112 ENSE00003751812
-4     ENSG00000276873       ENST00000616808 ENSE00003730872
-5     ENSG00000236545       ENST00000458654 ENSE00001729372
-6     ENSG00000236545       ENST00000458654 ENSE00001673061
-7     ENSG00000160255       ENST00000302347 ENSE00003791070
-8     ENSG00000160255       ENST00000302347 ENSE00003688153
-9     ENSG00000160255       ENST00000302347 ENSE00003784896
-10    ENSG00000160255       ENST00000302347 ENSE00003569344
-11    ENSG00000160255       ENST00000302347 ENSE00003648854
-12    ENSG00000160255       ENST00000302347 ENSE00003786943
-13    ENSG00000160255       ENST00000302347 ENSE00003692776
-14    ENSG00000160255       ENST00000302347 ENSE00003596110
-15    ENSG00000160255       ENST00000302347 ENSE00003676989
-16    ENSG00000160255       ENST00000302347 ENSE00003610443
-17    ENSG00000160255       ENST00000302347 ENSE00003474058
-18    ENSG00000160255       ENST00000302347 ENSE00003538737
-19    ENSG00000160255       ENST00000302347 ENSE00003608831
-20    ENSG00000160255       ENST00000302347 ENSE00003634407
-21    ENSG00000160255       ENST00000302347 ENSE00001530484
-22    ENSG00000160255       ENST00000302347 ENSE00003654080
-23    ENSG00000160255       ENST00000518033 ENSE00002121803
-24    ENSG00000160255       ENST00000518033 ENSE00002135361
-25    ENSG00000160255       ENST00000523126 ENSE00002119259
-26    ENSG00000160255       ENST00000523126 ENSE00002100821
-27    ENSG00000160255       ENST00000521995 ENSE00003791070
-28    ENSG00000160255       ENST00000521995 ENSE00003634407
-29    ENSG00000160255       ENST00000521995 ENSE00001530484
-30    ENSG00000160255       ENST00000521995 ENSE00002118353
-31    ENSG00000160255       ENST00000397846 ENSE00003791070
-32    ENSG00000160255       ENST00000397846 ENSE00003634407
-33    ENSG00000160255       ENST00000397846 ENSE00001854101
-34    ENSG00000160255       ENST00000397846 ENSE00003532481
-35    ENSG00000160255       ENST00000479849 ENSE00003476552
-36    ENSG00000160255       ENST00000479849 ENSE00001858561
-37    ENSG00000160255       ENST00000479849 ENSE00003542143
-38    ENSG00000160255       ENST00000517819 ENSE00003791070
-39    ENSG00000160255       ENST00000517819 ENSE00003634407
-40    ENSG00000160255       ENST00000517819 ENSE00002110944
-41    ENSG00000160255       ENST00000517819 ENSE00002093217
-42    ENSG00000160255       ENST00000524251 ENSE00002104346
-43    ENSG00000160255       ENST00000524251 ENSE00002135256
-44    ENSG00000160255       ENST00000524251 ENSE00003650963
-45    ENSG00000160255       ENST00000524251 ENSE00002125359
-46    ENSG00000160255       ENST00000520389 ENSE00003791070
-47    ENSG00000160255       ENST00000520389 ENSE00003634407
-48    ENSG00000160255       ENST00000520389 ENSE00003607150
-49    ENSG00000160255       ENST00000520389 ENSE00002121803
-50    ENSG00000160255       ENST00000520389 ENSE00002103133
-      chromosome_name    start     stop  hgnc_symbol    hgnc_id strand
-1                  21 44439035 44439110                              1
-2                  21  7092616  7092716                              1
-3                  21  8433085  8433174                              1
-4                  21 39171462 39171560                             -1
-5                  21 41870633 41872054                              1
-6                  21 41870633 41872054                              1
-7                  21 44885953 44931989        ITGB2  HGNC:6155     -1
-8                  21 44885953 44931989        ITGB2  HGNC:6155     -1
-9                  21 44885953 44931989        ITGB2  HGNC:6155     -1
-10                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-11                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-12                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-13                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-14                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-15                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-16                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-17                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-18                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-19                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-20                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-21                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-22                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-23                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-24                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-25                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-26                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-27                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-28                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-29                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-30                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-31                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-32                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-33                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-34                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-35                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-36                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-37                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-38                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-39                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-40                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-41                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-42                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-43                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-44                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-45                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-46                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-47                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-48                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-49                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-50                 21 44885953 44931989        ITGB2  HGNC:6155     -1
-                            gene_biotype
-1                                 snoRNA
-2                               misc_RNA
-3                               misc_RNA
-4                               misc_RNA
-5                              antisense
-6                              antisense
-7                         protein_coding
-8                         protein_coding
-9                         protein_coding
-10                        protein_coding
-11                        protein_coding
-12                        protein_coding
-13                        protein_coding
-14                        protein_coding
-15                        protein_coding
-16                        protein_coding
-17                        protein_coding
-18                        protein_coding
-19                        protein_coding
-20                        protein_coding
-21                        protein_coding
-22                        protein_coding
-23                        protein_coding
-24                        protein_coding
-25                        protein_coding
-26                        protein_coding
-27                        protein_coding
-28                        protein_coding
-29                        protein_coding
-30                        protein_coding
-31                        protein_coding
-32                        protein_coding
-33                        protein_coding
-34                        protein_coding
-35                        protein_coding
-36                        protein_coding
-37                        protein_coding
-38                        protein_coding
-39                        protein_coding
-40                        protein_coding
-41                        protein_coding
-42                        protein_coding
-43                        protein_coding
-44                        protein_coding
-45                        protein_coding
-46                        protein_coding
-47                        protein_coding
-48                        protein_coding
-49                        protein_coding
-50                        protein_coding
- [ reached getOption(&quot;max.print&quot;) -- omitted 13928 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 10
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
+2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
+3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
+4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
+5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
+6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
+7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
+8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
+9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
+10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
+# ... with 13,968 more rows, and 6 more variables: start &lt;int&gt;,
+#   stop &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>mutate()</code> </h2><h3> Add or replace columns</h3></hgroup><article  id="mutate-add-or-replace-columns" class="smaller build">
 
@@ -1672,258 +527,20 @@ gene_by_exon %&gt;%
   mutate(  length = end_position - start_position) %&gt;% 
   dplyr::select(hgnc_symbol, length)  </pre>
 
-<pre >       hgnc_symbol  length
-1                       75
-2                      100
-3                       89
-4                       98
-5                     1421
-6                     1421
-7            ITGB2   46036
-8            ITGB2   46036
-9            ITGB2   46036
-10           ITGB2   46036
-11           ITGB2   46036
-12           ITGB2   46036
-13           ITGB2   46036
-14           ITGB2   46036
-15           ITGB2   46036
-16           ITGB2   46036
-17           ITGB2   46036
-18           ITGB2   46036
-19           ITGB2   46036
-20           ITGB2   46036
-21           ITGB2   46036
-22           ITGB2   46036
-23           ITGB2   46036
-24           ITGB2   46036
-25           ITGB2   46036
-26           ITGB2   46036
-27           ITGB2   46036
-28           ITGB2   46036
-29           ITGB2   46036
-30           ITGB2   46036
-31           ITGB2   46036
-32           ITGB2   46036
-33           ITGB2   46036
-34           ITGB2   46036
-35           ITGB2   46036
-36           ITGB2   46036
-37           ITGB2   46036
-38           ITGB2   46036
-39           ITGB2   46036
-40           ITGB2   46036
-41           ITGB2   46036
-42           ITGB2   46036
-43           ITGB2   46036
-44           ITGB2   46036
-45           ITGB2   46036
-46           ITGB2   46036
-47           ITGB2   46036
-48           ITGB2   46036
-49           ITGB2   46036
-50           ITGB2   46036
-51           ITGB2   46036
-52           ITGB2   46036
-53           ITGB2   46036
-54           ITGB2   46036
-55           ITGB2   46036
-56           ITGB2   46036
-57           ITGB2   46036
-58           ITGB2   46036
-59           ITGB2   46036
-60           ITGB2   46036
-61           ITGB2   46036
-62           ITGB2   46036
-63           ITGB2   46036
-64           ITGB2   46036
-65           ITGB2   46036
-66           ITGB2   46036
-67           ITGB2   46036
-68           ITGB2   46036
-69           ITGB2   46036
-70           ITGB2   46036
-71           ITGB2   46036
-72           ITGB2   46036
-73           ITGB2   46036
-74           ITGB2   46036
-75           ITGB2   46036
-76           ITGB2   46036
-77           ITGB2   46036
-78           ITGB2   46036
-79           ITGB2   46036
-80           ITGB2   46036
-81           ITGB2   46036
-82           ITGB2   46036
-83           ITGB2   46036
-84           ITGB2   46036
-85           ITGB2   46036
-86           ITGB2   46036
-87           ITGB2   46036
-88           ITGB2   46036
-89           ITGB2   46036
-90           ITGB2   46036
-91           ITGB2   46036
-92           ITGB2   46036
-93           ITGB2   46036
-94           ITGB2   46036
-95           ITGB2   46036
-96           ITGB2   46036
-97           ITGB2   46036
-98           ITGB2   46036
-99           ITGB2   46036
-100          ITGB2   46036
-101          ITGB2   46036
-102          ITGB2   46036
-103          ITGB2   46036
-104          ITGB2   46036
-105          ITGB2   46036
-106          ITGB2   46036
-107          ITGB2   46036
-108          ITGB2   46036
-109          ITGB2   46036
-110          ITGB2   46036
-111          ITGB2   46036
-112          ITGB2   46036
-113          ITGB2   46036
-114          ITGB2   46036
-115          ITGB2   46036
-116          ITGB2   46036
-117          ITGB2   46036
-118          ITGB2   46036
-119          ITGB2   46036
-120          ITGB2   46036
-121          ITGB2   46036
-122          ITGB2   46036
-123          ITGB2   46036
-124          ITGB2   46036
-125          ITGB2   46036
-126          ITGB2   46036
-127          ITGB2   46036
-128          ITGB2   46036
-129          ITGB2   46036
-130          ITGB2   46036
-131          ITGB2   46036
-132          ITGB2   46036
-133          ITGB2   46036
-134          ITGB2   46036
-135          ITGB2   46036
-136          ITGB2   46036
-137          ITGB2   46036
-138          ITGB2   46036
-139          ITGB2   46036
-140          ITGB2   46036
-141          ITGB2   46036
-142          ITGB2   46036
-143          ITGB2   46036
-144          ITGB2   46036
-145          ITGB2   46036
-146          ITGB2   46036
-147          ITGB2   46036
-148          ITGB2   46036
-149          ITGB2   46036
-150          ITGB2   46036
-151          ITGB2   46036
-152          ITGB2   46036
-153          ITGB2   46036
-154          ITGB2   46036
-155          ITGB2   46036
-156          ITGB2   46036
-157          ITGB2   46036
-158          ITGB2   46036
-159          ITGB2   46036
-160          ITGB2   46036
-161          ITGB2   46036
-162          ITGB2   46036
-163          ITGB2   46036
-164          ITGB2   46036
-165          ITGB2   46036
-166          ITGB2   46036
-167          ITGB2   46036
-168          ITGB2   46036
-169          ITGB2   46036
-170          ITGB2   46036
-171          ITGB2   46036
-172          ITGB2   46036
-173          ITGB2   46036
-174          ITGB2   46036
-175          ITGB2   46036
-176          ITGB2   46036
-177          ITGB2   46036
-178          ITGB2   46036
-179          ITGB2   46036
-180          ITGB2   46036
-181          ITGB2   46036
-182          ITGB2   46036
-183          ITGB2   46036
-184          ITGB2   46036
-185          ITGB2   46036
-186          ITGB2   46036
-187          ITGB2   46036
-188          ITGB2   46036
-189          ITGB2   46036
-190          ITGB2   46036
-191          ITGB2   46036
-192          ITGB2   46036
-193          ITGB2   46036
-194          ITGB2   46036
-195          ITGB2   46036
-196          ITGB2   46036
-197          ITGB2   46036
-198          ITGB2   46036
-199          ITGB2   46036
-200          ITGB2   46036
-201          ITGB2   46036
-202          ITGB2   46036
-203      RNA5SP489     108
-204     RNU6-1149P      96
-205                    103
-206                    103
-207         MIR802      93
-208       RNU2-55P     173
-209                    107
-210                     83
-211        MIR4760      79
-212          S100B    6246
-213          S100B    6246
-214          S100B    6246
-215          S100B    6246
-216          S100B    6246
-217          S100B    6246
-218          S100B    6246
-219          S100B    6246
-220          S100B    6246
-221          DIP2A  110953
-222          DIP2A  110953
-223          DIP2A  110953
-224          DIP2A  110953
-225          DIP2A  110953
-226          DIP2A  110953
-227          DIP2A  110953
-228          DIP2A  110953
-229          DIP2A  110953
-230          DIP2A  110953
-231          DIP2A  110953
-232          DIP2A  110953
-233          DIP2A  110953
-234          DIP2A  110953
-235          DIP2A  110953
-236          DIP2A  110953
-237          DIP2A  110953
-238          DIP2A  110953
-239          DIP2A  110953
-240          DIP2A  110953
-241          DIP2A  110953
-242          DIP2A  110953
-243          DIP2A  110953
-244          DIP2A  110953
-245          DIP2A  110953
-246          DIP2A  110953
-247          DIP2A  110953
-248          DIP2A  110953
-249          DIP2A  110953
-250          DIP2A  110953
- [ reached getOption(&quot;max.print&quot;) -- omitted 13728 rows ]</pre></div>
+<pre ># A tibble: 13,978 × 2
+   hgnc_symbol length
+         &lt;chr&gt;  &lt;int&gt;
+1                  75
+2                 100
+3                  89
+4                  98
+5                1421
+6                1421
+7        ITGB2  46036
+8        ITGB2  46036
+9        ITGB2  46036
+10       ITGB2  46036
+# ... with 13,968 more rows</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>distinct()</code> </h2><h3> Unique rows</h3></hgroup><article  id="distinct-unique-rows" class="smaller ">
 
@@ -1936,239 +553,20 @@ gene_by_exon %&gt;%
   dplyr::select(hgnc_symbol, length) %&gt;% 
   distinct()</pre>
 
-<pre >    hgnc_symbol  length
-1         ITGB2   46036
-2         S100B    6246
-3         DIP2A  110953
-4     KRTAP12-2     738
-5     KRTAP12-4     446
-6          PCNT  121647
-7     KRTAP12-3     409
-8     KRTAP10-6    1237
-9     KRTAP12-1     587
-10    KRTAP10-2    1148
-11        BACH1  436680
-12    KRTAP10-8     875
-13       UBE2G2   33439
-14    KRTAP10-3     970
-15    KRTAP10-7    1577
-16        BACE2  114717
-17        RIPK4   27737
-18      TMPRSS2   66565
-19        SUMO3   13162
-20   KRTAP10-11    1236
-21     C21orf33   12118
-22         CBR1    3225
-23       DOPEY2  137492
-24        CLIC6   48838
-25       HSPA13   12369
-26        KCNE2    7365
-27       AGPAT3  121350
-28    C21orf140     755
-29      SMIM11A   32386
-30      UBASH3A   44234
-31                 5251
-32        RBM11   12242
-33       COL6A1   23313
-34        KCNE1   65587
-35        CXADR   81197
-36        RCAN1  102000
-37         BTG3   19294
-38       PAXBP1   37959
-39        FAM3B   53219
-40         WDR4   36474
-41                 3775
-42          MX1   38910
-43         YBEY   11414
-44       NDUFV3   33660
-45      ADAMTS5   48601
-46        CRYAA    3797
-47      PTTG1IP   24318
-48   KRTAP10-10    1099
-49       MCM3AP   51171
-50       PKNOX1   59421
-51       TSPEAR  213688
-52    KRTAP10-1    1214
-53    KRTAP10-4   64560
-54    KRTAP10-9    1170
-55          CBS   23752
-56        DSCR3   44499
-57    KRTAP10-5    1149
-58        NCAM2  545014
-59        HMGN1    7332
-60        LRRC3    6710
-61       CRYZL1   54585
-62       DONSON   29166
-63         PFKL   27325
-64   KRTAP10-12     872
-65        GRIK1  403100
-66      SMIM11B   32891
-67          LSS   40683
-68       PRDM15   81257
-69     MAP3K7CL   98418
-70        EVA1C  103391
-71        TIAM1  441561
-72         JAM2   78290
-73    KRTAP19-5     460
-74        TRPM2   92918
-75       SH3BGR   69651
-76       COL6A2   34752
-77               346920
-78      C21orf2   10458
-79         FTCD   19305
-80                12605
-81        CHODL  366110
-82      SLC37A1   85432
-83        ABCG1   97555
-84        NRIP1  104701
-85      SLC19A1   50839
-86     C21orf58   23694
-87          MX2   47447
-88         PCP4   62080
-89      B3GALT5  116695
-90          SON   34863
-91        IGSF5   56689
-92        ATP5O   12527
-93        DSCAM  836140
-94         TTC3  129886
-95         CCT8   17992
-96       IFNAR1   35385
-97        LCA5L   39961
-98        USP16   29859
-99     C21orf62   20179
-100        PWP2   23891
-101     TMEM50B   47526
-102       OLIG1    2276
-103        HLCS  239348
-104      RWDD2B   14994
-105     RIPPLY3   13509
-106        SIM2   50784
-107                 459
-108     SPATC1L   23328
-109       ITSN1  257461
-110       CYYR1  107075
-111        HUNK  171318
-112      IFNAR2   35774
-113        CBSL   23171
-114       PDE9A  121873
-115       RSPH1   23868
-116       RUNX1 1216866
-117        PDXK   43213
-118        PIGP   14000
-119       SETD4   44848
-120       MORC3   65959
-121      CHAF1B   33637
-122        RRP1   15780
-123    TMPRSS15  216763
-124       SYNJ1   99289
-125       BRWD1  137383
-126               66891
-127      DNMT3L   15877
-128                9973
-129     COL18A1  108583
-130      POFUT2   23970
-131      ADARB1  152707
-132     FAM207A   36979
-133   KRTAP19-4     309
-134   KRTAP19-2     379
-135        GART   39560
-136      KCNE1B   13251
-137        AIRE   12810
-138         WRB   48284
-139      IL10RB   43829
-140                1707
-141    C21orf91   30419
-142       MRPS6   69810
-143      SLC5A3   32692
-144        TFF1    4312
-145        TFF3    3984
-146        LIPI  102078
-147       DSCR8   66565
-148   KRTAP19-8     317
-149       ATP5J   19170
-150       GABPA   37890
-151   KRTAP21-1     598
-152   KRTAP21-2     439
-153       DSCR4  169935
-154       U2AF1   14631
-155      HSF2BP  130301
-156     DNAJC28    6190
-157      IFNGR2   76452
-158     U2AF1L5   14638
-159               36438
-160      CLDN14  115948
-161     TMPRSS3   24956
-162      ICOSLG   17975
-163       OLIG2    3351
-164        LTN1   64812
-165      N6AMT1   13180
-166               33459
-167    KRTAP7-1     720
-168   KRTAP20-3     272
-169      DYRK1A  151660
-170       PRMT2   29957
-171   KRTAP24-1    1649
-172   KRTAP25-1     369
-173   KRTAP26-1    1192
-174   KRTAP27-1     681
-175   KRTAP23-1     210
-176   KRTAP13-2     866
-177   KRTAP13-1     748
-178   KRTAP13-3     703
-179   KRTAP13-4     796
-180      SAMSN1   98174
-181   KRTAP19-3     521
-182   KRTAP15-1     670
-183         APP  290578
-184        URB1   82008
-185       POTED   31727
-186        SOD1    9309
-187      ZBTB21   23556
-188         ERG  281753
-189   KRTAP20-2     383
-190   KRTAP19-6     329
-191        TFF2    4771
-192   KRTAP21-3     252
-193   KRTAP19-7     439
-194       CLDN8    2067
-195        CBR3   11654
-196    TRAPPC10   94233
-197       PCBP3  298760
-198        CSTB    3934
-199       USP25  150044
-200       PSMG1    9082
-201                5346
-202        SIK1   12613
-203      KCNJ15  150323
-204     ADAMTS1    9662
-205      TCP10L   12532
-206      MIS18A   10850
-207       H2BFS     459
-208    C21orf59   20787
-209       RRP1B   36531
-210               17462
-211       SCAF4   61042
-212       C2CD2   68778
-213        MRAP   22971
-214               18173
-215   KRTAP19-1     645
-216        TPTE   84587
-217      CLDN17    1192
-218      MRPL39   21861
-219        ETS2   19648
-220      UMODL1   80494
-221               23863
-222               49131
-223   KRTAP11-1     911
-224    KRTAP8-1     555
-225       KCNJ6  309070
-226   KRTAP22-2     292
-227    KRTAP6-3     635
-228    KRTAP6-2     312
-229   KRTAP22-1     295
-230    KRTAP6-1     499
-231   KRTAP20-1     274
-232   KRTAP20-4     223</pre></div>
+<pre ># A tibble: 232 × 2
+   hgnc_symbol length
+         &lt;chr&gt;  &lt;int&gt;
+1        ITGB2  46036
+2        S100B   6246
+3        DIP2A 110953
+4    KRTAP12-2    738
+5    KRTAP12-4    446
+6         PCNT 121647
+7    KRTAP12-3    409
+8    KRTAP10-6   1237
+9    KRTAP12-1    587
+10   KRTAP10-2   1148
+# ... with 222 more rows</pre></div>
 
 <div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
@@ -2201,7 +599,7 @@ gene_by_exon %&gt;%
 18                         pseudogene            103
 19                              miRNA             86</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>mutate_at(), mutate_all(), mutate_if()</code> </h2><h3> Changing many columns</h3></hgroup><article  id="mutate_at-mutate_all-mutate_if-changing-many-columns" class="smaller ">
+<p>## <code>mutate_at(), mutate_all(), mutate_if()</code> | Changing many columns</p>
 
 <div class = 'row'><div class = 'box col-12 bg-blue'><h3>Usage</h3>
 
@@ -2215,171 +613,33 @@ gene_by_exon %&gt;%
 
 <div id="unnamed-chunk-23" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
-  mutate_at(vars(contains(&quot;position&quot;)), funs(. +1))</pre></div>
+  mutate_at(vars(contains(&quot;position&quot;)), funs(. + 1))</pre></div>
 
 </div></div><div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Coordinate conversion</h3>
 
 <div id="unnamed-chunk-24" class="chunk shadow">
 <div class="row">
-<div class="col-4">
+<div class="col-5">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
-  mutate_if(is.numeric, funs(. +1))</pre></div>
+  mutate_if(is.numeric, funs(. + 1))</pre></div>
 
-<div class="col-8">
-<pre >      ensembl_gene_id ensembl_transcript_id ensembl_exon_id
-1     ENSG00000264452       ENST00000583496 ENSE00002709519
-2     ENSG00000274046       ENST00000617336 ENSE00003722332
-3     ENSG00000278775       ENST00000619112 ENSE00003751812
-4     ENSG00000276873       ENST00000616808 ENSE00003730872
-5     ENSG00000236545       ENST00000458654 ENSE00001729372
-6     ENSG00000236545       ENST00000458654 ENSE00001673061
-7     ENSG00000160255       ENST00000302347 ENSE00003791070
-8     ENSG00000160255       ENST00000302347 ENSE00003688153
-9     ENSG00000160255       ENST00000302347 ENSE00003784896
-10    ENSG00000160255       ENST00000302347 ENSE00003569344
-11    ENSG00000160255       ENST00000302347 ENSE00003648854
-12    ENSG00000160255       ENST00000302347 ENSE00003786943
-13    ENSG00000160255       ENST00000302347 ENSE00003692776
-14    ENSG00000160255       ENST00000302347 ENSE00003596110
-15    ENSG00000160255       ENST00000302347 ENSE00003676989
-16    ENSG00000160255       ENST00000302347 ENSE00003610443
-17    ENSG00000160255       ENST00000302347 ENSE00003474058
-18    ENSG00000160255       ENST00000302347 ENSE00003538737
-19    ENSG00000160255       ENST00000302347 ENSE00003608831
-20    ENSG00000160255       ENST00000302347 ENSE00003634407
-21    ENSG00000160255       ENST00000302347 ENSE00001530484
-22    ENSG00000160255       ENST00000302347 ENSE00003654080
-23    ENSG00000160255       ENST00000518033 ENSE00002121803
-24    ENSG00000160255       ENST00000518033 ENSE00002135361
-25    ENSG00000160255       ENST00000523126 ENSE00002119259
-26    ENSG00000160255       ENST00000523126 ENSE00002100821
-27    ENSG00000160255       ENST00000521995 ENSE00003791070
-28    ENSG00000160255       ENST00000521995 ENSE00003634407
-29    ENSG00000160255       ENST00000521995 ENSE00001530484
-30    ENSG00000160255       ENST00000521995 ENSE00002118353
-31    ENSG00000160255       ENST00000397846 ENSE00003791070
-32    ENSG00000160255       ENST00000397846 ENSE00003634407
-33    ENSG00000160255       ENST00000397846 ENSE00001854101
-34    ENSG00000160255       ENST00000397846 ENSE00003532481
-35    ENSG00000160255       ENST00000479849 ENSE00003476552
-36    ENSG00000160255       ENST00000479849 ENSE00001858561
-37    ENSG00000160255       ENST00000479849 ENSE00003542143
-38    ENSG00000160255       ENST00000517819 ENSE00003791070
-39    ENSG00000160255       ENST00000517819 ENSE00003634407
-40    ENSG00000160255       ENST00000517819 ENSE00002110944
-41    ENSG00000160255       ENST00000517819 ENSE00002093217
-42    ENSG00000160255       ENST00000524251 ENSE00002104346
-43    ENSG00000160255       ENST00000524251 ENSE00002135256
-44    ENSG00000160255       ENST00000524251 ENSE00003650963
-45    ENSG00000160255       ENST00000524251 ENSE00002125359
-46    ENSG00000160255       ENST00000520389 ENSE00003791070
-47    ENSG00000160255       ENST00000520389 ENSE00003634407
-48    ENSG00000160255       ENST00000520389 ENSE00003607150
-49    ENSG00000160255       ENST00000520389 ENSE00002121803
-50    ENSG00000160255       ENST00000520389 ENSE00002103133
-      chromosome_name start_position end_position  hgnc_symbol    hgnc_id
-1                  22       44439036     44439111                        
-2                  22        7092617      7092717                        
-3                  22        8433086      8433175                        
-4                  22       39171463     39171561                        
-5                  22       41870634     41872055                        
-6                  22       41870634     41872055                        
-7                  22       44885954     44931990        ITGB2  HGNC:6155
-8                  22       44885954     44931990        ITGB2  HGNC:6155
-9                  22       44885954     44931990        ITGB2  HGNC:6155
-10                 22       44885954     44931990        ITGB2  HGNC:6155
-11                 22       44885954     44931990        ITGB2  HGNC:6155
-12                 22       44885954     44931990        ITGB2  HGNC:6155
-13                 22       44885954     44931990        ITGB2  HGNC:6155
-14                 22       44885954     44931990        ITGB2  HGNC:6155
-15                 22       44885954     44931990        ITGB2  HGNC:6155
-16                 22       44885954     44931990        ITGB2  HGNC:6155
-17                 22       44885954     44931990        ITGB2  HGNC:6155
-18                 22       44885954     44931990        ITGB2  HGNC:6155
-19                 22       44885954     44931990        ITGB2  HGNC:6155
-20                 22       44885954     44931990        ITGB2  HGNC:6155
-21                 22       44885954     44931990        ITGB2  HGNC:6155
-22                 22       44885954     44931990        ITGB2  HGNC:6155
-23                 22       44885954     44931990        ITGB2  HGNC:6155
-24                 22       44885954     44931990        ITGB2  HGNC:6155
-25                 22       44885954     44931990        ITGB2  HGNC:6155
-26                 22       44885954     44931990        ITGB2  HGNC:6155
-27                 22       44885954     44931990        ITGB2  HGNC:6155
-28                 22       44885954     44931990        ITGB2  HGNC:6155
-29                 22       44885954     44931990        ITGB2  HGNC:6155
-30                 22       44885954     44931990        ITGB2  HGNC:6155
-31                 22       44885954     44931990        ITGB2  HGNC:6155
-32                 22       44885954     44931990        ITGB2  HGNC:6155
-33                 22       44885954     44931990        ITGB2  HGNC:6155
-34                 22       44885954     44931990        ITGB2  HGNC:6155
-35                 22       44885954     44931990        ITGB2  HGNC:6155
-36                 22       44885954     44931990        ITGB2  HGNC:6155
-37                 22       44885954     44931990        ITGB2  HGNC:6155
-38                 22       44885954     44931990        ITGB2  HGNC:6155
-39                 22       44885954     44931990        ITGB2  HGNC:6155
-40                 22       44885954     44931990        ITGB2  HGNC:6155
-41                 22       44885954     44931990        ITGB2  HGNC:6155
-42                 22       44885954     44931990        ITGB2  HGNC:6155
-43                 22       44885954     44931990        ITGB2  HGNC:6155
-44                 22       44885954     44931990        ITGB2  HGNC:6155
-45                 22       44885954     44931990        ITGB2  HGNC:6155
-46                 22       44885954     44931990        ITGB2  HGNC:6155
-47                 22       44885954     44931990        ITGB2  HGNC:6155
-48                 22       44885954     44931990        ITGB2  HGNC:6155
-49                 22       44885954     44931990        ITGB2  HGNC:6155
-50                 22       44885954     44931990        ITGB2  HGNC:6155
-      strand                       gene_biotype
-1          2                             snoRNA
-2          2                           misc_RNA
-3          2                           misc_RNA
-4          0                           misc_RNA
-5          2                          antisense
-6          2                          antisense
-7          0                     protein_coding
-8          0                     protein_coding
-9          0                     protein_coding
-10         0                     protein_coding
-11         0                     protein_coding
-12         0                     protein_coding
-13         0                     protein_coding
-14         0                     protein_coding
-15         0                     protein_coding
-16         0                     protein_coding
-17         0                     protein_coding
-18         0                     protein_coding
-19         0                     protein_coding
-20         0                     protein_coding
-21         0                     protein_coding
-22         0                     protein_coding
-23         0                     protein_coding
-24         0                     protein_coding
-25         0                     protein_coding
-26         0                     protein_coding
-27         0                     protein_coding
-28         0                     protein_coding
-29         0                     protein_coding
-30         0                     protein_coding
-31         0                     protein_coding
-32         0                     protein_coding
-33         0                     protein_coding
-34         0                     protein_coding
-35         0                     protein_coding
-36         0                     protein_coding
-37         0                     protein_coding
-38         0                     protein_coding
-39         0                     protein_coding
-40         0                     protein_coding
-41         0                     protein_coding
-42         0                     protein_coding
-43         0                     protein_coding
-44         0                     protein_coding
-45         0                     protein_coding
-46         0                     protein_coding
-47         0                     protein_coding
-48         0                     protein_coding
-49         0                     protein_coding
-50         0                     protein_coding
- [ reached getOption(&quot;max.print&quot;) -- omitted 13928 rows ]</pre></div></div></div>
+<div class="col-7">
+<pre ># A tibble: 13,978 × 10
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;
+1  ENSG00000264452       ENST00000583496 ENSE00002709519              22
+2  ENSG00000274046       ENST00000617336 ENSE00003722332              22
+3  ENSG00000278775       ENST00000619112 ENSE00003751812              22
+4  ENSG00000276873       ENST00000616808 ENSE00003730872              22
+5  ENSG00000236545       ENST00000458654 ENSE00001729372              22
+6  ENSG00000236545       ENST00000458654 ENSE00001673061              22
+7  ENSG00000160255       ENST00000302347 ENSE00003791070              22
+8  ENSG00000160255       ENST00000302347 ENSE00003688153              22
+9  ENSG00000160255       ENST00000302347 ENSE00003784896              22
+10 ENSG00000160255       ENST00000302347 ENSE00003569344              22
+# ... with 13,968 more rows, and 6 more variables: start_position &lt;dbl&gt;,
+#   end_position &lt;dbl&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;dbl&gt;,
+#   gene_biotype &lt;chr&gt;</pre></div></div></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Grouping and summarizing</h2></hgroup><article  id="grouping-and-summarizing" class="smaller ">
 
@@ -2439,22 +699,118 @@ Groups: ensembl_gene_id [5]
 2       AATBC     8
 3      ABCC13    63</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Joining data frames</h2></hgroup><article  id="joining-data-frames" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Non-standard evaluation</h2></hgroup><article  id="non-standard-evaluation" class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Sample data from Clinvar</h2></hgroup><article  id="sample-data-from-clinvar" class="smaller ">
+<div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Basics</h3>
+
+<ul>
+<li><code>filter(), mutate(), summarise(), arrange(), select()</code> and <code>group_by()</code> take unquoted variable names.</li>
+<li><em>Non-standard evaluation</em> is standard in many tidyverse functions</li>
+<li>Reduces typing</li>
+<li>Enhances speed on back-end</li>
+<li>Use of <code>lazyeval</code> package</li>
+<li>Verbs have alternative version with trailing underscore (<code>select_</code>) for standard evaluation</li>
+<li>The system is to be &quot;soft deprectated&quot; in <code>dplyr</code> 0.6.0, set to be released soon.</li>
+<li>Vignette &quot;Non-standard evaluation&quot;</li>
+</ul>
+
+</div><div class = 'box col-6 bg-yellow2 stretch '><h3>Examples</h3>
 
 <div id="unnamed-chunk-28" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>clinvar &lt;- tribble(~symbol, ~gene_interest, 
-                   &quot;ATP50&quot;, &quot;yes&quot;,
-                   &quot;APP&quot;,   &quot;yes&quot;,
-                   &quot;DIP2A&quot;, &quot;yes&quot;)</pre></div>
+<pre class = 'prettyprint lang-r'>#NSE 
+gene_by_exon %&gt;% 
+  summarize(mean(start_position))</pre>
 
-<div class = 'row'><div class = 'box col-12 bg-blue'><h3>Join two data frames</h3>
+<pre ># A tibble: 1 × 1
+  `mean(start_position)`
+                   &lt;dbl&gt;
+1               34468236</pre>
+
+<pre class = 'prettyprint lang-r'># SE
+gene_by_exon %&gt;% 
+  summarize_(&quot;mean(start_position)&quot;) #!</pre>
+
+<pre ># A tibble: 1 × 1
+  `mean(start_position)`
+                   &lt;dbl&gt;
+1               34468236</pre>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  summarize_(quote(mean(start_position))) #!</pre>
+
+<pre ># A tibble: 1 × 1
+  `mean(start_position)`
+                   &lt;dbl&gt;
+1               34468236</pre>
+
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  summarize_(~mean(start_position)) #!</pre>
+
+<pre ># A tibble: 1 × 1
+  `mean(start_position)`
+                   &lt;dbl&gt;
+1               34468236</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Joining data frames</h2></hgroup><article  id="joining-data-frames" class="smaller ">
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Sample data </h2><h3> Common manual input</h3></hgroup><article  id="sample-data-common-manual-input" class="smaller ">
 
 <div id="unnamed-chunk-29" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_annotation &lt;- gene_by_exon %&gt;% 
-  inner_join(clinvar, by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) # provide the equivalence since columns have a different name
-gene_annotation</pre></div>
+<pre class = 'prettyprint lang-r'>gene_interest &lt;- tribble(~symbol, ~gene_interest, 
+                   &quot;ATP50&quot;, &quot;yes&quot;,
+                   &quot;APP&quot;,   &quot;yes&quot;,
+                   &quot;DIP2A&quot;, &quot;yes&quot;,
+                   &quot;TP53&quot;,  &quot;yes&quot;)</pre></div>
+
+<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Inner join</h3>
+
+<div id="unnamed-chunk-30" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  inner_join(gene_interest, 
+             by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
+
+<pre ># A tibble: 365 × 11
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000160305       ENST00000400274 ENSE00001542216              21
+2  ENSG00000160305       ENST00000400274 ENSE00002347315              21
+3  ENSG00000160305       ENST00000400274 ENSE00002324363              21
+4  ENSG00000160305       ENST00000400274 ENSE00002319629              21
+5  ENSG00000160305       ENST00000400274 ENSE00002218277              21
+6  ENSG00000160305       ENST00000400274 ENSE00002276427              21
+7  ENSG00000160305       ENST00000400274 ENSE00003471299              21
+8  ENSG00000160305       ENST00000400274 ENSE00001542215              21
+9  ENSG00000160305       ENST00000400274 ENSE00003546587              21
+10 ENSG00000160305       ENST00000400274 ENSE00003683586              21
+# ... with 355 more rows, and 7 more variables: start_position &lt;int&gt;,
+#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;, gene_interest &lt;chr&gt;</pre>
+
+<pre class = 'prettyprint lang-r'>  # provide the equivalence since columns have a different name</pre></div>
+
+</div><div class = 'box col-6 bg-blue  stretch'><h3>Outer join</h3>
+
+<div id="unnamed-chunk-31" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
+  full_join(gene_interest, 
+             by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
+
+<pre ># A tibble: 13,980 × 11
+   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
+1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
+2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
+3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
+4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
+5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
+6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
+7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
+8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
+9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
+10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
+# ... with 13,970 more rows, and 7 more variables: start_position &lt;int&gt;,
+#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
+#   gene_biotype &lt;chr&gt;, gene_interest &lt;chr&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Relational operations </h2><h3> <strong>mutating</strong> joins</h3></hgroup><article  id="relational-operations-mutating-joins" class="smaller ">
 
@@ -2468,167 +824,60 @@ gene_annotation</pre></div>
 
 <img src='http://r4ds.had.co.nz/diagrams/join-outer.png' title='fig:'/>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>lead() and lag()</code> </h2><h3> Comparing rows above and below</h3></hgroup><article  id="lead-and-lag-comparing-rows-above-and-below" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>lead()</code> and <code>lag()</code> </h2><h3> Comparing rows above and below</h3></hgroup><article  id="lead-and-lag-comparing-rows-above-and-below" class="smaller ">
 
 <div class = 'row'><div class = 'box col-8 offset-1 bg-blue'><h3>Calculate intergenic distance</h3>
 
-<div id="unnamed-chunk-30" class="chunk shadow">
+<div id="unnamed-chunk-32" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   dplyr::select(ensembl_gene_id, start_position, end_position) %&gt;% 
   distinct() %&gt;% 
   arrange(start_position) %&gt;% 
   mutate(intergenic_length = start_position - lag(end_position)) </pre>
 
-<pre >    ensembl_gene_id start_position end_position intergenic_length
-1   ENSG00000279493        5011799      5017145                NA
-2   ENSG00000277117        5022493      5040666              5348
-3   ENSG00000279687        5073458      5087867             32792
-4   ENSG00000280071        5079294      5128425             -8573
-5   ENSG00000276612        5116343      5133805            -12082
-6   ENSG00000275464        5130871      5154734             -2934
-7   ENSG00000280433        5155499      5165472               765
-8   ENSG00000279669        5232668      5243833             67196
-9   ENSG00000279094        5499151      5502542            255318
-10  ENSG00000274333        5553637      5614880             51095
-11  ENSG00000277777        5597390      5597490            -17490
-12  ENSG00000279186        5703182      5705637            105692
-13  ENSG00000279784        5705345      5707160              -292
-14  ENSG00000279064        5707004      5709456              -156
-15  ENSG00000274559        5972924      5973383            263468
-16  ENSG00000280013        6008604      6008810             35221
-17  ENSG00000279769        6034690      6036093             25880
-18  ENSG00000280191        6060340      6076305             24247
-19  ENSG00000280095        6081193      6082585              4888
-20  ENSG00000280179        6084364      6091407              1779
-21  ENSG00000275993        6111134      6123739             19727
-22  ENSG00000274790        6223480      6223580             99741
-23  ENSG00000275496        6228966      6267317              5386
-24  ENSG00000280019        6272135      6276532              4818
-25  ENSG00000279709        6309161      6312948             32629
-26  ENSG00000278903        6318434      6360415              5486
-27  ENSG00000276902        6365955      6366055              5540
-28  ENSG00000274276        6444869      6468040             78814
-29  ENSG00000275895        6484623      6499261             16583
-30  ENSG00000280346        6507017      6507389              7756
-31  ENSG00000279226        6520344      6520670             12955
-32  ENSG00000278927        6550749      6553955             30079
-33  ENSG00000276076        6560714      6564489              6759
-34  ENSG00000280145        6630182      6670695             65693
-35  ENSG00000278878        6667304      6670667             -3391
-36  ENSG00000279788        6676178      6679962              5511
-37  ENSG00000279728        6712596      6716361             32634
-38  ENSG00000280164        6721812      6725209              5451
-39  ENSG00000279998        6789592      6812297             64383
-40  ENSG00000278955        6858539      6897263             46242
-41  ENSG00000284550        6859171      6859256            -38092
-42  ENSG00000280172        6897291      6899280             38035
-43  ENSG00000279751        6904884      6906692              5604
-44  ENSG00000280018        6986450      6997765             79758
-45  ENSG00000279313        6994374      6997737             -3391
-46  ENSG00000279477        7003248      7007022              5511
-47  ENSG00000278884        7020599      7025166             13577
-48  ENSG00000277067        7048891      7087229             23725
-49  ENSG00000274046        7092616      7092716              5387
-50  ENSG00000280330        7129103      7130287             36387
-51  ENSG00000279303        7135334      7137789              5047
-52  ENSG00000279647        7385058      7388799            247269
-53  ENSG00000279895        7421442      7425839             32643
-54  ENSG00000276077        7430659      7469007              4820
-55  ENSG00000274484        7474394      7474494              5387
-56  ENSG00000279177        7626344      7627528            151850
-57  ENSG00000276546        7663911      7664011             36383
-58  ENSG00000277991        7669397      7681742              5386
-59  ENSG00000273590        7744962      7777853             63220
-60  ENSG00000277277        7768884      7770591             -8969
-61  ENSG00000278961        7788703      7793954             18112
-62  ENSG00000276289        7816675      7829926             22721
-63  ENSG00000273614        7826098      7826225             -3828
-64  ENSG00000279967        8101251      8103706            275026
-65  ENSG00000278996        8197620      8227646             93914
-66  ENSG00000275950        8205315      8205406            -22331
-67  ENSG00000275664        8205851      8205940               445
-68  ENSG00000275708        8208473      8208652              2533
-69  ENSG00000277437        8208844      8208904               192
-70  ENSG00000280800        8210384      8211306              1480
-71  ENSG00000278233        8212572      8212724              1266
-72  ENSG00000274060        8249505      8249596             36781
-73  ENSG00000277671        8250060      8250149               464
-74  ENSG00000281383        8254592      8255514              4443
-75  ENSG00000277739        8256781      8256933              1267
-76  ENSG00000280441        8380665      8410645            123732
-77  ENSG00000277379        8388362      8388453            -22283
-78  ENSG00000274868        8388898      8388987               445
-79  ENSG00000280614        8393419      8394341              4432
-80  ENSG00000275215        8395607      8395759              1266
-81  ENSG00000275692        8432530      8432621             36771
-82  ENSG00000278775        8433085      8433174               464
-83  ENSG00000281181        8437629      8438551              4455
-84  ENSG00000278189        8439823      8439975              1272
-85  ENSG00000279990        8603547      8603984            163572
-86  ENSG00000279615        8680538      8680934             76554
-87  ENSG00000279167        8701461      8701562             20527
-88  ENSG00000279579        8759077      8761335             57515
-89  ENSG00000279213        8801362      8801880             40027
-90  ENSG00000280243        8845566      8846646             43686
-91  ENSG00000278931        8857260      8880976             10614
-92  ENSG00000264462        8986999      8987178            106023
-93  ENSG00000264063        8987370      8987430               192
-94  ENSG00000279501        8996496      9018670              9066
-95  ENSG00000279414        9026821      9027329              8151
-96  ENSG00000280436        9053122      9059060             25793
-97  ENSG00000188681        9068361      9129752              9301
-98  ENSG00000279720        9082601      9083101            -47151
-99  ENSG00000279381        9088188      9088391              5087
-100 ENSG00000278932        9325013      9368775            236622
-101 ENSG00000279718        9364467      9365225             -4308
-102 ENSG00000279208        9369285      9376645              4060
-103 ENSG00000279864        9558970      9559155            182325
-104 ENSG00000279211        9580024      9580415             20869
-105 ENSG00000275631        9646825      9647000             66410
-106 ENSG00000280081        9781918      9814009            134918
-107 ENSG00000280075        9810381      9810503             -3628
-108 ENSG00000279783        9810501      9810848                -2
-109 ENSG00000264002        9902344      9902627             91496
-110 ENSG00000252199        9907916      9908010              5289
-111 ENSG00000279321        9913117      9914846              5107
-112 ENSG00000270533        9975017     10119309             60171
-113 ENSG00000280372       10028361     10029855            -90948
-114 ENSG00000279851       10122273     10129029             92418
-115 ENSG00000279062       10136419     10137004              7390
-116 ENSG00000277693       10328411     10342737            191407
-117 ENSG00000275945       10330732     10331537            -12005
-118 ENSG00000275592       10357400     10358620             25863
-119 ENSG00000278106       10397644     10397778             39024
-120 ENSG00000187172       10413477     10516431             15699
-121 ENSG00000273840       10482738     10605716            -33693
-122 ENSG00000274391       10521553     10606140            -84163
-123 ENSG00000278678       10576292     10576587            -29848
-124 ENSG00000273872       10612455     10613379             35868
-125 ENSG00000276556       10640028     10640338             26649
- [ reached getOption(&quot;max.print&quot;) -- omitted 712 rows ]</pre></div>
+<pre ># A tibble: 837 × 4
+   ensembl_gene_id start_position end_position intergenic_length
+             &lt;chr&gt;          &lt;int&gt;        &lt;int&gt;             &lt;int&gt;
+1  ENSG00000279493        5011799      5017145                NA
+2  ENSG00000277117        5022493      5040666              5348
+3  ENSG00000279687        5073458      5087867             32792
+4  ENSG00000280071        5079294      5128425             -8573
+5  ENSG00000276612        5116343      5133805            -12082
+6  ENSG00000275464        5130871      5154734             -2934
+7  ENSG00000280433        5155499      5165472               765
+8  ENSG00000279669        5232668      5243833             67196
+9  ENSG00000279094        5499151      5502542            255318
+10 ENSG00000274333        5553637      5614880             51095
+# ... with 827 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>That covers 80% of dplyr</h2></hgroup><article  id="that-covers-80-of-dplyr" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Summary</h2></hgroup><article  id="summary-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Most commonly used - 80%</h3>
 
 <ul>
-<li>select</li>
-<li>filter</li>
-<li>arrange</li>
-<li>glimpse</li>
-<li>rename</li>
-<li>mutate</li>
-<li>group_by, ungroup</li>
-<li>summarise</li>
+<li><code>select()</code> - columns</li>
+<li><code>filter()</code> - rows meeting condition</li>
+<li><code>arrange()</code> - sort</li>
+<li><code>glimpse()</code> - inspect</li>
+<li><code>rename()</code> - change column name</li>
+<li><code>mutate()</code> - copy manipulated values</li>
+<li><code>group_by()</code>, <code>ungroup()</code></li>
+<li><code>summarise()</code> - group-wise, table-wise summaries</li>
+<li><code>lead()</code> and <code>lag()</code> - Values in other rows</li>
+<li><code>inner_join</code> and friends - Merging tables</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other 20%</h2></hgroup><article  id="other-20" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Other 20%</h2></hgroup><article  id="other-20" class="smaller ">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-yellow2'><h3>Occasionally handy</h3>
 
 <ul>
-<li>assembly: <code>bind_rows</code>, <code>bind_cols</code></li>
-<li>windows function, <code>min_rank</code>, <code>dense_rank</code>, <code>cumsum</code>. See <a href='https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html' title=''>vignette</a></li>
+<li>Assembly: <code>bind_rows</code>, <code>bind_cols</code></li>
+<li>Windows function, <code>min_rank</code>, <code>dense_rank</code>, <code>cumsum</code>. See <a href='https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html' title=''>vignette</a></li>
 <li><code>do</code>: arbitrary code on each chunk. To be replaced by <code>tidyr::nest() %&gt;% mutate(purrr::map())</code> <code>data.tables</code>)</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data base access</h2></hgroup><article  id="data-base-access" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Data base access</h2></hgroup><article  id="data-base-access" class="smaller ">
 
 <div class = 'row'><div class = 'box col-8 offset-2 bg_green'><h3>SQL mapping</h3>
 
