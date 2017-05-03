@@ -11,7 +11,7 @@ title: "Practicals"
 #### plotting with **ggplot2**
 
 - [question](TD_ggplot2_question.html)
-- [solution](TD_ggplot2_question.html)
+- [solution](TD_ggplot2_solution.html)
 
 #### programming with **purrr**
 

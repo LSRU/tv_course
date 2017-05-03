@@ -3,7 +3,6 @@ title: "practical ggplot2"
 author: "Aurelien Ginolhac"
 date: "3 May 2017"
 output:
-  unilur::tutorial_html_solution: default
   unilur::tutorial_pdf: default
   unilur::tutorial_pdf_solution: default
 subtitle: practising the grammar of graphics
