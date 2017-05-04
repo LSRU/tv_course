@@ -194,7 +194,7 @@ fun1("stringent")
 ```
 
 
-### introducing `glue` {.box-6 .bg-yellow2 .build .stretch}
+### introducing `glue`{} {.box-6 .bg-yellow2 .build .stretch}
 
 ```{r}
 fun2 <- function(name) {
@@ -204,7 +204,7 @@ fun2("stringent")
 ```
 
 
- ## Solution with tidyeval
+## Solution with tidyeval {.vs1 .compact-output}
  
  
 currently [discussed](https://github.com/tidyverse/dplyr/issues/2726)

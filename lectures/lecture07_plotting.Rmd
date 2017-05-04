@@ -207,7 +207,7 @@ by Miles McBrain ![](https://pbs.twimg.com/profile_images/702995114075955200/8s0
 
 ## Motivation for this layered system | football example {.vs1}
 
-> *Data visualisation* is not meant just to be seen but to be read, like written text - Alberto Cairo
+> *Data visualisation* is not meant just to be seen but to be read, like written text | Alberto Cairo
 
 ```{r, echo = FALSE}
 # https://github.com/johnburnmurdoch/johnburnmurdoch.github.io/blob/master/slides/r-ggplot/r-scripts.R
@@ -637,6 +637,7 @@ ggplot(iris) +
              alpha = 0.6, size = 3) +
   labs(x = "Width",
        y = "Length",
+       colour = "flower",
        title = "Iris",
        subtitle = "petal measures",
        caption = "Fisher, R. A. (1936)")

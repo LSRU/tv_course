@@ -15,7 +15,8 @@ title: "Practicals"
 
 #### programming with **purrr**
 
-- [question]()
+- [question](TD_purrr_question.html)
+- [solution](TD_purrr_solution.html)
 
 #### handling multiple models with **broom**
 
