@@ -331,9 +331,9 @@ Do you think that our dataset is now “tidy”?</p>
 <div id="column-headers-are-values-not-variable-names" class="section level2">
 <h2>1.2 Column headers are values, not variable names</h2>
 <ul>
-<li>Keep care to build a tibble with each column representing a variable: At this point we are storing the sample name as a different column <code>sample</code> associated to values in <code>expression</code> column. Save as <code>cleaned_data_melt</code></li>
+<li>Keep care to build a tibble with each column representing a variable: At this point we are storing the sample name (will contain <code>G0.05</code> …) as a different column <code>sample</code> associated to values in <code>expression</code> column. Save as <code>cleaned_data_melt</code></li>
 </ul>
-<p>Now look at the content of the <code>sample</code> column. We are again facing the problem that two variables are stored in a single column.</p>
+<p>Now look at the content of the <code>sample</code> column. We are again facing the problem that two variables are stored in a single column. The <code>nutrient</code> in the first character, then the <code>growth rate</code>.</p>
 <p>Use the same function as before to split the <code>sample</code> column into two variables <code>nutrient</code> and <code>rate</code> (use the appropriate delimitation in <code>sep</code>.</p>
 <div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
 <h2 style="background-color:rgba(173, 216, 230, 1);">
@@ -355,8 +355,8 @@ S = &quot;Sulfate&quot;, N = &quot;Ammonia&quot;, U = &quot;Uracil&quot;</code><
 <h2>1.4 Cleaning up missing data</h2>
 <p>Two variables must be present for the further analysis:</p>
 <ul>
-<li>gene expression</li>
-<li>systematic_name</li>
+<li>gene expression named as <code>expression</code></li>
+<li>systematic id named as <code>systematic_name</code></li>
 </ul>
 <p>delete observations that are missing any of the two mandatory variables. How many rows did you remove?</p>
 </div>

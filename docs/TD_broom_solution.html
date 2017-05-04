@@ -367,10 +367,7 @@ Solution
 <div class="box-content">
 <pre class="r"><code>cleaned_data &lt;- original_data %&gt;%
   separate(NAME, c(&quot;name&quot;, &quot;BP&quot;, &quot;MF&quot;, &quot;systematic_name&quot;, &quot;number&quot;), sep = &quot;\\|\\|&quot;) %&gt;%
-  mutate_each(funs(trimws), name:systematic_name)</code></pre>
-<pre><code>## Warning: `mutate_each()` is deprecated.
-## Use `mutate_all()`, `mutate_at()` or `mutate_if()` instead.
-## To map `funs` over a selection of variables, use `mutate_at()`</code></pre>
+  mutate_at(vars(name:systematic_name), funs(trimws))</code></pre>
 </div>
 </div>
 <ol start="3" style="list-style-type: decimal">
@@ -399,7 +396,7 @@ Solution
 <div id="column-headers-are-values-not-variable-names" class="section level2">
 <h2>1.2 Column headers are values, not variable names</h2>
 <ul>
-<li>Keep care to build a tibble with each column representing a variable: At this point we are storing the sample name as a different column <code>sample</code> associated to values in <code>expression</code> column. Save as <code>cleaned_data_melt</code></li>
+<li>Keep care to build a tibble with each column representing a variable: At this point we are storing the sample name (will contain <code>G0.05</code> …) as a different column <code>sample</code> associated to values in <code>expression</code> column. Save as <code>cleaned_data_melt</code></li>
 </ul>
 <div class="box solution">
 <h2>
@@ -410,7 +407,7 @@ Solution
   gather(sample, expression, G0.05:U0.3) -&gt; cleaned_data_melt</code></pre>
 </div>
 </div>
-<p>Now look at the content of the <code>sample</code> column. We are again facing the problem that two variables are stored in a single column.</p>
+<p>Now look at the content of the <code>sample</code> column. We are again facing the problem that two variables are stored in a single column. The <code>nutrient</code> in the first character, then the <code>growth rate</code>.</p>
 <div class="box solution">
 <h2>
 Solution
@@ -464,8 +461,8 @@ Solution
 <h2>1.4 Cleaning up missing data</h2>
 <p>Two variables must be present for the further analysis:</p>
 <ul>
-<li>gene expression</li>
-<li>systematic_name</li>
+<li>gene expression named as <code>expression</code></li>
+<li>systematic id named as <code>systematic_name</code></li>
 </ul>
 <p>delete observations that are missing any of the two mandatory variables. How many rows did you remove?</p>
 <div class="box solution">
@@ -493,7 +490,7 @@ Solution
 <div class="box-content">
 <pre class="r"><code>cleaned_data_melt %&gt;%
   filter(name == &quot;LEU1&quot;) %&gt;%
-  ggplot(aes(rate, expression, colour = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_line()</code></pre>
 <p><img src="TD_broom_files/figure-html/plot_leu1-1.png" width="672" /></p>
 </div>
@@ -510,7 +507,7 @@ Solution
 <div class="box-content">
 <pre class="r"><code>cleaned_data_melt %&gt;%
   filter(BP == &quot;leucine biosynthesis&quot;) %&gt;%
-  ggplot(aes(rate, expression, color = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_line() +
   facet_wrap(~ name)</code></pre>
 <p><img src="TD_broom_files/figure-html/plot_leubio-1.png" width="672" /></p>
@@ -528,7 +525,7 @@ Solution
 <div class="box-content">
 <pre class="r"><code>cleaned_data_melt %&gt;%
   filter(BP == &quot;leucine biosynthesis&quot;) %&gt;%
-  ggplot(aes(rate, expression, colour = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_point() +
   geom_smooth(method = &quot;lm&quot;, se = FALSE) +
   facet_wrap(~ name)</code></pre>

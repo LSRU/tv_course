@@ -77,7 +77,7 @@ trimws(s)
 ```{r clean_trimws, solution = TRUE}
 cleaned_data <- original_data %>%
   separate(NAME, c("name", "BP", "MF", "systematic_name", "number"), sep = "\\|\\|") %>%
-  mutate_each(funs(trimws), name:systematic_name)
+  mutate_at(vars(name:systematic_name), funs(trimws))
 ```
 
 3. We are not going to use every column of the dataframe. Remove the unnecessary columns: `number`, `GID`, `YORF` and `GWEIGHT`.
@@ -97,14 +97,14 @@ No, our tibble is still not tidy. We can see that the column names from G0.05 to
 ## 1.2 Column headers are values, not variable names
 
 + Keep care to build a tibble with each column representing a variable: 
-At this point we are storing the sample name as a different column `sample` associated to values in `expression` column. Save as `cleaned_data_melt`
+At this point we are storing the sample name (will contain `G0.05` ...) as a different column `sample` associated to values in `expression` column. Save as `cleaned_data_melt`
 
 ```{r clean_gather, solution = TRUE}
 cleaned_data %>%
   gather(sample, expression, G0.05:U0.3) -> cleaned_data_melt
 ```
 
-Now look at the content of the `sample` column. We are again facing the problem that two variables are stored in a single column.  
+Now look at the content of the `sample` column. We are again facing the problem that two variables are stored in a single column. The `nutrient` in the first character, then the `growth rate`.  
 
 ```{r uniq_sample, solution = TRUE}
 unique(cleaned_data_melt$sample)
@@ -145,8 +145,8 @@ cleaned_data_melt %>%
 
 Two variables must be present for the further analysis:
 
-- gene expression
-- systematic_name
+- gene expression named as `expression`
+- systematic id named as `systematic_name`
 
 delete observations that are missing any of the two mandatory variables. How many rows did you remove?
 
@@ -168,7 +168,7 @@ Extract the data corresponding to the gene called _LEU1_ and draw a line for eac
 ```{r plot_leu1, solution = TRUE}
 cleaned_data_melt %>%
   filter(name == "LEU1") %>%
-  ggplot(aes(rate, expression, colour = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_line()
 ```
 
@@ -180,7 +180,7 @@ Extract all the genes in the **leucine biosynthesis** process and plot the expre
 ```{r plot_leubio, solution = TRUE}
 cleaned_data_melt %>%
   filter(BP == "leucine biosynthesis") %>%
-  ggplot(aes(rate, expression, color = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_line() +
   facet_wrap(~ name)
 ```
@@ -193,7 +193,7 @@ Add a linear regression with the appropriate `ggplot2` function and carrefully a
 ```{r plot_leubio_lm, solution = TRUE}
 cleaned_data_melt %>%
   filter(BP == "leucine biosynthesis") %>%
-  ggplot(aes(rate, expression, colour = nutrient)) +
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +
   facet_wrap(~ name)
