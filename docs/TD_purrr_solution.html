@@ -571,14 +571,14 @@ Solution
   group_by(gene) %&gt;%
   nest() %&gt;%
   mutate(file_out = paste0(gene, &quot;.csv&quot;),
-         file_out_path = paste0(file.path(&quot;data&quot;, &quot;by_gene&quot;, file_out), &quot;.csv&quot;),
+         file_out_path = file.path(&quot;data&quot;, &quot;by_gene&quot;, file_out),
          walk2(data, file_out_path, write_csv))</code></pre>
 <pre><code>## # A tibble: 96 × 5
-##    gene              data  file_out              file_out_path
-##   &lt;chr&gt;            &lt;list&gt;     &lt;chr&gt;                      &lt;chr&gt;
-## 1 gene1 &lt;tibble [10 × 5]&gt; gene1.csv data/by_gene/gene1.csv.csv
-## 2 gene2 &lt;tibble [10 × 5]&gt; gene2.csv data/by_gene/gene2.csv.csv
-## 3 gene3 &lt;tibble [10 × 5]&gt; gene3.csv data/by_gene/gene3.csv.csv
+##    gene              data  file_out          file_out_path
+##   &lt;chr&gt;            &lt;list&gt;     &lt;chr&gt;                  &lt;chr&gt;
+## 1 gene1 &lt;tibble [10 × 5]&gt; gene1.csv data/by_gene/gene1.csv
+## 2 gene2 &lt;tibble [10 × 5]&gt; gene2.csv data/by_gene/gene2.csv
+## 3 gene3 &lt;tibble [10 × 5]&gt; gene3.csv data/by_gene/gene3.csv
 ## # ... with 93 more rows, and 1 more variables: `walk2(data, file_out_path,
 ## #   write_csv)` &lt;list&gt;</code></pre>
 </div>

@@ -134,7 +134,7 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
   group_by(gene) %>%
   nest() %>%
   mutate(file_out = paste0(gene, ".csv"),
-         file_out_path = paste0(file.path("data", "by_gene", file_out), ".csv"),
+         file_out_path = file.path("data", "by_gene", file_out),
          walk2(data, file_out_path, write_csv))
 ```
 
