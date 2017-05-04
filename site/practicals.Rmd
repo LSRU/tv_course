@@ -21,6 +21,7 @@ title: "Practicals"
 #### handling multiple models with **broom**
 
 - [question](TD_broom_question.html)
+- [solution](TD_broom_solution.html)
 
 
 #### microarray **project**
