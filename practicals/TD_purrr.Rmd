@@ -3,7 +3,6 @@ title: '`purrr` practical'
 author: "Eric Koncina"
 date: "4 May 2017"
 output:
-  unilur::tutorial_html: default
   unilur::tutorial_pdf: default
   unilur::tutorial_pdf_solution: default
 ---
