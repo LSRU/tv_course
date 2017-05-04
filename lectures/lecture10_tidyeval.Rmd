@@ -48,11 +48,11 @@ wt
 
 ### evaluation in base, solution {.box-6 .stretch .build .bg-yellow2 .compact-output}
 
-combine `substitute` and `eval` in df context
+combine `substitute` and `eval` in _df_ context
 
 ```{r}
 
-eval(substitute(hp), mtcars)
+eval(substitute(wt), mtcars)
 ```
 
 ### evaluation in tidyverse {.box-12 .build .bg-grgold .compact-output}
