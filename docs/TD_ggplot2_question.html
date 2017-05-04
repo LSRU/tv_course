@@ -381,6 +381,7 @@ Tip
 <p>by default <code>stat_summary()</code> adds the mean and +/- standard error via geom_pointrange(). specify the <code>fun.y = &quot;median&quot;</code> and appropriate <code>geom</code>, <code>colour</code>.</p>
 </div>
 </div>
+<p>next year replaces <code>stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4)</code> by <code>geom_point(stat = &quot;summary&quot;, fun.y = &quot;median&quot;, colour = &quot;red&quot;, size = 4)</code></p>
 <ol start="12" class="example" style="list-style-type: decimal">
 <li>change the <code>stat_summary()</code> in the previous plot from <strong>median</strong> to <strong>mean_cl_boot</strong> and polish the labels.</li>
 </ol>

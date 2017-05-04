@@ -41,7 +41,8 @@ Released in **2005** until **2008** by [Hadley Wickham](https://github.com/hadle
 
 ```{r, eval = FALSE}
 # devtools::install_github("hadley/ggplot1")
-p <- ggplot(mtcars, list(x = mpg, y = wt)) %>% 
+p <- ggplot(mtcars, list(x = mpg, y = wt))
+# need temp p object to avoid too many ()'s
 scbrewer(ggpoint(p, list(colour = gear)))
 ```
 

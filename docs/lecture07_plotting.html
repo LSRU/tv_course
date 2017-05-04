@@ -199,7 +199,8 @@
 
 <div id="unnamed-chunk-1" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># devtools::install_github(&quot;hadley/ggplot1&quot;)
-p &lt;- ggplot(mtcars, list(x = mpg, y = wt)) %&gt;% 
+p &lt;- ggplot(mtcars, list(x = mpg, y = wt))
+# need temp p object to avoid too many ()&#39;s
 scbrewer(ggpoint(p, list(colour = gear)))</pre></div>
 
 </div><div class = 'box col-6 bg-yellow2 '><h3>with the pipe</h3>

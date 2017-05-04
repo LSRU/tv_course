@@ -518,10 +518,13 @@ Solution
   ggplot(aes(x = factor(dose), y = len)) +
   geom_violin(trim = FALSE) +
   geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, binwidth = 1) +
-  stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4)</code></pre>
+  #stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4) +
+  #geom_point(stat = &quot;summary&quot;, fun.y = &quot;median&quot;, colour = &quot;red&quot;, size = 4)
+  geom_pointrange(stat = &quot;summary&quot;, fun.data = &quot;mean_cl_boot&quot;)</code></pre>
 <p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-19-1.png" width="384" /></p>
 </div>
 </div>
+<p>next year replaces <code>stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4)</code> by <code>geom_point(stat = &quot;summary&quot;, fun.y = &quot;median&quot;, colour = &quot;red&quot;, size = 4)</code></p>
 <ol start="12" class="example" style="list-style-type: decimal">
 <li>change the <code>stat_summary()</code> in the previous plot from <strong>median</strong> to <strong>mean_cl_boot</strong> and polish the labels.</li>
 </ol>
