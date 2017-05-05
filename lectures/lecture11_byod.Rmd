@@ -2,7 +2,7 @@
 title: "Bring your own data"
 subtitle: "Set up"
 author: "A. Ginolhac, E. Koncina, R. Krause"
-date: "2 May 2017"
+date: "5 May 2017"
 output:
   iosp::ioslides_plus:
     footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
@@ -18,7 +18,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Today (is your day...) {.vs1}
+## Today (is your day...) {.vs2}
 
  + Choose ..
 
@@ -29,11 +29,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Exercise project  {.box-10 .bg-green}
  * Complete the learning 
- * Required for PhD students in needs of ECTS
+ * Required for PhD students in needs of **ECTS**
+ * to be send back latest Friday 19th May
  * Recommended if you just want to exercise `tidyverse` and follow a rather straight path
  * Presented by Aurélien
 
-## Bring your own data
+## Bring your own data {.vs2}
 
 ### Getting the most out of it {.box-10 .offset-1 .bg-green}
  * Ideal group composition of experienced and early stage users
@@ -46,7 +47,7 @@ knitr::opts_chunk$set(echo = TRUE)
     + Exploratory data analysis 
     + Tackling hard, well-studied problems
 
-## Projects
+## Projects {.vs2}
 
 ### Known projects  {.box-10 .offset-1 .bg-greenwhite}
  * Circadian rythm of the blood-brain barrier in cellular model (*Jochen Ohnmacht*)
@@ -67,7 +68,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 - [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/) 
 - [R for data science](http://r4ds.had.co.nz/)
-- [tidyverse website] 
+- [tidyverse website](https://lsru.github.io/tv_course/)
 
 ### Bring on the data {.box-10 .offset-1 .bg-red .build}
 Thank you for your attention!

@@ -204,7 +204,6 @@ gene_by_exon &lt;- getBM(
   attributes = c(
     &quot;ensembl_gene_id&quot;,
     &quot;ensembl_transcript_id&quot;,
-    &quot;ensembl_exon_id&quot;,
     &quot;chromosome_name&quot;,
     &quot;start_position&quot;,
     &quot;end_position&quot;,
@@ -222,7 +221,24 @@ gene_by_exon &lt;- getBM(
 <div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Important with large tables</h3>
 
 <div id="unnamed-chunk-6" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon &lt;- as_tibble(gene_by_exon)</pre></div>
+<pre class = 'prettyprint lang-r'>gene_by_exon &lt;- as_tibble(gene_by_exon)
+gene_by_exon</pre>
+
+<pre ># A tibble: 2,413 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000264452       ENST00000583496              21       44439035
+2  ENSG00000274046       ENST00000617336              21        7092616
+3  ENSG00000278775       ENST00000619112              21        8433085
+4  ENSG00000276873       ENST00000616808              21       39171462
+5  ENSG00000236545       ENST00000458654              21       41870633
+6  ENSG00000160255       ENST00000302347              21       44885953
+7  ENSG00000160255       ENST00000518033              21       44885953
+8  ENSG00000160255       ENST00000523126              21       44885953
+9  ENSG00000160255       ENST00000521995              21       44885953
+10 ENSG00000160255       ENST00000397846              21       44885953
+# ... with 2,403 more rows, and 5 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>glimpse()</code> </h2><h3> Inspect data frames / tibbles</h3></hgroup><article  id="glimpse-inspect-data-frames-tibbles" class="smaller ">
 
@@ -234,17 +250,16 @@ gene_by_exon &lt;- getBM(
 <div id="unnamed-chunk-7" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>glimpse(gene_by_exon)</pre>
 
-<pre >Observations: 13,978
-Variables: 10
+<pre >Observations: 2,413
+Variables: 9
 $ ensembl_gene_id       &lt;chr&gt; &quot;ENSG00000264452&quot;, &quot;ENSG00000274046&quot;, &quot;E...
 $ ensembl_transcript_id &lt;chr&gt; &quot;ENST00000583496&quot;, &quot;ENST00000617336&quot;, &quot;E...
-$ ensembl_exon_id       &lt;chr&gt; &quot;ENSE00002709519&quot;, &quot;ENSE00003722332&quot;, &quot;E...
 $ chromosome_name       &lt;int&gt; 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, ...
 $ start_position        &lt;int&gt; 44439035, 7092616, 8433085, 39171462, 41...
 $ end_position          &lt;int&gt; 44439110, 7092716, 8433174, 39171560, 41...
-$ hgnc_symbol           &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;ITGB2&quot;, &quot;ITGB2&quot;...
-$ hgnc_id               &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;HGNC:6155&quot;, &quot;HG...
-$ strand                &lt;int&gt; 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -...
+$ hgnc_symbol           &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;ITGB2&quot;, &quot;ITGB2&quot;, &quot;I...
+$ hgnc_id               &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;HGNC:6155&quot;, &quot;HGNC:6...
+$ strand                &lt;int&gt; 1, 1, 1, -1, 1, -1, -1, -1, -1, -1, -1, ...
 $ gene_biotype          &lt;chr&gt; &quot;snoRNA&quot;, &quot;misc_RNA&quot;, &quot;misc_RNA&quot;, &quot;misc_...</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pipes in R </h2><h3> magrittr</h3></hgroup><article  id="pipes-in-r-magrittr" class="smaller vs1">
@@ -254,146 +269,15 @@ $ gene_biotype          &lt;chr&gt; &quot;snoRNA&quot;, &quot;misc_RNA&quot;, &q
 
 <p>from <a href='https://twitter.com/ParisRaddict/status/781267225420435461' title=''>Romain François</a></p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> inspect subsets of data</h3></hgroup><article  id="filter-inspect-subsets-of-data" class="smaller ">
-
-<ul>
-<li>Take a look at the amyloid precursor protein gene <strong>APP</strong></li>
-<li>Note the rendering of the <code>data.frame</code>, not a tibble.</li>
-</ul>
-
-<div id="unnamed-chunk-9" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  filter(hgnc_symbol == &quot;APP&quot;)</pre>
-
-<pre ># A tibble: 174 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000142192       ENST00000346798 ENSE00001909719              21
-2  ENSG00000142192       ENST00000346798 ENSE00003537029              21
-3  ENSG00000142192       ENST00000346798 ENSE00003491735              21
-4  ENSG00000142192       ENST00000346798 ENSE00003586713              21
-5  ENSG00000142192       ENST00000346798 ENSE00003595661              21
-6  ENSG00000142192       ENST00000346798 ENSE00003527715              21
-7  ENSG00000142192       ENST00000346798 ENSE00003691723              21
-8  ENSG00000142192       ENST00000346798 ENSE00001309322              21
-9  ENSG00000142192       ENST00000346798 ENSE00001017338              21
-10 ENSG00000142192       ENST00000346798 ENSE00001608815              21
-# ... with 164 more rows, and 6 more variables: start_position &lt;int&gt;,
-#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, AND (<code>&amp;</code>)</h3></hgroup><article  id="filter-multiple-conditions-and" class="smaller ">
-
-<h3>Genes in a particular range</h3>
-
-<div id="unnamed-chunk-10" class="chunk shadow">
-<pre class = 'prettyprint lang-r'># Comma separated conditions are combined with &#39;&amp;&#39;
-gene_by_exon %&gt;%
-   filter(start_position &gt; 10000000, end_position &lt; 12000000)</pre>
-
-<pre ># A tibble: 178 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000277282       ENST00000622028 ENSE00003742120              21
-2  ENSG00000277282       ENST00000622028 ENSE00003753345              21
-3  ENSG00000187172       ENST00000474011 ENSE00001825894              21
-4  ENSG00000187172       ENST00000474011 ENSE00002021537              21
-5  ENSG00000187172       ENST00000474011 ENSE00001887197              21
-6  ENSG00000187172       ENST00000470054 ENSE00002021537              21
-7  ENSG00000187172       ENST00000470054 ENSE00001647801              21
-8  ENSG00000187172       ENST00000470054 ENSE00001849458              21
-9  ENSG00000187172       ENST00000470054 ENSE00001810225              21
-10 ENSG00000187172       ENST00000470054 ENSE00001755570              21
-# ... with 168 more rows, and 6 more variables: start_position &lt;int&gt;,
-#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, OR (<code>|</code>)</h3></hgroup><article  id="filter-multiple-conditions-or" class="smaller ">
-
-<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Genes close to the telomers</h3>
-
-<div id="unnamed-chunk-11" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  filter(start_position &lt; 100000 | end_position &gt;46665124 )</pre></div>
-
-</div></div><div class = 'row'><div class = 'box col-10 offset-1 bg-yellow2'><h3>Set operations</h3>
-
-<p>For more complicated checks. The following 2 are equivalent:</p>
-
-<div id="unnamed-chunk-12" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  filter(is.element(hgnc_symbol, c(&quot;APP&quot;, &quot;ATP50&quot;, &quot;PRMT2&quot;)))</pre></div>
-
-<div id="unnamed-chunk-13" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  filter(hgnc_symbol %in% c(&quot;APP&quot;, &quot;ATP50&quot;, &quot;PRMT2&quot;))</pre></div>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>arrange()</code> </h2><h3> Sort columns</h3></hgroup><article  id="arrange-sort-columns" class="smaller ">
-
-<div class = 'row build'><div class = 'box col-10 bg-yellow2 '><h3>Perform a nested sorting of all Genes:</h3>
-
-<pre >1. hgnc_symbol
-2. gene_biotype
-3. end_position</pre>
-
-<div id="unnamed-chunk-14" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  arrange(hgnc_symbol, gene_biotype, end_position) %&gt;% 
-  dplyr::select(hgnc_symbol, gene_biotype, end_position, everything())</pre>
-
-<pre ># A tibble: 13,978 × 10
-   hgnc_symbol gene_biotype end_position ensembl_gene_id
-         &lt;chr&gt;        &lt;chr&gt;        &lt;int&gt;           &lt;chr&gt;
-1                 antisense      5087867 ENSG00000279687
-2                 antisense      5087867 ENSG00000279687
-3                 antisense     14144468 ENSG00000224905
-4                 antisense     14144468 ENSG00000224905
-5                 antisense     14144468 ENSG00000224905
-6                 antisense     14144468 ENSG00000224905
-7                 antisense     14144468 ENSG00000224905
-8                 antisense     14144468 ENSG00000224905
-9                 antisense     14144468 ENSG00000224905
-10                antisense     14144468 ENSG00000224905
-# ... with 13,968 more rows, and 6 more variables:
-#   ensembl_transcript_id &lt;chr&gt;, ensembl_exon_id &lt;chr&gt;,
-#   chromosome_name &lt;int&gt;, start_position &lt;int&gt;, hgnc_id &lt;chr&gt;,
-#   strand &lt;int&gt;</pre></div>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>arrange()</code> </h2><h3> <code>desc</code> to reverse sort columns</h3></hgroup><article  id="arrange-desc-to-reverse-sort-columns" class="smaller ">
-
-<p>Find the <em>last</em> gene on chromosome 21.</p>
-
-<div id="unnamed-chunk-15" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  arrange(desc(end_position)) %&gt;%
-  dplyr::select(end_position, everything()) # way to reorder arr_delay 1st column</pre>
-
-<pre ># A tibble: 13,978 × 10
-   end_position ensembl_gene_id ensembl_transcript_id ensembl_exon_id
-          &lt;int&gt;           &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;
-1      46691226 ENSG00000212932       ENST00000427757 ENSE00001697032
-2      46665124 ENSG00000160310       ENST00000355680 ENSE00001828011
-3      46665124 ENSG00000160310       ENST00000355680 ENSE00001414070
-4      46665124 ENSG00000160310       ENST00000355680 ENSE00001336411
-5      46665124 ENSG00000160310       ENST00000355680 ENSE00003542955
-6      46665124 ENSG00000160310       ENST00000355680 ENSE00003472918
-7      46665124 ENSG00000160310       ENST00000355680 ENSE00003595101
-8      46665124 ENSG00000160310       ENST00000355680 ENSE00003480025
-9      46665124 ENSG00000160310       ENST00000355680 ENSE00003541221
-10     46665124 ENSG00000160310       ENST00000355680 ENSE00001051359
-# ... with 13,968 more rows, and 6 more variables: chromosome_name &lt;int&gt;,
-#   start_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
-
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> </h2><h3> Selecting specific <em>columns</em></h3></hgroup><article  id="select-selecting-specific-columns" class="smaller ">
 
 <p><code>select()</code> is part of the <code>biomaRt</code> package, need to address <code>dplyr</code>-package!</p>
 
-<div id="unnamed-chunk-16" class="chunk shadow">
+<div id="unnamed-chunk-9" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   dplyr::select(hgnc_symbol, chromosome_name, start_position, end_position)</pre>
 
-<pre ># A tibble: 13,978 × 4
+<pre ># A tibble: 2,413 × 4
    hgnc_symbol chromosome_name start_position end_position
          &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;        &lt;int&gt;
 1                           21       44439035     44439110
@@ -401,40 +285,14 @@ gene_by_exon %&gt;%
 3                           21        8433085      8433174
 4                           21       39171462     39171560
 5                           21       41870633     41872054
-6                           21       41870633     41872054
+6        ITGB2              21       44885953     44931989
 7        ITGB2              21       44885953     44931989
 8        ITGB2              21       44885953     44931989
 9        ITGB2              21       44885953     44931989
 10       ITGB2              21       44885953     44931989
-# ... with 13,968 more rows</pre></div>
+# ... with 2,403 more rows</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> </h2><h3> Negative selection</h3></hgroup><article  id="select-negative-selection" class="smaller ">
-
-<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Dropping columns</h3>
-
-<p>We can drop columns by &quot;negating&quot; their names. Since helpers give us column names, we can negate them too. Note that the</p>
-
-<div id="unnamed-chunk-17" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  dplyr::select(-strand, -starts_with(&quot;ensembl&quot;),
-         -ends_with(&quot;id&quot;))</pre>
-
-<pre ># A tibble: 13,978 × 5
-   chromosome_name start_position end_position hgnc_symbol   gene_biotype
-             &lt;int&gt;          &lt;int&gt;        &lt;int&gt;       &lt;chr&gt;          &lt;chr&gt;
-1               21       44439035     44439110                     snoRNA
-2               21        7092616      7092716                   misc_RNA
-3               21        8433085      8433174                   misc_RNA
-4               21       39171462     39171560                   misc_RNA
-5               21       41870633     41872054                  antisense
-6               21       41870633     41872054                  antisense
-7               21       44885953     44931989       ITGB2 protein_coding
-8               21       44885953     44931989       ITGB2 protein_coding
-9               21       44885953     44931989       ITGB2 protein_coding
-10              21       44885953     44931989       ITGB2 protein_coding
-# ... with 13,968 more rows</pre></div>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> helper functions</h2></hgroup><article  id="select-helper-functions" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> helper functions</h2></hgroup><article  id="select-helper-functions" class="smaller ">
 
 <div class = 'row'><div class = 'box col-12 bg-yellow2'><h3><code>select()</code> has many helper functions</h3>
 
@@ -446,29 +304,245 @@ gene_by_exon %&gt;%
 <li>Can be combined</li>
 </ul>
 
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>select()</code> </h2><h3> Negative selection</h3></hgroup><article  id="select-negative-selection" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Dropping columns</h3>
+
+<p>We can drop columns by &quot;negating&quot; their names. Since helpers give us column names, we can negate them too. Note that the</p>
+
+<div id="unnamed-chunk-10" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  dplyr::select(-strand, -starts_with(&quot;ensembl&quot;),
+         -ends_with(&quot;id&quot;))</pre>
+
+<pre ># A tibble: 2,413 × 5
+   chromosome_name start_position end_position hgnc_symbol   gene_biotype
+             &lt;int&gt;          &lt;int&gt;        &lt;int&gt;       &lt;chr&gt;          &lt;chr&gt;
+1               21       44439035     44439110                     snoRNA
+2               21        7092616      7092716                   misc_RNA
+3               21        8433085      8433174                   misc_RNA
+4               21       39171462     39171560                   misc_RNA
+5               21       41870633     41872054                  antisense
+6               21       44885953     44931989       ITGB2 protein_coding
+7               21       44885953     44931989       ITGB2 protein_coding
+8               21       44885953     44931989       ITGB2 protein_coding
+9               21       44885953     44931989       ITGB2 protein_coding
+10              21       44885953     44931989       ITGB2 protein_coding
+# ... with 2,403 more rows</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> inspect subsets of data</h3></hgroup><article  id="filter-inspect-subsets-of-data" class="smaller ">
+
+<ul>
+<li>Take a look at the amyloid precursor protein gene <strong>APP</strong></li>
+<li>Note the rendering of the <code>data.frame</code>, not a tibble.</li>
+</ul>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(hgnc_symbol == &quot;APP&quot;) %&gt;% 
+  dplyr::select(hgnc_symbol, everything())</pre>
+
+<pre ># A tibble: 17 × 9
+   hgnc_symbol ensembl_gene_id ensembl_transcript_id chromosome_name
+         &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;
+1          APP ENSG00000142192       ENST00000346798              21
+2          APP ENSG00000142192       ENST00000354192              21
+3          APP ENSG00000142192       ENST00000348990              21
+4          APP ENSG00000142192       ENST00000357903              21
+5          APP ENSG00000142192       ENST00000440126              21
+6          APP ENSG00000142192       ENST00000439274              21
+7          APP ENSG00000142192       ENST00000464867              21
+8          APP ENSG00000142192       ENST00000358918              21
+9          APP ENSG00000142192       ENST00000448850              21
+10         APP ENSG00000142192       ENST00000415997              21
+11         APP ENSG00000142192       ENST00000491395              21
+12         APP ENSG00000142192       ENST00000474136              21
+13         APP ENSG00000142192       ENST00000463070              21
+14         APP ENSG00000142192       ENST00000548570              21
+15         APP ENSG00000142192       ENST00000462267              21
+16         APP ENSG00000142192       ENST00000466453              21
+17         APP ENSG00000142192       ENST00000359726              21
+# ... with 5 more variables: start_position &lt;int&gt;, end_position &lt;int&gt;,
+#   hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, AND (<code>&amp;</code>)</h3></hgroup><article  id="filter-multiple-conditions-and" class="smaller ">
+
+<h3>Genes in a particular range</h3>
+
+<div id="unnamed-chunk-12" class="chunk shadow">
+<pre class = 'prettyprint lang-r'># Comma separated conditions are combined with &#39;&amp;&#39;
+gene_by_exon %&gt;%
+  filter(start_position &gt; 10000000, end_position &lt; 12000000) %&gt;% 
+  dplyr::select(hgnc_symbol, start_position, end_position)</pre>
+
+<pre ># A tibble: 21 × 3
+   hgnc_symbol start_position end_position
+         &lt;chr&gt;          &lt;int&gt;        &lt;int&gt;
+1  IGHV1OR21-1       10649400     10649835
+2        BAGE2       10413477     10516431
+3        BAGE2       10413477     10516431
+4        BAGE2       10413477     10516431
+5                    10482738     10605716
+6                    10397644     10397778
+7                    10328411     10342737
+8                    10328411     10342737
+9                    10136419     10137004
+10  SLC25A15P4       10612455     10613379
+# ... with 11 more rows</pre></div>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Multiple conditions, OR (<code>|</code>)</h3></hgroup><article  id="filter-multiple-conditions-or" class="smaller ">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Genes close to the telomers</h3>
+
+<div id="unnamed-chunk-13" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(start_position &lt; 7000000 | end_position &gt;46665124 )</pre>
+
+<pre ># A tibble: 131 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000284550       ENST00000616627              21        6859171
+2  ENSG00000275496       ENST00000621924              21        6228966
+3  ENSG00000275496       ENST00000617746              21        6228966
+4  ENSG00000275496       ENST00000624446              21        6228966
+5  ENSG00000275496       ENST00000623405              21        6228966
+6  ENSG00000275496       ENST00000623575              21        6228966
+7  ENSG00000275496       ENST00000623506              21        6228966
+8  ENSG00000275496       ENST00000619488              21        6228966
+9  ENSG00000279064       ENST00000623723              21        5707004
+10 ENSG00000276076       ENST00000619537              21        6560714
+# ... with 121 more rows, and 5 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>filter()</code> </h2><h3> Set operations</h3></hgroup><article  id="filter-set-operations" class="smaller ">
+
+<ul>
+<li>The two below are equivalent</li>
+<li>For larger operations use <code>inner_join()</code></li>
+</ul>
+
+<div class = 'row build'><div class = 'box col-6 bg-cobalt  stretch'><h3>Set operations</h3>
+
+<div id="unnamed-chunk-14" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(is.element(hgnc_symbol, c(&quot;APP&quot;, &quot;ATP50&quot;, &quot;PRMT2&quot;)))</pre>
+
+<pre ># A tibble: 33 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000160310       ENST00000355680              21       46635167
+2  ENSG00000160310       ENST00000397638              21       46635167
+3  ENSG00000160310       ENST00000291705              21       46635167
+4  ENSG00000160310       ENST00000397637              21       46635167
+5  ENSG00000160310       ENST00000334494              21       46635167
+6  ENSG00000160310       ENST00000397628              21       46635167
+7  ENSG00000160310       ENST00000440086              21       46635167
+8  ENSG00000160310       ENST00000482508              21       46635167
+9  ENSG00000160310       ENST00000481861              21       46635167
+10 ENSG00000160310       ENST00000455177              21       46635167
+# ... with 23 more rows, and 5 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div><div class = 'box col-6 bg-cobalt'><h3>Set operations</h3>
+
+<div id="unnamed-chunk-15" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  filter(hgnc_symbol %in% c(&quot;APP&quot;, &quot;ATP50&quot;, &quot;PRMT2&quot;))</pre>
+
+<pre ># A tibble: 33 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000160310       ENST00000355680              21       46635167
+2  ENSG00000160310       ENST00000397638              21       46635167
+3  ENSG00000160310       ENST00000291705              21       46635167
+4  ENSG00000160310       ENST00000397637              21       46635167
+5  ENSG00000160310       ENST00000334494              21       46635167
+6  ENSG00000160310       ENST00000397628              21       46635167
+7  ENSG00000160310       ENST00000440086              21       46635167
+8  ENSG00000160310       ENST00000482508              21       46635167
+9  ENSG00000160310       ENST00000481861              21       46635167
+10 ENSG00000160310       ENST00000455177              21       46635167
+# ... with 23 more rows, and 5 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>arrange()</code> </h2><h3> Sort columns</h3></hgroup><article  id="arrange-sort-columns" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-10 bg-yellow2 '><h3>Perform a nested sorting of all Genes:</h3>
+
+<pre >1. hgnc_symbol
+2. gene_biotype
+3. end_position</pre>
+
+<div id="unnamed-chunk-16" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  arrange(hgnc_symbol, gene_biotype, end_position) %&gt;% 
+  dplyr::select(hgnc_symbol, gene_biotype, end_position, everything())</pre>
+
+<pre ># A tibble: 2,413 × 9
+   hgnc_symbol gene_biotype end_position ensembl_gene_id
+         &lt;chr&gt;        &lt;chr&gt;        &lt;int&gt;           &lt;chr&gt;
+1                 antisense      5087867 ENSG00000279687
+2                 antisense     14144468 ENSG00000224905
+3                 antisense     14144468 ENSG00000224905
+4                 antisense     14144468 ENSG00000224905
+5                 antisense     14947096 ENSG00000235277
+6                 antisense     14964233 ENSG00000229047
+7                 antisense     14992854 ENSG00000231201
+8                 antisense     17810845 ENSG00000244676
+9                 antisense     17810845 ENSG00000244676
+10                antisense     21226829 ENSG00000226771
+# ... with 2,403 more rows, and 5 more variables:
+#   ensembl_transcript_id &lt;chr&gt;, chromosome_name &lt;int&gt;,
+#   start_position &lt;int&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;</pre></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>arrange()</code> </h2><h3> <code>desc</code> to reverse sort columns</h3></hgroup><article  id="arrange-desc-to-reverse-sort-columns" class="smaller ">
+
+<p>Find the <em>last</em> gene on chromosome 21.</p>
+
+<div id="unnamed-chunk-17" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
+  arrange(desc(end_position)) %&gt;%
+  dplyr::select(end_position, everything()) # way to reorder arr_delay 1st column</pre>
+
+<pre ># A tibble: 2,413 × 9
+   end_position ensembl_gene_id ensembl_transcript_id chromosome_name
+          &lt;int&gt;           &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;
+1      46691226 ENSG00000212932       ENST00000427757              21
+2      46665124 ENSG00000160310       ENST00000355680              21
+3      46665124 ENSG00000160310       ENST00000397638              21
+4      46665124 ENSG00000160310       ENST00000291705              21
+5      46665124 ENSG00000160310       ENST00000397637              21
+6      46665124 ENSG00000160310       ENST00000334494              21
+7      46665124 ENSG00000160310       ENST00000397628              21
+8      46665124 ENSG00000160310       ENST00000440086              21
+9      46665124 ENSG00000160310       ENST00000482508              21
+10     46665124 ENSG00000160310       ENST00000481861              21
+# ... with 2,403 more rows, and 5 more variables: start_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
+
 <div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   dplyr::select(hgnc_symbol, 
                 starts_with(&quot;ensembl&quot;),
                 contains(&quot;position&quot;),
-                -contains(&quot;exon&quot;))</pre>
+                -contains(&quot;transcript&quot;))</pre>
 
-<pre ># A tibble: 13,978 × 5
-   hgnc_symbol ensembl_gene_id ensembl_transcript_id start_position
-         &lt;chr&gt;           &lt;chr&gt;                 &lt;chr&gt;          &lt;int&gt;
-1              ENSG00000264452       ENST00000583496       44439035
-2              ENSG00000274046       ENST00000617336        7092616
-3              ENSG00000278775       ENST00000619112        8433085
-4              ENSG00000276873       ENST00000616808       39171462
-5              ENSG00000236545       ENST00000458654       41870633
-6              ENSG00000236545       ENST00000458654       41870633
-7        ITGB2 ENSG00000160255       ENST00000302347       44885953
-8        ITGB2 ENSG00000160255       ENST00000302347       44885953
-9        ITGB2 ENSG00000160255       ENST00000302347       44885953
-10       ITGB2 ENSG00000160255       ENST00000302347       44885953
-# ... with 13,968 more rows, and 1 more variables: end_position &lt;int&gt;</pre></div>
+<pre ># A tibble: 2,413 × 4
+   hgnc_symbol ensembl_gene_id start_position end_position
+         &lt;chr&gt;           &lt;chr&gt;          &lt;int&gt;        &lt;int&gt;
+1              ENSG00000264452       44439035     44439110
+2              ENSG00000274046        7092616      7092716
+3              ENSG00000278775        8433085      8433174
+4              ENSG00000276873       39171462     39171560
+5              ENSG00000236545       41870633     41872054
+6        ITGB2 ENSG00000160255       44885953     44931989
+7        ITGB2 ENSG00000160255       44885953     44931989
+8        ITGB2 ENSG00000160255       44885953     44931989
+9        ITGB2 ENSG00000160255       44885953     44931989
+10       ITGB2 ENSG00000160255       44885953     44931989
+# ... with 2,403 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Verbs for inspecting data</h2></hgroup><article  id="verbs-for-inspecting-data" class="smaller ">
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Verbs for inspecting data</h2></hgroup><article  id="verbs-for-inspecting-data" class="smaller ">
 
 <div class = 'row'><div class = 'box col-10 offset-1 bg-blue'><h3>Summary</h3>
 
@@ -497,22 +571,21 @@ gene_by_exon %&gt;%
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   rename(stop = end_position, start = start_position)</pre>
 
-<pre ># A tibble: 13,978 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
-2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
-3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
-4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
-5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
-6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
-7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
-8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
-9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
-10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
-# ... with 13,968 more rows, and 6 more variables: start &lt;int&gt;,
-#   stop &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
+<pre ># A tibble: 2,413 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name    start     stop
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;    &lt;int&gt;    &lt;int&gt;
+1  ENSG00000264452       ENST00000583496              21 44439035 44439110
+2  ENSG00000274046       ENST00000617336              21  7092616  7092716
+3  ENSG00000278775       ENST00000619112              21  8433085  8433174
+4  ENSG00000276873       ENST00000616808              21 39171462 39171560
+5  ENSG00000236545       ENST00000458654              21 41870633 41872054
+6  ENSG00000160255       ENST00000302347              21 44885953 44931989
+7  ENSG00000160255       ENST00000518033              21 44885953 44931989
+8  ENSG00000160255       ENST00000523126              21 44885953 44931989
+9  ENSG00000160255       ENST00000521995              21 44885953 44931989
+10 ENSG00000160255       ENST00000397846              21 44885953 44931989
+# ... with 2,403 more rows, and 4 more variables: hgnc_symbol &lt;chr&gt;,
+#   hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
 
 </article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>mutate()</code> </h2><h3> Add or replace columns</h3></hgroup><article  id="mutate-add-or-replace-columns" class="smaller build">
 
@@ -527,7 +600,7 @@ gene_by_exon %&gt;%
   mutate(  length = end_position - start_position) %&gt;% 
   dplyr::select(hgnc_symbol, length)  </pre>
 
-<pre ># A tibble: 13,978 × 2
+<pre ># A tibble: 2,413 × 2
    hgnc_symbol length
          &lt;chr&gt;  &lt;int&gt;
 1                  75
@@ -535,12 +608,12 @@ gene_by_exon %&gt;%
 3                  89
 4                  98
 5                1421
-6                1421
+6        ITGB2  46036
 7        ITGB2  46036
 8        ITGB2  46036
 9        ITGB2  46036
 10       ITGB2  46036
-# ... with 13,968 more rows</pre></div>
+# ... with 2,403 more rows</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>distinct()</code> </h2><h3> Unique rows</h3></hgroup><article  id="distinct-unique-rows" class="smaller ">
 
@@ -584,22 +657,21 @@ gene_by_exon %&gt;%
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   mutate_at(vars(contains(&quot;position&quot;)), funs(. + 1))</pre>
 
-<pre ># A tibble: 13,978 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
-2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
-3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
-4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
-5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
-6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
-7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
-8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
-9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
-10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
-# ... with 13,968 more rows, and 6 more variables: start_position &lt;dbl&gt;,
-#   end_position &lt;dbl&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
+<pre ># A tibble: 2,413 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;dbl&gt;
+1  ENSG00000264452       ENST00000583496              21       44439036
+2  ENSG00000274046       ENST00000617336              21        7092617
+3  ENSG00000278775       ENST00000619112              21        8433086
+4  ENSG00000276873       ENST00000616808              21       39171463
+5  ENSG00000236545       ENST00000458654              21       41870634
+6  ENSG00000160255       ENST00000302347              21       44885954
+7  ENSG00000160255       ENST00000518033              21       44885954
+8  ENSG00000160255       ENST00000523126              21       44885954
+9  ENSG00000160255       ENST00000521995              21       44885954
+10 ENSG00000160255       ENST00000397846              21       44885954
+# ... with 2,403 more rows, and 5 more variables: end_position &lt;dbl&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;</pre></div>
 
 </div><div class = 'box col-6 bg-cobalt'><h3>Coordinate conversion</h3>
 
@@ -607,22 +679,21 @@ gene_by_exon %&gt;%
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   mutate_if(is.numeric, funs(. + 1))</pre>
 
-<pre ># A tibble: 13,978 × 10
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;dbl&gt;
-1  ENSG00000264452       ENST00000583496 ENSE00002709519              22
-2  ENSG00000274046       ENST00000617336 ENSE00003722332              22
-3  ENSG00000278775       ENST00000619112 ENSE00003751812              22
-4  ENSG00000276873       ENST00000616808 ENSE00003730872              22
-5  ENSG00000236545       ENST00000458654 ENSE00001729372              22
-6  ENSG00000236545       ENST00000458654 ENSE00001673061              22
-7  ENSG00000160255       ENST00000302347 ENSE00003791070              22
-8  ENSG00000160255       ENST00000302347 ENSE00003688153              22
-9  ENSG00000160255       ENST00000302347 ENSE00003784896              22
-10 ENSG00000160255       ENST00000302347 ENSE00003569344              22
-# ... with 13,968 more rows, and 6 more variables: start_position &lt;dbl&gt;,
-#   end_position &lt;dbl&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;dbl&gt;,
-#   gene_biotype &lt;chr&gt;</pre></div>
+<pre ># A tibble: 2,413 × 9
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;dbl&gt;          &lt;dbl&gt;
+1  ENSG00000264452       ENST00000583496              22       44439036
+2  ENSG00000274046       ENST00000617336              22        7092617
+3  ENSG00000278775       ENST00000619112              22        8433086
+4  ENSG00000276873       ENST00000616808              22       39171463
+5  ENSG00000236545       ENST00000458654              22       41870634
+6  ENSG00000160255       ENST00000302347              22       44885954
+7  ENSG00000160255       ENST00000518033              22       44885954
+8  ENSG00000160255       ENST00000523126              22       44885954
+9  ENSG00000160255       ENST00000521995              22       44885954
+10 ENSG00000160255       ENST00000397846              22       44885954
+# ... with 2,403 more rows, and 5 more variables: end_position &lt;dbl&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;dbl&gt;, gene_biotype &lt;chr&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Grouping and summarizing</h2></hgroup><article  id="grouping-and-summarizing" class="smaller ">
 
@@ -634,55 +705,69 @@ gene_by_exon %&gt;%
 <li>Use <code>ungroup()</code></li>
 </ul>
 
-<div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Let&#39;s compute the average number of exons</h3>
+<div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Let&#39;s compute the average number of transcripts</h3>
 
 <div id="unnamed-chunk-24" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
   group_by(ensembl_gene_id, hgnc_symbol) %&gt;% 
-  summarise(nexon =n_distinct(ensembl_exon_id)) %&gt;% 
-  head(5)</pre>
+  summarise(nexon =n_distinct(ensembl_transcript_id))</pre>
 
-<pre >Source: local data frame [5 x 3]
-Groups: ensembl_gene_id [5]
+<pre >Source: local data frame [837 x 3]
+Groups: ensembl_gene_id [?]
 
-  ensembl_gene_id hgnc_symbol nexon
-            &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;
-1 ENSG00000141956      PRDM15    78
-2 ENSG00000141959        PFKL    65
-3 ENSG00000142149        HUNK    19
-4 ENSG00000142156      COL6A1    53
-5 ENSG00000142166      IFNAR1    15</pre></div>
+   ensembl_gene_id hgnc_symbol nexon
+             &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;
+1  ENSG00000141956      PRDM15    16
+2  ENSG00000141959        PFKL    12
+3  ENSG00000142149        HUNK     4
+4  ENSG00000142156      COL6A1     7
+5  ENSG00000142166      IFNAR1     3
+6  ENSG00000142168        SOD1     4
+7  ENSG00000142173      COL6A2     8
+8  ENSG00000142178        SIK1     2
+9  ENSG00000142182      DNMT3L     4
+10 ENSG00000142185       TRPM2     8
+# ... with 827 more rows</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>tally / count</h2></hgroup><article  id="tally-count" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>count()</code></h2></hgroup><article  id="count" class="smaller ">
 
-<p><code>tally</code> is a shortcut to counting the number of items per group.</p>
+<div class = 'row'><div class = 'box col-8 offset-2 bg-blue'><h3>Replacing calls to <code>table()</code></h3>
 
 <div id="unnamed-chunk-25" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  group_by(hgnc_symbol) %&gt;%
-  tally() %&gt;% head(3) # could sum up with multiple tally calls</pre>
+<pre class = 'prettyprint lang-r'>head(as.data.frame(table(gene_by_exon$hgnc_symbol) ))</pre>
 
-<pre ># A tibble: 3 × 2
-  hgnc_symbol     n
-        &lt;chr&gt; &lt;int&gt;
-1              1319
-2       AATBC     8
-3      ABCC13    63</pre></div>
+<pre >     Var1 Freq
+1          461
+2   AATBC    3
+3  ABCC13    6
+4   ABCG1   11
+5 ADAMTS1    6
+6 ADAMTS5    1</pre></div>
 
-<p><code>count</code> does the grouping for you</p>
+<ul>
+<li><code>count()</code> does the grouping for you</li>
+</ul>
 
 <div id="unnamed-chunk-26" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;%
-  count(hgnc_symbol) %&gt;% head(3)</pre>
+  count(hgnc_symbol)</pre>
 
-<pre ># A tibble: 3 × 2
-  hgnc_symbol     n
-        &lt;chr&gt; &lt;int&gt;
-1              1319
-2       AATBC     8
-3      ABCC13    63</pre></div>
+<pre ># A tibble: 520 × 2
+   hgnc_symbol     n
+         &lt;chr&gt; &lt;int&gt;
+1                461
+2        AATBC     3
+3       ABCC13     6
+4        ABCG1    11
+5      ADAMTS1     6
+6      ADAMTS5     1
+7       ADARB1    15
+8       AGPAT3    18
+9         AIRE     5
+10 ANKRD20A11P     6
+# ... with 510 more rows</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Non-standard evaluation</h2></hgroup><article  id="non-standard-evaluation" class="smaller ">
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Non-standard evaluation</h2></hgroup><article  id="non-standard-evaluation" class="smaller ">
 
 <div class = 'row build'><div class = 'box col-6 bg-blue stretch '><h3>Basics</h3>
 
@@ -707,7 +792,7 @@ gene_by_exon %&gt;%
 <pre ># A tibble: 1 × 1
   `mean(start_position)`
                    &lt;dbl&gt;
-1               34468236</pre>
+1               32221766</pre>
 
 <pre class = 'prettyprint lang-r'># SE
 gene_by_exon %&gt;% 
@@ -716,7 +801,7 @@ gene_by_exon %&gt;%
 <pre ># A tibble: 1 × 1
   `mean(start_position)`
                    &lt;dbl&gt;
-1               34468236</pre>
+1               32221766</pre>
 
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   summarize_(quote(mean(start_position))) #!</pre>
@@ -724,7 +809,7 @@ gene_by_exon %&gt;%
 <pre ># A tibble: 1 × 1
   `mean(start_position)`
                    &lt;dbl&gt;
-1               34468236</pre>
+1               32221766</pre>
 
 <pre class = 'prettyprint lang-r'>gene_by_exon %&gt;% 
   summarize_(~mean(start_position)) #!</pre>
@@ -732,7 +817,7 @@ gene_by_exon %&gt;%
 <pre ># A tibble: 1 × 1
   `mean(start_position)`
                    &lt;dbl&gt;
-1               34468236</pre></div>
+1               32221766</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Joining data frames</h2></hgroup><article  id="joining-data-frames" class="smaller ">
 
@@ -752,22 +837,22 @@ gene_by_exon %&gt;%
   inner_join(gene_interest, 
              by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
 
-<pre ># A tibble: 365 × 11
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000160305       ENST00000400274 ENSE00001542216              21
-2  ENSG00000160305       ENST00000400274 ENSE00002347315              21
-3  ENSG00000160305       ENST00000400274 ENSE00002324363              21
-4  ENSG00000160305       ENST00000400274 ENSE00002319629              21
-5  ENSG00000160305       ENST00000400274 ENSE00002218277              21
-6  ENSG00000160305       ENST00000400274 ENSE00002276427              21
-7  ENSG00000160305       ENST00000400274 ENSE00003471299              21
-8  ENSG00000160305       ENST00000400274 ENSE00001542215              21
-9  ENSG00000160305       ENST00000400274 ENSE00003546587              21
-10 ENSG00000160305       ENST00000400274 ENSE00003683586              21
-# ... with 355 more rows, and 7 more variables: start_position &lt;int&gt;,
-#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;, gene_interest &lt;chr&gt;</pre>
+<pre ># A tibble: 29 × 10
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000160305       ENST00000400274              21       46458899
+2  ENSG00000160305       ENST00000457905              21       46458899
+3  ENSG00000160305       ENST00000466639              21       46458899
+4  ENSG00000160305       ENST00000435722              21       46458899
+5  ENSG00000160305       ENST00000417564              21       46458899
+6  ENSG00000160305       ENST00000473752              21       46458899
+7  ENSG00000160305       ENST00000494435              21       46458899
+8  ENSG00000160305       ENST00000480553              21       46458899
+9  ENSG00000160305       ENST00000472364              21       46458899
+10 ENSG00000160305       ENST00000481883              21       46458899
+# ... with 19 more rows, and 6 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;,
+#   gene_interest &lt;chr&gt;</pre>
 
 <pre class = 'prettyprint lang-r'>  # provide the equivalence since columns have a different name</pre></div>
 
@@ -778,22 +863,22 @@ gene_by_exon %&gt;%
   full_join(gene_interest, 
              by = c(&quot;hgnc_symbol&quot;=&quot;symbol&quot;)) </pre>
 
-<pre ># A tibble: 13,980 × 11
-   ensembl_gene_id ensembl_transcript_id ensembl_exon_id chromosome_name
-             &lt;chr&gt;                 &lt;chr&gt;           &lt;chr&gt;           &lt;int&gt;
-1  ENSG00000264452       ENST00000583496 ENSE00002709519              21
-2  ENSG00000274046       ENST00000617336 ENSE00003722332              21
-3  ENSG00000278775       ENST00000619112 ENSE00003751812              21
-4  ENSG00000276873       ENST00000616808 ENSE00003730872              21
-5  ENSG00000236545       ENST00000458654 ENSE00001729372              21
-6  ENSG00000236545       ENST00000458654 ENSE00001673061              21
-7  ENSG00000160255       ENST00000302347 ENSE00003791070              21
-8  ENSG00000160255       ENST00000302347 ENSE00003688153              21
-9  ENSG00000160255       ENST00000302347 ENSE00003784896              21
-10 ENSG00000160255       ENST00000302347 ENSE00003569344              21
-# ... with 13,970 more rows, and 7 more variables: start_position &lt;int&gt;,
-#   end_position &lt;int&gt;, hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;,
-#   gene_biotype &lt;chr&gt;, gene_interest &lt;chr&gt;</pre></div>
+<pre ># A tibble: 2,415 × 10
+   ensembl_gene_id ensembl_transcript_id chromosome_name start_position
+             &lt;chr&gt;                 &lt;chr&gt;           &lt;int&gt;          &lt;int&gt;
+1  ENSG00000264452       ENST00000583496              21       44439035
+2  ENSG00000274046       ENST00000617336              21        7092616
+3  ENSG00000278775       ENST00000619112              21        8433085
+4  ENSG00000276873       ENST00000616808              21       39171462
+5  ENSG00000236545       ENST00000458654              21       41870633
+6  ENSG00000160255       ENST00000302347              21       44885953
+7  ENSG00000160255       ENST00000518033              21       44885953
+8  ENSG00000160255       ENST00000523126              21       44885953
+9  ENSG00000160255       ENST00000521995              21       44885953
+10 ENSG00000160255       ENST00000397846              21       44885953
+# ... with 2,405 more rows, and 6 more variables: end_position &lt;int&gt;,
+#   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;,
+#   gene_interest &lt;chr&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Relational operations </h2><h3> <strong>mutating</strong> joins</h3></hgroup><article  id="relational-operations-mutating-joins" class="smaller ">
 
@@ -882,7 +967,9 @@ gene_by_exon %&gt;%
 <li><code>dtplyr</code> is a <code>dplyr</code> interface to <code>data.table</code> but slower than native <code>data.table</code></li>
 </ul>
 
-<img src='https://www.stickermule.com/marketplace/embed_img/16249' title='fig:'/></div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<img src='https://www.stickermule.com/marketplace/embed_img/16249' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>Thank you for your attention</h2></hgroup><article  id="thank-you-for-your-attention" class="smaller "></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
