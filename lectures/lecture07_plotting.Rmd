@@ -480,6 +480,8 @@ allSeasons %>%
 ## iris dataset {.vs1}
 
 
+rstudio [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
+
 ```{r}
 iris <- as_tibble(iris)
 iris
@@ -672,19 +674,38 @@ ggplot(iris) +
 ```
 
 
-## stat functions {.vs1}
+## Stat functions {.nvs1}
 
-- We used a new variable in the density plot: `..density..`
-- In `ggplot2`, variables surrounded by two pair of dots (`..<variable>..`) 
+### transform data {.bg-yellow2 .box-12 .icon}
+
+![](img/07_stats.png)
+
+- variables surrounded by two pair of dots (`..variable..`) 
 are intermediate values calculated by `ggplot2` using stat functions
-
-- Every `geom` uses a `stat` function to transform the data:
-    + For example `geom_histogram()` and `geom_density()` need to perform calculations 
-    in order to display the histogram or the density curve (Not as simple as plotting _x_ and _y_ values from two columns)
-    + `geom_histogram()` uses `stat_bin()` to divide the distributions into _bins_ 
+- `geom` uses a `stat` function to transform the data:
+    + `geom_histogram()` uses `stat_bin()` to divide the data into _bins_ 
     and count the number of observations in each _bin_.
-    + `stat_bin()` computes for example: `count`, `density`, `ncount` and `ndensity` (see `?stat_bin()`)
-    + Here `..density..` specifies that we would like to use such a computed `density` column.
+    + `stat_bin()` computes for example: `..count..`, `..density..`, `..ncount..` and `..ndensity..` (see `?stat_bin()`)
+    + stat variable for density plot: `..density..`
+    + `stat_identity` is used for scatter plots or `geom_col()`, no transformation
+    
+### 1D {.box-4 .bg-yellow2 .build}
+
+- `stat_count`
+- `stat_bin`
+
+### 2D {.box-4 .bg-yellow2 .build}
+
+- `stat_density_2d`
+- `stat_bin_2d`
+- `stat_ellipse`
+
+### 3D {.box-4 .bg-yellow2 .build}
+
+- `stat_contour`
+- `stat_summary_hex`
+
+<span class = "small">source: [ggplot2 cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) by Rstudio</span> 
     
 ## Barcharts | Categorical variables
 
@@ -693,7 +714,8 @@ are intermediate values calculated by `ggplot2` using stat functions
 
 ```{r, row = TRUE, fig.height = 4}
 ggplot(iris) +
-  geom_bar(aes(x = Species)) # or: geom_bar(aes(x = Species, y = ..count..))
+  geom_bar(aes(x = Species))
+# or: geom_bar(aes(x = Species, y = ..count..))
 ```
 
 

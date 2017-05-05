@@ -274,12 +274,21 @@ $(document).ready(function () {
 
 
 <p>This short tutorial will allow you to explore <code>dplyr</code> functionality based on the previous lecture.</p>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>If you are missing `biomaRt, install with</p>
+<pre><code>source(&quot;https://bioconductor.org/biocLite.R&quot;)
+biocLite(&quot;biomaRt&quot;)</code></pre>
+</div>
+</div>
 <ol class="example" style="list-style-type: decimal">
 <li>Get data for chromosome 22 from biomaRt. Use Rmarkdown and set the chunk option ‘cache = TRUE’</li>
 </ol>
-<pre class="r"><code>library(biomaRt)</code></pre>
-<pre><code>## Loading required package: methods</code></pre>
-<pre class="r"><code>gene_mart &lt;- useMart(biomart=&quot;ENSEMBL_MART_ENSEMBL&quot;, host=&quot;www.ensembl.org&quot;)
+<pre class="r"><code>library(biomaRt)
+gene_mart &lt;- useMart(biomart=&quot;ENSEMBL_MART_ENSEMBL&quot;, host=&quot;www.ensembl.org&quot;)
 gene_set &lt;- useDataset(gene_mart , dataset=&quot;hsapiens_gene_ensembl&quot;)
 
 gene_by_exon &lt;- getBM(
@@ -301,6 +310,7 @@ gene_by_exon &lt;- getBM(
   value = &quot;21&quot;
   )</code></pre>
 <ol start="2" class="example" style="list-style-type: decimal">
+<li><p>Convert <code>genes_by_exon</code> data set to a <code>tibble</code></p></li>
 <li><p>Extract the processed pseudogenes from the <code>genes_by_exon</code> data set. Use <code>glimpse()</code> to find the correct columns.</p></li>
 <li><p>Count the number of pseudogenes in the set (without referring to <code>table()</code> obviously )</p></li>
 <li><p>Extract a unique set of gene ids without reduncancy of transcripts and exon information. Store the results in a tibble called <code>genes</code></p></li>

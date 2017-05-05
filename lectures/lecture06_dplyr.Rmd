@@ -313,7 +313,7 @@ gene_by_exon %>%
  * Use column conditions for `mutate_if()`
  * `vars()` to wrap variables and `funs()` to wrap functions 
  
-### Coordinate conversion {.box-12 .bg-cobalt}
+### Coordinate conversion {.box-6 .bg-cobalt}
  
 ```{r}
 gene_by_exon %>% 
@@ -321,9 +321,9 @@ gene_by_exon %>%
 
 ```
 
-### Coordinate conversion {.box-12 .bg-cobalt}
+### Coordinate conversion {.box-6 .bg-cobalt}
  
-```{r, row = c(5, 7)}
+```{r}
 gene_by_exon %>% 
   mutate_if(is.numeric, funs(. + 1))
 ```
