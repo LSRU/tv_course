@@ -1,0 +1,273 @@
+---
+title: "Data processing with R tidyverse"
+subtitle: "Nothing on stringr, really"
+author: "G. Androsova, R. Krause"
+date: "5 May 2017"
+output:
+  iosp::ioslides_plus:
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
+    box_colours:
+      bg-yellow: ["lightgoldenrod1", "goldenrod2"]
+      bg-grayblue: ["#bfccd7"]
+      bg-bluewhite: ["white", "#005c99"]
+      bg-greenwhite: ["white", "#1f7a1f"]
+      bg-elixir: [  "white", "#023452", "#ED7520"]
+      yellow2: ["lightgoldenrod1", "goldenrod2"]
+---
+
+## Learning objectives
+
+
+### A first glance at regular expressions {.box-6 .bg-blue}
+ * Matching substituting of character strings 
+ * Ugly, unreadable, terrifying expression s/^lecture([0-9]{1,2}).*[^_].Rmd$/\1.Rmd/
+ * See [R for data science](http://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)
+ * Slides are adapted from presentation "LECTURE 16: REGULAR EXPRESSIONS IN R" by Vinayak Rao
+ 
+### The only important advice  {.box-6 .bg-red}
+ 1. Start simply and expand
+ 2. Think about the most comprehensive -- shortest -- expression
+ 3. Think about negation rather than inclusion of all possibilities
+
+
+## Motivation
+### What if we want to match 
+- any letter followed by 'n'?
+- any vowel followed by 'n'?
+- two letters followed by 'n'?
+- any number of letters followed by 'n'? 
+
+### Regular expressions!
+- allow us to match much more complicated patterns 
+- build patterns from a simple vocabulary and grammar 
+
+
+## Typical R functions
+
+### `grep, grepl` {.box-6 .bg-bluewhite}
+Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match
+
+### `sub, gsub` {.box-6 .bg-greenwhite} Search a character vector for regular expression matches and replace that match with another string
+
+## Meta characters
+### `.` (period) represents any character except empty string ''
+
+```{r}
+vec <- c('ct', 'cat', 'cart', 'dog', 'rat', 'carert', 'bet')
+grep(".at", vec)
+grep("..t", vec)
+```
+`+` represents one or more occurrences
+
+```{r}
+grep('c.+t', vec)
+```
+
+## Meta characters
+\* represents zero or more occurrences
+
+```{r}
+vec 
+grep('c.*t', vec)
+```
+Group terms with parentheses '(' and ')'
+
+```{r}
+grep('c(.r)+t', vec)
+grep('c(.r)*t', vec)
+```
+
+## Meta characters
+### Covered so far {.box-8 .bg-bluewhite}
+ * `.` 
+ * `,` 
+ * `+` 
+ * `*`  
+ 
+### Other useful ones include {.box-8 .bg-bluewhite}
+ * `^` Start of line
+ * `$` End of line
+```{r}
+vec
+grep('r.$', vec)
+```
+
+
+```{r}
+grep('^c', vec)
+```
+
+## Meta characters
+ * `|` ( logical OR )
+```{r}
+vec
+grep('(c.t)|(c.rt)', vec)
+```
+
+## Character classes
+ * **[a-z]** lowercase letters
+ * **[a-zA-Z]** any letter
+ * **[0-9]** any number'
+ * **[aeiou]** any vowel
+ * **[0-7ivx]** any of 0 to 7, i, v, and x
+
+Inside a character class **??** means anything except the following characters. E.g.
+
+**[??0-9]** anything except a digit
+
+## Matching metacharacters
+We saw a bunch of special characters . + * ] [ $ What if we want to match them?
+```{r}
+vec2 = c("ct", "cat", "caat", "caart", "caaat", "caaraat", "c.t")
+grep('c.t', vec2)
+```
+Escape them with \ or in R's case, two \\
+
+```{r}
+#grep('c\.t', vec) will not work, because R thinks \. is a special character like \n
+
+#Use two \'s
+grep('c\\.t', vec2)
+```
+
+## Matching metacharacters
+
+To match a \, our pattern must represent \\
+
+Our string must contain 4 backslashes!
+```{r}
+vec = c("a\\backslash", "nobackslash")
+#grep('\\', vec) gives error
+grep('\\\\', vec)
+```
+
+## Search and replace
+### The **sub** function allows search and replacement {.box-12 .bg-blue}
+```{r}
+vec2
+sub('a+', 'a', vec2)
+```
+**sub** replaces only first match, **gsub** replaces all
+
+Use the backreferences `\1, \2` etc to refer to first, second group, etc.
+```{r}
+gsub('(a+)r(a+)', 'b\\1brc\\2c', vec2)
+```
+
+## Search and replace
+### Use `\U, \L, \E` to make following backreferences upper or lower case or leave unchanged {.box-12 .bg-cobalt}
+```{r}
+vec2
+gsub('(a+)r(a+)', '\\U\\1r\\2', vec2)
+gsub('(a+)r(a+)', '\\U\\1r\\E\\2', vec2)
+```
+
+## Summary
+**.** stands for any character.
+
+**[ABC]** means A,B or C.
+
+**[A-Z]** means any upper letter between A and Z.
+
+**[0-9]** means any digit between 0 and 9.
+
+List of metacharacters '**$ * + . ? [ ] ^ { } | ( ) \'**. If you need to use one of those characters, precede them with a doubled backslash.
+
+## Extended list of regular expressions
+
+Requires `perl=TRUE` flag
+
+For numbers:
+
+**[:digit:]** Digits: '0 1 2 3 4 5 6 7 8 9'.
+
+For letters :
+
+**[:alpha:]** Alphabetic characters: '[:lower:]' and '[:upper:]'.
+
+**[:upper:]** Upper-case letters.
+
+**[:lower:]** Lower-case letters.
+
+Note that the set of alphabetic characters includes accents such as ?? ?? ?? which are very common is some languages like French. Therefore, it is more general than **[A-Za-z]** which does not include letters with accent.
+
+## Extended list of regular expressions
+### For other characters {.box-10 .bg-blue}
+
+**[:punct:]** Punctuation characters: '! " # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \ ] ^ _ ` { | } ~'.
+
+**[:space:]** Space characters: tab, newline, vertical tab, form feed, carriage return, and space.
+
+**[:blank:]** Blank characters: space and tab.
+
+## Extended list of regular expressions
+### For combination of other classes {.box-10 .bg-blue}
+
+**[:alnum:]** Alphanumeric characters: '[:alpha:]' and '[:digit:]'.
+
+**[:graph:]** Graphical characters: '[:alnum:]' and '[:punct:]'.
+
+**[:print:]** Printable characters: '[:alnum:]', '[:punct:]' and space.
+
+**[:xdigit:]** Hexadecimal digits: '0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f'.
+
+## Extended list of regular expressions
+
+You can quantify the number of repetition by adding after the regular expression the following characters :
+
+**?** The preceding item is optional and will be matched at most once.
+
+* The preceding item will be matched zero or more times.
+
+**+** The preceding item will be matched one or more times.
+
+**{n}** The preceding item is matched exactly 'n' times.
+
+**{n,}** The preceding item is matched 'n' or more times.
+
+**{n,m}** The preceding item is matched at least 'n' times, but not more than 'm' times.
+
+
+## Concatenating strings
+### Base R 
+ * `paste()` concatenates strings.
+ * `paste0()`
+ * `cat()` prints and concatenates strings
+```{r}
+paste("toto","tata",sep=' ')
+paste("toto","tata",sep=",")
+x <- c("a","b","c")
+paste(x,collapse="-")
+cat(c("a","b","c"), sep = "+")
+```
+
+## Splitting a string
+
+**strsplit( )** : Split the elements of a character vector 'x' into substrings according to the matches to substring 'split' within them.
+**cat()** prints and concatenates strings
+```{r}
+strsplit("a.b.c", "\\.")
+unlist(strsplit("a.b.c", "\\."))
+```
+
+## Excercise 2
+
+### **Part 1**
+
+Do a search and replace of 'dog' to 'cat', 'cat' to `mouse', and 'mouse' to 'dog' in: 
+
+```{r}
+string = "Do dogs eat cats, or does your cat eat a mouse?"
+```
+
+### **Part 2**
+Part 1 results in the word 'mouses', which is not very good English! Modify your solution to also replace 'cats' with 'mice' . 
+
+Hint: We need to distinguish 'cat' from 'cats' . 
+
+
+
+
+
+
+
