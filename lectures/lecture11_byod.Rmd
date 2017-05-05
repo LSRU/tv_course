@@ -1,0 +1,73 @@
+---
+title: "Bring your own data"
+subtitle: "Set up"
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "2 May 2017"
+output:
+  iosp::ioslides_plus:
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
+    box_colours:
+      bg-yellow: ["lightgoldenrod1", "goldenrod2"]
+      bg-grayblue: ["#bfccd7"]
+      bg-bluewhite: ["white", "#005c99"]
+      bg-greenwhite: ["white", "#1f7a1f"]
+      yellow2: ["lightgoldenrod1", "goldenrod2"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Today (is your day...) {.vs1}
+
+ + Choose ..
+
+### Bring your own data {.box-10 .bg-blue}
+ * Working on an problem set that you understand and want to move/improve/integrate with the `tidyverse`.
+ * Small work groups with assistance of instructors
+ * Concluding short presentation 
+
+### Exercise project  {.box-10 .bg-green}
+ * Complete the learning 
+ * Required for PhD students in needs of ECTS
+ * Recommended if you just want to exercise `tidyverse` and follow a rather straight path
+ * Presented by Aurélien
+
+## Bring your own data
+
+### Getting the most out of it {.box-10 .offset-1 .bg-green}
+ * Ideal group composition of experienced and early stage users
+ * Work as group or in pair-programming
+   + Rotate keyboard access every hour
+   + Switch group composition after completion
+ * Focus is on learning, refactoring and code review and improvement
+ * Try to avoid
+    + Implementation of features
+    + Exploratory data analysis 
+    + Tackling hard, well-studied problems
+
+## Projects
+
+### Known projects  {.box-10 .offset-1 .bg-greenwhite}
+ * Circadian rythm of the blood-brain barrier in cellular model (*Jochen Ohnmacht*)
+ * Metabolomics (*Malgorzata Nyga*, after ~11:00)
+ * Advanced code using `dplyr` and `data.table` (*Arnaud Muller*)
+ * TCGA-meta data cleaning and analysis (*Peter Nazarov*, after ~12:00)
+ 
+### Other options {.box-10 .offset-1 .bg-red .build}
+ * Time to discuss specific issues
+
+  
+
+## Before we start ... {.vs1}
+
+### Further reading {.box-10 .offset-1 .bg-blue .icon}
+
+![](img/00_book.png)
+
+- [Cheat sheets](https://www.rstudio.com/resources/cheatsheets/) 
+- [R for data science](http://r4ds.had.co.nz/)
+- [tidyverse website] 
+
+### Bring on the data {.box-10 .offset-1 .bg-red .build}
+Thank you for your attention!
