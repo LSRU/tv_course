@@ -27,7 +27,9 @@ navbar:
         - text: "Lecture 09 - data handling with broom"
           href: lecture09_broom.html
         - text: "Lecture 10 - non standard evaluation with tidyeval"
-          href: lecture10_tidyeval.html          
+          href: lecture10_tidyeval.html   
+        - text: "Lecture 11 - Bring Your Own Data"
+          href: lecture11_byod.html 
         - text: "---------"        
         - text: "slides, keyboard shortcuts:"
         - text: "o: outline"

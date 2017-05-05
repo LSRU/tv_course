@@ -273,7 +273,7 @@ $(document).ready(function () {
 </div>
 
 
-<p>This short tutorial will allow you to explore <code>dplyr</code> functionality based on the previous lecture.</p>
+<p>This short tutorial will allow you to explore <code>dplyr</code> functionality based on the previous lecture. Every question can be answered with a combination of <code>%&gt;%</code> pipes. You should refrain from using temporary variables and statements outside of the range of the tidyverse.</p>
 <div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
 <h2 style="background-color:rgba(173, 216, 230, 1);">
 Tip
@@ -285,13 +285,14 @@ biocLite(&quot;biomaRt&quot;)</code></pre>
 </div>
 </div>
 <ol class="example" style="list-style-type: decimal">
-<li>Get data for chromosome 22 from biomaRt. Use Rmarkdown and set the chunk option ‘cache = TRUE’</li>
+<li>Get data for chromosome 21 from biomaRt. Use Rmarkdown and set the chunk option ‘cache = TRUE’</li>
 </ol>
-<pre class="r"><code>library(biomaRt)
-gene_mart &lt;- useMart(biomart=&quot;ENSEMBL_MART_ENSEMBL&quot;, host=&quot;www.ensembl.org&quot;)
+<pre class="r"><code>library(biomaRt)</code></pre>
+<pre><code>## Loading required package: methods</code></pre>
+<pre class="r"><code>gene_mart &lt;- useMart(biomart=&quot;ENSEMBL_MART_ENSEMBL&quot;, host=&quot;www.ensembl.org&quot;)
 gene_set &lt;- useDataset(gene_mart , dataset=&quot;hsapiens_gene_ensembl&quot;)
 
-gene_by_exon &lt;- getBM(
+gene_by_exon &lt;-as_tibble(getBM(
   mart = gene_set,
   attributes = c(
     &quot;ensembl_gene_id&quot;,
@@ -308,9 +309,9 @@ gene_by_exon &lt;- getBM(
     ), 
   filter = &quot;chromosome_name&quot;,
   value = &quot;21&quot;
-  )</code></pre>
+  ))</code></pre>
 <ol start="2" class="example" style="list-style-type: decimal">
-<li>Convert <code>genes_by_exon</code> data set to a <code>tibble</code></li>
+<li>Extract the processed pseudogenes from the <code>genes_by_exon</code> data set. Convert <code>genes_by_exon</code> data set to a <code>tibble</code> Use <code>glimpse()</code> to find the correct columns and <code>distinct()</code> to identify how pseudogenes are coded. Store the results in a tibble <code>pseudogenes</code></li>
 </ol>
 <div class="box solution">
 <h2>
@@ -318,30 +319,29 @@ Solution
 </h2>
 <div class="box-content">
 <pre class="r"><code>gene_by_exon &lt;- gene_by_exon %&gt;% 
-  as_tibble()</code></pre>
+  as_tibble()
+
+pseudogenes &lt;- gene_by_exon %&gt;% 
+  filter(gene_biotype == &quot;processed_pseudogene&quot;)</code></pre>
 </div>
 </div>
 <ol start="3" class="example" style="list-style-type: decimal">
-<li>Extract the processed pseudogenes from the <code>genes_by_exon</code> data set. Use <code>glimpse()</code> to find the correct columns.</li>
+<li>Count the number of pseudogenes in the set (without referring to <code>table()</code> obviously )</li>
 </ol>
 <div class="box solution">
 <h2>
 Solution
 </h2>
 <div class="box-content">
-<pre class="r"><code>  gene_by_exon %&gt;% 
-  filter(gene_biotype == &quot;processed_pseudogenes&quot;)</code></pre>
-<pre><code>## # A tibble: 0 × 11
-## # ... with 11 variables: ensembl_gene_id &lt;chr&gt;,
-## #   ensembl_transcript_id &lt;chr&gt;, ensembl_exon_id &lt;chr&gt;,
-## #   chromosome_name &lt;int&gt;, start_position &lt;int&gt;, end_position &lt;int&gt;,
-## #   hgnc_symbol &lt;chr&gt;, hgnc_id &lt;chr&gt;, strand &lt;int&gt;, gene_biotype &lt;chr&gt;,
-## #   phenotype_description &lt;chr&gt;</code></pre>
+<pre class="r"><code>pseudogenes %&gt;% count()</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##       n
+##   &lt;int&gt;
+## 1   170</code></pre>
 </div>
 </div>
 <ol start="4" class="example" style="list-style-type: decimal">
-<li><p>Count the number of pseudogenes in the set (without referring to <code>table()</code> obviously )</p></li>
-<li><p>Extract a unique set of gene ids without reduncancy of transcripts and exon information. Store the results in a tibble called <code>genes</code></p></li>
+<li>Extract a unique set of gene ids without redunancy of transcripts and exon information. Store the results in a tibble called <code>genes</code></li>
 </ol>
 <div class="box solution">
 <h2>
@@ -353,7 +353,7 @@ Solution
   distinct()-&gt; genes</code></pre>
 </div>
 </div>
-<ol start="6" class="example" style="list-style-type: decimal">
+<ol start="5" class="example" style="list-style-type: decimal">
 <li>Sort the genes by their length.</li>
 </ol>
 <div class="box solution">
@@ -382,7 +382,7 @@ Solution
 ## #   gene_biotype &lt;chr&gt;, phenotype_description &lt;chr&gt;, length &lt;int&gt;</code></pre>
 </div>
 </div>
-<ol start="7" class="example" style="list-style-type: decimal">
+<ol start="6" class="example" style="list-style-type: decimal">
 <li>Calculate the average length per gene by <code>gene_biotype</code>.</li>
 </ol>
 <div class="box solution">
@@ -418,7 +418,7 @@ Solution
 ## 19             unprocessed_pseudogene       12495</code></pre>
 </div>
 </div>
-<ol start="8" class="example" style="list-style-type: decimal">
+<ol start="7" class="example" style="list-style-type: decimal">
 <li>Calculate the total number of genes and their average length by <code>gene_biotype</code>.</li>
 </ol>
 <div class="box solution">
@@ -455,7 +455,7 @@ Solution
 ## 19             unprocessed_pseudogene        6128     32</code></pre>
 </div>
 </div>
-<ol start="9" class="example" style="list-style-type: decimal">
+<ol start="8" class="example" style="list-style-type: decimal">
 <li>What is the most frequent single word in the phenotype description on chromosome 21? Split the column using <code>separate</code>, <code>gather</code> the columns and <code>count</code> in a single <code>dplyr</code> statement.</li>
 </ol>
 <div class="box solution">

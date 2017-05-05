@@ -31,6 +31,8 @@ By the end you should be able to:
 - Know how to find help on `ggplot2` when you run into problems.
 
 
+XX ADD GROUP aes for geom_line
+
 ## Before, there was `ggplot1`
 
 Released in **2005** until **2008** by [Hadley Wickham](https://github.com/hadley/ggplot1).
