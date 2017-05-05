@@ -18,16 +18,12 @@ output:
 ## Learning objectives
 
 
-### A first glance at regular expressions {.box-6 .bg-blue}
+### A first glance at regular expressions {.box-8 .offset-1 .bg-bluewhite}
  * Matching substituting of character strings 
- * Ugly, unreadable, terrifying expression s/^lecture([0-9]{1,2}).*[^_].Rmd$/\1.Rmd/
+ * `s/^lecture([0-9]{1,2}).*[^_].Rmd$/\1.Rmd/g`
+ * Ugly, unreadable, terrifying expression 
  * See [R for data science](http://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions)
- * Slides are adapted from presentation "LECTURE 16: REGULAR EXPRESSIONS IN R" by Vinayak Rao
  
-### The only important advice  {.box-6 .bg-red}
- 1. Start simply and expand
- 2. Think about the most comprehensive -- shortest -- expression
- 3. Think about negation rather than inclusion of all possibilities
 
 
 ## Motivation
@@ -44,12 +40,38 @@ output:
 
 ## Typical R functions
 
-### `grep, grepl` {.box-6 .bg-bluewhite}
+### `grep, grepl` {.box-6 .bg-bluewhite .build}
 Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match
+```{r}
+grep("c", "cat")
+```
 
-### `sub, gsub` {.box-6 .bg-greenwhite} Search a character vector for regular expression matches and replace that match with another string
+```{r}
+grep("a", "cat", value = TRUE)
+```
 
-## Meta characters
+```{r}
+grepl("at", "cat")
+```
+
+%end%
+
+### `sub, gsub` {.box-6 .bg-greenwhite} 
+Search a character vector for regular expression matches and replace that 
+match with another string
+```{r}
+sub("c", "h", "cat")
+```
+
+```{r}
+sub("c", "kl", "cataract")
+```
+
+```{r}
+gsub("c", "n", "cataract")
+```
+
+## Meta-characters | Not representing matched characters
 ### `.` (period) represents any character except empty string ''
 
 ```{r}
@@ -77,16 +99,24 @@ grep('c(.r)+t', vec)
 grep('c(.r)*t', vec)
 ```
 
-## Meta characters
-### Covered so far {.box-8 .bg-bluewhite}
- * `.` 
- * `,` 
- * `+` 
- * `*`  
- 
-### Other useful ones include {.box-8 .bg-bluewhite}
- * `^` Start of line
- * `$` End of line
+## Quantifying number of matches
+
+### Applies to preceeding of group {.box-6 .bg-yellow2 } 
+ * `?` The preceding item is optional and will be matched at most once.
+ * `*` The preceding item will be matched zero or more times.
+ *`+` The preceding item will be matched one or more times.
+ * `{n}` The preceding item is matched exactly 'n' times.
+ * `{n,}` The preceding item is matched 'n' or more times.
+ * `{n,m}` The preceding item is matched at least 'n' times, but not more than 'm' times.
+
+## Match positions
+
+### Other useful ones include {.box-6 .bg-bluewhite}
+ * `^` Start of string
+ * `$` End of string
+
+### Other useful ones include {.box-6 .bg-cobalt}
+
 ```{r}
 vec
 grep('r.$', vec)
@@ -177,11 +207,9 @@ List of metacharacters '**$ * + . ? [ ] ^ { } | ( ) \'**. If you need to use one
 
 Requires `perl=TRUE` flag
 
-For numbers:
+### Readable short cuts
 
 **[:digit:]** Digits: '0 1 2 3 4 5 6 7 8 9'.
-
-For letters :
 
 **[:alpha:]** Alphabetic characters: '[:lower:]' and '[:upper:]'.
 
@@ -189,7 +217,7 @@ For letters :
 
 **[:lower:]** Lower-case letters.
 
-Note that the set of alphabetic characters includes accents such as ?? ?? ?? which are very common is some languages like French. Therefore, it is more general than **[A-Za-z]** which does not include letters with accent.
+Note that the set of alphabetic characters includes accents such as ß, ç or ö which are very common is some languages. Therefore, it is more general than **[A-Za-z]** which ascii characters only.
 
 ## Extended list of regular expressions
 ### For other characters {.box-10 .bg-blue}
@@ -211,21 +239,6 @@ Note that the set of alphabetic characters includes accents such as ?? ?? ?? whi
 
 **[:xdigit:]** Hexadecimal digits: '0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f'.
 
-## Extended list of regular expressions
-
-You can quantify the number of repetition by adding after the regular expression the following characters :
-
-**?** The preceding item is optional and will be matched at most once.
-
-* The preceding item will be matched zero or more times.
-
-**+** The preceding item will be matched one or more times.
-
-**{n}** The preceding item is matched exactly 'n' times.
-
-**{n,}** The preceding item is matched 'n' or more times.
-
-**{n,m}** The preceding item is matched at least 'n' times, but not more than 'm' times.
 
 
 ## Concatenating strings
@@ -250,21 +263,12 @@ strsplit("a.b.c", "\\.")
 unlist(strsplit("a.b.c", "\\."))
 ```
 
-## Excercise 2
+## Mastering regular expressions
 
-### **Part 1**
-
-Do a search and replace of 'dog' to 'cat', 'cat' to `mouse', and 'mouse' to 'dog' in: 
-
-```{r}
-string = "Do dogs eat cats, or does your cat eat a mouse?"
-```
-
-### **Part 2**
-Part 1 results in the word 'mouses', which is not very good English! Modify your solution to also replace 'cats' with 'mice' . 
-
-Hint: We need to distinguish 'cat' from 'cats' . 
-
+### Working with regular   {.box-6 .bg-red}
+ 1. Start simply and expand
+ 2. Think about the most comprehensive -- shortest -- expression
+ 3. Think about negation rather than inclusion of all possibilities
 
 
 
