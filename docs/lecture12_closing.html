@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data processing in the R tidyverse</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Data processing in the R tidyverse',
+                        subtitle: 'Closing time',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'lecture12_closing_files/logo.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'A. Ginolhac, E. Koncina, R. Krause' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="css/tweaks.css" type="text/css" />
+
+  <link href="site_libs/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="site_libs/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="site_libs/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="site_libs/ioslides-13.5.1/js/slide-deck.js"></script>
+  <link href="site_libs/iosp-0.1/css/iosp.css" rel="stylesheet" />
+  <script src="site_libs/iosp-0.1/js/lang-r.js"></script>
+  <style type="text/css">
+  
+    .bg-yellow {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  
+    .bg-grayblue {
+      background-color: #BFCCD7;
+    }
+  
+    .box.bg-grayblue {
+      border: 2px solid #60666C;
+      color: #000;
+    }
+  
+    .box.bg-grayblue > h3:first-child {
+      background-color: #60666C;
+      color: #fff;
+    }
+  
+    .bg-bluewhite {
+      background-color: #FFFFFF;
+    }
+  
+    .box.bg-bluewhite {
+      border: 2px solid #005C99;
+      color: #000;
+    }
+  
+    .box.bg-bluewhite > h3:first-child {
+      background-color: #005C99;
+      color: #fff;
+    }
+  
+    .bg-greenwhite {
+      background-color: #FFFFFF;
+    }
+  
+    .box.bg-greenwhite {
+      border: 2px solid #1F7A1F;
+      color: #000;
+    }
+  
+    .box.bg-greenwhite > h3:first-child {
+      background-color: #1F7A1F;
+      color: #fff;
+    }
+  
+    .bg-elixir {
+      background-color: #FFFFFF;
+    }
+  
+    .box.bg-elixir {
+      border: 2px solid #023452;
+      color: #ED7520;
+    }
+  
+    .box.bg-elixir > h3:first-child {
+      background-color: #023452;
+      color: #fff;
+    }
+  
+    .bg-yellow2 {
+      background-color: #FFEC8B;
+    }
+  
+    .box.bg-yellow2 {
+      border: 2px solid #EEB422;
+      color: #000;
+    }
+  
+    .box.bg-yellow2 > h3:first-child {
+      background-color: #EEB422;
+      color: #000;
+    }
+  </style>
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="lecture12_closing_files/logo.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+            <p style="margin-top: 6px; margin-left: -2px;">5 May 2017</p>
+          </hgroup>
+  </slide>
+
+<slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller vs1">
+
+<div class = 'row'><div class = 'box col-10 offset-1 bg-red icon'><h3>So much for the tidyverse</h3>
+
+<img src='img/00_kt.png' title='fig:'/>
+
+<ul>
+<li>Reading data</li>
+<li>Tidy data</li>
+<li>Manipulation</li>
+<li>Functional programming</li>
+<li>Tidying model objects</li>
+<li>Consistent and compact data analysis using tidy verse</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Missing features</h2></hgroup><article  id="missing-features" class="smaller vs1 build">
+
+<div class = 'row'><div class = 'box col-8 offset-2 bg-blue icon'><h3>Resources</h3>
+
+<img src='img/00_book.png' title='fig:'/>
+
+<ul>
+<li><a href='http://tidyverse.org/' title=''>tidyverse website</a></li>
+<li><a href='http://r4ds.had.co.nz/data-import.html' title=''>R for Data Science</a></li>
+<li><a href='https://www.datacamp.com/courses/' title=''>Datacamp courses</a></li>
+<li><a href='http://www.datacarpentry.org/' title=''>Data carpentry</a></li>
+<li><a href='http://www.softwarecarpentry.org/' title=''>Software carpentry</a></li>
+</ul>
+
+</div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-yellow2 icon'><h3>lesser known tricks by Bruno Rodrigues</h3>
+
+<img src='https://pbs.twimg.com/profile_images/765520852989386752/GzhcsZws.jpg' title='fig:'/>
+
+<ul>
+<li><a href='http://www.brodrigues.co/blog/2017-02-17-lesser_known_tricks/' title=''>dplyr</a></li>
+<li><a href='http://www.brodrigues.co/blog/2017-03-24-lesser_known_purrr/' title=''>purrr</a></li>
+<li><a href='http://www.brodrigues.co/blog/2017-02-17-how_to_use_jailbreakr/' title=''>jailbreakr</a></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>dplyr <code>case_when()</code></h2></hgroup><article  id="dplyr-case_when" class="smaller ">
+
+<p>Great vectorise multiple <code>if</code> and <code>else if</code> statements</p>
+
+<div class = 'row'><div class = 'box col-12'>
+
+<div id="unnamed-chunk-1" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>summary(iris$Petal.Length)</pre></div>
+
+<div class="col-6">
+<pre >   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  1.000   1.600   4.350   3.758   5.100   6.900 </pre></div></div></div>
+
+</div></div><div class = 'row'><div class = 'box col-12 compact-output'>
+
+<div id="unnamed-chunk-2" class="chunk shadow">
+<div class="row">
+<div class="col-6">
+<pre class = 'prettyprint lang-r'>iris %&gt;%
+  as_tibble() %&gt;%
+  mutate(
+    petal_length_cat = case_when(
+      Petal.Length &lt; 2 ~ &quot;super_small&quot;,
+      Petal.Length &lt; 4 ~ &quot;small&quot;,
+      Petal.Length &lt; 6 ~ &quot;big&quot;,
+      TRUE ~ &quot;very_big&quot;)) %&gt;%
+  ggplot(aes(x = Petal.Length,
+             fill = petal_length_cat)) +
+  geom_density(alpha = 0.6)</pre></div>
+
+<div class="col-6">
+<p><img src='lecture12_closing_files/figure-html/unnamed-chunk-2-1.png' title=''/><!-- --></p></div></div></div>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>ELIXIR</h2></hgroup><article  id="elixir" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-elixir icon'><h3><a href='http://elixir-europe.org' title=''>ELIXIR</a> is a bioinformatics infrastructure programme</h3>
+
+<ul>
+<li>Hub at the EBI and national nodes</li>
+<li>Platforms <img src='https://www.elixir-europe.org/sites/default/files/images/compute-icon.png' title=''/>
+
+<ul>
+<li>Data</li>
+<li>Tools</li>
+<li>Compute</li>
+</ul></li>
+<li>Interoperability</li>
+<li><strong>Training</strong> <img src='https://www.elixir-europe.org/sites/default/files/images/training-icon.png' title=''/></li>
+</ul>
+
+</div><div class = 'box col-6 bg-elixir icon stretch'><h3>Across Europe</h3>
+
+<img src='https://www.elixir-europe.org/sites/default/files/home-banner2.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Elixir-Luxembourg</h2></hgroup><article  id="elixir-luxembourg" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-elixir icon stretch'><h3>Focus</h3>
+
+<ul>
+<li>LCSB is the national node for Luxembourg <a href='http://elixir-luxembourg.org' title=''>ELIXIR-LU</a></li>
+<li>Focus on translational medicine <img src='http://elixir-luxembourg.org/sites/default/files/sites/default/files/Elixir-LU_Logo_SizeLinkedin.png' title=''/></li>
+</ul>
+
+</div><div class = 'box col-6 icon stretch'>
+
+<img src='http://elixir-luxembourg.org/sites/default/files/sites/default/files/ELIXIR-LU_Services_Web.jpg' title='fig:'/>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>ELIXIR-LU training in Luxembourg</h2></hgroup><article  id="elixir-lu-training-in-luxembourg" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-elixir stretch icon'><h3>Training focus</h3>
+
+<img src='http://elixir-luxembourg.org/sites/default/files/sites/default/files/Training_Pic_Websize.jpg' title='fig:'/>
+
+</div><div class = 'box col-6 bg-elixir stretch'><h3>Training plan</h3>
+
+<ul>
+<li>On-site training and hands-on training courses
+
+<ul>
+<li>User training of TMDC and tranSMART</li>
+<li>Curation of clinical data and integration to tranSMART</li>
+<li>Basic bio-medical research IT training for researchers</li>
+<li>Data management at the bench – from Excel to Tidy Data in statistical analysis platform</li>
+<li>Basic bioinformatics, reproducible pipelines and reproducible analysis</li>
+</ul></li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Future courses</h2></hgroup><article  id="future-courses" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-elixir icon'><h3>Upcoming events</h3>
+
+<ul>
+<li>Advanced <code>git</code> training
+
+<ul>
+<li>2017-05-12, 9:00 @ LCSB</li>
+</ul></li>
+<li>ELIXIR-LU launch event
+
+<ul>
+<li>2017-09-07, 9:00</li>
+</ul></li>
+<li><a href='https://bigdata.uni.lu/' title=''>Big data in healthcare meeting</a>
+
+<ul>
+<li>2017-10-04</li>
+</ul></li>
+<li>TMDC and tranSMART courses will be scheduled in May</li>
+<li>Smaller course to be arranged on shorter schedule</li>
+<li>Focus on development of advanced courses</li>
+</ul>
+
+</div><div class = 'box col-6 bg-elixir icon stretch'><h3>Opportunities</h3>
+
+<ul>
+<li>Support for your courses</li>
+<li>Collection of requests for course (to <a href='mailto:roland.krause@elixir-luxembourg.org' title=''>roland.krause@elixir-luxembourg.org</a>)</li>
+<li>Organization</li>
+<li>Training organization, train-the-trainers</li>
+</ul>
+
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Acknowledgments</h2></hgroup><article  id="acknowledgments" class="smaller ">
+
+<div class = 'row'><div class = 'box col-5 offset-1 bg-yellow'><h3><code>tidyverse</code> and course material</h3>
+
+<ul>
+<li>Hadley Wickham</li>
+<li>Robert Rudis</li>
+<li>Jennifer Bryan</li>
+<li>Ian Lyttle</li>
+<li>David Robinson</li>
+<li>Bruno Rodrigues</li>
+<li>Jeremy Stanley</li>
+</ul>
+
+</div><div class = 'box col-5 bg-elixir stretch'><h3>Organization ELIXIR-LU</h3>
+
+<ul>
+<li>Reinhard Schneider</li>
+<li>Wei Gu</li>
+<li>Marie-Laure Magnani</li>
+<li>Anya Androsova</li>
+</ul></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<script>
+  (function () {
+    footers = document.getElementsByClassName('footer');
+    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
+    [].slice.call(footers).forEach(function (footer) {
+      footer.innerHTML = "<img src=lecture12_closing_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
+      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
+    });
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

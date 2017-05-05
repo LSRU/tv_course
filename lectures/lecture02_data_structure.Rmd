@@ -86,7 +86,16 @@ NA_integer_
 NA_character_
 NA_complex_
 NULL # empty
+-Inf/Inf # infinite values
 ```
+
+## missing and infinite
+
+```{r}
+c(NA_real_, 2.45, 45.67)
+c(Inf, 2.45, 45.67)
+```
+
 
 ## Structures
 

@@ -29,7 +29,9 @@ navbar:
         - text: "Lecture 10 - non standard evaluation with tidyeval"
           href: lecture10_tidyeval.html   
         - text: "Lecture 11 - Bring Your Own Data"
-          href: lecture11_byod.html 
+          href: lecture11_byod.html
+        - text: "Lecture 12 - Closing"
+          href: lecture12_closing.html
         - text: "---------"        
         - text: "slides, keyboard shortcuts:"
         - text: "o: outline"

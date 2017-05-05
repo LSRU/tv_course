@@ -2,7 +2,7 @@
 title: "Data processing in the R tidyverse"
 subtitle: "Closing time"
 author: "A. Ginolhac, E. Koncina, R. Krause"
-date: "2 May 2017"
+date: "5 May 2017"
 output:
   iosp::ioslides_plus:
     footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
@@ -15,6 +15,11 @@ output:
       yellow2: ["lightgoldenrod1", "goldenrod2"]
 ---
   
+```{r setup, include=FALSE}
+library("tidyverse")
+ggplot2::theme_set(ggplot2::theme_bw(14))
+```
+  
 ## Learning objectives {.vs1}
   
 ### So much for the tidyverse {.box-10 .offset-1 .bg-red .icon}
@@ -24,6 +29,7 @@ output:
  * Tidy data
  * Manipulation
  * Functional programming
+ * Tidying model objects
  * Consistent and compact data analysis using tidy verse
  
   
@@ -40,7 +46,40 @@ output:
 - [Data carpentry](http://www.datacarpentry.org/)
 - [Software carpentry](http://www.softwarecarpentry.org/)
 
+### lesser known tricks by Bruno Rodrigues {.box-8 .offset-2 .bg-yellow2 .icon}
 
+![](https://pbs.twimg.com/profile_images/765520852989386752/GzhcsZws.jpg)
+
+- [dplyr](http://www.brodrigues.co/blog/2017-02-17-lesser_known_tricks/)
+- [purrr](http://www.brodrigues.co/blog/2017-03-24-lesser_known_purrr/)
+- [jailbreakr](http://www.brodrigues.co/blog/2017-02-17-how_to_use_jailbreakr/)
+
+## dplyr `case_when()`
+
+
+Great vectorise multiple `if` and `else if` statements
+
+### {.box-12}
+
+```{r, row = TRUE}
+summary(iris$Petal.Length)
+```
+
+### {.box-12 .compact-output}
+
+```{r, row = TRUE}
+iris %>%
+  as_tibble() %>%
+  mutate(
+    petal_length_cat = case_when(
+      Petal.Length < 2 ~ "super_small",
+      Petal.Length < 4 ~ "small",
+      Petal.Length < 6 ~ "big",
+      TRUE ~ "very_big")) %>%
+  ggplot(aes(x = Petal.Length,
+             fill = petal_length_cat)) +
+  geom_density(alpha = 0.6)
+```
 
 
 ## ELIXIR 
@@ -111,9 +150,11 @@ output:
 * Jennifer Bryan
 * Ian Lyttle
 * David Robinson
+* Bruno Rodrigues
 * Jeremy Stanley
 
 ### Organization ELIXIR-LU {.box-5  .bg-elixir .stretch }
+
  * Reinhard Schneider
  * Wei Gu
  * Marie-Laure Magnani
