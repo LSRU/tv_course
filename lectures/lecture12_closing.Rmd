@@ -1,0 +1,120 @@
+---
+title: "Data processing in the R tidyverse"
+subtitle: "Closing time"
+author: "A. Ginolhac, E. Koncina, R. Krause"
+date: "2 May 2017"
+output:
+  iosp::ioslides_plus:
+    footer: "[R tidyverse workshop](https://lsru.github.io/tv_course/)"
+    box_colours:
+      bg-yellow: ["lightgoldenrod1", "goldenrod2"]
+      bg-grayblue: ["#bfccd7"]
+      bg-bluewhite: ["white", "#005c99"]
+      bg-greenwhite: ["white", "#1f7a1f"]
+      bg-elixir: [  "white", "#023452", "#ED7520"]
+      yellow2: ["lightgoldenrod1", "goldenrod2"]
+---
+  
+## Learning objectives {.vs1}
+  
+### So much for the tidyverse {.box-10 .offset-1 .bg-red .icon}
+![](img/00_kt.png)
+
+ * Reading data
+ * Tidy data
+ * Manipulation
+ * Functional programming
+ * Consistent and compact data analysis using tidy verse
+ 
+  
+## Missing features {.vs1 .build}
+ 
+
+### Resources {.box-8 .offset-2 .bg-blue .icon}
+
+![](img/00_book.png)
+
+- [tidyverse website](http://tidyverse.org/)
+- [R for Data Science](http://r4ds.had.co.nz/data-import.html)
+- [Datacamp courses](https://www.datacamp.com/courses/)
+- [Data carpentry](http://www.datacarpentry.org/)
+- [Software carpentry](http://www.softwarecarpentry.org/)
+
+
+
+
+## ELIXIR 
+
+###  [ELIXIR](http://elixir-europe.org) is a bioinformatics infrastructure programme {.box-6  .bg-elixir .icon}
+ - Hub at the EBI and national nodes
+ - Platforms ![](https://www.elixir-europe.org/sites/default/files/images/compute-icon.png)
+    + Data
+    + Tools
+    + Compute
+ - Interoperability
+ - **Training** ![](https://www.elixir-europe.org/sites/default/files/images/training-icon.png)
+
+### Across Europe{.box-6 .bg-elixir .icon .stretch}
+![](https://www.elixir-europe.org/sites/default/files/home-banner2.jpg)
+
+
+## Elixir-Luxembourg
+
+### Focus {.box-6 .bg-elixir .icon .stretch}
+ - LCSB is the national node for Luxembourg [ELIXIR-LU](http://elixir-luxembourg.org)
+ - Focus on translational medicine
+ ![](http://elixir-luxembourg.org/sites/default/files/sites/default/files/Elixir-LU_Logo_SizeLinkedin.png)
+
+### {.box-6  .icon .stretch} 
+![](http://elixir-luxembourg.org/sites/default/files/sites/default/files/ELIXIR-LU_Services_Web.jpg)
+
+## ELIXIR-LU training in Luxembourg
+
+### Training focus {.box-6 .bg-elixir .stretch .icon}
+![](http://elixir-luxembourg.org/sites/default/files/sites/default/files/Training_Pic_Websize.jpg)
+
+### Training plan {.box-6 .bg-elixir .stretch}
+ * On-site training and hands-on training courses 
+    + User training of TMDC and tranSMART
+    + Curation of clinical data and integration to tranSMART
+    + Basic bio-medical research IT training for researchers
+    + Data management at the bench – from Excel to Tidy Data in statistical analysis platform
+    + Basic bioinformatics, reproducible pipelines and reproducible analysis 
+
+
+
+## Future courses
+
+### Upcoming events {.box-6 .bg-elixir .icon}
+ * Advanced `git` training 
+    - 2017-05-12, 9:00 @ LCSB
+ * ELIXIR-LU launch event 
+    - 2017-09-07, 9:00
+ * [Big data in healthcare meeting](https://bigdata.uni.lu/) 
+     - 2017-10-04
+ * TMDC and tranSMART courses will be scheduled in May
+ * Smaller course to be arranged on shorter schedule
+ * Focus on development of advanced courses
+
+### Opportunities {.box-6 .bg-elixir .icon .stretch}
+ + Support for your courses
+ + Collection of requests for course (to roland.krause@elixir-luxembourg.org)
+ + Organization
+ + Training organization, train-the-trainers
+
+## Acknowledgments
+
+### `tidyverse` and course material{.box-5 .offset-1 .bg-yellow}
+
+* Hadley Wickham
+* Robert Rudis
+* Jennifer Bryan
+* Ian Lyttle
+* David Robinson
+* Jeremy Stanley
+
+### Organization ELIXIR-LU {.box-5  .bg-elixir .stretch }
+ * Reinhard Schneider
+ * Wei Gu
+ * Marie-Laure Magnani
+ * Anya Androsova
