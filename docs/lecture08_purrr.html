@@ -178,7 +178,7 @@
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reminder </h2><h3> Lists and vectors</h3></hgroup><article  id="reminder-lists-and-vectors" class="smaller ">
 
-<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Atomic vectors</h3>
+<div class = 'row'><div class = 'box col-6 bg-blue stretch'><h3>Atomic vectors</h3>
 
 <p>Each <strong>atomic</strong> vector contains only a single type of data</p>
 
@@ -198,7 +198,7 @@ c(1, 5, 7)
 c(&quot;character&quot;, &quot;sequence&quot;)</pre></div></li>
 </ul>
 
-</div><div class = 'box col-6 bg-blue'><h3>Coercion</h3>
+</div><div class = 'box col-6 bg-blue stretch'><h3>Coercion</h3>
 
 <p>Is the conversion between types</p>
 
@@ -226,9 +226,14 @@ str(v_example)</pre>
 
 <pre > chr [1:3] &quot;1&quot; &quot;3&quot; &quot;seven&quot;</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reminder </h2><h3> Lists and vectors</h3></hgroup><article  id="reminder-lists-and-vectors-1" class="smaller ">
+</div></div>
 
-<div class = 'row'><div class = 'box col-6 bg-blue'><h3>Lists</h3>
+<p><span class="small">
+Adapted from the tutorial of <a href='https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html' title=''>Jenny Bryan</a></span></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Reminder </h2><h3> Lists and vectors</h3></hgroup><article  id="reminder-lists-and-vectors-1" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 offset-3 bg-blue'><h3>Lists</h3>
 
 <ul>
 <li>are <strong>vectors</strong> which are <strong>not atomic</strong>.</li>
@@ -254,9 +259,17 @@ str(my_list)</pre>
 <pre >[1] FALSE</pre></div></li>
 </ul>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> functional programming</h3></hgroup><article  id="purrr-functional-programming" class="smaller ">
+</div></div>
+
+<p><span class="small">
+Adapted from the tutorial of <a href='https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html' title=''>Jenny Bryan</a></span></p>
+
+</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> functional programming</h3></hgroup><article  id="purrr-functional-programming" class="smaller ">
 
 <div id="unnamed-chunk-5">
+</div>
+
+<div id="unnamed-chunk-6">
 <style type="text/css">
 .center-pic img {
   display: block;
@@ -278,7 +291,7 @@ str(my_list)</pre>
 
 <img src='img/08_purrr.png' title='fig:'/>
 
-<p>purrr enhances R&#39;s <strong>functional programming</strong> toolkit by providing a complete and consistent set of tools for <strong>working with functions and vectors</strong> (purrr overview on github page)</p>
+<p>purrr enhances R&#39;s <strong>functional programming</strong> toolkit by providing a complete and consistent set of tools for <strong>working with functions and vectors</strong> (<code>purrr</code> overview on github page)</p>
 
 </div></div><div class = 'row build'><div class = 'col-10 offset-1 '>
 
@@ -301,9 +314,9 @@ str(my_list)</pre>
 
 </div></div><div class = 'row'><div class = 'box col-12 bg-green compact-output'><h3>Example</h3>
 
-<p>Calculate the mean of each column of the mtcars dataset</p>
+<p>Calculate the mean of each column of the <code>mtcars</code> dataset</p>
 
-<div id="unnamed-chunk-6">
+<div id="unnamed-chunk-7">
 <style type="text/css">
 .col-h250 {
   max-height: 260px;
@@ -316,20 +329,22 @@ str(my_list)</pre>
 <div class="col-6 col-h250 build">
 <h3><code>for</code> loops</h3>
 
-<div id="unnamed-chunk-7" class="chunk shadow">
+<div id="unnamed-chunk-8" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>means &lt;- vector(&quot;double&quot;, ncol(mtcars))
 for (i in seq_along(mtcars)) {
   means[i] &lt;- mean(mtcars[[i]])
 }
 means</pre>
 
-<pre > [1]  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250
- [7]  17.848750   0.437500   0.406250   3.687500   2.812500</pre></div></div>
+<pre > [1]  20.090625   6.187500 230.721875
+ [4] 146.687500   3.596563   3.217250
+ [7]  17.848750   0.437500   0.406250
+[10]   3.687500   2.812500</pre></div></div>
 
 <div class="col-6 col-h250 build">
 <h3>base R apply family</h3>
 
-<div id="unnamed-chunk-8" class="chunk shadow">
+<div id="unnamed-chunk-9" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>apply(mtcars, 2, mean) %&gt;% str()</pre>
 
 <pre > Named num [1:11] 20.09 6.19 230.72 146.69 3.6 ...
@@ -349,6 +364,12 @@ means</pre>
  $ am  : num 0.406
  $ gear: num 3.69
  $ carb: num 2.81</pre></div></div></div>
+
+<p><span class="small">
+From <a href='http://r4ds.had.co.nz/' title=''>R for Data Science</a></span></p>
+
+<div id="unnamed-chunk-10">
+</div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>apply vs map</h2></hgroup><article  id="apply-vs-map" class="smaller ">
 
@@ -389,8 +410,8 @@ means</pre>
 
 <ul>
 <li>Most members of the <code>apply()</code> family are inconsistent.</li>
-<li>Exception: <code>vapply()</code></li>
-<li><code>apply()</code> family still usefull to avoid dependencies (package development)</li>
+<li>Exception: <code>lapply()</code></li>
+<li><code>apply()</code> family still useful to avoid dependencies (package development)</li>
 </ul>
 
 </div></div><div class = 'row'><div class = 'box col-8 offset-2 bg-blue'><h3>The <code>purrr::map()</code> family of functions</h3>
@@ -416,7 +437,7 @@ means</pre>
 </ul></li>
 </ul>
 
-<div id="unnamed-chunk-9" class="chunk shadow">
+<div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>antennate &lt;- function(x) put_on(x, antenna)
 map(legos, antennate)</pre></div>
 
@@ -430,14 +451,17 @@ map(legos, antennate)</pre></div>
 <div class="col-5">
 <img src='img/08_lego_antennate.jpg' title='fig:'/><p class='caption'><code>map(legos, antennate)</code></p></div></div>
 
+<p><span class="small">
+<a href='https://github.com/jennybc/lego-rstats' title=''>LEGO pictures from Jenny Bryan</a></span></p>
+
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> map shortcuts</h3></hgroup><article  id="purrr-map-shortcuts" class="smaller ">
 
-<div class = 'row'><div class = 'box col-6 bg-green'><h3>Example</h3>
+<div class = 'row'><div class = 'box col-8 offset-2 bg-green'><h3>Example</h3>
 
 <ul>
 <li><p>Split the mtcars dataset by each value of cylinder</p>
 
-<div id="unnamed-chunk-10" class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars &lt;- mtcars %&gt;%
   split(.$cyl)
 str(spl_mtcars, max.level = 1)</pre>
@@ -454,6 +478,9 @@ str(spl_mtcars, max.level = 1)</pre>
 </ul></li>
 </ul>
 
+<p><span class="small">
+From <a href='http://r4ds.had.co.nz/' title=''>R for Data Science</a></span></p>
+
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2><code>purrr::map()</code> </h2><h3> example</h3></hgroup><article  id="purrrmap-example" class="smaller ">
 
 <div class = 'row'><div class = 'box col-6 bg-green'><h3>1 - map the linear model</h3>
@@ -461,7 +488,7 @@ str(spl_mtcars, max.level = 1)</pre>
 <ul>
 <li><p>reminder:</p>
 
-<div id="unnamed-chunk-11" class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>map(YOUR_LIST, YOUR_FUNCTION)
 # is equivalent to:
 YOUR_LIST %&gt;% map(YOUR_FUNCTION)</pre></div></li>
@@ -469,7 +496,7 @@ YOUR_LIST %&gt;% map(YOUR_FUNCTION)</pre></div></li>
 <li><p><code>YOUR_FUNCTION</code> can be an anonymous function (declared on the fly)</p></li>
 </ul>
 
-<div id="unnamed-chunk-12" class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>str(spl_mtcars, max.level = 1)</pre>
 
 <pre >List of 3
@@ -477,9 +504,9 @@ YOUR_LIST %&gt;% map(YOUR_FUNCTION)</pre></div></li>
  $ 6:&#39;data.frame&#39;:  7 obs. of  11 variables:
  $ 8:&#39;data.frame&#39;:  14 obs. of  11 variables:</pre></div>
 
-</div><div class = 'box col-6 compact-output'>
+</div><div class = 'col-6 compact-output'>
 
-<div id="unnamed-chunk-13" class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(function(df) lm(mpg ~ wt, data = df))</pre>
 
@@ -521,9 +548,9 @@ Coefficients:
 <li>we can map a new function on the output of the previous call</li>
 </ul>
 
-</div></div><div class = 'row'><div class = 'box col-10 offset-2 compact-output'>
+</div></div><div class = 'row'><div class = 'col-10 offset-2 compact-output'>
 
-<div id="unnamed-chunk-14" class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(function(df) lm(mpg ~ wt, data = df)) %&gt;%
   map(summary) %&gt;%
@@ -549,7 +576,7 @@ $`8`
 <ul>
 <li><p>One sided formula to create anonymous functions (using <code>~</code> and the placeholder <code>.</code> which refers to the current list element)</p>
 
-<div id="unnamed-chunk-15" class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>map(YOUR_LIST, function(df) lm(mpg ~ wt, data = df))
 
 # is equivalent to:
@@ -561,7 +588,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 <div class = 'row'><div class = 'box col-7 bg-cobalt'><h3>Initial code</h3>
 
-<div id="unnamed-chunk-16" class="chunk shadow">
+<div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(function(df) lm(mpg ~ wt, data = df)) %&gt;%
   map(summary) %&gt;%
@@ -569,7 +596,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 </div><div class = 'box col-5 bg-cobalt'><h3>Using shortcuts</h3>
 
-<div id="unnamed-chunk-17" class="chunk shadow">
+<div id="unnamed-chunk-19" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(~lm(mpg ~ wt, data = .)) %&gt;%
   map(summary) %&gt;%
@@ -583,7 +610,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 <div class = 'row'><div class = 'box col-5 offset-7 bg-cobalt'><h3>Using shortcuts</h3>
 
-<div id="unnamed-chunk-18" class="chunk shadow">
+<div id="unnamed-chunk-20" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(~lm(mpg ~ wt, data = .)) %&gt;%
   map(summary) %&gt;%
@@ -619,7 +646,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 </div></div><div class = 'row'><div class = 'box col-6 bg-cobalt compact-output'><h3>using <code>map()</code></h3>
 
-<div id="unnamed-chunk-19" class="chunk shadow">
+<div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(~lm(mpg ~ wt, data = .)) %&gt;%
   map(summary) %&gt;%
@@ -633,7 +660,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 </div><div class = 'box col-6 bg-cobalt compact-output'><h3>using <code>map_dbl()</code></h3>
 
-<div id="unnamed-chunk-20" class="chunk shadow">
+<div id="unnamed-chunk-22" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>spl_mtcars %&gt;% 
   map(~lm(mpg ~ wt, data = .)) %&gt;%
   map(summary) %&gt;%
@@ -661,7 +688,7 @@ map(YOUR_LIST, ~ lm(mpg ~ wt, data = .))</pre></div></li>
 
 <div class = 'row'><div class = 'box col-10 bg-cobalt offset-1 compact-output'><h3>Solution</h3>
 
-<div id="unnamed-chunk-21" class="chunk shadow">
+<div id="unnamed-chunk-23" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>library(readxl)
 path &lt;- readxl_example(&quot;deaths.xls&quot;)
 
@@ -708,7 +735,7 @@ path %&gt;%
 <ul>
 <li><p>to set names in a vector</p>
 
-<div id="unnamed-chunk-22" class="chunk shadow">
+<div id="unnamed-chunk-24" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>set_names(1:5)</pre>
 
 <pre >1 2 3 4 5 
@@ -720,7 +747,7 @@ path %&gt;%
 1 2 3 4 5 </pre></div></li>
 <li><p>is a wrapper for <code>setNames</code> which does some checkings and is stricter</p>
 
-<div id="unnamed-chunk-23" class="chunk shadow">
+<div id="unnamed-chunk-25" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>setNames(1:5, nm = letters[1:2])</pre>
 
 <pre >   a    b &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; 
@@ -735,7 +762,7 @@ path %&gt;%
 
 <div class = 'row'><div class = 'box col-10 bg-cobalt offset-1 compact-output'><h3>Enhanced solution</h3>
 
-<div id="unnamed-chunk-24" class="chunk shadow">
+<div id="unnamed-chunk-26" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>path %&gt;%
   excel_sheets() %&gt;%
   set_names() %&gt;% # creates a named vector
@@ -743,29 +770,29 @@ path %&gt;%
   janitor::clean_names()</pre>
 
 <pre ># A tibble: 20 × 7
-   profession_area               name profession   age has_kids
-             &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;    &lt;lgl&gt;
-1             arts        David Bowie   musician    69     TRUE
-2             arts      Carrie Fisher      actor    60     TRUE
-3             arts        Chuck Berry   musician    90     TRUE
-4             arts        Bill Paxton      actor    61     TRUE
-5             arts             Prince   musician    57     TRUE
-6             arts       Alan Rickman      actor    69    FALSE
-7             arts Florence Henderson      actor    82     TRUE
-8             arts         Harper Lee     author    89    FALSE
-9             arts      Zsa Zsa Gábor      actor    99     TRUE
-10            arts     George Michael   musician    53    FALSE
-11           other         Vera Rubin  scientist    88     TRUE
-12           other        Mohamed Ali    athlete    74     TRUE
-13           other       Morley Safer journalist    84     TRUE
-14           other       Fidel Castro politician    90     TRUE
-15           other     Antonin Scalia     lawyer    79     TRUE
-16           other             Jo Cox politician    41     TRUE
-17           other         Janet Reno     lawyer    78    FALSE
-18           other         Gwen Ifill journalist    61    FALSE
-19           other         John Glenn  astronaut    95     TRUE
-20           other         Pat Summit      coach    64     TRUE
-# ... with 2 more variables: date_of_birth &lt;dttm&gt;, date_of_death &lt;dttm&gt;</pre></div>
+   profession_area               name profession   age has_kids date_of_birth
+             &lt;chr&gt;              &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;    &lt;lgl&gt;        &lt;dttm&gt;
+1             arts        David Bowie   musician    69     TRUE    1947-01-08
+2             arts      Carrie Fisher      actor    60     TRUE    1956-10-21
+3             arts        Chuck Berry   musician    90     TRUE    1926-10-18
+4             arts        Bill Paxton      actor    61     TRUE    1955-05-17
+5             arts             Prince   musician    57     TRUE    1958-06-07
+6             arts       Alan Rickman      actor    69    FALSE    1946-02-21
+7             arts Florence Henderson      actor    82     TRUE    1934-02-14
+8             arts         Harper Lee     author    89    FALSE    1926-04-28
+9             arts      Zsa Zsa Gábor      actor    99     TRUE    1917-02-06
+10            arts     George Michael   musician    53    FALSE    1963-06-25
+11           other         Vera Rubin  scientist    88     TRUE    1928-07-23
+12           other        Mohamed Ali    athlete    74     TRUE    1942-01-17
+13           other       Morley Safer journalist    84     TRUE    1931-11-08
+14           other       Fidel Castro politician    90     TRUE    1926-08-13
+15           other     Antonin Scalia     lawyer    79     TRUE    1936-03-11
+16           other             Jo Cox politician    41     TRUE    1974-06-22
+17           other         Janet Reno     lawyer    78    FALSE    1938-07-21
+18           other         Gwen Ifill journalist    61    FALSE    1955-09-29
+19           other         John Glenn  astronaut    95     TRUE    1921-07-28
+20           other         Pat Summit      coach    64     TRUE    1952-06-14
+# ... with 1 more variables: date_of_death &lt;dttm&gt;</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Purrr </h2><h3> Iterating on 2 lists</h3></hgroup><article  id="purrr-iterating-on-2-lists" class="smaller ">
 
@@ -773,14 +800,14 @@ path %&gt;%
 
 <p><img src='img/08_lego.jpg' title=''/> <img src='img/08_lego_antenna.jpg' title=''/> <img src='img/08_lego_antennate.jpg' title=''/></p>
 
-<div id="unnamed-chunk-25" class="chunk shadow">
+<div id="unnamed-chunk-27" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>map(legos, antennate)</pre></div>
 
 </div><div class = 'box col-6 bg-red center-pic stretch'><h3><code>map2()</code></h3>
 
 <p><img src='img/08_lego_hairs.jpg' title=''/> <img src='img/08_lego_enhaired.jpg' title=''/></p>
 
-<div id="unnamed-chunk-26" class="chunk shadow">
+<div id="unnamed-chunk-28" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>enhair &lt;- function(x, y) x %&gt;% put_on(y)
 map2(legos, hairs, enhair)</pre></div>
 
@@ -823,7 +850,7 @@ map2(legos, hairs, enhair)</pre></div>
 
 <img src='img/08_lego_tibble.jpg' title='fig:'/>
 
-<div id="unnamed-chunk-27" class="chunk shadow">
+<div id="unnamed-chunk-29" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>tibble(numbers = 1:8,
        my_list = list(a = c(&quot;a&quot;, &quot;b&quot;), b = 2.56, 
                       c = c(&quot;a&quot;, &quot;b&quot;), d = rep(TRUE, 4),
@@ -845,7 +872,7 @@ map2(legos, hairs, enhair)</pre></div>
 
 <div class = 'row build'><div class = 'box col-4 bg-cobalt  stretch'><h3>Rewriting our previous example</h3>
 
-<div id="unnamed-chunk-28" class="build shadow chunk shadow">
+<div id="unnamed-chunk-30" class="build shadow chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   group_by(cyl) %&gt;%
   nest()</pre>
@@ -859,7 +886,7 @@ map2(legos, hairs, enhair)</pre></div>
 
 </div><div class = 'box col-8 bg-cobalt  stretch'><h3>Use mutate and map</h3>
 
-<div id="unnamed-chunk-29" class="build shadow chunk shadow">
+<div id="unnamed-chunk-31" class="build shadow chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   group_by(cyl) %&gt;%
   nest() %&gt;%
@@ -885,7 +912,7 @@ map2(legos, hairs, enhair)</pre></div>
 
 <div class = 'row'><div class = 'box col-8 bg-gray offset-2'><h3>Visualising lists</h3>
 
-<div id="unnamed-chunk-30" class="chunk shadow">
+<div id="unnamed-chunk-32" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>x1 &lt;- list(c(1, 2), c(3, 4))
 x2 &lt;- list(list(1, 2), list(3, 4))
 x3 &lt;- list(1, list(2, list(3)))</pre></div>
@@ -912,7 +939,7 @@ x3 &lt;- list(1, list(2, list(3)))</pre></div>
 
 </div><div class = 'box col-8 bg-greenwhite stretch'><h3>flatten a list</h3>
 
-<div id="unnamed-chunk-31" class="chunk shadow">
+<div id="unnamed-chunk-33" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>x &lt;- list(list(a = 1, b = 2), list(c = 3, d = 4))
 
 flatten(x) %&gt;% str()</pre>
@@ -942,7 +969,7 @@ flatten(x) %&gt;% str()</pre>
 <li><code>unlist()</code> will always succeed</li>
 </ul>
 
-<div id="unnamed-chunk-32" class="chunk shadow">
+<div id="unnamed-chunk-34" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>unlist(1:3)</pre>
 
 <pre >[1] 1 2 3</pre>
@@ -978,7 +1005,7 @@ unlist(my_list) %&gt;% str()</pre>
 
 </div><div class = 'box col-6 bg-green compact-output'><h3>Example</h3>
 
-<div id="unnamed-chunk-33" class="chunk shadow">
+<div id="unnamed-chunk-35" class="chunk shadow">
 <div class="row">
 <div class="col-7">
 <pre class = 'prettyprint lang-r'>x &lt;- list(
@@ -1027,7 +1054,7 @@ x %&gt;% str()</pre></div>
 <li>Let&#39;s adapt an example provided by Hadley Wickham</li>
 </ul>
 
-<div id="unnamed-chunk-34" class="chunk shadow">
+<div id="unnamed-chunk-36" class="chunk shadow">
 <div class="row">
 <div class="col-7">
 <pre class = 'prettyprint lang-r'>l1 &lt;- list(
@@ -1072,7 +1099,7 @@ l1 %&gt;% str()</pre></div>
 
 <div class = 'row'><div class = 'box col-8 offset-2 bg-cobalt'><h3>The <code>listviewer</code> package</h3>
 
-<div id="unnamed-chunk-35">
+<div id="unnamed-chunk-37">
 <style type="text/css">
 .chunk > .jsonedit {
   background: white;
@@ -1081,11 +1108,11 @@ l1 %&gt;% str()</pre></div>
 }
 </style></div>
 
-<div id="unnamed-chunk-36" class="chunk shadow">
+<div id="unnamed-chunk-38" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l1 %&gt;% listviewer::jsonedit()</pre>
 
-<div id="htmlwidget-e16b88204126e781a240" style="width:576px;height:480px;" class="jsonedit html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e16b88204126e781a240">{"x":{"data":{"group1":{"individual1":{"param1":[1,2],"param2":[3,4]},"individual2":{"param1":[5,6],"param2":[7,8]}},"group2":{"individual1":{"param1":[9,10],"param2":[11,12]},"individual2":{"param1":[13,14],"param2":[15,16]}}},"options":{"mode":"tree","modes":["code","form","text","tree","view"]}},"evals":[],"jsHooks":[]}</script></div>
+<div id="htmlwidget-620a2334210ef344f6dd" style="width:576px;height:480px;" class="jsonedit html-widget"></div>
+<script type="application/json" data-for="htmlwidget-620a2334210ef344f6dd">{"x":{"data":{"group1":{"individual1":{"param1":[1,2],"param2":[3,4]},"individual2":{"param1":[5,6],"param2":[7,8]}},"group2":{"individual1":{"param1":[9,10],"param2":[11,12]},"individual2":{"param1":[13,14],"param2":[15,16]}}},"options":{"mode":"tree","modes":["code","form","text","tree","view"]}},"evals":[],"jsHooks":[]}</script></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Nested lists </h2><h3> extracting elements</h3></hgroup><article  id="nested-lists-extracting-elements" class="smaller ">
 
@@ -1095,7 +1122,7 @@ l1 %&gt;% str()</pre></div>
 <li>try to extract all <em>param1</em> values for <em>individual2</em> in both groups</li>
 </ul>
 
-<div id="unnamed-chunk-37" class="build chunk shadow">
+<div id="unnamed-chunk-39" class="build chunk shadow">
 <pre class = 'prettyprint lang-r'># Extract individual2 using a string shortcut
 l1 %&gt;%
   map(&quot;individual2&quot;) %&gt;% str()</pre>
@@ -1108,7 +1135,7 @@ l1 %&gt;%
   ..$ param1: int [1:2] 13 14
   ..$ param2: int [1:2] 15 16</pre></div>
 
-<div id="unnamed-chunk-38" class="build chunk shadow">
+<div id="unnamed-chunk-40" class="build chunk shadow">
 <pre class = 'prettyprint lang-r'># chain 2 map calls to get param1 out of both groups
 
 l1 %&gt;%
@@ -1127,7 +1154,7 @@ l1 %&gt;%
 <li>Do it in a single step using a character vector with <code>map()</code>!</li>
 </ul>
 
-<div id="unnamed-chunk-39" class="chunk shadow">
+<div id="unnamed-chunk-41" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l1 %&gt;%
   map(&quot;individual2&quot;) %&gt;%
   map(&quot;param1&quot;) %&gt;% str()</pre>
@@ -1152,7 +1179,7 @@ l1 %&gt;%
 <li>We would need to recursively use <code>map()</code></li>
 </ul>
 
-<div id="unnamed-chunk-40" class="chunk shadow">
+<div id="unnamed-chunk-42" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l1 %&gt;% map(~map(., ~map(., mean))) %&gt;% str()</pre>
 
 <pre >List of 2
@@ -1179,7 +1206,7 @@ l1 %&gt;%
 <li>is a recursive <code>map()</code></li>
 <li><p>map a function to a lower level of a list</p>
 
-<div id="unnamed-chunk-41" class="chunk shadow">
+<div id="unnamed-chunk-43" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>x %&gt;% at_depth(0, fun)
 # is equivalent to
 # fun(x)
@@ -1199,10 +1226,10 @@ x %&gt;% at_depth(2, fun)
 <li>Our previous call becomes much simplier</li>
 </ul>
 
-<div id="unnamed-chunk-42" class="chunk shadow">
+<div id="unnamed-chunk-44" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l1 %&gt;% map(~map(., ~map(., mean)))</pre></div>
 
-<div id="unnamed-chunk-43" class="chunk shadow">
+<div id="unnamed-chunk-45" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>l1 %&gt;% at_depth(3, mean) %&gt;% str()</pre>
 
 <pre >List of 2
@@ -1228,7 +1255,7 @@ x %&gt;% at_depth(2, fun)
 <ul>
 <li><p>combines a list from the <strong>left</strong></p>
 
-<div id="unnamed-chunk-44" class="chunk shadow">
+<div id="unnamed-chunk-46" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce(`-`)</pre>
 
 <pre >[1] -8</pre>
@@ -1243,7 +1270,7 @@ x %&gt;% at_depth(2, fun)
 <ul>
 <li><p>combines a list from the <strong>right</strong></p>
 
-<div id="unnamed-chunk-45" class="chunk shadow">
+<div id="unnamed-chunk-47" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce_right(`-`)</pre>
 
 <pre >[1] -2</pre>
@@ -1257,7 +1284,7 @@ x %&gt;% at_depth(2, fun)
 
 <div class="row">
 <div class="col-5">
-<div id="unnamed-chunk-46" class="chunk shadow">
+<div id="unnamed-chunk-48" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>1:4 %&gt;% reduce(`+`)
 
 c(1, 2, 3, 4)
@@ -1265,14 +1292,14 @@ c(   3, 3, 4)
 c(      6, 4)
 c(        10)</pre></div>
 
-<div id="unnamed-chunk-47" class="chunk shadow">
+<div id="unnamed-chunk-49" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>my_add &lt;- function(x, y) {
   print(paste(&quot;x =&quot;, x, &quot;y =&quot;, y))
   x + y
 }</pre></div></div>
 
 <div class="col-7 middle">
-<div id="unnamed-chunk-48" class="chunk shadow">
+<div id="unnamed-chunk-50" class="chunk shadow">
 <div class="row">
 <div class="col-7">
 <pre class = 'prettyprint lang-r'>reduce(1:4, my_add)</pre></div>
@@ -1302,7 +1329,7 @@ c(        10)</pre></div>
 <ul>
 <li><p>similar to <code>reduce()</code> but keeps intermediate results</p>
 
-<div id="unnamed-chunk-49" class="chunk shadow">
+<div id="unnamed-chunk-51" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>1:4 %&gt;% accumulate(`+`)</pre>
 
 <pre >[1]  1  3  6 10</pre></div></li>
@@ -1313,7 +1340,7 @@ c(        10)</pre></div>
 <ul>
 <li><p>accumulates a list from the <strong>right</strong></p>
 
-<div id="unnamed-chunk-50" class="chunk shadow">
+<div id="unnamed-chunk-52" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>1:4 %&gt;% accumulate_right(`+`)</pre>
 
 <pre >[1] 10  9  7  4</pre></div></li>
@@ -1352,7 +1379,7 @@ Make your pure <a href="https://twitter.com/hashtag/rstats?src=hash">#rstats</a>
 <li>hidden inputs or outputs are called <em><strong>side-effects</strong></em></li>
 </ul>
 
-<div id="unnamed-chunk-51" class="chunk shadow">
+<div id="unnamed-chunk-53" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>start &lt;- 10
 
 impure &lt;- function(x) {
@@ -1374,7 +1401,7 @@ result &lt;- impure(2)</pre>
 <li>no hidden inputs and/or outputs</li>
 </ul>
 
-<div id="unnamed-chunk-52" class="chunk shadow">
+<div id="unnamed-chunk-54" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>pure &lt;- function(x, start) {
   x + start
 }
@@ -1395,7 +1422,7 @@ result</pre>
 
 </div></div><div class = 'row build'><div class = 'box col-6 bg-cobalt  compact-output'><h3>Impure <code>log()</code></h3>
 
-<div id="unnamed-chunk-53" class="chunk shadow">
+<div id="unnamed-chunk-55" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>(res &lt;- log(10))</pre>
 
 <pre >[1] 2.302585</pre>
@@ -1410,7 +1437,7 @@ result</pre>
 
 </div><div class = 'box col-6 bg-cobalt compact-output'><h3>Purified <code>log()</code></h3>
 
-<div id="unnamed-chunk-54" class="chunk shadow">
+<div id="unnamed-chunk-56" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>safe_log &lt;- purrr::safely(log)
 (res &lt;- safe_log(10))</pre>
 
@@ -1435,7 +1462,7 @@ $error
 
 <div class = 'row build'><div class = 'col-12 compact-output '>
 
-<div id="unnamed-chunk-55" class="chunk shadow">
+<div id="unnamed-chunk-57" class="chunk shadow">
 <div class="row">
 <div class="col-4">
 <pre class = 'prettyprint lang-r'># Example from the help page
@@ -1460,7 +1487,7 @@ y %&gt;% str()</pre></div>
 
 </div></div><div class = 'row build'><div class = 'col-12 compact-output '>
 
-<div id="unnamed-chunk-56" class="chunk shadow">
+<div id="unnamed-chunk-58" class="chunk shadow">
 <div class="row">
 <div class="col-4">
 <pre class = 'prettyprint lang-r'>y %&gt;% transpose() %&gt;% str()</pre></div>
@@ -1481,7 +1508,7 @@ y %&gt;% str()</pre></div>
 
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Side effects are still required</h2></hgroup><article  id="side-effects-are-still-required" class="smaller ">
 
-<div id="unnamed-chunk-57">
+<div id="unnamed-chunk-59">
 </div>
 
 <div class = 'row'><div class = 'box col-6 bg-blue'><h3><code>walk</code></h3>
@@ -1498,7 +1525,7 @@ y %&gt;% str()</pre></div>
 
 </div><div class = 'box col-6 bg-green'><h3>Example</h3>
 
-<div id="unnamed-chunk-58" class="chunk shadow">
+<div id="unnamed-chunk-60" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>x &lt;- list(1, &quot;a&quot;, 3)
 
 x %&gt;% 
@@ -1510,7 +1537,7 @@ x %&gt;%
 
 </div></div><div class = 'row build'><div class = 'col-6 '>
 
-<div id="unnamed-chunk-59" class="chunk shadow">
+<div id="unnamed-chunk-61" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>x %&gt;% 
@@ -1543,7 +1570,7 @@ List of 3
 
 </div><div class = 'col-6'>
 
-<div id="unnamed-chunk-60" class="chunk shadow">
+<div id="unnamed-chunk-62" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>x %&gt;% 

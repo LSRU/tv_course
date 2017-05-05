@@ -3,7 +3,6 @@ title: "practical ggplot2"
 author: "Aurelien Ginolhac"
 date: "3 May 2017"
 output:
-  unilur::tutorial_html_solution: default
   unilur::tutorial_pdf: default
   unilur::tutorial_pdf_solution: default
 subtitle: practising the grammar of graphics
@@ -202,9 +201,13 @@ ToothGrowth %>%
   ggplot(aes(x = factor(dose), y = len)) +
   geom_violin(trim = FALSE) +
   geom_dotplot(binaxis = "y", stackdir = "center", binwidth = 1) +
-  stat_summary(fun.y = "median", geom = "point", colour = "red", size = 4)
+  #stat_summary(fun.y = "median", geom = "point", colour = "red", size = 4) +
+  #geom_point(stat = "summary", fun.y = "median", colour = "red", size = 4)
+  geom_pointrange(stat = "summary", fun.data = "mean_cl_boot")
 ```
 
+next year replaces `stat_summary(fun.y = "median", geom = "point", colour = "red", size = 4)`
+by `geom_point(stat = "summary", fun.y = "median", colour = "red", size = 4)`
 
 (@) change the `stat_summary()` in the previous plot from **median** to **mean_cl_boot** and polish the labels.
 

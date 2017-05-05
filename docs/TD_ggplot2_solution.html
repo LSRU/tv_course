@@ -280,8 +280,21 @@ $(document).ready(function () {
 <h2>Scatter plots</h2>
 <p>The <code>mtcars</code> dataset is provided by the <code>ggplot2</code> library (have a look above at the first lines printed using the <code>head()</code> function). As for every (or near to every) function, most datasets shipped with a library contain also a useful help page (<code>?</code>).</p>
 <ol class="example" style="list-style-type: decimal">
-<li><p>Plot the fuel consumption on the <em>y</em> axis and the cars weight on the <em>x</em> axis.</p></li>
-<li><p>The <code>geom_smooth()</code> layer can be used to add a trend line. Try to overlay it to your scatter plot.</p></li>
+<li>Plot the fuel consumption on the <em>y</em> axis and the cars weight on the <em>x</em> axis.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mtcars %&gt;%
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+</div>
+<ol start="2" class="example" style="list-style-type: decimal">
+<li>The <code>geom_smooth()</code> layer can be used to add a trend line. Try to overlay it to your scatter plot.</li>
 </ol>
 <div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
 <h2 style="background-color:rgba(173, 216, 230, 1);">
@@ -295,8 +308,35 @@ Tip
 </ul>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mtcars %&gt;%
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth()</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39;</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>
 <ol start="3" class="example" style="list-style-type: decimal">
-<li><p>It would be more useful to draw a regression line on the scatter plot and without the standard error. Using the help (<code>?</code>), adjust the relevant setting in <code>geom_smooth()</code>.</p></li>
+<li>It would be more useful to draw a regression line on the scatter plot and without the standard error. Using the help (<code>?</code>), adjust the relevant setting in <code>geom_smooth()</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mtcars %&gt;%
+  ggplot(aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+<ol start="4" class="example" style="list-style-type: decimal">
 <li>Ajust some aesthetics in order to:
 <ul>
 <li>associate the shape of the points to the number of cylinders</li>
@@ -311,6 +351,37 @@ Tip
 </h2>
 <div class="box-content">
 <p>The <code>cyl</code> variable is of type <em>double</em>, thus a continuous variable. To map as the shape aesthetics, mind coercing the variable to a factor</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mtcars %&gt;%
+  ggplot(aes(x = wt, y = mpg, color = qsec)) +
+  geom_point(aes(shape = factor(cyl)), size = 3) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  scale_color_continuous(low = &quot;yellow&quot;, high = &quot;blue&quot;) +
+  theme_bw()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># install.packages(&quot;viridis&quot;)
+library(&quot;viridis&quot;)</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<pre class="r"><code>mtcars %&gt;%
+  ggplot(aes(x = wt, y = mpg, color = qsec)) +
+  geom_point(aes(shape = factor(cyl)), size = 3) +
+  geom_smooth(method = &quot;lm&quot;) +
+  viridis::scale_color_viridis() +
+  theme_bw()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 </div>
 <ol start="5" class="example" style="list-style-type: decimal">
@@ -335,10 +406,44 @@ Tip
 <h2>Categorical data</h2>
 <p>We will now look at another built-in dataset called <code>ToothGrowth</code>. This dataset contains the teeth length of 60 guinea pigs which received 3 different doses of vitamin C (in mg/day), delivered either by orange juice (<code>OJ</code>) or ascorbic acid (<code>VC</code>).</p>
 <ol start="6" class="example" style="list-style-type: decimal">
-<li><p>Is this dataset tidy?</p></li>
-<li><p>plot the distributions as boxplots of the teeth lengths by the dose received</p></li>
-<li><p>attribute a different filling colour to each delivery method</p></li>
+<li>Is this dataset tidy?</li>
 </ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>yes, each row is an observation, each column a variable.</p>
+</div>
+</div>
+<ol start="7" class="example" style="list-style-type: decimal">
+<li>plot the distributions as boxplots of the teeth lengths by the dose received</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  geom_boxplot()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="384" /></p>
+</div>
+</div>
+<ol start="8" class="example" style="list-style-type: decimal">
+<li>attribute a different filling colour to each delivery method</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len, fill = supp)) +
+  geom_boxplot()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="384" /></p>
+</div>
+</div>
 <p>When the dataset is tidy, it is easy to draw a plot telling us the story: vitamin C affects the teeth growth and the delivery method is only important for lower concentrations.</p>
 <hr />
 <p>Boxplots are nice but misleading. The size of the dataset is not visible and the shapes of distrubutions could be better represented.</p>
@@ -358,6 +463,17 @@ Tip
 </ul>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, binwidth = 1)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-15-1.png" width="384" /></p>
+</div>
+</div>
 <ol start="10" class="example" style="list-style-type: decimal">
 <li>add a <code>geom_violin()</code> to the previous plot to get a better view of the distribution shape.</li>
 </ol>
@@ -367,6 +483,18 @@ Tip
 </h2>
 <div class="box-content">
 <p>The order of the layers matters. Plotting is done respectively. Set the option <code>trim = FALSE</code> to the violin for a better looking shape</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, binwidth = 1)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-17-1.png" width="384" /></p>
 </div>
 </div>
 <p>Now we are missing summary values like the median which is shown by the boxplots. We should add one.</p>
@@ -381,11 +509,43 @@ Tip
 <p>by default <code>stat_summary()</code> adds the mean and +/- standard error via geom_pointrange(). specify the <code>fun.y = &quot;median&quot;</code> and appropriate <code>geom</code>, <code>colour</code>.</p>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, binwidth = 1) +
+  #stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4) +
+  #geom_point(stat = &quot;summary&quot;, fun.y = &quot;median&quot;, colour = &quot;red&quot;, size = 4)
+  geom_pointrange(stat = &quot;summary&quot;, fun.data = &quot;mean_cl_boot&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-19-1.png" width="384" /></p>
+</div>
+</div>
 <p>next year replaces <code>stat_summary(fun.y = &quot;median&quot;, geom = &quot;point&quot;, colour = &quot;red&quot;, size = 4)</code> by <code>geom_point(stat = &quot;summary&quot;, fun.y = &quot;median&quot;, colour = &quot;red&quot;, size = 4)</code></p>
 <ol start="12" class="example" style="list-style-type: decimal">
 <li>change the <code>stat_summary()</code> in the previous plot from <strong>median</strong> to <strong>mean_cl_boot</strong> and polish the labels.</li>
 </ol>
 <p>different summary statistics from the library <code>Hmisc</code> are available. Let’s try the <strong>mean_cl_boot</strong> that computes the non-parametric bootstrap to obtain 95% confidence intervals (<code>mean_cl_normal</code> assumes normality)</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>ToothGrowth %&gt;%
+  ggplot(aes(x = factor(dose), y = len)) +
+  geom_violin(trim = FALSE) +
+  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;, binwidth = 1) +
+  stat_summary(fun.data = &quot;mean_cl_boot&quot;, colour = &quot;red&quot;) +
+  labs(x = &quot;vit C [mg/day]&quot;,
+       y = &quot;Tooth length&quot;,
+       title = &quot;The Effect of Vitamin C on Tooth Growth in Guinea Pigs&quot;,
+       caption = &quot;C. I. Bliss (1952) The Statistics of Bioassay. Academic Press.&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-20-1.png" width="384" /></p>
+</div>
+</div>
 <p>Of note, a <code>ggplot</code> extension named <code>ggbeeswarm</code> proposes a very neat dotplot that fits the distribution.</p>
 <pre class="r"><code>ToothGrowth %&gt;%
   ggplot(aes(x = factor(dose), y = len)) +
@@ -430,13 +590,65 @@ Warning
 </ul>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv &lt;- read_tsv(&quot;data/CNV.seg.gz&quot;, skip = 2,
+                col_names = c(&quot;chr&quot;, &quot;start&quot;, &quot;end&quot;, &quot;state&quot;, &quot;length_kb&quot;),
+                col_types = cols(chr = col_character()))
+cnv</code></pre>
+<pre><code>## # A tibble: 19,288 × 5
+##      chr  start    end state length_kb
+##    &lt;chr&gt;  &lt;int&gt;  &lt;int&gt; &lt;int&gt;     &lt;int&gt;
+## 1      1      0  11000     0        11
+## 2      1  11000 178000     2       167
+## 3      1 178000 227000     0        49
+## 4      1 227000 268000     2        41
+## 5      1 268000 317000     0        49
+## 6      1 317000 472000     2       155
+## 7      1 472000 522000     0        50
+## 8      1 522000 606000     2        84
+## 9      1 606000 609000     0         3
+## 10     1 609000 611000     2         2
+## # ... with 19,278 more rows</code></pre>
+</div>
+</div>
 </div>
 <div id="exploratory-plots" class="section level3">
 <h3>exploratory plots</h3>
 <ol start="14" class="example" style="list-style-type: decimal">
-<li><p>plot the counts of the different states. We expect a majority of diploid states.</p></li>
-<li><p>plot the counts of the different states per chromosome. Might be worth freeing the <strong>count</strong> scale.</p></li>
-<li><p>using the previous plot, reorder the levels of chromosomes to let them appear in the karyotype order (1:22, X, Y)</p></li>
+<li>plot the counts of the different states. We expect a majority of diploid states.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv %&gt;%
+  ggplot(aes(x = state)) +
+  geom_bar()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+</div>
+<ol start="15" class="example" style="list-style-type: decimal">
+<li>plot the counts of the different states per chromosome. Might be worth freeing the <strong>count</strong> scale.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv %&gt;%
+  ggplot(aes(x = state)) +
+  geom_bar() +
+  facet_wrap(~ chr, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+</div>
+<ol start="16" class="example" style="list-style-type: decimal">
+<li>using the previous plot, reorder the levels of chromosomes to let them appear in the karyotype order (1:22, X, Y)</li>
 </ol>
 <div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
 <h2 style="background-color:rgba(173, 216, 230, 1);">
@@ -444,6 +656,19 @@ Tip
 </h2>
 <div class="box-content">
 <p>we could explicity provide the full levels lists in the desired order. However, in the tibble, the chromosomes appear in the wanted order. See the <code>fct_inorder()</code> function in the <strong>forcats</strong> package to take advantage of this.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv %&gt;%
+  mutate(chr = forcats::fct_inorder(chr)) %&gt;%
+  ggplot(aes(x = state)) +
+  geom_bar() +
+  facet_wrap(~ chr, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
 </div>
 <ol start="17" class="example" style="list-style-type: decimal">
@@ -455,6 +680,21 @@ Tip
 </h2>
 <div class="box-content">
 <p>See the <code>fct_collapse()</code> function in the <strong>forcats</strong></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv %&gt;%
+  mutate(chr = forcats::fct_inorder(chr),
+         chr = forcats::fct_collapse(chr,
+                                     gonosomes = c(&quot;X&quot;, &quot;Y&quot;))) %&gt;%
+  ggplot(aes(x = state)) +
+  geom_bar() +
+  facet_wrap(~ chr, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 </div>
 <ol start="18" class="example" style="list-style-type: decimal">
@@ -471,16 +711,72 @@ Tip
 </ul>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv %&gt;%
+  ggplot(aes(x = factor(state), y = log10(length_kb))) +
+  geom_violin() +
+  stat_summary(fun.data = &quot;mean_cl_boot&quot;, colour = &quot;red&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+</div>
 </div>
 <div id="count-gain-loss-summarising-events-per-chromosome" class="section level3">
 <h3>count gain / loss summarising events per chromosome</h3>
 <ol start="19" class="example" style="list-style-type: decimal">
-<li><p>filter the tibble only for <em>autosomes</em> and remove segments with no coverage and diploid (<em>i.e</em> states 0 and 2 respectively). Save as <code>cnv_auto</code>.</p></li>
+<li>filter the tibble only for <em>autosomes</em> and remove segments with no coverage and diploid (<em>i.e</em> states 0 and 2 respectively). Save as <code>cnv_auto</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv_auto &lt;- cnv %&gt;%
+  filter(state == 1 | state &gt; 2,
+         !chr %in% c(&quot;X&quot;, &quot;Y&quot;))</code></pre>
+</div>
+</div>
+<ol start="20" class="example" style="list-style-type: decimal">
 <li>We are left with state 1 and 3 and 4. Rename <strong>1</strong> as <em>loss</em> and the others as <em>gain</em></li>
 <li>count the events per chromosome and per state</li>
-<li><p>for <em>loss</em> counts, set them to negative so the barplot will be display up / down. Save as <code>cnv_auto_chr</code></p></li>
-<li><p>plot <code>cnv_auto_chr</code> using the count as the <code>y</code> variable.</p></li>
+<li>for <em>loss</em> counts, set them to negative so the barplot will be display up / down. Save as <code>cnv_auto_chr</code></li>
 </ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv_auto %&gt;%
+  mutate(state = if_else(state == 1, &quot;loss&quot;, &quot;gain&quot;)) %&gt;%
+  mutate(chr = forcats::fct_inorder(chr)) %&gt;%
+  count(chr, state) %&gt;%
+  mutate(n = if_else(state == &quot;loss&quot;, -n, n)) -&gt; cnv_auto_chr</code></pre>
+</div>
+</div>
+<ol start="23" class="example" style="list-style-type: decimal">
+<li>plot <code>cnv_auto_chr</code> using the count as the <code>y</code> variable.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv_auto_chr %&gt;%
+  ggplot(aes(x = chr, fill = state, y = n)) +
+  geom_col() +
+  scale_y_continuous(labels = abs) + # absolute values for negative counts
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_fill_manual(values = c(&quot;springgreen3&quot;, &quot;steelblue2&quot;)) + 
+  theme_classic(14) +
+  theme(legend.position = c(1, 1),
+        legend.justification = c(1, 1)) +
+    labs(x = NULL,
+         y = &quot;count&quot;)</code></pre>
+</div>
+</div>
 <p>this is the final plot, where the following changes were made:</p>
 <ul>
 <li>labels of the <code>y</code> axis in absolute numbers</li>
@@ -504,12 +800,71 @@ Tip
 <p>the function <code>fct_lump</code> from <em>forcats</em> ease lumping. Just pick <code>n = 5</code> to get the top 5 chromosomes</p>
 </div>
 </div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv_auto %&gt;%
+  mutate(top_chr = forcats::fct_lump(chr, n = 5)) %&gt;%
+  ggplot(aes(x = top_chr)) +
+  geom_bar()</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>the 5 top chromosomes are then, 10, 11, 3, 12 &amp; 5</p>
+</div>
+</div>
 </div>
 <div id="genomic-plot-of-top-5-chromosomes" class="section level3">
 <h3>genomic plot of top 5 chromosomes</h3>
 <ol start="25" class="example" style="list-style-type: decimal">
 <li>plot the genomic localisations of CNV on the 5 main chromosomes</li>
 </ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cnv_auto %&gt;%
+  filter(chr %in% c(&quot;10&quot;, &quot;11&quot;, &quot;3&quot;, &quot;12&quot;, &quot;5&quot;)) %&gt;%
+  mutate(cnv = if_else(state == 1, &quot;loss&quot;, &quot;gain&quot;),
+         state_start = if_else(state == 1, 1, 3),
+         state_end   = if_else(state == 1, 1.5, 2.5)) %&gt;%
+  ggplot(aes(x = start, xend = end, 
+             y = state_start, yend = state_end, colour = cnv)) +
+  scale_x_continuous(expand = c(0, 0),
+                     breaks = seq(0, 200e6, 50e6), labels = c(1, seq(50, 200, 50))) +
+  theme_classic(14) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = c(1, 0),
+        legend.justification = c(1, 0)) +
+  geom_segment() +
+  scale_colour_manual(name = &quot;CNV&quot;, values = c(&quot;springgreen3&quot;, &quot;steelblue2&quot;)) +
+  facet_grid(chr ~ ., switch = &quot;y&quot;) +
+  labs(y = &quot;Chromosome&quot;,
+       colour = &quot;state&quot;,
+       x = &quot;Genomic positions (Mb)&quot;)</code></pre>
+<p><img src="TD_ggplot2_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<ul>
+<li>facet_grid is used to display the chromosome horizontally. Switching the labels allow to get the strip text on the left side.</li>
+<li>on the x axis, using the continuous scale, manual breaks can be defined with respective labels such as Mega-bases.</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 

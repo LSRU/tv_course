@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Aurelien Ginolhac, Eric Koncina" />
+
+
+<title>practical broom</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R tidyverse</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecture01_intro.html">Lecture 01 - intro</a>
+    </li>
+    <li>
+      <a href="lecture02_data_structure.html">Lecture 02 - data types &amp; structures</a>
+    </li>
+    <li>
+      <a href="lecture03_rmarkdown.html">Lecture 03 - Rmarkdown</a>
+    </li>
+    <li>
+      <a href="lecture04_readr.html">Lecture 04 - importing data</a>
+    </li>
+    <li>
+      <a href="lecture05_tidyr.html">Lecture 05 - tidy data</a>
+    </li>
+    <li>
+      <a href="lecture06_dplyr.html">Lecture 06 - manipulation with dplyr</a>
+    </li>
+    <li>
+      <a href="lecture07_plotting.html">Lecture 07 - data plotting</a>
+    </li>
+    <li>
+      <a href="lecture08_purrr.html">Lecture 08 - functional programming with purrr</a>
+    </li>
+    <li>
+      <a href="lecture09_broom.html">Lecture 09 - data handling with broom</a>
+    </li>
+    <li>
+      <a href="lecture10_tidyeval.html">Lecture 10 - non standard evaluation with tidyeval</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">slides, keyboard shortcuts:</li>
+    <li class="dropdown-header">o: outline</li>
+    <li class="dropdown-header">w: widescreen on/off</li>
+    <li class="dropdown-header">f: fullscreen on/off</li>
+    <li class="dropdown-header">ctrl +/ ctrl -: zoom in/out</li>
+  </ul>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Misc
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">practical broom</h1>
+<h3 class="subtitle"><em>Yeast dataset</em></h3>
+<h4 class="author"><em>Aurelien Ginolhac, Eric Koncina</em></h4>
+<h4 class="date"><em>4 May 2017</em></h4>
+
+</div>
+
+
+<blockquote>
+<p>This practical work is adapted from the exhaustive example published by David Robinson on <a href="http://varianceexplained.org/r/tidy-genomics/">his blog</a>.</p>
+</blockquote>
+<p>In <a href="http://www.molbiolcell.org/content/19/1/352.abstract">2008, Brauer et al.</a> used microarrays to test the effect of starvation on the growth rate of yeast. For example, they tried limiting the yeast’s supply of glucose (sugar to metabolize into energy), of leucine (an essential amino acid), or of ammonium (a source of nitrogen).</p>
+<div id="project---set-up" class="section level2">
+<h2>Project - set-up</h2>
+<ul>
+<li>Create a folder <code>data</code></li>
+<li>Download <a href="https://lsru.github.io/r_workshop/data/Brauer2008_DataSet1.tds"><code>Brauer2008_DataSet1.tds</code></a> inside the <code>data</code> folder</li>
+</ul>
+<p>Load the [<code>Brauer2008_DataSet1.tds</code>] file as a <code>tibble</code> named <code>original_data</code>. This is the exact data that was published with the paper (though for some reason the link on the journal’s page is broken). It thus serves as a good example of tidying a biological dataset “found in the wild”.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>original_data &lt;- read_tsv(&quot;https://lsru.github.io/r_workshop/data/Brauer2008_DataSet1.tds&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   GID = col_character(),
+##   YORF = col_character(),
+##   NAME = col_character(),
+##   GWEIGHT = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+</div>
+</div>
+</div>
+<div id="tidying-the-data" class="section level1">
+<h1>1 Tidying the data</h1>
+<p>Have a look at the dataset. Is the data “tidy”?</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cat(as.character(original_data$NAME[1:3]), sep = &quot;\n&quot;)</code></pre>
+<pre><code>## SFB2       || ER to Golgi transport || molecular function unknown || YNL049C || 1082129
+## || biological process unknown || molecular function unknown || YNL095C || 1086222
+## QRI7       || proteolysis and peptidolysis || metalloendopeptidase activity || YDL104C || 1085955</code></pre>
+<pre class="r"><code># not tidy at all</code></pre>
+</div>
+</div>
+<div id="many-variables-are-stored-in-one-column" class="section level2">
+<h2>1.1 Many variables are stored in one column</h2>
+<ul>
+<li><strong>Gene name</strong> e.g. <em>SFB2</em>. Note that not all genes have a name.</li>
+<li><strong>Biological process</strong> e.g. “proteolysis and peptidolysis”</li>
+<li><strong>Molecular function</strong> e.g. “metalloendopeptidase activity”</li>
+<li><strong>Systematic ID</strong> e.g. <em>YNL049C</em>. Unlike a gene name, every gene in this dataset has a systematic ID.</li>
+<li><strong>Another ID number</strong> e.g. <code>1082129</code>. We don’t know what this number means, and it’s not annotated in the paper. Oh, well.</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Use the appropriate function provided in the <code>tidyr</code> library to split these values and generate a column for each variable.</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>Special characters such as pipes (<code>|</code>) must be despecialized as they have a specific meaning. In R, you have to use 2 backslashes like <code>\\|</code> for one pipe <code>|</code></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data &lt;- original_data %&gt;%
+  separate(NAME, c(&quot;name&quot;, &quot;BP&quot;, &quot;MF&quot;, &quot;systematic_name&quot;, &quot;number&quot;), sep = &quot;\\|\\|&quot;)</code></pre>
+</div>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Once you separated the variables delimited by two “<code>||</code>”, check closer the new values: You will see that they might start and/or end with whitespaces which might be inconvinient during the subsequent use.
+<ul>
+<li>To remove these whitespaces, R base provides a function called <code>trimws()</code>. Let’s test how the function works:</li>
+<li><code>dplyr</code> allows us to apply a function (in our case <code>trimws()</code>) to all columns. In other words, we would like to modify the content of each column with the output of the function <code>trimws()</code>. How can you achieve this? Save the result in a <code>tibble</code> called <code>cleaned_data</code>.</li>
+</ul></li>
+</ol>
+<!-- Moving chunk down as it breaks the indentation in HTML (Is it working in Pdf?) -->
+<pre class="r"><code># Creating test string with whitespaces:
+s &lt;- &quot;  Removing whitespaces at both ends &quot;
+s</code></pre>
+<pre><code>## [1] &quot;  Removing whitespaces at both ends &quot;</code></pre>
+<pre class="r"><code>trimws(s)</code></pre>
+<pre><code>## [1] &quot;Removing whitespaces at both ends&quot;</code></pre>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data &lt;- original_data %&gt;%
+  separate(NAME, c(&quot;name&quot;, &quot;BP&quot;, &quot;MF&quot;, &quot;systematic_name&quot;, &quot;number&quot;), sep = &quot;\\|\\|&quot;) %&gt;%
+  mutate_at(vars(name:systematic_name), funs(trimws))</code></pre>
+</div>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>We are not going to use every column of the dataframe. Remove the unnecessary columns: <code>number</code>, <code>GID</code>, <code>YORF</code> and <code>GWEIGHT</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data %&gt;%
+  select(-number, -GID, -YORF, -GWEIGHT) -&gt; cleaned_data</code></pre>
+</div>
+</div>
+<p>Look at the column names.<br />
+Do you think that our dataset is now “tidy”?</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>No, our tibble is still not tidy. We can see that the column names from G0.05 to U0.3 represent a variable.</p>
+</div>
+</div>
+</div>
+<div id="column-headers-are-values-not-variable-names" class="section level2">
+<h2>1.2 Column headers are values, not variable names</h2>
+<ul>
+<li>Keep care to build a tibble with each column representing a variable: At this point we are storing the sample name (will contain <code>G0.05</code> …) as a different column <code>sample</code> associated to values in <code>expression</code> column. Save as <code>cleaned_data_melt</code></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data %&gt;%
+  gather(sample, expression, G0.05:U0.3) -&gt; cleaned_data_melt</code></pre>
+</div>
+</div>
+<p>Now look at the content of the <code>sample</code> column. We are again facing the problem that two variables are stored in a single column. The <code>nutrient</code> in the first character, then the <code>growth rate</code>.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>unique(cleaned_data_melt$sample)</code></pre>
+<pre><code>##  [1] &quot;G0.05&quot; &quot;G0.1&quot;  &quot;G0.15&quot; &quot;G0.2&quot;  &quot;G0.25&quot; &quot;G0.3&quot;  &quot;N0.05&quot; &quot;N0.1&quot; 
+##  [9] &quot;N0.15&quot; &quot;N0.2&quot;  &quot;N0.25&quot; &quot;N0.3&quot;  &quot;P0.05&quot; &quot;P0.1&quot;  &quot;P0.15&quot; &quot;P0.2&quot; 
+## [17] &quot;P0.25&quot; &quot;P0.3&quot;  &quot;S0.05&quot; &quot;S0.1&quot;  &quot;S0.15&quot; &quot;S0.2&quot;  &quot;S0.25&quot; &quot;S0.3&quot; 
+## [25] &quot;L0.05&quot; &quot;L0.1&quot;  &quot;L0.15&quot; &quot;L0.2&quot;  &quot;L0.25&quot; &quot;L0.3&quot;  &quot;U0.05&quot; &quot;U0.1&quot; 
+## [33] &quot;U0.15&quot; &quot;U0.2&quot;  &quot;U0.25&quot; &quot;U0.3&quot;</code></pre>
+</div>
+</div>
+<p>Use the same function as before to split the <code>sample</code> column into two variables <code>nutrient</code> and <code>rate</code> (use the appropriate delimitation in <code>sep</code>.</p>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>Consider using the <code>convert</code> argument. It allows to convert strings to number when relevant like here.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  separate(sample, c(&quot;nutrient&quot;, &quot;rate&quot;), sep = 1, convert = TRUE) -&gt; cleaned_data_melt</code></pre>
+</div>
+</div>
+</div>
+<div id="turn-nutrient-letters-into-more-comprehensive-words" class="section level2">
+<h2>1.3 Turn nutrient letters into more comprehensive words</h2>
+<p>Right now, the nutrients are designed by a single letter. It would be nice to have the full word instead. One could use a full mixture of <code>if</code> and <code>else</code> such as <code>if_else(nutrient == &quot;G&quot;, &quot;Glucose&quot;, if_else(nutrient == &quot;L&quot;, &quot;Leucine&quot;, etc ...))</code> But, that would be cumbersome.</p>
+<p>using the following correspondences and <code>dplyr::recode</code>, recode all nutrient names.</p>
+<pre class="r"><code>G = &quot;Glucose&quot;, L = &quot;Leucine&quot;, P = &quot;Phosphate&quot;,
+S = &quot;Sulfate&quot;, N = &quot;Ammonia&quot;, U = &quot;Uracil&quot;</code></pre>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  mutate(nutrient = recode(nutrient, G = &quot;Glucose&quot;, L = &quot;Leucine&quot;, P = &quot;Phosphate&quot;,
+                                     S = &quot;Sulfate&quot;, N = &quot;Ammonia&quot;, U = &quot;Uracil&quot;)) -&gt; cleaned_data_melt</code></pre>
+</div>
+</div>
+</div>
+<div id="cleaning-up-missing-data" class="section level2">
+<h2>1.4 Cleaning up missing data</h2>
+<p>Two variables must be present for the further analysis:</p>
+<ul>
+<li>gene expression named as <code>expression</code></li>
+<li>systematic id named as <code>systematic_name</code></li>
+</ul>
+<p>delete observations that are missing any of the two mandatory variables. How many rows did you remove?</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  filter(!is.na(expression), systematic_name != &quot;&quot;) -&gt; cleaned_data_melt
+# 199,332 - 198,430 = 902 rows deleted</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="representing-the-data" class="section level1">
+<h1>2 Representing the data</h1>
+<p>Tidying the data is a crucial step allowing easy handling and representing.</p>
+<div id="plot-the-expression-data-of-the-leu1-gene" class="section level2">
+<h2>2.1 Plot the expression data of the <em>LEU1</em> gene</h2>
+<p>Extract the data corresponding to the gene called <em>LEU1</em> and draw a line for each nutrient showing the expression in function of the growth rate.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  filter(name == &quot;LEU1&quot;) %&gt;%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
+  geom_line()</code></pre>
+<p><img src="TD_broom_files/figure-html/plot_leu1-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="plot-the-expression-data-of-a-biological-process" class="section level2">
+<h2>2.2 Plot the expression data of a biological process</h2>
+<p>For this, we don’t need to filter by single gene names as the raw data provides us some information on the biological process for each gene.<br />
+Extract all the genes in the <strong>leucine biosynthesis</strong> process and plot the expression in function of the growth rate for each nutrient.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  filter(BP == &quot;leucine biosynthesis&quot;) %&gt;%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
+  geom_line() +
+  facet_wrap(~ name)</code></pre>
+<p><img src="TD_broom_files/figure-html/plot_leubio-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="perform-a-linear-regression-in-top-of-the-plots" class="section level2">
+<h2>2.3 Perform a linear regression in top of the plots</h2>
+<p>Let’s play with the graph a little more. These trends look vaguely linear.<br />
+Add a linear regression with the appropriate <code>ggplot2</code> function and carrefully adjust the <code>method</code> argument.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  filter(BP == &quot;leucine biosynthesis&quot;) %&gt;%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  facet_wrap(~ name)</code></pre>
+<p><img src="TD_broom_files/figure-html/plot_leubio_lm-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="switch-to-another-biological-process" class="section level2">
+<h2>2.4 Switch to another biological process</h2>
+<p>Once the dataset is tidy, it is very easy to switch to another biological process. Instead of the “leucine biosynthesis”, plot the data corresponding to <strong>sulfur metabolism</strong>.</p>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>you can combine the facet headers using <code>+</code> in <code>facet_wrap()</code>. Adding the systematic name allows to get a name when the gene name is missing.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  filter(BP == &quot;sulfur metabolism&quot;) %&gt;%
+  ggplot(aes(x = rate, y = expression, colour = nutrient)) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  facet_wrap(~ name + systematic_name, scales = &quot;free_y&quot;) # add 2 headers to facets with &#39;+&#39;</code></pre>
+<p><img src="TD_broom_files/figure-html/plot_sulfur_lm-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+</div>
+<div id="linear-models" class="section level1">
+<h1>3. Linear models</h1>
+<p>We can see that most genes follow a linear trend under a starvation stress. Instead of manipulating all data points, we would like to estimate just the 2 parameters of a linear model. What are they? And what do they represent for this experiment?</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<ul>
+<li>Intercept, the value of gene expression for the maximum starvation</li>
+<li>slope, the estimate of how the the gene expression varies in function of the starvation. A negative slope indicates that the gene is less expressed when starvation is relaxed</li>
+</ul>
+</div>
+</div>
+<div id="perform-all-linear-models" class="section level2">
+<h2>3.1 Perform all linear models</h2>
+<p>Perform a linear regression of <code>expression</code> explained by <code>rate</code> for all group of name, systematic_name and nutrient. By sure to convert the linear models to a <code>tibble</code> using <code>broom</code> as saved as <code>cleaned_lm</code></p>
+<p>The computation takes ~ 60 sec on my macbook pro. For test purposes, you may want to subsample per group a small number of genes</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  group_by(name, systematic_name, nutrient) %&gt;%
+  do(tidy(lm(expression ~ rate, data = .))) -&gt; cleaned_lm</code></pre>
+<pre><code>## Warning in summary.lm(x): essentially perfect fit: summary may be
+## unreliable</code></pre>
+</div>
+</div>
+<ul>
+<li>How many models did you perform?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># divide by 2 since we have 2 coef per model
+nrow(cleaned_lm) / 2</code></pre>
+<pre><code>## [1] 33214</code></pre>
+</div>
+</div>
+<ul>
+<li>bonus question: you have observed a warning <code>essentially perfect fit: summary may be unreliable</code>, why? How can we clean up the dataset to avoid it?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># it is due to missing data where we have less than 6 points, which is already small to perform a linear model
+# we can keep only groups where all 6 data points are presents
+cleaned_data_melt %&gt;%
+  group_by(name, systematic_name, nutrient) %&gt;%
+  mutate(n = n()) %&gt;%
+  ggplot(aes(n)) + geom_histogram(bins = 40)</code></pre>
+<p><img src="TD_broom_files/figure-html/do_lm_n6-1.png" width="672" /></p>
+<pre class="r"><code>cleaned_data_melt %&gt;%
+  group_by(name, systematic_name, nutrient) %&gt;%
+  mutate(n = n()) %&gt;%
+  filter(n == 6) %&gt;%
+  do(tidy(lm(expression ~ rate, data = .))) -&gt; cleaned_lm_clean</code></pre>
+<pre><code>## Warning in summary.lm(x): essentially perfect fit: summary may be
+## unreliable</code></pre>
+</div>
+</div>
+</div>
+<div id="explore-models-intercept-values" class="section level2">
+<h2>3.2 Explore models, intercept values</h2>
+<p>For the gene <em>LEU1</em>, let’s look again at the linear models per nutrient and add as a dashed black line for mean of all intercepts.</p>
+<div class="figure">
+<img src="TD_broom_files/figure-html/leu1_intercept-1.png" alt="LEU1 linear models per nutrient" width="672" />
+<p class="caption">
+LEU1 linear models per nutrient
+</p>
+</div>
+<p>We can see that when <strong>leucine</strong> is the limiting factor, the yeast expresses massively this gene <em>LEU1</em> to compensate. Remember that all experiments are performed at constant growth rates in this chemostat.</p>
+<p>Now, compute the difference between the intercept and the mean(intercept) per systematic name, so for all nutrient per gene. And select the top 20 highest intercept values to their means. Save as <code>top_20_intercept</code></p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_lm %&gt;%
+  filter(term == &quot;(Intercept)&quot;) %&gt;%
+  group_by(systematic_name) %&gt;%
+  mutate(centered_intercept = estimate - mean(estimate)) %&gt;%
+  ungroup() %&gt;%
+  top_n(20, centered_intercept) -&gt; top_20_intercept</code></pre>
+</div>
+</div>
+<ul>
+<li>merge those 20 genes with the <code>cleaned_data_melt</code> to retreived the original data points</li>
+<li>plot the data points and linear trends for those top 20 genes. Instead of the systematic name in the header, use the molecular function (<code>MF</code>)</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>top_20_intercept %&gt;%
+  inner_join(cleaned_data_melt, by = c(&quot;systematic_name&quot;)) %&gt;%
+  ggplot(aes(x = rate, y = expression, colour = nutrient.y)) + 
+  geom_hline(aes(yintercept = mean(expression)), linetype = &quot;dashed&quot;) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  facet_wrap(~ name.y + MF)</code></pre>
+<div class="figure">
+<img src="TD_broom_files/figure-html/top20_intercept-1.png" alt="over expressed genes in starving conditions" width="768" />
+<p class="caption">
+over expressed genes in starving conditions
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li>what can conclude?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>It is striking to see that most of genes have a transporter role. And like most higlhy expressed genes under high starvation like <em>PHO</em> genes are under phosphate starvation. The yeast is producing the necessary transporter to feed itself when the necessary metabolite is missing</p>
+</div>
+</div>
+</div>
+<div id="explore-models-slope-estimates" class="section level2">
+<h2>3.3 Explore models, slope estimates</h2>
+<p>We can now have a look at the slope estimates.</p>
+<ul>
+<li>first, filter the term for slope estimate <code>rate</code> and remove <em>p-value</em> that are missing. Save as <code>rate_slopes</code></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>cleaned_lm %&gt;%
+  ungroup() %&gt;%
+  filter(term == &quot;rate&quot;, !is.na(p.value)) -&gt; rate_slopes</code></pre>
+</div>
+</div>
+<ul>
+<li>display the <em>p-values</em> histograms per nutrient</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rate_slopes %&gt;%
+  ggplot(aes(x = p.value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~nutrient)</code></pre>
+<div class="figure">
+<img src="TD_broom_files/figure-html/slope_hist-1.png" alt="p values per nutrient" width="768" />
+<p class="caption">
+p values per nutrient
+</p>
+</div>
+</div>
+</div>
+<ul>
+<li>looking at those histograms, how do you estimate the ratio of <em>null</em> and <em>alternative</em> hypotheses?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>close to the 0, this is where our alternative hypotheses lie. The p-values for the null follows a null distribution</p>
+</div>
+</div>
+<ul>
+<li>how can retrieved the genes that belong most probably to the _alternative hypothesis?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>we have perform 32000 tests, we must correct for multiple testing otherwise the false positives would be too high. We can compute the q-values</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># see https://bioconductor.org/packages/release/bioc/html/qvalue.html
+# for installation instructions
+library(qvalue) 
+rate_slopes %&gt;%
+  mutate(q.value = qvalue(p.value)$qvalues) -&gt; rate_slopes</code></pre>
+</div>
+</div>
+<ul>
+<li>display the histograms of both <em>p</em> and <em>q</em> <em>values</em> per nutrient</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rate_slopes %&gt;%
+  gather(prob, value, ends_with(&quot;value&quot;)) %&gt;%
+  ggplot(aes(x = value, fill = prob)) +
+  geom_histogram(bins = 30, position = &quot;dodge&quot;) +
+  facet_wrap(~nutrient)</code></pre>
+<div class="figure">
+<img src="TD_broom_files/figure-html/slope_histpq-1.png" alt="p and q values per nutrient" width="768" />
+<p class="caption">
+p and q values per nutrient
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

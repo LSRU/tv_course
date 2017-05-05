@@ -31,7 +31,7 @@ library(tidyverse)
 
 ## Reminder | Lists and vectors
 
-### Atomic vectors{.box-6 .bg-blue}
+### Atomic vectors{.box-6 .bg-blue .stretch}
 
 Each **atomic** vector contains only a single type of data
 
@@ -49,7 +49,7 @@ Each **atomic** vector contains only a single type of data
     c("character", "sequence")
     ```
 
-### Coercion{.box-6 .bg-blue}
+### Coercion{.box-6 .bg-blue .stretch}
 
 Is the conversion between types
 
@@ -68,10 +68,13 @@ str(v_example)
 str(c(v_example, "seven"))
 ```
 
+%end%
+
+<span class = "small">Adapted from the tutorial of [Jenny Bryan](https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html)</span>
 
 ## Reminder | Lists and vectors
 
-### Lists{.box-6 .bg-blue}
+### Lists{.box-6 .offset-3 .bg-blue}
 
 - are **vectors** which are **not atomic**.
   + Elements can be of different types
@@ -84,7 +87,16 @@ str(c(v_example, "seven"))
     is.atomic(my_list)
     ```
 
+%end%
+
+<span class = "small">Adapted from the tutorial of [Jenny Bryan](https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html)</span>
+
 ## Purrr | functional programming
+
+```{r, echo = FALSE}
+options(width = 40)
+```
+
 
 ```{css}
 .center-pic img {
@@ -107,7 +119,7 @@ str(c(v_example, "seven"))
 
 ![](img/08_purrr.png)
 
-purrr enhances R's **functional programming** toolkit by providing a complete and consistent set of tools for **working with functions and vectors** (purrr overview on github page)
+purrr enhances R's **functional programming** toolkit by providing a complete and consistent set of tools for **working with functions and vectors** (`purrr` overview on github page)
 
 ### {.col-10 .offset-1 .build}
 
@@ -126,7 +138,7 @@ FOR EACH `x` DO `f`
 
 ### Example {.box-12 .bg-green .compact-output}
 
-Calculate the mean of each column of the mtcars dataset
+Calculate the mean of each column of the `mtcars` dataset
 
 ```{css}
 .col-h250 {
@@ -161,6 +173,12 @@ lapply(mtcars, mean) %>% str()
 
 </div></div>
 
+<span class = "small">From [R for Data Science](http://r4ds.had.co.nz/)</span>
+
+```{r, echo = FALSE}
+options(width = 80)
+```
+
 ## apply vs map
 
 ### The apply family of functions{.box-6 .bg-green .compact-table}
@@ -180,8 +198,8 @@ lapply(mtcars, mean) %>% str()
 ### Warning {.box-6 .bg-red}
 
 - Most members of the `apply()` family are inconsistent.
-- Exception: `vapply()`
-- `apply()` family still usefull to avoid dependencies (package development)
+- Exception: `lapply()`
+- `apply()` family still useful to avoid dependencies (package development)
 
 ### The `purrr::map()` family of functions {.box-8 .offset-2 .bg-blue}
 
@@ -189,7 +207,6 @@ lapply(mtcars, mean) %>% str()
 - `map()` is the general function and close to `base::lapply()`
 - `map()` introduces shortcuts (absent in `lapply()`)
 - six variants to specify the type of vectorized output (`map_lgl()`, `map_int()`, `map_dbl()`, `map_chr()`, `map_df()`, `walk()`)
-
 
 ## `Purrr::map()`
 
@@ -219,9 +236,11 @@ map(legos, antennate)
 
 </div></div>
 
+<span class = "small">[LEGO pictures from Jenny Bryan](https://github.com/jennybc/lego-rstats)</span>
+
 ## Purrr | map shortcuts
 
-### Example {.box-6 .bg-green}
+### Example {.box-8 .offset-2 .bg-green}
 
 - Split the mtcars dataset by each value of cylinder
     ```{r}
@@ -233,6 +252,7 @@ map(legos, antennate)
     + fit a linear model (miles per gallon explained by the weight)
     + extract the $r^2$ value
 
+<span class = "small">From [R for Data Science](http://r4ds.had.co.nz/)</span>
 
 ## `purrr::map()` | example
 
@@ -252,7 +272,7 @@ map(legos, antennate)
 str(spl_mtcars, max.level = 1)
 ```
 
-### {.box-6 .compact-output}
+### {.col-6 .compact-output}
 
 ```{r}
 spl_mtcars %>% 
@@ -266,7 +286,7 @@ spl_mtcars %>%
 - map uses a list as an argument and **returns a list**
 - we can map a new function on the output of the previous call
 
-### {.box-10 .offset-2 .compact-output}
+### {.col-10 .offset-2 .compact-output}
 
 ```{r}
 spl_mtcars %>% 

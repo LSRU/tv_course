@@ -199,7 +199,8 @@
 
 <div id="unnamed-chunk-1" class="chunk shadow">
 <pre class = 'prettyprint lang-r'># devtools::install_github(&quot;hadley/ggplot1&quot;)
-p &lt;- ggplot(mtcars, list(x = mpg, y = wt)) %&gt;% 
+p &lt;- ggplot(mtcars, list(x = mpg, y = wt))
+# need temp p object to avoid too many ()&#39;s
 scbrewer(ggpoint(p, list(colour = gear)))</pre></div>
 
 </div><div class = 'box col-6 bg-yellow2 '><h3>with the pipe</h3>
@@ -383,7 +384,7 @@ source: <a href='http://www.thinkr.fr/guide-survie-ggplot2-datajournalistes/' ti
 </div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Motivation for this layered system </h2><h3> football example</h3></hgroup><article  id="motivation-for-this-layered-system-football-example" class="smaller vs1">
 
 <blockquote>
-<p><em>Data visualisation</em> is not meant just to be seen but to be read, like written text - Alberto Cairo</p>
+<p><em>Data visualisation</em> is not meant just to be seen but to be read, like written text <cite> Alberto Cairo</p></cite>
 </blockquote>
 
 <div id="unnamed-chunk-7">
@@ -861,6 +862,7 @@ iris</pre>
              alpha = 0.6, size = 3) +
   labs(x = &quot;Width&quot;,
        y = &quot;Length&quot;,
+       colour = &quot;flower&quot;,
        title = &quot;Iris&quot;,
        subtitle = &quot;petal measures&quot;,
        caption = &quot;Fisher, R. A. (1936)&quot;)</pre></div>

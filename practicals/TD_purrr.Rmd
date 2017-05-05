@@ -1,0 +1,236 @@
+---
+title: '`purrr` practical'
+author: "Eric Koncina"
+date: "4 May 2017"
+output:
+  unilur::tutorial_pdf: default
+  unilur::tutorial_pdf_solution: default
+---
+
+```{r setup, include = FALSE}
+library("tidyverse")
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+```
+
+```{css}
+h1 {
+  font-size: 25px;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 18px;
+}
+.bonus {
+  color: red;
+  text-decoration: underline;
+}
+```
+
+# 1. Loading data
+
+Download a set of qPCR experiments results [here](https://lsru.github.io/tv_course/data/pcr.zip). The file is a zip archive which you should uncompress into a subfolder of your project.
+
+For example, if you downloaded the file into your project folder you can run the following command:
+
+```{r, eval = FALSE}
+unzip("pcr.zip", exdir = "data/pcr") # will create a data/pcr subfolder and extract the files
+```
+
+```{r, echo = FALSE}
+unzip(file.path("data", "pcr.zip"), exdir = "data/pcr")
+```
+
+These qPCR results were obtained from 2 different samples and were replicated 5 times. They are stored in 10 different files. A filename looks like "mlc1_1.csv" where the first number is the sample id and the second the replicate id.
+
+## Read in the qPCR results
+
+### Identify the file format
+
+1. Using a text editor or RStudio, try to identify how the flat file has been encoded.
+2. Try to import the file `mlc1_1.csv` using the `read_delim()` function.
+
+```{r, solution = TRUE}
+read_delim(file.path("data", "pcr", "mlc1_1.csv"), delim = " ")
+```
+
+### Import multiple files
+
+3. Create a vector named `pcr_files` containing the path to all 10 data files using the `list.files()` function and adjust the `full.names` argument accordingly (if required you might get some help using `?list.files`).
+```{r, solution = TRUE}
+pcr_files <- list.files(file.path("data", "pcr"), full.names = TRUE)
+```
+4. Now use `map()` from the `purrr` package to import **all** files.
+    + What is the type of the output (you might want to use `glimpse()`)
+    + Are you able to identify from which file each element has been imported ?
+```{r, solution = TRUE}
+options(tibble.print_min = 3)
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  map(read_delim, delim = " ")
+# map() creates a list
+# We are not able to tell which list element comes from which file
+```
+5. `map()` will name each output element according to the names found in the input vector. Use `set_names()` to keep this information.
+```{r, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names() %>%
+  map(read_delim, delim = " ") %>% 
+  names()
+```
+- <span class = "bonus">(Supplementary question)</span> remove the path and extension from the filename using `basename()` and `tools::file_path_sans_ext()`.
+
+```{r, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
+  map(read_delim, delim = " ") %>% 
+  names()
+```
+
+
+6. Getting a single `tibble` out of all files would be much handier. Instead of further transforming this output we will use another member of the `map()` family of functions that will immediately create the desired output. Replace your call to `map()` in your previous code by the alternative member of the family to get a data frame directly.
+```{r, message = FALSE, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names() %>% 
+  map_df(read_delim, delim = " ")
+```
+7. Are you still able to identify the different samples and replicates? You probably need to adjust the appropriate argument in your mapping function (have a look at the help page).
+```{r, solution = TRUE}
+# We are missing the sample and replicate variables (i.e. the associated filename)
+# We need to adjust the .id argument to get the name of each individual
+# tibble in a new column.
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names() %>% 
+  map_df(read_delim, delim = " ", .id = "filename")
+```
+
+### Rearrange the data and save multiple files
+
+Now that we were able to read in our data into a single data frame we would like to group together the measures for each individual gene and store them as separate `.csv` files.
+
+8. first nest the data to let the measures associated to each gene appear in their own tibble.
+9. create a folder to store the files
+```{r, boxtitle = "Tip", box = "lightblue"}
+# First we create a new folder inside the data folder to store the output files
+# You can create such a folder relative to your project or Rmarkdown folder using the following command:
+dir.create(file.path("data", "by_gene"), showWarnings = FALSE) 
+# You can set `showWarnings = FALSE` to avoid a warning each time you knit
+# or execute the chunk telling that the folder already exists 
+```
+
+```{asis, boxtitle = "Tip", box = "lightblue"}
+In this tutorial we stored our input files in the `data/pcr` subfolder relative to the projects path.
+To build up a platform independent path (windows uses `\` while linux and MAC OS are using `/`) we can use the function `file.path()` which will choose the appropriate path separator.
+```
+10. create a new column containing the path to the target name
+    + first create a filename using `paste0`
+    + then combine the folder path with the filename using `file.path()`.
+11. now we should use a function able to write `.csv` files and map it to the appropriate vector(s). If `read_csv()` is able to read `.csv` files, which would be the `readr` function able to write such a file?
+    + Is writing a file to a disk a side-effect? What would be the appropriate `purrr` function?
+    
+```{r, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  map_df(read_delim, delim = " ", .id = "filename") %>%
+  group_by(gene) %>%
+  nest() %>%
+  mutate(file_out = paste0(gene, ".csv"),
+         file_out_path = file.path("data", "by_gene", file_out),
+         walk2(data, file_out_path, write_csv))
+```
+
+
+# 2. Loading data and handling untidy data
+
+Download the excel file called [`sizes.xls`](https://lsru.github.io/tv_course/data/sizes.xls). The file contains measures (width, height and depth) of 5 different samples before and after a treatment. We would like to calculate the volume of the object before and after the treatment.
+
+## Load the content of the excel file
+
+First load the measures into a data frame using the powerful tools provided by the `purrr` package.
+
+- What function would you like to repeat?
+- How do you generate your starting vector?
+
+```{r, solution = TRUE}
+library(readxl)
+
+xls_file <- "data/sizes.xls"
+
+excel_sheets(xls_file) %>%
+  set_names() %>% 
+  map_df(read_excel, path = xls_file, .id = "treatment_onset", range = "B3:C9")
+```
+
+## Calculate the volume
+
+It turns out that the size ($width \times height \times depth$) was not entered in a tidy form. Extract the different values in order to calculate the volume.
+
+```{asis, boxtitle = "Warning", box = "orange"}
+We already saw the `tidyr::separate()` function which might help you to get what you want.
+Here we would like to stick to a `purrr` approach. Think about how many elements you would like to provide and how many elements you would like to get.
+```
+
+```{asis, boxtitle = "Tip", box = "lightblue"}
+- You might want to use `base::strsplit()` or `stringr::str_split()` 
+```
+
+```{r, solution = TRUE}
+# The tidyr / dplyr way but it's not a purrr approach
+excel_sheets(xls_file) %>%
+  set_names() %>% 
+  map_df(read_excel, path = xls_file, .id = "treatment_onset", range = "B3:C9") %>% 
+  separate(size, c("width", "height", "depth"), sep = "x") %>%
+  mutate_at(c("width", "height", "depth"), parse_integer) %>%
+  mutate(volume = width * height * depth)
+```
+
+```{r, solution = TRUE}
+excel_sheets(xls_file) %>%
+  set_names() %>% 
+  map_df(read_excel, path = xls_file, .id = "treatment_onset", range = "B3:C9") %>% 
+  mutate(tidy_size = stringr::str_split(size, "x") %>% map(parse_integer),
+         volume = map_dbl(tidy_size, reduce, `*`))
+```
+
+
+```{r, echo = FALSE}
+knitr::knit_exit()
+```
+
+### Tibbles are very flexible
+
+To show you the power of tibbles and `purrr` we now would like to generate boxplots of the _Ct_ values for each type.
+
+1. We would like to generate a distinct plot for the data from each file and store it directly in a tibble column.
+    + build up an anonymous function which will create the plot
+    + just store the output list `map()` returns as usual and have a look at the resulting tibble
+    
+```{r}
+list.files("data/pcr", full.names = TRUE) %>%
+  set_names() %>%
+  map_df(read_delim, delim = " ", .id = "filename") %>%
+  group_by(filename) %>%
+  nest() %>%
+  mutate(plot = map(data, ~ggplot(data = ., aes(x = type, y = Ct)) + geom_boxplot()))
+```
+
+2. Like in the previous question, we now would like to save each plot as an individual file.
+    + create again a new subfolder
+    + first build-up the path to the output file (original filename but with the `.pdf` extension)
+    
+```{r, echo = FALSE}
+dir.create(file.path("data", "plots"), showWarnings = FALSE)
+```
+
+```{r, solution = TRUE}
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names() %>%
+  map_df(read_delim, delim = " ", .id = "filename") %>%
+  group_by(filename) %>%
+  nest() %>%
+  mutate(plot_file = paste0(filename, ".pdf"),
+         plot_file_path = file.path("data", "plots", plot_file),
+         plot = map(data, ~ggplot(data = ., aes(x = type, y = Ct)) + geom_boxplot()),
+         walk2(plot_file_path, plot, ggsave, device = "pdf"))
+```
+
+

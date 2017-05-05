@@ -82,10 +82,24 @@ progress bar will be [added](https://github.com/hadley/purrr/issues/149)
 knitr::include_graphics("http://lsru.github.io/r_workshop/img/purrr_do.png")
 ```
 
-## Gapminder | [gapminder](http://www.gapminder.org/) is a fact tank {.vs2}
+## list-column cheatsheet
+
+### nest {.bg-yellow2 .icon .box-5}
+
+![](img/09_nest_cheatsheet.png)
+
+### workflow {.bg-yellow2 .icon .box-7}
+
+![](img/09_workflow_cheatsheet.png)
+
+%end%
+
+see [pdf on rstudio' github repository](https://github.com/rstudio/cheatsheets/blob/master/source/pdfs/list-columns-cheatsheet.pdf)
+
+## Gapminder | [gapminder](http://www.gapminder.org/) is a fact tank {.vs3}
 
 
-### dataset {.box-7 .bg-grgold .stretch .icon} 
+### dataset {.box-6 .bg-grgold .stretch .icon} 
 
 ![](https://avatars1.githubusercontent.com/u/599454?v=3&s=200)
 
@@ -93,7 +107,7 @@ knitr::include_graphics("http://lsru.github.io/r_workshop/img/purrr_do.png")
 - [R package](https://github.com/jennybc/gapminder) maintained by [Jenny Bryan!](https://github.com/jennybc)
 - install from CRAN: `gapminder`
 
-### Hans Rosling {.box-5 .bg-yellow2 .icon}
+### Hans Rosling {.box-6 .bg-yellow2 .icon}
 
 ![](https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSEJdjTYt4u2AuFZuNmVQ3vfPB4lJdZfC3ckPrfC27BDlxNcjvL)
 

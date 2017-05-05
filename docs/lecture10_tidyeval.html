@@ -205,13 +205,14 @@
 
 </div><div class = 'box col-6 stretch  bg-yellow2 compact-output'><h3>evaluation in base, solution</h3>
 
-<p>combine <code>substitute</code> and <code>eval</code> in df context</p>
+<p>combine <code>substitute</code> and <code>eval</code> in <em>df</em> context</p>
 
 <div id="unnamed-chunk-4" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>eval(substitute(hp), mtcars)</pre>
+<pre class = 'prettyprint lang-r'>eval(substitute(wt), mtcars)</pre>
 
-<pre > [1] 110 110  93 110 175 105 245  62  95 123 123 180 180 180 205 215 230
-[18]  66  52  65  97 150 150 245 175  66  91 113 264 175 335 109</pre></div>
+<pre > [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 3.440 3.440
+[12] 4.070 3.730 3.780 5.250 5.424 5.345 2.200 1.615 1.835 2.465 3.520
+[23] 3.435 3.840 3.845 1.935 2.140 1.513 3.170 2.770 3.570 2.780</pre></div>
 
 </div></div><div class = 'row build'><div class = 'box col-12  bg-grgold compact-output'><h3>evaluation in tidyverse</h3>
 
@@ -426,7 +427,7 @@ fun2(&quot;stringent&quot;)</pre>
 
 <pre >name is stringent</pre></div>
 
-<p>## Solution with tidyeval</p>
+</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution with tidyeval</h2></hgroup><article  id="solution-with-tidyeval" class="smaller vs1 compact-output">
 
 <p>currently <a href='https://github.com/tidyverse/dplyr/issues/2726' title=''>discussed</a></p>
 

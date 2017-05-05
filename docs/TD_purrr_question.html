@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Eric Koncina" />
+
+
+<title>purrr practical</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R tidyverse</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecture01_intro.html">Lecture 01 - intro</a>
+    </li>
+    <li>
+      <a href="lecture02_data_structure.html">Lecture 02 - data types &amp; structures</a>
+    </li>
+    <li>
+      <a href="lecture03_rmarkdown.html">Lecture 03 - Rmarkdown</a>
+    </li>
+    <li>
+      <a href="lecture04_readr.html">Lecture 04 - importing data</a>
+    </li>
+    <li>
+      <a href="lecture05_tidyr.html">Lecture 05 - tidy data</a>
+    </li>
+    <li>
+      <a href="lecture06_dplyr.html">Lecture 06 - manipulation with dplyr</a>
+    </li>
+    <li>
+      <a href="lecture07_plotting.html">Lecture 07 - data plotting</a>
+    </li>
+    <li>
+      <a href="lecture08_purrr.html">Lecture 08 - functional programming with purrr</a>
+    </li>
+    <li>
+      <a href="lecture09_broom.html">Lecture 09 - data handling with broom</a>
+    </li>
+    <li>
+      <a href="lecture10_tidyeval.html">Lecture 10 - non standard evaluation with tidyeval</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">slides, keyboard shortcuts:</li>
+    <li class="dropdown-header">o: outline</li>
+    <li class="dropdown-header">w: widescreen on/off</li>
+    <li class="dropdown-header">f: fullscreen on/off</li>
+    <li class="dropdown-header">ctrl +/ ctrl -: zoom in/out</li>
+  </ul>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Misc
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore"><code>purrr</code> practical</h1>
+<h4 class="author"><em>Eric Koncina</em></h4>
+<h4 class="date"><em>4 May 2017</em></h4>
+
+</div>
+
+
+<style type="text/css">
+h1 {
+  font-size: 25px;
+}
+h2 {
+  font-size: 20px;
+}
+h3 {
+  font-size: 18px;
+}
+.bonus {
+  color: red;
+  text-decoration: underline;
+}
+</style>
+<div id="loading-data" class="section level1">
+<h1>1. Loading data</h1>
+<p>Download a set of qPCR experiments results <a href="https://lsru.github.io/tv_course/data/pcr.zip">here</a>. The file is a zip archive which you should uncompress into a subfolder of your project.</p>
+<p>For example, if you downloaded the file into your project folder you can run the following command:</p>
+<pre class="r"><code>unzip(&quot;pcr.zip&quot;, exdir = &quot;data/pcr&quot;) # will create a data/pcr subfolder and extract the files</code></pre>
+<p>These qPCR results were obtained from 2 different samples and were replicated 5 times. They are stored in 10 different files. A filename looks like “mlc1_1.csv” where the first number is the sample id and the second the replicate id.</p>
+<div id="read-in-the-qpcr-results" class="section level2">
+<h2>Read in the qPCR results</h2>
+<div id="identify-the-file-format" class="section level3">
+<h3>Identify the file format</h3>
+<ol style="list-style-type: decimal">
+<li>Using a text editor or RStudio, try to identify how the flat file has been encoded.</li>
+<li>Try to import the file <code>mlc1_1.csv</code> using the <code>read_delim()</code> function.</li>
+</ol>
+</div>
+<div id="import-multiple-files" class="section level3">
+<h3>Import multiple files</h3>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Create a vector named <code>pcr_files</code> containing the path to all 10 data files using the <code>list.files()</code> function and adjust the <code>full.names</code> argument accordingly (if required you might get some help using <code>?list.files</code>).</p></li>
+<li>Now use <code>map()</code> from the <code>purrr</code> package to import <strong>all</strong> files.
+<ul>
+<li>What is the type of the output (you might want to use <code>glimpse()</code>)</li>
+<li>Are you able to identify from which file each element has been imported ?</li>
+</ul></li>
+<li><p><code>map()</code> will name each output element according to the names found in the input vector. Use <code>set_names()</code> to keep this information.</p></li>
+</ol>
+<ul>
+<li><span class="bonus">(Supplementary question)</span> remove the path and extension from the filename using <code>basename()</code> and <code>tools::file_path_sans_ext()</code>.</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Getting a single <code>tibble</code> out of all files would be much handier. Instead of further transforming this output we will use another member of the <code>map()</code> family of functions that will immediately create the desired output. Replace your call to <code>map()</code> in your previous code by the alternative member of the family to get a data frame directly.</p></li>
+<li><p>Are you still able to identify the different samples and replicates? You probably need to adjust the appropriate argument in your mapping function (have a look at the help page).</p></li>
+</ol>
+</div>
+<div id="rearrange-the-data-and-save-multiple-files" class="section level3">
+<h3>Rearrange the data and save multiple files</h3>
+<p>Now that we were able to read in our data into a single data frame we would like to group together the measures for each individual gene and store them as separate <code>.csv</code> files.</p>
+<ol start="8" style="list-style-type: decimal">
+<li>first nest the data to let the measures associated to each gene appear in their own tibble.</li>
+<li>create a folder to store the files</li>
+</ol>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<pre class="r"><code># First we create a new folder inside the data folder to store the output files
+# You can create such a folder relative to your project or Rmarkdown folder using the following command:
+dir.create(file.path(&quot;data&quot;, &quot;by_gene&quot;), showWarnings = FALSE) 
+# You can set `showWarnings = FALSE` to avoid a warning each time you knit
+# or execute the chunk telling that the folder already exists </code></pre>
+</div>
+</div>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>In this tutorial we stored our input files in the <code>data/pcr</code> subfolder relative to the projects path. To build up a platform independent path (windows uses <code>\</code> while linux and MAC OS are using <code>/</code>) we can use the function <code>file.path()</code> which will choose the appropriate path separator.</p>
+</div>
+</div>
+<ol start="10" style="list-style-type: decimal">
+<li>create a new column containing the path to the target name
+<ul>
+<li>first create a filename using <code>paste0</code></li>
+<li>then combine the folder path with the filename using <code>file.path()</code>.</li>
+</ul></li>
+<li>now we should use a function able to write <code>.csv</code> files and map it to the appropriate vector(s). If <code>read_csv()</code> is able to read <code>.csv</code> files, which would be the <code>readr</code> function able to write such a file?
+<ul>
+<li>Is writing a file to a disk a side-effect? What would be the appropriate <code>purrr</code> function?</li>
+</ul></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="loading-data-and-handling-untidy-data" class="section level1">
+<h1>2. Loading data and handling untidy data</h1>
+<p>Download the excel file called <a href="https://lsru.github.io/tv_course/data/sizes.xls"><code>sizes.xls</code></a>. The file contains measures (width, height and depth) of 5 different samples before and after a treatment. We would like to calculate the volume of the object before and after the treatment.</p>
+<div id="load-the-content-of-the-excel-file" class="section level2">
+<h2>Load the content of the excel file</h2>
+<p>First load the measures into a data frame using the powerful tools provided by the <code>purrr</code> package.</p>
+<ul>
+<li>What function would you like to repeat?</li>
+<li>How do you generate your starting vector?</li>
+</ul>
+</div>
+<div id="calculate-the-volume" class="section level2">
+<h2>Calculate the volume</h2>
+<p>It turns out that the size (<span class="math inline">\(width \times height \times depth\)</span>) was not entered in a tidy form. Extract the different values in order to calculate the volume.</p>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>We already saw the <code>tidyr::separate()</code> function which might help you to get what you want. Here we would like to stick to a <code>purrr</code> approach. Think about how many elements you would like to provide and how many elements you would like to get.</p>
+</div>
+</div>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<ul>
+<li>You might want to use <code>base::strsplit()</code> or <code>stringr::str_split()</code></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
