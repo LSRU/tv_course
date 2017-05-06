@@ -218,6 +218,15 @@ $(document).ready(function () {
     <li>
       <a href="lecture10_tidyeval.html">Lecture 10 - non standard evaluation with tidyeval</a>
     </li>
+    <li>
+      <a href="lecture11_byod.html">Lecture 11 - Bring Your Own Data</a>
+    </li>
+    <li>
+      <a href="lecture12_closing.html">Lecture 12 - Closing</a>
+    </li>
+    <li>
+      <a href="lecture13_regex.html">Lecture 13 - Regular expressions</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">slides, keyboard shortcuts:</li>
     <li class="dropdown-header">o: outline</li>
@@ -286,6 +295,9 @@ h3 {
   color: red;
   text-decoration: underline;
 }
+.solution > h2 {
+  font-size: 30px;
+}
 </style>
 <div id="loading-data" class="section level1">
 <h1>1. Loading data</h1>
@@ -351,96 +363,39 @@ Solution
 <div class="box-content">
 <pre class="r"><code>options(tibble.print_min = 3)
 list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
-  map(read_delim, delim = &quot; &quot;)</code></pre>
-<pre><code>## [[1]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 33.60  data    OK
-## 2    A2 gene2 22.42  data    OK
-## 3    A3 gene3 31.84  data    OK
-## # ... with 93 more rows
-## 
-## [[2]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 33.60  data    OK
-## 2    A2 gene2 22.42  data    OK
-## 3    A3 gene3 31.84  data    OK
-## # ... with 93 more rows
-## 
-## [[3]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 36.08  data    OK
-## 2    A2 gene2 21.73  data    OK
-## 3    A3 gene3 33.45  data    OK
-## # ... with 93 more rows
-## 
-## [[4]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 34.29  data    OK
-## 2    A2 gene2 21.85  data    OK
-## 3    A3 gene3 31.72  data    OK
-## # ... with 93 more rows
-## 
-## [[5]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 34.83  data    OK
-## 2    A2 gene2 22.70  data    OK
-## 3    A3 gene3 30.75  data    OK
-## # ... with 93 more rows
-## 
-## [[6]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 32.83  data    OK
-## 2    A2 gene2 23.35  data    OK
-## 3    A3 gene3 30.60  data    OK
-## # ... with 93 more rows
-## 
-## [[7]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 32.37  data    OK
-## 2    A2 gene2 21.90  data    OK
-## 3    A3 gene3 30.72  data    OK
-## # ... with 93 more rows
-## 
-## [[8]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 34.97  data    OK
-## 2    A2 gene2 22.89  data    OK
-## 3    A3 gene3 34.18  data    OK
-## # ... with 93 more rows
-## 
-## [[9]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 34.26  data    OK
-## 2    A2 gene2 22.93  data    OK
-## 3    A3 gene3 31.96  data    OK
-## # ... with 93 more rows
-## 
-## [[10]]
-## # A tibble: 96 × 5
-##    well  gene    Ct  type  flag
-##   &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1    A1 gene1 33.77  data    OK
-## 2    A2 gene2 23.54  data    OK
-## 3    A3 gene3 29.97  data    OK
-## # ... with 93 more rows</code></pre>
+  map(read_delim, delim = &quot; &quot;, col_types = cols()) %&gt;% 
+  str(max.level = 1)</code></pre>
+<pre><code>## List of 10
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;
+##  $ :Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    96 obs. of  5 variables:
+##   ..- attr(*, &quot;spec&quot;)=List of 2
+##   .. ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
 <pre class="r"><code># map() creates a list
 # We are not able to tell which list element comes from which file</code></pre>
 </div>
@@ -488,7 +443,7 @@ Solution
 </h2>
 <div class="box-content">
 <pre class="r"><code>list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
-  set_names() %&gt;% 
+  set_names(nm = (basename(.) %&gt;% tools::file_path_sans_ext())) %&gt;%
   map_df(read_delim, delim = &quot; &quot;)</code></pre>
 <pre><code>## # A tibble: 960 × 5
 ##    well  gene    Ct  type  flag
@@ -511,14 +466,14 @@ Solution
 # We need to adjust the .id argument to get the name of each individual
 # tibble in a new column.
 list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
-  set_names() %&gt;% 
+  set_names(nm = (basename(.) %&gt;% tools::file_path_sans_ext())) %&gt;%
   map_df(read_delim, delim = &quot; &quot;, .id = &quot;filename&quot;)</code></pre>
 <pre><code>## # A tibble: 960 × 6
-##              filename  well  gene    Ct  type  flag
-##                 &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 data/pcr/mlc1_1.csv    A1 gene1 33.60  data    OK
-## 2 data/pcr/mlc1_1.csv    A2 gene2 22.42  data    OK
-## 3 data/pcr/mlc1_1.csv    A3 gene3 31.84  data    OK
+##   filename  well  gene    Ct  type  flag
+##      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+## 1   mlc1_1    A1 gene1 33.60  data    OK
+## 2   mlc1_1    A2 gene2 22.42  data    OK
+## 3   mlc1_1    A3 gene3 31.84  data    OK
 ## # ... with 957 more rows</code></pre>
 </div>
 </div>
@@ -566,21 +521,67 @@ Tip
 Solution
 </h2>
 <div class="box-content">
-<pre class="r"><code>list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
+<ul>
+<li>Writing a file to a disk is considered to be a side-effect. We are indead <strong>not interested in changing our data</strong> and should use <code>walk</code> instead of <code>map</code>.</li>
+<li>We will use <code>write_csv()</code> with two arguments: 1) the data and 2) the file path.</li>
+<li>Here we will try two different approaches (and a third one which is actually only working with the developement version of <code>purrr</code> available on <a href="https://github.com/tidyverse/purrr">github</a>)
+<ul>
+<li><strong>First method</strong> will use <code>walk2()</code> with two input lists (data and filename). We will have to put it inside a <code>mutate()</code> function within our workflow. This might not be the nicest place for this function as we don’t want to mutate anything when calling <code>walk2()</code>. <code>walk2()</code> returns the first argument (data) leaving it unchanged and we will assign this output to the data column (this will overwrite it with itself leaving it unchanged).</li>
+<li><strong>Second method</strong> will use <code>walk()</code> but outside a mutate. We will use the <strong>transposed</strong> tibble as the input list (will map a function on each row instead of column) and declare an anonymous function using <code>write_csv()</code>.</li>
+<li><strong>Third method <em>not working with the actual purrr found on CRAN</em></strong> will use the new function <code>iwalk()</code>. <code>iwalk()</code> is a shortcut to <code>walk2(.x, names(.x), .f)</code> to use the index.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># Method 1: using walk2 but inside a mutate call
+list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
+  set_names(nm = (basename(.) %&gt;% tools::file_path_sans_ext())) %&gt;%
   map_df(read_delim, delim = &quot; &quot;, .id = &quot;filename&quot;) %&gt;%
   group_by(gene) %&gt;%
   nest() %&gt;%
   mutate(file_out = paste0(gene, &quot;.csv&quot;),
          file_out_path = file.path(&quot;data&quot;, &quot;by_gene&quot;, file_out),
-         walk2(data, file_out_path, write_csv))</code></pre>
-<pre><code>## # A tibble: 96 × 5
-##    gene              data  file_out          file_out_path
-##   &lt;chr&gt;            &lt;list&gt;     &lt;chr&gt;                  &lt;chr&gt;
-## 1 gene1 &lt;tibble [10 × 5]&gt; gene1.csv data/by_gene/gene1.csv
-## 2 gene2 &lt;tibble [10 × 5]&gt; gene2.csv data/by_gene/gene2.csv
-## 3 gene3 &lt;tibble [10 × 5]&gt; gene3.csv data/by_gene/gene3.csv
-## # ... with 93 more rows, and 1 more variables: `walk2(data, file_out_path,
-## #   write_csv)` &lt;list&gt;</code></pre>
+         data = walk2(data, file_out_path, write_csv))</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># Method 2: using walk on the transposed tibble with an anonymous function
+list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
+  set_names(nm = (basename(.) %&gt;% tools::file_path_sans_ext())) %&gt;%
+  map_df(read_delim, delim = &quot; &quot;, .id = &quot;filename&quot;) %&gt;%
+  group_by(gene) %&gt;%
+  nest() %&gt;%
+  mutate(file_out = paste0(gene, &quot;.csv&quot;),
+         file_out_path = file.path(&quot;data&quot;, &quot;by_gene&quot;, file_out)) %&gt;%
+  transpose() %&gt;%
+  walk(~write_csv(.$data, .$file_out_path))</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># Method 3: using `iwalk()` (new purrr function)
+list.files(file.path(&quot;data&quot;, &quot;pcr&quot;), full.names = TRUE) %&gt;%
+  set_names(nm = (basename(.) %&gt;% tools::file_path_sans_ext())) %&gt;%
+  map_df(read_delim, delim = &quot; &quot;, .id = &quot;filename&quot;, col_types = cols()) %&gt;%
+  group_by(gene) %&gt;%
+  nest() %&gt;%
+  mutate(file_out = paste0(gene, &quot;.csv&quot;),
+         file_out_path = file.path(&quot;data&quot;, &quot;by_gene&quot;, file_out)) %&gt;%
+  select(file_out_path, data) %&gt;%
+  deframe() %&gt;% # generate a named list from a 2 column tibble
+  iwalk(write_csv)</code></pre>
 </div>
 </div>
 </div>
