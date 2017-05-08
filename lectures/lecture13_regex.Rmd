@@ -37,8 +37,22 @@ output:
 - allow us to match much more complicated patterns 
 - build patterns from a simple vocabulary and grammar 
 
+## Finite state automaton
 
-## Typical R functions
+### Most relevant consequence {.bg-bluewhite .box-6}
+1. It will always return the
+earliest (leftmost) match it
+finds. 
+
+
+2. Given a choice it always
+favors match over a nonmatch
+
+### Examples {.bg-bluewhite .box-6}
+The **top**ic of the day is isotopes.
+
+
+## Typical R functions using regex
 
 ### `grep, grepl` {.box-6 .bg-bluewhite .build}
 Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match
