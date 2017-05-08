@@ -32,6 +32,8 @@ navbar:
           href: lecture11_byod.html
         - text: "Lecture 12 - Closing"
           href: lecture12_closing.html
+        - text: "Lecture 13 - Regular expressions"
+          href: lecture13_regex.html  
         - text: "---------"        
         - text: "slides, keyboard shortcuts:"
         - text: "o: outline"

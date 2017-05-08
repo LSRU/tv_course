@@ -26,6 +26,9 @@ h3 {
   color: red;
   text-decoration: underline;
 }
+.solution > h2 {
+  font-size: 30px;
+}
 ```
 
 # 1. Loading data
@@ -67,7 +70,8 @@ pcr_files <- list.files(file.path("data", "pcr"), full.names = TRUE)
 ```{r, solution = TRUE}
 options(tibble.print_min = 3)
 list.files(file.path("data", "pcr"), full.names = TRUE) %>%
-  map(read_delim, delim = " ")
+  map(read_delim, delim = " ", col_types = cols()) %>% 
+  str(max.level = 1)
 # map() creates a list
 # We are not able to tell which list element comes from which file
 ```
@@ -91,7 +95,7 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
 6. Getting a single `tibble` out of all files would be much handier. Instead of further transforming this output we will use another member of the `map()` family of functions that will immediately create the desired output. Replace your call to `map()` in your previous code by the alternative member of the family to get a data frame directly.
 ```{r, message = FALSE, solution = TRUE}
 list.files(file.path("data", "pcr"), full.names = TRUE) %>%
-  set_names() %>% 
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
   map_df(read_delim, delim = " ")
 ```
 7. Are you still able to identify the different samples and replicates? You probably need to adjust the appropriate argument in your mapping function (have a look at the help page).
@@ -100,7 +104,7 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
 # We need to adjust the .id argument to get the name of each individual
 # tibble in a new column.
 list.files(file.path("data", "pcr"), full.names = TRUE) %>%
-  set_names() %>% 
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
   map_df(read_delim, delim = " ", .id = "filename")
 ```
 
@@ -127,17 +131,66 @@ To build up a platform independent path (windows uses `\` while linux and MAC OS
     + then combine the folder path with the filename using `file.path()`.
 11. now we should use a function able to write `.csv` files and map it to the appropriate vector(s). If `read_csv()` is able to read `.csv` files, which would be the `readr` function able to write such a file?
     + Is writing a file to a disk a side-effect? What would be the appropriate `purrr` function?
-    
-```{r, solution = TRUE}
+
+```{asis, solution = TRUE}
+- Writing a file to a disk is considered to be a side-effect. We are indead **not interested in changing our data** and should use `walk` instead of `map`.
+- We will use `write_csv()` with two arguments: 1) the data and 2) the file path.
+- Here we will try two different approaches (and a third one which is actually only working with the developement version of `purrr` available on [github](https://github.com/tidyverse/purrr))
+    + **First method** will use `walk2()` with two input lists (data and filename). We will have to put it inside a `mutate()` function within our workflow. This might not be the nicest place for this function as we don't want to mutate anything when calling `walk2()`. `walk2()` returns the first argument (data) leaving it unchanged and we will assign this output to the data column (this will overwrite it with itself leaving it unchanged).
+    + **Second method** will use `walk()` but outside a mutate. We will use the **transposed** tibble as the input list (will map a function on each row instead of column) and declare an anonymous function using `write_csv()`.
+    + **Third method _not working with the actual purrr found on CRAN_** will use the new function `iwalk()`. `iwalk()` is a shortcut to `walk2(.x, names(.x), .f)` to use the index.
+```
+
+
+```{r, solution = TRUE, eval = FALSE}
+# Method 1: using walk2 but inside a mutate call
 list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
   map_df(read_delim, delim = " ", .id = "filename") %>%
   group_by(gene) %>%
   nest() %>%
   mutate(file_out = paste0(gene, ".csv"),
          file_out_path = file.path("data", "by_gene", file_out),
-         walk2(data, file_out_path, write_csv))
+         data = walk2(data, file_out_path, write_csv))
 ```
 
+```{r, solution = TRUE, eval = FALSE}
+# Method 2: using walk on the transposed tibble with an anonymous function
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
+  map_df(read_delim, delim = " ", .id = "filename") %>%
+  group_by(gene) %>%
+  nest() %>%
+  mutate(file_out = paste0(gene, ".csv"),
+         file_out_path = file.path("data", "by_gene", file_out)) %>%
+  transpose() %>%
+  walk(~write_csv(.$data, .$file_out_path))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# To test the new version of purrr
+# First install it in an alternative lib path
+#dir.create("test-library")
+#withr::with_libpaths(new = "test-library", devtools::install_github("tidyverse/purrr"))
+unloadNamespace("modelr")
+unloadNamespace("purrr")
+library("purrr", lib.loc="test-library")
+```
+
+
+```{r, solution = TRUE, eval = FALSE}
+# Method 3: using `iwalk()` (new purrr function)
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  set_names(nm = (basename(.) %>% tools::file_path_sans_ext())) %>%
+  map_df(read_delim, delim = " ", .id = "filename", col_types = cols()) %>%
+  group_by(gene) %>%
+  nest() %>%
+  mutate(file_out = paste0(gene, ".csv"),
+         file_out_path = file.path("data", "by_gene", file_out)) %>%
+  select(file_out_path, data) %>%
+  deframe() %>% # generate a named list from a 2 column tibble
+  iwalk(write_csv)
+```
 
 # 2. Loading data and handling untidy data
 
@@ -230,7 +283,19 @@ list.files(file.path("data", "pcr"), full.names = TRUE) %>%
   mutate(plot_file = paste0(filename, ".pdf"),
          plot_file_path = file.path("data", "plots", plot_file),
          plot = map(data, ~ggplot(data = ., aes(x = type, y = Ct)) + geom_boxplot()),
-         walk2(plot_file_path, plot, ggsave, device = "pdf"))
+         plot_file_path = walk2(plot_file_path, plot, ggsave, device = "pdf"))
+
+list.files(file.path("data", "pcr"), full.names = TRUE) %>%
+  map_df(read_delim, delim = " ", .id = "filename", col_types = cols()) %>%
+  group_by(filename) %>%
+  nest() %>%
+  mutate(plot_file = paste0(filename, ".pdf"),
+         plot_file_path = file.path("data", "plots", plot_file),
+         plot = map(data, ~ggplot(data = ., aes(x = type, y = Ct)) + geom_boxplot())) %>%
+  transpose() %>%
+  walk(~ggsave(.$plot_file_path, .$plot, device = "pdf"))
+
+# Or iwalk...
 ```
 
 
