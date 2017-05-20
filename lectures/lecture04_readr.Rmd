@@ -237,7 +237,7 @@ source("https://git.io/v9WkW")
 
 ![](img/04_readr_read_csv2.png)
 
-### `read_tsf()`{} {.box-4 .bg-gray}
+### `read_tsv()`{} {.box-4 .bg-gray}
 
 - **tab** delimited files
 
