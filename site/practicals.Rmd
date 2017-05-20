@@ -27,3 +27,4 @@ title: "Practicals"
 #### microarray **project**
 
 - [question](TD_project_question.html)
+- [solution](TD_project_solution.html)

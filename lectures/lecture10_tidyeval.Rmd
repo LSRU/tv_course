@@ -209,6 +209,10 @@ fun2("stringent")
  
 currently [discussed](https://github.com/tidyverse/dplyr/issues/2726)
 
+We can pass on `hp` as a promise (it is unknow in **Global Env**), evaluation is delayed and `enquo()` uses 
+some _dark magic_ 
+
+
 ```{r, error=TRUE}
  
 mtcars_filter <- function(df, column) {
@@ -218,6 +222,64 @@ mtcars_filter <- function(df, column) {
   df %>%
     select(!! col)
 }
-mtcars_filter(df = mtcars, hp)
-
+mtcars_filter(df = mtcars, column = hp)
 ```
+
+
+## Expressions
+
+
+### `quo`inside function {.box-6} 
+
+```{r, error=TRUE}
+mtcars_filter <- function(df, column, threshold) {
+
+  var <- quo(hp  > !! threshold)
+  message(var)
+  df %>%
+    filter(!! var)
+}
+mtcars_filter(df = mtcars, hp, threshold = 300)
+```
+
+### `quo`ins function' call {.box-6} 
+
+```{r}
+mtcars_filter2 <- function(df, expr) {
+  var <- enquo(expr)
+  message(var)
+  df %>%
+    filter(!! var)
+}
+mtcars_filter2(df = mtcars, cyl > 6)
+mtcars_filter2(df = mtcars, hp > 250)
+mtcars_filter2(df = mtcars, am == 0)
+```
+
+
+
+## different output / input variables
+
+- to turn a **quosure** into a **name** that could be pasted
+- Must uses a specific assignment `:=`
+
+```{r}
+my_mutate <- function(df, out_name, expr) {
+  expr <- enquo(expr)
+  out <- enquo(out_name)
+  g_name <- paste0("mean_", quo_name(out))
+
+  summarise(df, 
+    !!g_name := mean(!!expr)
+  )
+}
+
+my_mutate(mtcars, out_name = gear_type, am)
+```
+
+
+
+## Pass arguments as promises, not strings {.vs3}
+
+
+> I can categorically say if you're pasting strings to program with dplyr, there is always better way. | [Hadley](https://github.com/tidyverse/dplyr/issues/2663#issuecomment-294206288)

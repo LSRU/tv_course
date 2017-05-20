@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<link href="site_libs/tutorial-0.1/css/style.css" rel="stylesheet" />
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="css/tutorial.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">R tidyverse</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Lectures
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="lecture01_intro.html">Lecture 01 - intro</a>
+    </li>
+    <li>
+      <a href="lecture02_data_structure.html">Lecture 02 - data types &amp; structures</a>
+    </li>
+    <li>
+      <a href="lecture03_rmarkdown.html">Lecture 03 - Rmarkdown</a>
+    </li>
+    <li>
+      <a href="lecture04_readr.html">Lecture 04 - importing data</a>
+    </li>
+    <li>
+      <a href="lecture05_tidyr.html">Lecture 05 - tidy data</a>
+    </li>
+    <li>
+      <a href="lecture06_dplyr.html">Lecture 06 - manipulation with dplyr</a>
+    </li>
+    <li>
+      <a href="lecture07_plotting.html">Lecture 07 - data plotting</a>
+    </li>
+    <li>
+      <a href="lecture08_purrr.html">Lecture 08 - functional programming with purrr</a>
+    </li>
+    <li>
+      <a href="lecture09_broom.html">Lecture 09 - data handling with broom</a>
+    </li>
+    <li>
+      <a href="lecture10_tidyeval.html">Lecture 10 - non standard evaluation with tidyeval</a>
+    </li>
+    <li>
+      <a href="lecture11_byod.html">Lecture 11 - Bring Your Own Data</a>
+    </li>
+    <li>
+      <a href="lecture12_closing.html">Lecture 12 - Closing</a>
+    </li>
+    <li>
+      <a href="lecture13_regex.html">Lecture 13 - Regular expressions</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">slides, keyboard shortcuts:</li>
+    <li class="dropdown-header">o: outline</li>
+    <li class="dropdown-header">w: widescreen on/off</li>
+    <li class="dropdown-header">f: fullscreen on/off</li>
+    <li class="dropdown-header">ctrl +/ ctrl -: zoom in/out</li>
+  </ul>
+</li>
+<li>
+  <a href="practicals.html">
+    <span class="fa fa-desktop"></span>
+     
+    Practicals
+  </a>
+</li>
+<li>
+  <a href="install_tutorial.html">
+    <span class="fa fa-cogs"></span>
+     
+    Install
+  </a>
+</li>
+<li>
+  <a href="misc.html">
+    <span class="fa fa-book"></span>
+     
+    Misc
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">
+    <span class="fa fa-question fa-lg"></span>
+     
+    About
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Project</h1>
+
+</div>
+
+
+<blockquote>
+<p>Objective: practice a wrap-up project that encompasses most of the workshop</p>
+</blockquote>
+<div id="project---set-up" class="section level2">
+<h2>Project - set-up</h2>
+<ul>
+<li><p>On your computer, in a folder with a meaningful name, create a new project using the project manager utility on the upper-right part of the rstudio window.</p></li>
+<li><p>Check if you have all those libraries installed</p></li>
+</ul>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;broom&quot;)
+library(&quot;GEOquery&quot;)
+theme_set(theme_bw(14)) # if you wish to get this theme by default</code></pre>
+</div>
+<div id="aim" class="section level2">
+<h2>Aim</h2>
+<p>As you already experienced, working with GEO datasets can be a hassle. But it provides also a nice exercise as it requires to manipulate of a lot of tables (<code>data.frame</code> and/or <code>matrix</code>). Here, we will investigate the relationship between the expression of <em>ENTPD5</em> and <em>mir-182</em> as it was described by <a href="https://www.ncbi.nlm.nih.gov/pubmed/23987127">Pizzini et al.</a>. Even if the data are already normalised and should be ready to use, you will see that reproducing the claimed results still requires an extensive amount of work.</p>
+</div>
+<div id="retrieve-the-geo-study" class="section level2">
+<h2>Retrieve the GEO study</h2>
+<p>The GEO dataset of interest is <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE35834">GSE35834</a></p>
+<ul>
+<li>load the study using the <code>getGEO</code> function</li>
+</ul>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>after NCBI moved its pages from http to https make sure that to have GEOquery version &gt; 2.39</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>gse35834 &lt;- getGEO(&quot;GSE35834&quot;, GSEMatrix = TRUE)</code></pre>
+<pre><code>## https://ftp.ncbi.nlm.nih.gov/geo/series/GSE35nnn/GSE35834/matrix/</code></pre>
+<pre><code>## OK</code></pre>
+<pre><code>## Found 2 file(s)</code></pre>
+<pre><code>## GSE35834-GPL15236_series_matrix.txt.gz</code></pre>
+<pre><code>## File stored at:</code></pre>
+<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpqCFeMq/GPL15236.soft</code></pre>
+<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote =
+## quote, : not all columns named in &#39;colClasses&#39; exist</code></pre>
+<pre><code>## GSE35834-GPL8786_series_matrix.txt.gz</code></pre>
+<pre><code>## File stored at:</code></pre>
+<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpqCFeMq/GPL8786.soft</code></pre>
+<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote =
+## quote, : not all columns named in &#39;colClasses&#39; exist</code></pre>
+<pre class="r"><code>show(gse35834)</code></pre>
+<pre><code>## $`GSE35834-GPL15236_series_matrix.txt.gz`
+## ExpressionSet (storageMode: lockedEnvironment)
+## assayData: 22486 features, 80 samples 
+##   element names: exprs 
+## protocolData: none
+## phenoData
+##   sampleNames: GSM875933 GSM875934 ... GSM876012 (80 total)
+##   varLabels: title geo_accession ... data_row_count (39 total)
+##   varMetadata: labelDescription
+## featureData
+##   featureNames: 10000_at 10001_at ... 9_at (22486 total)
+##   fvarLabels: ID ENTREZ_GENE_ID Description SPOT_ID
+##   fvarMetadata: Column Description labelDescription
+## experimentData: use &#39;experimentData(object)&#39;
+## Annotation: GPL15236 
+## 
+## $`GSE35834-GPL8786_series_matrix.txt.gz`
+## ExpressionSet (storageMode: lockedEnvironment)
+## assayData: 7815 features, 78 samples 
+##   element names: exprs 
+## protocolData: none
+## phenoData
+##   sampleNames: GSM875855 GSM875856 ... GSM875932 (78 total)
+##   varLabels: title geo_accession ... data_row_count (39 total)
+##   varMetadata: labelDescription
+## featureData
+##   featureNames: 14q-0_st 14qI-1_st ... zma-miR408_st (7815 total)
+##   fvarLabels: ID miRNA_ID_LIST ... SEQUENCE (11 total)
+##   fvarMetadata: Column Description labelDescription
+## experimentData: use &#39;experimentData(object)&#39;
+## Annotation: GPL8786</code></pre>
+</div>
+</div>
+<ul>
+<li>what kind of object is <code>gse35834</code>?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>As shown in the Environment tab, it is a list composed of two elements. Each list is also a list with a special class ‘ExpressionSet’.</p>
+</div>
+</div>
+<div class="box" style="background-color:rgba(173, 216, 230, 0.3);border:2px solid rgba(173, 216, 230, 1);">
+<h2 style="background-color:rgba(173, 216, 230, 1);">
+Tip
+</h2>
+<div class="box-content">
+<p>To help figuring out the ExpressionSet object, see the figure below. Mind that for this project, the list GSE contains <strong>2</strong> ExpressionSets!</p>
+</div>
+</div>
+<div class="figure">
+<img src="img/04_GEO_S4.png" />
+
+</div>
+<ul>
+<li>Two platforms were used in this study, which ones?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>according to the GEO webpage:</p>
+<ul>
+<li>GPL15236 (<a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL15236">HuEx-1_0-st Affymetrix Human Exon 1.0 ST Array</a>)</li>
+<li>GPL8786 (<a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL8786">miRNA-1_0 Affymetrix miRNA Array</a>)</li>
+</ul>
+</div>
+</div>
+<ul>
+<li>How can you assign the mRNA or mir data to each element of <code>gse35834</code>?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>The function <code>show()</code> displays</p>
+<ol style="list-style-type: decimal">
+<li>GPL15236</li>
+<li>GPL8786</li>
+</ol>
+<p>Thus, gse35834[[1]] is mRNA (22486 probes) gse35834[[2]] is mir (7815 probes)</p>
+</div>
+</div>
+</div>
+<div id="explore-the-mrna-expression-meta-data" class="section level2">
+<h2>Explore the mRNA expression meta-data</h2>
+<p>You can use <code>phenoData()</code> to get informations on samples or <code>pData()</code> to retrieve them directly as a <code>data.frame</code>.</p>
+<ul>
+<li>Extract the mRNA meta-data as a <code>tibble</code> which you will name <code>rna_meta</code>
+<ul>
+<li>rename <code>geo_accession</code> to <code>sample</code></li>
+<li>retain only the columns <code>source_name_ch1</code> and starting with <code>&quot;charact&quot;</code></li>
+</ul></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rna_meta &lt;- pData(gse35834[[1]]) %&gt;%
+  as_tibble() %&gt;%
+  select(sample = geo_accession,
+         source_name_ch1,
+         starts_with(&quot;charact&quot;))</code></pre>
+</div>
+</div>
+</div>
+<div id="explore-the-mir-expression-meta-data" class="section level2">
+<h2>Explore the mir expression meta-data</h2>
+<ul>
+<li>Extract the mir meta-data as a <code>tibble</code> which you will name <code>mir_meta</code>
+<ul>
+<li>rename <code>geo_accession</code> to <code>sample</code></li>
+<li>retain only the columns <code>source_name_ch1</code> and all starting with “charact”</li>
+</ul></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mir_meta &lt;- pData(gse35834[[2]]) %&gt;%
+  as_tibble() %&gt;%
+  select(sample = geo_accession,
+         source_name_ch1,
+         starts_with(&quot;charact&quot;))</code></pre>
+</div>
+</div>
+</div>
+<div id="join-the-meta-data" class="section level2">
+<h2>Join the meta-data</h2>
+<ul>
+<li>Explore the two data frames with <code>View(rna_meta)</code> and <code>View(mir_meta)</code>. Are the samples <code>GSM*</code> identical?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>No, they aren’t. This is really annoying as the expression data contain only GSM ids.</p>
+</div>
+</div>
+<p>We would like to somehow join both informations.<br />
+Knowing that both data frames have different <code>sample</code> columns, merge them to get the correspondence between RNA <code>GSM*</code> and mir <code>GSM*</code>. Save the result as <code>rna_mir</code>.</p>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Note
+</h2>
+<div class="box-content">
+<p>If 2 data.frames that are joined (by specific columns) have identical names in their remaining columns, the default suffixes ‘.x’ and ‘.y’ are appended to the concerned column names from the first and second data frames respectively. However, you can make more friendly suffixes that match your actual data using the <code>suffix = c(&quot;.x&quot;, &quot;.y&quot;)</code> option.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>inner_join(rna_meta, mir_meta, 
+           by = c(&quot;characteristics_ch1.1&quot;, &quot;characteristics_ch1&quot;,
+                  &quot;source_name_ch1&quot;, &quot;characteristics_ch1.2&quot;, 
+                  &quot;characteristics_ch1.3&quot;, &quot;characteristics_ch1.4&quot;, 
+                  &quot;characteristics_ch1.5&quot;, &quot;characteristics_ch1.6&quot;, 
+                  &quot;characteristics_ch1.7&quot;, &quot;characteristics_ch1.8&quot;),
+           suffix = c(&quot;_rna&quot;, &quot;_mir&quot;)) -&gt; rna_mir</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining factors with different levels, coercing to
+## character vector
+
+## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining factors with different levels, coercing to
+## character vector
+
+## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining factors with different levels, coercing to
+## character vector</code></pre>
+</div>
+</div>
+</div>
+<div id="get-rna-expression-data-for-the-entpd5-gene" class="section level2">
+<h2>Get RNA expression data for the <em>ENTPD5</em> gene</h2>
+<p>Expression data can be accessed using <code>exprs()</code> which returns a matrix.</p>
+<div class="box" style="background-color:rgba(255, 165, 0, 0.3);border:2px solid rgba(255, 165, 0, 1);">
+<h2 style="background-color:rgba(255, 165, 0, 1);">
+Warning
+</h2>
+<div class="box-content">
+<p>If you do not pipe the command to <code>head</code>, <code>R</code> would print <strong>ALL</strong> rows (or until it reaches <code>max.print</code>).</p>
+</div>
+</div>
+<pre class="r"><code>exprs(gse35834[[1]]) %&gt;% head()</code></pre>
+<ul>
+<li>rows are probes and columns are sample ids in the form of <code>GSM*</code>.</li>
+<li>Probe ids by themselves are not meaningful, but <code>fData()</code> provides features.</li>
+</ul>
+<pre class="r"><code>fData(gse35834[[1]]) %&gt;% head()</code></pre>
+<p>Again, we need to merge both informations to assign the expression data to the gene of interest.</p>
+<ol style="list-style-type: decimal">
+<li>Find the common values that that allow us to join both data frames.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>the probe ids are the common values</p>
+</div>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>The <code>rownames</code> contain the necessary informations. But as a <code>matrix</code> contains, by definition, only a single data type (here numerical values), you will need to transform it to a <code>data.frame</code> and convert the <code>rownames</code> to a column using <code>rownames_to_column(var = &quot;ID&quot;)</code>.<br />
+Save the result as <code>rna_expression</code></li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>exprs(gse35834[[1]]) %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column(var = &quot;ID&quot;) -&gt; rna_expression</code></pre>
+</div>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>merge the expression data to the platform annotations (<code>fData(gse35834[[1]])</code>). Save the result as <code>rna_expression</code> (Don’t worry: <code>R</code> is always working on temporary objects and you won’t erase the object you are working on).</li>
+</ol>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Note
+</h2>
+<div class="box-content">
+<p>Warnings about <em>factors being coerced to characters</em> can be ignored.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rna_expression %&gt;%
+ inner_join(fData(gse35834[[1]])) -&gt; rna_expression</code></pre>
+<pre><code>## Joining, by = &quot;ID&quot;</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector</code></pre>
+</div>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Find the <a href="http://www.ncbi.nlm.nih.gov/gene">Entrez</a> gene id for <em>ENTPD5</em>. Usually, the gene symbol is given in the annotation, but each GEO submission is a new discovery.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>957, for Homo sapiens</p>
+</div>
+</div>
+<ol start="5" style="list-style-type: decimal">
+<li>Filter <code>rna_expression</code> for the gene of interest (<em>ENTPD5</em>) and tidy the samples:<br />
+A column <code>sample</code> for all <code>GSM*</code> and a column <code>rna_expression</code> containing the expression values. Save the result as <code>rna_expression_melt</code>. At this point you should get a <code>tibble</code> of 80 values.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rna_expression %&gt;%
+  filter(ENTREZ_GENE_ID == 957) %&gt;% 
+  gather(sample, rna_expression, starts_with(&quot;GSM&quot;)) -&gt; rna_expression_melt</code></pre>
+</div>
+</div>
+<ol start="6" style="list-style-type: decimal">
+<li>Add the meta-data and discard the columns <code>ID</code>, <code>SPOT_ID</code> and <code>sample_mir</code>. Save the result as <code>rna_expression_melt</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>rna_expression_melt %&gt;%
+  inner_join(rna_mir, by = c(&quot;sample&quot; = &quot;sample_rna&quot;)) %&gt;%
+  select(-ID, -SPOT_ID, -sample_mir) -&gt; rna_expression_melt</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector</code></pre>
+</div>
+</div>
+</div>
+<div id="get-mir-expression-data-for-mir-182" class="section level2">
+<h2>Get mir expression data for <em>miR-182</em></h2>
+<ol style="list-style-type: decimal">
+<li>Repeat the previous step but using <code>exprs(gse35834[[2]])</code> for the <code>mir_expression</code>. This time, the mir names are nicely provided by <code>fData(gse35834[[2]])</code> in the column <code>miRNA_ID_LIST</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>exprs(gse35834[[2]]) %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column(var = &quot;ID&quot;) %&gt;%
+  # match expression data to platform annotation
+  inner_join(fData(gse35834[[2]])) %&gt;% 
+  gather(sample, mir_expression, starts_with(&quot;GSM&quot;)) %&gt;% # melt patients
+  filter(miRNA_ID_LIST == &quot;hsa-mir-182&quot;) -&gt; mir_expression_melt</code></pre>
+<pre><code>## Joining, by = &quot;ID&quot;</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector</code></pre>
+</div>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>How many rows do you obtain? How many are expected?</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>78 samples for the mir experiment, so we would expect 78 but we are obtaining twice this number.</p>
+</div>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Find out what happened, and plot the boxplot distribution of <code>expression</code> by <code>ID</code></li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>The mir array contains probes for both strands of mir:</p>
+<ul>
+<li>mature mir</li>
+<li>immature mir, named “*“, star.</li>
+</ul>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mir_expression_melt %&gt;%
+  ggplot(aes(x = ID, y = mir_expression)) +
+  geom_boxplot()</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>The immature mir, named star is indeed merely expressed</p>
+</div>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Filter out the irrelevant IDs using <code>grepl</code> in the <code>filter</code> function.</li>
+</ol>
+<div class="box" style="background-color:rgba(0, 255, 0, 0.3);border:2px solid rgba(0, 255, 0, 1);">
+<h2 style="background-color:rgba(0, 255, 0, 1);">
+Hint
+</h2>
+<div class="box-content">
+<p>adding <code>!</code> to a condition means <code>NOT</code>. Example <code>filter(iris, !grepl(&quot;a&quot;, Species))</code>: remove all Species containing the letter “a”.</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mir_expression_melt %&gt;%
+  filter(!grepl(&quot;star&quot;, ID)) -&gt; mir_expression_melt</code></pre>
+</div>
+</div>
+<ol start="5" style="list-style-type: decimal">
+<li>Add the meta-data, count the number of rows. Discard the column <code>sample_rna</code> after joining.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>mir_expression_melt %&gt;%
+  inner_join(rna_mir, by = c(&quot;sample&quot; = &quot;sample_mir&quot;)) %&gt;%
+  select(-sample_rna) -&gt; mir_expression_melt</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>77 rows, we lost GSM875854, which is not present in the meta-data nor the GSE description. Let it down</p>
+</div>
+</div>
+</div>
+<div id="join-both-expression" class="section level2">
+<h2>join both expression</h2>
+<p>Join <code>rna_expression_melt</code> and <code>mir_expression_melt</code> by their common columns EXCEPT <code>sample</code>. Save the result as <code>expression</code>.</p>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression &lt;- inner_join(rna_expression_melt, mir_expression_melt,
+                         by = c(&quot;source_name_ch1&quot;, &quot;characteristics_ch1&quot;,
+                                &quot;characteristics_ch1.1&quot;, &quot;characteristics_ch1.2&quot;,
+                                &quot;characteristics_ch1.3&quot;, &quot;characteristics_ch1.4&quot;,
+                                &quot;characteristics_ch1.5&quot;, &quot;characteristics_ch1.6&quot;,
+                                &quot;characteristics_ch1.7&quot;, &quot;characteristics_ch1.8&quot;))</code></pre>
+</div>
+</div>
+</div>
+<div id="examine-gene-expression-according-to-meta-data" class="section level2">
+<h2>Examine gene expression according to meta data</h2>
+<ol style="list-style-type: decimal">
+<li>Plot the gene expression distribution by Gender. Is there any obvious difference?</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  ggplot(aes(y = rna_expression, x = characteristics_ch1)) +
+  geom_boxplot()</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>no relation to gender</p>
+</div>
+</div>
+<ol start="2" style="list-style-type: decimal">
+<li>Plot gene AND mir expression distribution by Gender. Is there any obvious difference?</li>
+</ol>
+<div class="box" style="background-color:rgba(0, 0, 255, 0.3);border:2px solid rgba(0, 0, 255, 1);">
+<h2 style="background-color:rgba(0, 0, 255, 1);">
+Hint
+</h2>
+<div class="box-content">
+<p>You will need to tidy by gathering rna and mir expression</p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  gather(expression, value, ends_with(&quot;expression&quot;)) %&gt;%
+  ggplot(aes(y = value, x = characteristics_ch1, fill = expression)) +
+  geom_boxplot()</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>no relation to gender for both expressions</p>
+</div>
+</div>
+<ol start="3" style="list-style-type: decimal">
+<li>Plot gene AND mir expression distributions by source (control / cancer). To make it easier, a quick hack is <code>separate(expression, source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12)</code> to get <code>source</code> as control / cancer. Is there any difference?</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  gather(expression, value, ends_with(&quot;expression&quot;)) %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12) %&gt;%
+  ggplot(aes(y = value, fill = source, x = expression)) +
+  geom_boxplot() + ggtitle(&quot;GSE35834&quot;)</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>Like it is stated in the summary of the study, the expression of mir-182 seems indeed higher in cancer while the ENTPD5 expression seems lower.</p>
+</div>
+</div>
+<ol start="4" style="list-style-type: decimal">
+<li>Do the same plot as in 3. but reorder the levels so that normal colon appears first. Display <em>normal</em> in “lightgreen” and <em>cancer</em> in “red” using <code>scale_fill_manual()</code>.</li>
+</ol>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  gather(expression, value, ends_with(&quot;expression&quot;)) %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12)  %&gt;% 
+  mutate(source = factor(source, levels = c(&quot;normal colon&quot;, &quot;colon cancer&quot;))) %&gt;%
+  ggplot(aes(y = value, fill = source, x = expression)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c(&quot;lightgreen&quot;, &quot;red&quot;))</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="plot-relation-entpd5-mir-182-as-scatter-plot-for-all-patients" class="section level2">
+<h2>plot relation ENTPD5 ~ mir-182 as scatter-plot for all patients</h2>
+<ul>
+<li>add a linear trend using <code>geom_smooth()</code> for all data + per source</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12) %&gt;%
+  ggplot(aes(x = mir_expression, y = rna_expression)) +
+  geom_point(aes(colour = source)) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  geom_smooth(aes(colour = source), method = &quot;lm&quot;, se = FALSE) +
+  labs(y = &quot;gene expression ENTPD5&quot;,
+       x = &quot;hsa-mir-182 expression&quot;) +
+  ggtitle(&quot;GSE35834&quot;)</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+</div>
+</div>
+<ul>
+<li>does it support the claim of the study?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>the two dot clouds between normal and cancer origin do split by</p>
+<ul>
+<li>high mir expression / low gene expression</li>
+<li>mild mir expression / high gene expression</li>
+</ul>
+<p>but the trend is not so clear</p>
+</div>
+</div>
+</div>
+<div id="linear-models" class="section level2">
+<h2>linear models</h2>
+<ul>
+<li>get the estimate from the linear trend for each source. linear models are outputted by <code>lm()</code> as lists. Since <code>data.frame</code> are much easier to work with, <a href="http://varianceexplained.org/">David Robinson</a> developed <a href="https://cran.r-project.org/web/packages/broom/index.html"><code>broom</code></a>.</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>library(&quot;broom&quot;)
+expression %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12) %&gt;%
+  group_by(source) %&gt;%
+  do(tidy(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
+  filter(term != &quot;(Intercept)&quot;)</code></pre>
+<pre><code>## Source: local data frame [2 x 6]
+## Groups: source [2]
+## 
+##         source           term    estimate  std.error  statistic   p.value
+##          &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+## 1 colon cancer mir_expression -0.03354124 0.09217281 -0.3638951 0.7174117
+## 2 normal colon mir_expression  0.04496954 0.10042656  0.4477853 0.6588934</code></pre>
+</div>
+</div>
+<p>The estimate of the intercept is not meaningful thus it is filtered out. One can easily see that the slope is not significant when data are slipped by source.</p>
+<ul>
+<li>Perform the linear regression and tidy the results for all data, is it significant?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  do(tidy(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
+  filter(term != &quot;(Intercept)&quot;)</code></pre>
+<pre><code>##             term   estimate  std.error statistic      p.value
+## 1 mir_expression -0.3172285 0.06592259 -4.812137 7.545623e-06</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>with a pvalue of 7.54e-6, the negative is highly significant</p>
+</div>
+</div>
+<ul>
+<li>replace <code>tidy</code> by <code>glance</code> to extract the <span class="math inline">\(r^2\)</span>. Is this value satisfactory?</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>expression %&gt;%
+  do(glance(lm(rna_expression ~ mir_expression, data = .)))</code></pre>
+<pre><code>##   r.squared adj.r.squared     sigma statistic      p.value df   logLik
+## 1 0.2359153     0.2257275 0.9136575  23.15666 7.545623e-06  2 -101.292
+##       AIC      BIC deviance df.residual
+## 1 208.584 215.6154 62.60775          75</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<p>with a r^2 of 0.236, i.e only 23.6% of the variance explained, a linear fit sounds bad due to outliers</p>
+</div>
+</div>
+</div>
+<div id="perform-a-linear-model-for-the-expression-of-entpd5-and-all-mirs" class="section level2">
+<h2>Perform a linear model for the expression of <em>ENTPD5</em> and ALL mirs</h2>
+<ul>
+<li>Count how many <code>hsa-mir</code>, which are not star, are present on the array GPL8786</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>fData(gse35834[[2]]) %&gt;%
+  filter(grepl(&quot;^hsa&quot;, ID)) %&gt;%
+  filter(!grepl(&quot;star&quot;, ID)) %&gt;%
+  nrow()</code></pre>
+<pre><code>## [1] 677</code></pre>
+</div>
+</div>
+<ul>
+<li>Retrieve the expression values for the 677 human mir like you did before. Same procedure, except that you don’t filter for mir-182. Save as <code>all_mir_rna_expression</code></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>exprs(gse35834[[2]]) %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column(var = &quot;ID&quot;) %&gt;%
+  filter(grepl(&quot;^hsa&quot;, ID)) %&gt;%
+  # match expression data to platform annotation
+  gather(sample, mir_expression, starts_with(&quot;GSM&quot;)) %&gt;%
+  filter(!grepl(&quot;star&quot;, ID)) %&gt;%
+  inner_join(fData(gse35834[[2]])) %&gt;% 
+  inner_join(rna_mir, by = c(&quot;sample&quot; = &quot;sample_mir&quot;)) %&gt;%
+  select(-sample_rna) %&gt;% 
+  inner_join(rna_expression_melt,
+             by = c(&quot;source_name_ch1&quot;, &quot;characteristics_ch1&quot;, 
+                    &quot;characteristics_ch1.1&quot;, &quot;characteristics_ch1.2&quot;,
+                    &quot;characteristics_ch1.3&quot;,  &quot;characteristics_ch1.4&quot;,
+                    &quot;characteristics_ch1.5&quot;, &quot;characteristics_ch1.6&quot;, 
+                    &quot;characteristics_ch1.7&quot;, &quot;characteristics_ch1.8&quot;),
+             suffix = c(&quot;_mir&quot;, &quot;_rna&quot;)) -&gt; all_mir_rna_expression </code></pre>
+<pre><code>## Joining, by = &quot;ID&quot;</code></pre>
+<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector
+
+## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
+## accept_na_match): joining character vector and factor, coercing into
+## character vector</code></pre>
+</div>
+</div>
+<ul>
+<li>Perform the 677 linear models, tidy the results and arrange by the <code>adj.r.squared</code></li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>all_mir_rna_expression %&gt;%
+  group_by(ID) %&gt;%
+   do(glance(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(adj.r.squared))</code></pre>
+<pre><code>## # A tibble: 677 × 12
+##                   ID r.squared adj.r.squared     sigma statistic
+##                &lt;chr&gt;     &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1     hsa-miR-378_st 0.5337446     0.5275279 0.7137146  85.85605
+## 2    hsa-miR-422a_st 0.3880594     0.3799002 0.8176497  47.56092
+## 3     hsa-miR-215_st 0.3649550     0.3564878 0.8329423  43.10187
+## 4     hsa-miR-145_st 0.3239984     0.3149851 0.8593825  35.94649
+## 5     hsa-miR-183_st 0.3066374     0.2973925 0.8703479  33.16851
+## 6      hsa-miR-17_st 0.2964648     0.2870843 0.8767093  31.60447
+## 7    hsa-miR-106a_st 0.2875369     0.2780374 0.8822545  30.26861
+## 8  hsa-miR-140-3p_st 0.2812168     0.2716330 0.8861589  29.34301
+## 9     hsa-miR-138_st 0.2693901     0.2596486 0.8934195  27.65396
+## 10 hsa-miR-139-5p_st 0.2689871     0.2592402 0.8936659  27.59736
+## # ... with 667 more rows, and 7 more variables: p.value &lt;dbl&gt;, df &lt;int&gt;,
+## #   logLik &lt;dbl&gt;, AIC &lt;dbl&gt;, BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Get the top 12 mir and plot the scatter plot</li>
+</ul>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code>top12_mir &lt;- all_mir_rna_expression %&gt;%
+  group_by(ID) %&gt;%
+   do(glance(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
+  ungroup() %&gt;%
+  arrange(desc(adj.r.squared)) %&gt;%
+  head(12) %&gt;%
+  .$ID
+
+all_mir_rna_expression %&gt;%
+  filter(ID %in% top12_mir) %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12) %&gt;%
+  ggplot(aes(x = mir_expression, y = rna_expression)) +
+  geom_point(aes(colour = source)) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  facet_wrap(~ ID, ncol = 4) +
+  labs(y = &quot;gene expression ENTPD5&quot;,
+       x = &quot;hsa-mir expression&quot;)</code></pre>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

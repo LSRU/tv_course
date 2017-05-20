@@ -358,6 +358,20 @@ expression %>%
   filter(term != "(Intercept)")
 ```
 
+```{r, solution = TRUE, eval = FALSE}
+# the new purrr way
+expression %>%
+  separate(source_name_ch1, c("source", "rest"), sep = 12) %>%
+  group_by(source) %>%
+  nest() %>%
+  mutate(model = map(data, ~ lm(rna_expression ~ mir_expression, data = .x)),
+         tidy = tidy(model)) -> expression_lm
+expression_lm %>%
+  select(tidy) %>%
+  unnest(tidy) %>%
+  filter(term != "(Intercept)")
+```
+
 The estimate of the intercept is not meaningful thus it is filtered out.
 One can easily see that the slope is not significant when data are slipped by source.
 
