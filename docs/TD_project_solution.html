@@ -321,12 +321,12 @@ Solution
 <pre><code>## Found 2 file(s)</code></pre>
 <pre><code>## GSE35834-GPL15236_series_matrix.txt.gz</code></pre>
 <pre><code>## File stored at:</code></pre>
-<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpqCFeMq/GPL15236.soft</code></pre>
+<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpmenFJR/GPL15236.soft</code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote =
 ## quote, : not all columns named in &#39;colClasses&#39; exist</code></pre>
 <pre><code>## GSE35834-GPL8786_series_matrix.txt.gz</code></pre>
 <pre><code>## File stored at:</code></pre>
-<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpqCFeMq/GPL8786.soft</code></pre>
+<pre><code>## /var/folders/7x/14cplkhj0fn34yltb3c0j9bczm4jkt/T//RtmpmenFJR/GPL8786.soft</code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote =
 ## quote, : not all columns named in &#39;colClasses&#39; exist</code></pre>
 <pre class="r"><code>show(gse35834)</code></pre>
@@ -498,17 +498,12 @@ Solution
                   &quot;characteristics_ch1.5&quot;, &quot;characteristics_ch1.6&quot;, 
                   &quot;characteristics_ch1.7&quot;, &quot;characteristics_ch1.8&quot;),
            suffix = c(&quot;_rna&quot;, &quot;_mir&quot;)) -&gt; rna_mir</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining factors with different levels, coercing to
-## character vector
-
-## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining factors with different levels, coercing to
-## character vector
-
-## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining factors with different levels, coercing to
-## character vector</code></pre>
+<pre><code>## Warning: Column `characteristics_ch1.1` joining factors with different
+## levels, coercing to character vector</code></pre>
+<pre><code>## Warning: Column `characteristics_ch1.3` joining factors with different
+## levels, coercing to character vector</code></pre>
+<pre><code>## Warning: Column `characteristics_ch1.7` joining factors with different
+## levels, coercing to character vector</code></pre>
 </div>
 </div>
 </div>
@@ -574,8 +569,7 @@ Solution
 <pre class="r"><code>rna_expression %&gt;%
  inner_join(fData(gse35834[[1]])) -&gt; rna_expression</code></pre>
 <pre><code>## Joining, by = &quot;ID&quot;</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
+<pre><code>## Warning: Column `ID` joining character vector and factor, coercing into
 ## character vector</code></pre>
 </div>
 </div>
@@ -615,9 +609,8 @@ Solution
 <pre class="r"><code>rna_expression_melt %&gt;%
   inner_join(rna_mir, by = c(&quot;sample&quot; = &quot;sample_rna&quot;)) %&gt;%
   select(-ID, -SPOT_ID, -sample_mir) -&gt; rna_expression_melt</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
-## character vector</code></pre>
+<pre><code>## Warning: Column `sample`/`sample_rna` joining character vector and factor,
+## coercing into character vector</code></pre>
 </div>
 </div>
 </div>
@@ -639,8 +632,7 @@ Solution
   gather(sample, mir_expression, starts_with(&quot;GSM&quot;)) %&gt;% # melt patients
   filter(miRNA_ID_LIST == &quot;hsa-mir-182&quot;) -&gt; mir_expression_melt</code></pre>
 <pre><code>## Joining, by = &quot;ID&quot;</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
+<pre><code>## Warning: Column `ID` joining character vector and factor, coercing into
 ## character vector</code></pre>
 </div>
 </div>
@@ -720,9 +712,8 @@ Solution
 <pre class="r"><code>mir_expression_melt %&gt;%
   inner_join(rna_mir, by = c(&quot;sample&quot; = &quot;sample_mir&quot;)) %&gt;%
   select(-sample_rna) -&gt; mir_expression_melt</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
-## character vector</code></pre>
+<pre><code>## Warning: Column `sample`/`sample_mir` joining character vector and factor,
+## coercing into character vector</code></pre>
 </div>
 </div>
 <div class="box solution">
@@ -904,13 +895,30 @@ expression %&gt;%
   group_by(source) %&gt;%
   do(tidy(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
   filter(term != &quot;(Intercept)&quot;)</code></pre>
-<pre><code>## Source: local data frame [2 x 6]
-## Groups: source [2]
-## 
+<pre><code>## # A tibble: 2 x 6
+## # :         Groups: source [2]
 ##         source           term    estimate  std.error  statistic   p.value
 ##          &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 colon cancer mir_expression -0.03354124 0.09217281 -0.3638951 0.7174117
 ## 2 normal colon mir_expression  0.04496954 0.10042656  0.4477853 0.6588934</code></pre>
+</div>
+</div>
+<div class="box solution">
+<h2>
+Solution
+</h2>
+<div class="box-content">
+<pre class="r"><code># the new purrr way
+expression %&gt;%
+  separate(source_name_ch1, c(&quot;source&quot;, &quot;rest&quot;), sep = 12) %&gt;%
+  group_by(source) %&gt;%
+  nest() %&gt;%
+  mutate(model = map(data, ~ lm(rna_expression ~ mir_expression, data = .x)),
+         tidy = map(model, tidy -&gt; expression_lm
+expression_lm %&gt;%
+  select(source, tidy) %&gt;%
+  unnest(tidy) %&gt;%
+  filter(term != &quot;(Intercept)&quot;)</code></pre>
 </div>
 </div>
 <p>The estimate of the intercept is not meaningful thus it is filtered out. One can easily see that the slope is not significant when data are slipped by source.</p>
@@ -1005,13 +1013,10 @@ Solution
                     &quot;characteristics_ch1.7&quot;, &quot;characteristics_ch1.8&quot;),
              suffix = c(&quot;_mir&quot;, &quot;_rna&quot;)) -&gt; all_mir_rna_expression </code></pre>
 <pre><code>## Joining, by = &quot;ID&quot;</code></pre>
-<pre><code>## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
-## character vector
-
-## Warning in inner_join_impl(x, y, by$x, by$y, suffix$x, suffix$y,
-## accept_na_match): joining character vector and factor, coercing into
+<pre><code>## Warning: Column `ID` joining character vector and factor, coercing into
 ## character vector</code></pre>
+<pre><code>## Warning: Column `sample`/`sample_mir` joining character vector and factor,
+## coercing into character vector</code></pre>
 </div>
 </div>
 <ul>
@@ -1027,18 +1032,18 @@ Solution
    do(glance(lm(rna_expression ~ mir_expression, data = .))) %&gt;%
   ungroup() %&gt;%
   arrange(desc(adj.r.squared))</code></pre>
-<pre><code>## # A tibble: 677 × 12
+<pre><code>## # A tibble: 677 x 12
 ##                   ID r.squared adj.r.squared     sigma statistic
 ##                &lt;chr&gt;     &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-## 1     hsa-miR-378_st 0.5337446     0.5275279 0.7137146  85.85605
-## 2    hsa-miR-422a_st 0.3880594     0.3799002 0.8176497  47.56092
-## 3     hsa-miR-215_st 0.3649550     0.3564878 0.8329423  43.10187
-## 4     hsa-miR-145_st 0.3239984     0.3149851 0.8593825  35.94649
-## 5     hsa-miR-183_st 0.3066374     0.2973925 0.8703479  33.16851
-## 6      hsa-miR-17_st 0.2964648     0.2870843 0.8767093  31.60447
-## 7    hsa-miR-106a_st 0.2875369     0.2780374 0.8822545  30.26861
-## 8  hsa-miR-140-3p_st 0.2812168     0.2716330 0.8861589  29.34301
-## 9     hsa-miR-138_st 0.2693901     0.2596486 0.8934195  27.65396
+##  1    hsa-miR-378_st 0.5337446     0.5275279 0.7137146  85.85605
+##  2   hsa-miR-422a_st 0.3880594     0.3799002 0.8176497  47.56092
+##  3    hsa-miR-215_st 0.3649550     0.3564878 0.8329423  43.10187
+##  4    hsa-miR-145_st 0.3239984     0.3149851 0.8593825  35.94649
+##  5    hsa-miR-183_st 0.3066374     0.2973925 0.8703479  33.16851
+##  6     hsa-miR-17_st 0.2964648     0.2870843 0.8767093  31.60447
+##  7   hsa-miR-106a_st 0.2875369     0.2780374 0.8822545  30.26861
+##  8 hsa-miR-140-3p_st 0.2812168     0.2716330 0.8861589  29.34301
+##  9    hsa-miR-138_st 0.2693901     0.2596486 0.8934195  27.65396
 ## 10 hsa-miR-139-5p_st 0.2689871     0.2592402 0.8936659  27.59736
 ## # ... with 667 more rows, and 7 more variables: p.value &lt;dbl&gt;, df &lt;int&gt;,
 ## #   logLik &lt;dbl&gt;, AIC &lt;dbl&gt;, BIC &lt;dbl&gt;, deviance &lt;dbl&gt;, df.residual &lt;int&gt;</code></pre>
@@ -1069,7 +1074,7 @@ all_mir_rna_expression %&gt;%
   facet_wrap(~ ID, ncol = 4) +
   labs(y = &quot;gene expression ENTPD5&quot;,
        x = &quot;hsa-mir expression&quot;)</code></pre>
-<p><img src="TD_project_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="TD_project_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 </div>
 </div>
 </div>

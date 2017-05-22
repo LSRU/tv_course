@@ -365,9 +365,9 @@ expression %>%
   group_by(source) %>%
   nest() %>%
   mutate(model = map(data, ~ lm(rna_expression ~ mir_expression, data = .x)),
-         tidy = tidy(model)) -> expression_lm
+         tidy = map(model, tidy -> expression_lm
 expression_lm %>%
-  select(tidy) %>%
+  select(source, tidy) %>%
   unnest(tidy) %>%
   filter(term != "(Intercept)")
 ```
