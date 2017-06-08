@@ -179,26 +179,26 @@
 
 <div class = 'row'><div class = 'box col-6 stretch'><h3>R base, must refers to <code>mtcars</code></h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-1" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>plot(mtcars$wt, mtcars$mpg)</pre>
 
 <p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-1-1.png' title=''/><!-- --></p></div>
 
 </div><div class = 'box col-6'><h3>ggplot2 does the job</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-2" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point()</pre>
 
 <p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-2-1.png' title=''/><!-- --></p></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>non standard evaluation is hard</h2></hgroup><article  id="non-standard-evaluation-is-hard" class="smaller vs2">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>non standard evaluation is hard</h2></hgroup><article  id="non-standard-evaluation-is-hard" class="smaller vs2">
 
 <div class = 'row build'><div class = 'box col-6 stretch  bg-red compact-output'><h3>evaluation in base, problem</h3>
 
 <p><code>wt</code> is unknow in the global environment</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-3" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>wt</pre>
 
 <pre >Error in eval(expr, envir, enclos): object &#39;wt&#39; not found</pre></div>
@@ -207,7 +207,7 @@
 
 <p>combine <code>substitute</code> and <code>eval</code> in <em>df</em> context</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-4" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>eval(substitute(wt), mtcars)</pre>
 
 <pre > [1] 2.620 2.875 2.320 3.215 3.440 3.460 3.570 3.190 3.150 3.440 3.440
@@ -216,7 +216,7 @@
 
 </div></div><div class = 'row build'><div class = 'box col-12  bg-grgold compact-output'><h3>evaluation in tidyverse</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-5" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
@@ -239,15 +239,15 @@ Valiant           3.460</pre></div></div></div>
 <li>Hard when doing programming, as soon as you need <strong>iteration</strong> and hence <strong>function</strong></li>
 </ul>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>ggplot2</h2></hgroup><article  id="ggplot2" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>ggplot2</h2></hgroup><article  id="ggplot2" class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The issue </h2><h3> ggplot2</h3></hgroup><article  id="the-issue-ggplot2" class="smaller ">
+</article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>The issue </h2><h3> ggplot2</h3></hgroup><article  id="the-issue-ggplot2" class="smaller ">
 
 <p>When dealing with <strong>global</strong> variables, fine. But <strong>local</strong> ones in <em>function</em>&#8230;</p>
 
 <div class = 'row build'><div class = 'box col-6 bg-cobalt '><h3>in global env</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-6" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   ggplot(aes(x = mpg)) +
   geom_histogram(bins = 25)</pre>
@@ -256,7 +256,7 @@ Valiant           3.460</pre></div></div></div>
 
 </div><div class = 'box col-6 bg-red '><h3>in function</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-7" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars_dens &lt;- function(df, col) {
   df %&gt;%
     ggplot(aes(x = col)) +
@@ -268,11 +268,11 @@ mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre>
 
 <p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-7-1.png' title=''/><!-- --></p></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: <code>aes_string()</code> </h2><h3> only for ggplot2</h3></hgroup><article  id="solution-aes_string-only-for-ggplot2" class="smaller vs1">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: <code>aes_string()</code> </h2><h3> only for ggplot2</h3></hgroup><article  id="solution-aes_string-only-for-ggplot2" class="smaller vs1">
 
 <div class = 'row'><div class = 'box col-12'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-8" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars_dens &lt;- function(df, col) {
@@ -287,7 +287,7 @@ mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre></div>
 
 </div></div><div class = 'row build'><div class = 'box col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-9" class="chunk shadow">
 <div class="row">
 <div class="col-6">
 <pre class = 'prettyprint lang-r'>mtcars_dens(df = mtcars, col = &quot;hp&quot;)</pre></div>
@@ -295,13 +295,13 @@ mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre></div>
 <div class="col-6">
 <p><img src='lecture10_tidyeval_files/figure-html/unnamed-chunk-9-1.png' title=''/><!-- --></p></div></div></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &lt; 0.6</h2></hgroup><article  id="dplyr-0.6" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &lt; 0.6</h2></hgroup><article  id="dplyr-0.6" class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>before upcoming 0.6</h2></hgroup><article  id="before-upcoming-0.6" class="smaller ">
+</article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>before upcoming 0.6</h2></hgroup><article  id="before-upcoming-0.6" class="smaller ">
 
 <div class = 'row build'><div class = 'box col-6 bg-cobalt '><h3>in global env</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-10" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars %&gt;%
   filter(hp &gt; 250)</pre>
 
@@ -311,7 +311,7 @@ mtcars_dens(df = mtcars, col = &quot;mpg&quot;)</pre></div>
 
 </div><div class = 'box col-6 bg-red '><h3>in function</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col) {
   df %&gt;%
     filter(col &gt; 250)
@@ -352,11 +352,11 @@ Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
 Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: underscore versions </h2><h3> dplyr &lt; 0.6</h3></hgroup><article  id="solution-underscore-versions-dplyr-0.6" class="smaller vs2">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution: underscore versions </h2><h3> dplyr &lt; 0.6</h3></hgroup><article  id="solution-underscore-versions-dplyr-0.6" class="smaller vs2">
 
 <div class = 'row'><div class = 'box col-12'>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <div class="row">
 <div class="col-8">
 <pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col) {
@@ -383,7 +383,7 @@ mtcars_filter(df = mtcars, col = &quot;hp&quot;)</pre></div>
 
 <div class = 'row build'><div class = 'box col-12 '>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <div class="row">
 <div class="col-8">
 <pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, col, threshold) {
@@ -399,9 +399,9 @@ mtcars_filter(df = mtcars, col = &quot;hp&quot;, threshold = 265)</pre></div>
 <pre >  mpg cyl disp  hp drat   wt qsec vs am gear carb
 1  15   8  301 335 3.54 3.57 14.6  0  1    5    8</pre></div></div></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &gt;= 0.6</h2></hgroup><article  id="dplyr-0.6-1" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>dplyr &gt;= 0.6</h2></hgroup><article  id="dplyr-0.6-1" class="smaller ">
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>tidyeval </h2><h3> dplyr 0.6, upcoming!</h3></hgroup><article  id="tidyeval-dplyr-0.6-upcoming" class="smaller vs2">
+</article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>tidyeval </h2><h3> dplyr 0.6, upcoming!</h3></hgroup><article  id="tidyeval-dplyr-0.6-upcoming" class="smaller vs2">
 
 <p>described in this <a href='http://dplyr.tidyverse.org/articles/programming.html' title=''>vignette</a></p>
 
@@ -409,7 +409,7 @@ mtcars_filter(df = mtcars, col = &quot;hp&quot;, threshold = 265)</pre></div>
 
 <p>variables as strings</p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>fun1 &lt;- function(name) {
   paste0(&quot;name is, &quot;, name)
 }
@@ -419,7 +419,7 @@ fun1(&quot;stringent&quot;)</pre>
 
 </div><div class = 'box col-6 bg-yellow2  stretch'><h3>introducing <code>glue</code></h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>fun2 &lt;- function(name) {
   glue::glue(&quot;name is {name}&quot;)
 }
@@ -427,13 +427,13 @@ fun2(&quot;stringent&quot;)</pre>
 
 <pre >name is stringent</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution with tidyeval</h2></hgroup><article  id="solution-with-tidyeval" class="smaller vs1 compact-output">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Solution with tidyeval</h2></hgroup><article  id="solution-with-tidyeval" class="smaller vs1 compact-output">
 
 <p>currently <a href='https://github.com/tidyverse/dplyr/issues/2726' title=''>discussed</a></p>
 
 <p>We can pass on <code>hp</code> as a promise (it is unknow in <strong>Global Env</strong>), evaluation is delayed and <code>enquo()</code> uses some <em>dark magic</em></p>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, column) {
 
   col &lt;- enquo(column)
@@ -479,11 +479,11 @@ Ferrari Dino        175
 Maserati Bora       335
 Volvo 142E          109</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Expressions</h2></hgroup><article  id="expressions" class="smaller ">
+</article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Expressions</h2></hgroup><article  id="expressions" class="smaller ">
 
 <div class = 'row'><div class = 'box col-6'><h3><code>quo</code>inside function</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars_filter &lt;- function(df, column, threshold) {
 
   var &lt;- quo(hp  &gt; !! threshold)
@@ -500,7 +500,7 @@ mtcars_filter(df = mtcars, hp, threshold = 300)</pre>
 
 </div><div class = 'box col-6'><h3><code>quo</code>ins function&#39; call</h3>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>mtcars_filter2 &lt;- function(df, expr) {
   var &lt;- enquo(expr)
   message(var)
@@ -560,14 +560,14 @@ mtcars_filter2(df = mtcars, cyl &gt; 6)</pre>
 18 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
 19 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>different output / input variables</h2></hgroup><article  id="different-output-input-variables" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>different output / input variables</h2></hgroup><article  id="different-output-input-variables" class="smaller ">
 
 <ul>
 <li>to turn a <strong>quosure</strong> into a <strong>name</strong> that could be pasted</li>
 <li>Must uses a specific assignment <code>:=</code></li>
 </ul>
 
-<div class="chunk shadow">
+<div id="unnamed-chunk-19" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>my_mutate &lt;- function(df, out_name, expr) {
   expr &lt;- enquo(expr)
   out &lt;- enquo(out_name)
@@ -583,11 +583,11 @@ my_mutate(mtcars, out_name = gear_type, am)</pre>
 <pre >  mean_gear_type
 1        0.40625</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pass arguments as promises, not strings</h2></hgroup><article  id="pass-arguments-as-promises-not-strings" class="smaller vs3">
+</article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Pass arguments as promises, not strings</h2></hgroup><article  id="pass-arguments-as-promises-not-strings" class="smaller vs3">
 
 <blockquote>
 <p>I can categorically say if you&#39;re pasting strings to program with dplyr, there is always better way. <cite> <a href='https://github.com/tidyverse/dplyr/issues/2663#issuecomment-294206288' title=''>Hadley</a></p></cite>
-</blockquote></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+</blockquote></article><div class = "footer"><img src="lecture10_tidyeval_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
@@ -601,17 +601,6 @@ my_mutate(mtcars, out_name = gear_type, am)</pre>
     script.type = "text/javascript";
     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-<script>
-  (function () {
-    footers = document.getElementsByClassName('footer');
-    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
-    [].slice.call(footers).forEach(function (footer) {
-      footer.innerHTML = "<img src=lecture10_tidyeval_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
-      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
-    });
   })();
 </script>
 

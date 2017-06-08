@@ -189,24 +189,16 @@
 
 <slide class=''><hgroup><h2>Learning objectives</h2></hgroup><article  id="learning-objectives" class="smaller ">
 
-<div class = 'row'><div class = 'box col-6 bg-blue'><h3>A first glance at regular expressions</h3>
+<div class = 'row'><div class = 'box col-8 offset-1 bg-bluewhite'><h3>A first glance at regular expressions</h3>
 
 <ul>
 <li>Matching substituting of character strings</li>
-<li>Ugly, unreadable, terrifying expression s/^lecture([0-9]{1,2}).*[^_].Rmd$/.Rmd/</li>
+<li><code>s/^lecture([0-9]{1,2}).*[^_].Rmd$/\1.Rmd/g</code></li>
+<li>Ugly, unreadable, terrifying expression</li>
 <li>See <a href='http://r4ds.had.co.nz/strings.html#matching-patterns-with-regular-expressions' title=''>R for data science</a></li>
-<li>Slides are adapted from presentation &quot;LECTURE 16: REGULAR EXPRESSIONS IN R&quot; by Vinayak Rao</li>
 </ul>
 
-</div><div class = 'box col-6 bg-red'><h3>The only important advice</h3>
-
-<ol>
-<li>Start simply and expand</li>
-<li>Think about the most comprehensive &#8211; shortest &#8211; expression</li>
-<li>Think about negation rather than inclusion of all possibilities</li>
-</ol>
-
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Motivation</h2></hgroup><article  id="motivation" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Motivation</h2></hgroup><article  id="motivation" class="smaller ">
 
 <h3>What if we want to match</h3>
 
@@ -224,19 +216,64 @@
 <li>build patterns from a simple vocabulary and grammar</li>
 </ul>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Typical R functions</h2></hgroup><article  id="typical-r-functions" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Finite state automaton</h2></hgroup><article  id="finite-state-automaton" class="smaller ">
 
-<div class = 'row'><div class = 'box col-6 bg-bluewhite'><h3><code>grep, grepl</code></h3>
+<div class = 'row'><div class = 'bg-bluewhite box col-6'><h3>Most relevant consequence</h3>
+
+<ol>
+<li><p>It will always return the earliest (leftmost) match it finds.</p></li>
+<li><p>Given a choice it always favors match over a nonmatch</p></li>
+</ol>
+
+</div><div class = 'bg-bluewhite box col-6'><h3>Examples</h3>
+
+<p>The <strong>top</strong>ic of the day is isotopes.</p>
+
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Typical R functions using regex</h2></hgroup><article  id="typical-r-functions-using-regex" class="smaller ">
+
+<div class = 'row build'><div class = 'box col-6 bg-bluewhite '><h3><code>grep, grepl</code></h3>
 
 <p>Search for matches of a regular expression/pattern in a character vector; either return the indices into the character vector that match, the strings that happen to match, or a TRUE/FALSE vector indicating which elements match</p>
 
-<h3><code>sub, gsub</code> {.box-6 .bg-greenwhite} Search a character vector for regular expression matches and replace that match with another string</h3>
+<div id="unnamed-chunk-1" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>grep(&quot;c&quot;, &quot;cat&quot;)</pre>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters" class="smaller ">
+<pre >[1] 1</pre></div>
+
+<div id="unnamed-chunk-2" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>grep(&quot;a&quot;, &quot;cat&quot;, value = TRUE)</pre>
+
+<pre >[1] &quot;cat&quot;</pre></div>
+
+<div id="unnamed-chunk-3" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>grepl(&quot;at&quot;, &quot;cat&quot;)</pre>
+
+<pre >[1] TRUE</pre></div>
+
+</div><div class = 'box col-6 bg-greenwhite'><h3><code>sub, gsub</code></h3>
+
+<p>Search a character vector for regular expression matches and replace that match with another string</p>
+
+<div id="unnamed-chunk-4" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>sub(&quot;c&quot;, &quot;h&quot;, &quot;cat&quot;)</pre>
+
+<pre >[1] &quot;hat&quot;</pre></div>
+
+<div id="unnamed-chunk-5" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>sub(&quot;c&quot;, &quot;kl&quot;, &quot;cataract&quot;)</pre>
+
+<pre >[1] &quot;klataract&quot;</pre></div>
+
+<div id="unnamed-chunk-6" class="chunk shadow">
+<pre class = 'prettyprint lang-r'>gsub(&quot;c&quot;, &quot;n&quot;, &quot;cataract&quot;)</pre>
+
+<pre >[1] &quot;natarant&quot;</pre></div>
+
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta-characters </h2><h3> Not representing matched characters</h3></hgroup><article  id="meta-characters-not-representing-matched-characters" class="smaller ">
 
 <h3><code>.</code> (period) represents any character except empty string &#39;&#39;</h3>
 
-<div id="unnamed-chunk-1" class="chunk shadow">
+<div id="unnamed-chunk-7" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec &lt;- c(&#39;ct&#39;, &#39;cat&#39;, &#39;cart&#39;, &#39;dog&#39;, &#39;rat&#39;, &#39;carert&#39;, &#39;bet&#39;)
 grep(&quot;.at&quot;, vec)</pre>
 
@@ -248,16 +285,16 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <p><code>+</code> represents one or more occurrences</p>
 
-<div id="unnamed-chunk-2" class="chunk shadow">
+<div id="unnamed-chunk-8" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>grep(&#39;c.+t&#39;, vec)</pre>
 
 <pre >[1] 2 3 6</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters-1" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters" class="smaller ">
 
 <p>* represents zero or more occurrences</p>
 
-<div id="unnamed-chunk-3" class="chunk shadow">
+<div id="unnamed-chunk-9" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec </pre>
 
 <pre >[1] &quot;ct&quot;     &quot;cat&quot;    &quot;cart&quot;   &quot;dog&quot;    &quot;rat&quot;    &quot;carert&quot; &quot;bet&quot;   </pre>
@@ -268,7 +305,7 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <p>Group terms with parentheses &#39;(&#39; and &#39;)&#39;</p>
 
-<div id="unnamed-chunk-4" class="chunk shadow">
+<div id="unnamed-chunk-10" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>grep(&#39;c(.r)+t&#39;, vec)</pre>
 
 <pre >[1] 3 6</pre>
@@ -277,25 +314,30 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <pre >[1] 1 3 6</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters-2" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Quantifying number of matches</h2></hgroup><article  id="quantifying-number-of-matches" class="smaller ">
 
-<div class = 'row'><div class = 'box col-8 bg-bluewhite'><h3>Covered so far</h3>
-
-<ul>
-<li><code>.</code></li>
-<li><code>,</code></li>
-<li><code>+</code></li>
-<li><code>*</code></li>
-</ul>
-
-</div></div><div class = 'row'><div class = 'box col-8 bg-bluewhite'><h3>Other useful ones include</h3>
+<div class = 'row'><div class = 'box col-6 bg-yellow2'><h3>Applies to preceeding of group</h3>
 
 <ul>
-<li><code>^</code> Start of line</li>
-<li><code>$</code> End of line</li>
+<li><code>?</code> The preceding item is optional and will be matched at most once.</li>
+<li><code>*</code> The preceding item will be matched zero or more times. *<code>+</code> The preceding item will be matched one or more times.</li>
+<li><code>{n}</code> The preceding item is matched exactly &#39;n&#39; times.</li>
+<li><code>{n,}</code> The preceding item is matched &#39;n&#39; or more times.</li>
+<li><code>{n,m}</code> The preceding item is matched at least &#39;n&#39; times, but not more than &#39;m&#39; times.</li>
 </ul>
 
-<div id="unnamed-chunk-5" class="chunk shadow">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Match positions</h2></hgroup><article  id="match-positions" class="smaller ">
+
+<div class = 'row'><div class = 'box col-6 bg-bluewhite'><h3>Other useful ones include</h3>
+
+<ul>
+<li><code>^</code> Start of string</li>
+<li><code>$</code> End of string</li>
+</ul>
+
+</div><div class = 'box col-6 bg-cobalt'><h3>Other useful ones include</h3>
+
+<div id="unnamed-chunk-11" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec</pre>
 
 <pre >[1] &quot;ct&quot;     &quot;cat&quot;    &quot;cart&quot;   &quot;dog&quot;    &quot;rat&quot;    &quot;carert&quot; &quot;bet&quot;   </pre>
@@ -304,18 +346,18 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <pre >[1] 3 6</pre></div>
 
-<div id="unnamed-chunk-6" class="chunk shadow">
+<div id="unnamed-chunk-12" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>grep(&#39;^c&#39;, vec)</pre>
 
 <pre >[1] 1 2 3 6</pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters-3" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Meta characters</h2></hgroup><article  id="meta-characters-1" class="smaller ">
 
 <ul>
 <li><code>|</code> ( logical OR )</li>
 </ul>
 
-<div id="unnamed-chunk-7" class="chunk shadow">
+<div id="unnamed-chunk-13" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec</pre>
 
 <pre >[1] &quot;ct&quot;     &quot;cat&quot;    &quot;cart&quot;   &quot;dog&quot;    &quot;rat&quot;    &quot;carert&quot; &quot;bet&quot;   </pre>
@@ -324,7 +366,7 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <pre >[1] 2 3</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Character classes</h2></hgroup><article  id="character-classes" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Character classes</h2></hgroup><article  id="character-classes" class="smaller ">
 
 <ul>
 <li><strong>[a-z]</strong> lowercase letters</li>
@@ -338,11 +380,11 @@ grep(&quot;.at&quot;, vec)</pre>
 
 <p><strong>[??0-9]</strong> anything except a digit</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matching metacharacters</h2></hgroup><article  id="matching-metacharacters" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matching metacharacters</h2></hgroup><article  id="matching-metacharacters" class="smaller ">
 
 <p>We saw a bunch of special characters . + * ] [ $ What if we want to match them?</p>
 
-<div id="unnamed-chunk-8" class="chunk shadow">
+<div id="unnamed-chunk-14" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec2 = c(&quot;ct&quot;, &quot;cat&quot;, &quot;caat&quot;, &quot;caart&quot;, &quot;caaat&quot;, &quot;caaraat&quot;, &quot;c.t&quot;)
 grep(&#39;c.t&#39;, vec2)</pre>
 
@@ -350,7 +392,7 @@ grep(&#39;c.t&#39;, vec2)</pre>
 
 <p>Escape them with  or in R&#39;s case, two \</p>
 
-<div id="unnamed-chunk-9" class="chunk shadow">
+<div id="unnamed-chunk-15" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>#grep(&#39;c\.t&#39;, vec) will not work, because R thinks \. is a special character like \n
 
 #Use two \&#39;s
@@ -358,24 +400,24 @@ grep(&#39;c\\.t&#39;, vec2)</pre>
 
 <pre >[1] 7</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matching metacharacters</h2></hgroup><article  id="matching-metacharacters-1" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Matching metacharacters</h2></hgroup><article  id="matching-metacharacters-1" class="smaller ">
 
 <p>To match a , our pattern must represent \</p>
 
 <p>Our string must contain 4 backslashes!</p>
 
-<div id="unnamed-chunk-10" class="chunk shadow">
+<div id="unnamed-chunk-16" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec = c(&quot;a\\backslash&quot;, &quot;nobackslash&quot;)
 #grep(&#39;\\&#39;, vec) gives error
 grep(&#39;\\\\&#39;, vec)</pre>
 
 <pre >[1] 1</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Search and replace</h2></hgroup><article  id="search-and-replace" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Search and replace</h2></hgroup><article  id="search-and-replace" class="smaller ">
 
 <div class = 'row'><div class = 'box col-12 bg-blue'><h3>The <strong>sub</strong> function allows search and replacement</h3>
 
-<div id="unnamed-chunk-11" class="chunk shadow">
+<div id="unnamed-chunk-17" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec2</pre>
 
 <pre >[1] &quot;ct&quot;      &quot;cat&quot;     &quot;caat&quot;    &quot;caart&quot;   &quot;caaat&quot;   &quot;caaraat&quot; &quot;c.t&quot;    </pre>
@@ -388,17 +430,17 @@ grep(&#39;\\\\&#39;, vec)</pre>
 
 <p>Use the backreferences <code>\1, \2</code> etc to refer to first, second group, etc.</p>
 
-<div id="unnamed-chunk-12" class="chunk shadow">
+<div id="unnamed-chunk-18" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>gsub(&#39;(a+)r(a+)&#39;, &#39;b\\1brc\\2c&#39;, vec2)</pre>
 
 <pre >[1] &quot;ct&quot;          &quot;cat&quot;         &quot;caat&quot;        &quot;caart&quot;       &quot;caaat&quot;      
 [6] &quot;cbaabrcaact&quot; &quot;c.t&quot;        </pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Search and replace</h2></hgroup><article  id="search-and-replace-1" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Search and replace</h2></hgroup><article  id="search-and-replace-1" class="smaller ">
 
 <div class = 'row'><div class = 'box col-12 bg-cobalt'><h3>Use <code>\U, \L, \E</code> to make following backreferences upper or lower case or leave unchanged</h3>
 
-<div id="unnamed-chunk-13" class="chunk shadow">
+<div id="unnamed-chunk-19" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>vec2</pre>
 
 <pre >[1] &quot;ct&quot;      &quot;cat&quot;     &quot;caat&quot;    &quot;caart&quot;   &quot;caaat&quot;   &quot;caaraat&quot; &quot;c.t&quot;    </pre>
@@ -413,7 +455,7 @@ grep(&#39;\\\\&#39;, vec)</pre>
 <pre >[1] &quot;ct&quot;        &quot;cat&quot;       &quot;caat&quot;      &quot;caart&quot;     &quot;caaat&quot;     &quot;cUaarEaat&quot;
 [7] &quot;c.t&quot;      </pre></div>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Summary</h2></hgroup><article  id="summary" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Summary</h2></hgroup><article  id="summary" class="smaller ">
 
 <p><strong>.</strong> stands for any character.</p>
 
@@ -425,15 +467,13 @@ grep(&#39;\\\\&#39;, vec)</pre>
 
 <p>List of metacharacters &#39;<strong>$ * + . ? [ ] ^ { } | ( ) &#39;</strong>. If you need to use one of those characters, precede them with a doubled backslash.</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions" class="smaller ">
 
 <p>Requires <code>perl=TRUE</code> flag</p>
 
-<p>For numbers:</p>
+<h3>Readable short cuts</h3>
 
 <p><strong>[:digit:]</strong> Digits: &#39;0 1 2 3 4 5 6 7 8 9&#39;.</p>
-
-<p>For letters :</p>
 
 <p><strong>[:alpha:]</strong> Alphabetic characters: &#39;[:lower:]&#39; and &#39;[:upper:]&#39;.</p>
 
@@ -441,9 +481,9 @@ grep(&#39;\\\\&#39;, vec)</pre>
 
 <p><strong>[:lower:]</strong> Lower-case letters.</p>
 
-<p>Note that the set of alphabetic characters includes accents such as ?? ?? ?? which are very common is some languages like French. Therefore, it is more general than <strong>[A-Za-z]</strong> which does not include letters with accent.</p>
+<p>Note that the set of alphabetic characters includes accents such as ß, ç or ö which are very common is some languages. Therefore, it is more general than <strong>[A-Za-z]</strong> which ascii characters only.</p>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions-1" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions-1" class="smaller ">
 
 <div class = 'row'><div class = 'box col-10 bg-blue'><h3>For other characters</h3>
 
@@ -453,7 +493,7 @@ grep(&#39;\\\\&#39;, vec)</pre>
 
 <p><strong>[:blank:]</strong> Blank characters: space and tab.</p>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions-2" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions-2" class="smaller ">
 
 <div class = 'row'><div class = 'box col-10 bg-blue'><h3>For combination of other classes</h3>
 
@@ -465,25 +505,7 @@ grep(&#39;\\\\&#39;, vec)</pre>
 
 <p><strong>[:xdigit:]</strong> Hexadecimal digits: &#39;0 1 2 3 4 5 6 7 8 9 A B C D E F a b c d e f&#39;.</p>
 
-</div></div></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Extended list of regular expressions</h2></hgroup><article  id="extended-list-of-regular-expressions-3" class="smaller ">
-
-<p>You can quantify the number of repetition by adding after the regular expression the following characters :</p>
-
-<p><strong>?</strong> The preceding item is optional and will be matched at most once.</p>
-
-<ul>
-<li>The preceding item will be matched zero or more times.</li>
-</ul>
-
-<p><strong>+</strong> The preceding item will be matched one or more times.</p>
-
-<p><strong>{n}</strong> The preceding item is matched exactly &#39;n&#39; times.</p>
-
-<p><strong>{n,}</strong> The preceding item is matched &#39;n&#39; or more times.</p>
-
-<p><strong>{n,m}</strong> The preceding item is matched at least &#39;n&#39; times, but not more than &#39;m&#39; times.</p>
-
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Concatenating strings</h2></hgroup><article  id="concatenating-strings" class="smaller ">
+</div></div></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Concatenating strings</h2></hgroup><article  id="concatenating-strings" class="smaller ">
 
 <h3>Base R</h3>
 
@@ -493,7 +515,7 @@ grep(&#39;\\\\&#39;, vec)</pre>
 <li><code>cat()</code> prints and concatenates strings</li>
 </ul>
 
-<div id="unnamed-chunk-14" class="chunk shadow">
+<div id="unnamed-chunk-20" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>paste(&quot;toto&quot;,&quot;tata&quot;,sep=&#39; &#39;)</pre>
 
 <pre >[1] &quot;toto tata&quot;</pre>
@@ -511,11 +533,11 @@ paste(x,collapse=&quot;-&quot;)</pre>
 
 <pre >a+b+c</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Splitting a string</h2></hgroup><article  id="splitting-a-string" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Splitting a string</h2></hgroup><article  id="splitting-a-string" class="smaller ">
 
 <p><strong>strsplit( )</strong> : Split the elements of a character vector &#39;x&#39; into substrings according to the matches to substring &#39;split&#39; within them. <strong>cat()</strong> prints and concatenates strings</p>
 
-<div id="unnamed-chunk-15" class="chunk shadow">
+<div id="unnamed-chunk-21" class="chunk shadow">
 <pre class = 'prettyprint lang-r'>strsplit(&quot;a.b.c&quot;, &quot;\\.&quot;)</pre>
 
 <pre >[[1]]
@@ -525,20 +547,15 @@ paste(x,collapse=&quot;-&quot;)</pre>
 
 <pre >[1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</pre></div>
 
-</article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Excercise 2</h2></hgroup><article  id="excercise-2" class="smaller ">
+</article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide><slide class=''><hgroup><h2>Mastering regular expressions</h2></hgroup><article  id="mastering-regular-expressions" class="smaller ">
 
-<h3><strong>Part 1</strong></h3>
+<div class = 'row'><div class = 'box col-6 bg-red'><h3>Working with regular</h3>
 
-<p>Do a search and replace of &#39;dog&#39; to &#39;cat&#39;, &#39;cat&#39; to `mouse&#39;, and &#39;mouse&#39; to &#39;dog&#39; in:</p>
-
-<div id="unnamed-chunk-16" class="chunk shadow">
-<pre class = 'prettyprint lang-r'>string = &quot;Do dogs eat cats, or does your cat eat a mouse?&quot;</pre></div>
-
-<h3><strong>Part 2</strong></h3>
-
-<p>Part 1 results in the word &#39;mouses&#39;, which is not very good English! Modify your solution to also replace &#39;cats&#39; with &#39;mice&#39; .</p>
-
-<p>Hint: We need to distinguish &#39;cat&#39; from &#39;cats&#39; .</p></article><div class = "footer"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
+<ol>
+<li>Start simply and expand</li>
+<li>Think about the most comprehensive &#8211; shortest &#8211; expression</li>
+<li>Think about negation rather than inclusion of all possibilities</li>
+</ol></article><div class = "footer"><img src="lecture13_regex_files/logo.png"><a href='https://lsru.github.io/tv_course/'>R tidyverse workshop</a></div></slide>
 
 
   <slide class="backdrop"></slide>
@@ -552,17 +569,6 @@ paste(x,collapse=&quot;-&quot;)</pre>
     script.type = "text/javascript";
     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-<script>
-  (function () {
-    footers = document.getElementsByClassName('footer');
-    //imgsrc = document.getElementsByClassName("gdbar")[0].getElementsByTagName('img')[0].src;
-    [].slice.call(footers).forEach(function (footer) {
-      footer.innerHTML = "<img src=lecture13_regex_files/logo.png>" + footer.innerHTML; // This is the same behaviour as the standard ioslides: logo is not self-contained
-      //footer.innerHTML = "<img src=\"" + imgsrc + "\">" + footer.innerHTML; // disabling to avoid binary data replication...
-    });
   })();
 </script>
 
