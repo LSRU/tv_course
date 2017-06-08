@@ -68,8 +68,6 @@ grep("a", "cat", value = TRUE)
 grepl("at", "cat")
 ```
 
-%end%
-
 ### `sub, gsub` {.box-6 .bg-greenwhite} 
 Search a character vector for regular expression matches and replace that 
 match with another string

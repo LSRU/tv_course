@@ -83,7 +83,7 @@ biocLite("biomaRt")
 
 ### Gene from chromosome 21 from biomaRt {.box-10 .offset-1 .bg-blue}
 
-```{r cache=TRUE}
+```{r}
 # Load the library
 library(biomaRt)
 gene_mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="www.ensembl.org")
