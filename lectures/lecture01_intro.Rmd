@@ -311,6 +311,7 @@ knitr::include_graphics("img/01_tidyverse_data_science.png")
 - `purrr`, for functional programming
 - `tibble`, for tibbles, a modern re-imagining of data frames
 
+> source: http://tidyverse.tidyverse.org/ | H.Wickham
 
 ### Extended {.box .col-6 .bg-yellow}
 
@@ -332,9 +333,6 @@ knitr::include_graphics("img/01_tidyverse_data_science.png")
 - Modelling
     + `modelr`, for modelling within a pipeline
     + `broom`, for turning models into tidy data
-
-
-> source: http://tidyverse.tidyverse.org/ | H.Wickham
 
 ## Tidyverse criticism  | dialect {.vs2}
 
