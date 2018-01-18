@@ -219,7 +219,7 @@ In **Rstudio**, the help page can be viewed in the bottom right pane
 ### Sadly {.box-4 .bg-orange}
 
 manpages are often unhelpful, 
-now **vignettes** (and [**articles**](http://readxl.tidyverse.org/articles/sheet-geometry.html) on tidyverse) are better and described workflows.
+now **vignettes** (and [**articles**](http://readxl.tidyverse.org/articles/sheet-geometry.html) on tidyverse) are better to describe workflows.
 
 ## Drawback: Steep learning curve | Period of much suckiness
 
