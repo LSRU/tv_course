@@ -344,7 +344,7 @@ LETTERS[2:5]
 LETTERS[c(2:5, 7)]
 ```
 </br>
-- indexes from **1** to **5** + last one
+- indexes from **1** to **5** + one before the last one
 ```{r, row = TRUE}
 LETTERS[c(1:5, length(LETTERS) - 1)]
 ```
