@@ -6,6 +6,19 @@ output:
     toc_float: yes
 ---
 
+
+# Deprecated, new location at the University of Luxembourg
+
+This website is **deprecated**.
+
+The new repo is publicly available [here with gitab](https://git-r3lab.uni.lu/aurelien.ginolhac/rworkshop)
+
+And the companion website is: https://rworkshop.uni.lu/
+
+
+
+
+
 ## Introduction
 
 [_R_](https://cran.r-project.org/) is a powerful language for data science in many disciplines of research with a steep learning curve. 

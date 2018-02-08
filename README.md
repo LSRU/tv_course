@@ -2,6 +2,15 @@ tidyverse course
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+Deprecated: new location on gitlab
+==================================
+
+This repository is **deprecated**.
+
+The new repo is publicly available [here with gitab](https://git-r3lab.uni.lu/aurelien.ginolhac/rworkshop)
+
+And the companion website is: <https://rworkshop.uni.lu/>
+
 Building the docs folder
 ------------------------
 

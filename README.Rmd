@@ -15,6 +15,15 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Deprecated: new location on gitlab
+
+This repository is **deprecated**.
+
+The new repo is publicly available [here with gitab](https://git-r3lab.uni.lu/aurelien.ginolhac/rworkshop)
+
+And the companion website is: https://rworkshop.uni.lu/
+
+
 ## Building the docs folder
 
 To create the html files for the docs folder, use the Build -> Build All button in RStudio. This button will use the rules defined in `Makefiles` to produce the HTML files. `make` will use the `rmarkdown::render_site()` function to create the files in the `docs` folder.
