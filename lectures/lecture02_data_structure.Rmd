@@ -524,7 +524,7 @@ How to subset a single pepper seed?
 
 ## Data frames {.vs2}
 
-It's the most important type to recall. All the `tidyverse` is focusing on those. 
+Data frames are the most important type to recall. All the `tidyverse` is focusing on those. 
 
 Actually on tweaked `data.frame`: **tibbles**
 
